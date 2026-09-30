@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import { site } from '../data/site';
+
+const updated = '29 September 2026';
+---
+
+<BaseLayout
+  title="Privacy Notice"
+  description="How ZanamTech collects, uses and protects information submitted through this website."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy Notice"
+    lead={`How we handle information submitted through this website. Last updated ${updated}.`}
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }]}
+  />
+
+  <article class="container-page max-w-3xl space-y-10 py-16 text-muted lg:py-20 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-fg [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5">
+    <section>
+      <h2>Information we collect</h2>
+      <p>When you submit a consultation request, we collect the information you provide:</p>
+      <ul>
+        <li>Full name, work email address and company</li>
+        <li>Role and service of interest (optional)</li>
+        <li>The content of your message and your consent confirmation</li>
+      </ul>
+      <p>We do not ask for, and ask you not to submit, sensitive personal data or confidential system credentials.</p>
+    </section>
+
+    <section>
+      <h2>How we use it</h2>
+      <p>
+        Your information is used solely to respond to your request, schedule consultations and prepare any resulting
+        proposal. We do not sell your information or add it to marketing lists.
+      </p>
+    </section>
+
+    <section>
+      <h2>Form processing</h2>
+      <p>
+        Form submissions are transmitted over an encrypted connection to a third-party form processing provider, which
+        delivers them to our team by email. The provider acts on our instructions and applies automated spam
+        filtering.
+      </p>
+    </section>
+
+    <section>
+      <h2>Analytics and cookies</h2>
+      <p>
+        This website does not use cookies for tracking or advertising. We may use privacy-first, cookieless analytics
+        that record aggregated, anonymous usage statistics (such as page views and referrers) without identifying
+        individual visitors. Your theme preference is stored locally in your browser and never leaves your device.
+      </p>
+    </section>
+
+    <section>
+      <h2>Retention</h2>
+      <p>
+        We retain enquiry information only for as long as necessary to respond to you and to manage any resulting
+        engagement, after which it is deleted.
+      </p>
+    </section>
+
+    <section>
+      <h2>Your rights</h2>
+      <p>
+        You may request access to, correction of, or deletion of the information you have submitted at any time by
+        contacting us.
+      </p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>
+        For privacy questions, email
+        <a href={`mailto:${site.email}`} class="font-semibold text-link underline underline-offset-2">{site.email}</a>.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

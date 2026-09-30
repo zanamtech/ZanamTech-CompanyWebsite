@@ -1,0 +1,56 @@
+---
+import { Info } from 'lucide-react';
+import { metricTargets, formatMetric } from '../../data/metrics';
+import { metricsFootnote } from '../../data/site';
+---
+
+<section id="metrics" aria-labelledby="metrics-title" class="relative isolate overflow-hidden border-y border-border bg-surface/60">
+  <div class="mesh-bg absolute inset-0 -z-10 opacity-70" aria-hidden="true"></div>
+  <div class="container-page py-20 sm:py-24">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Target outcomes</p>
+      <h2 id="metrics-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">Engineering tied to measurable results</h2>
+      <p class="mt-4 text-lg text-muted">
+        Every engagement is anchored to key performance indicators agreed up front and reported against throughout
+        delivery.
+      </p>
+    </div>
+
+    <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        metricTargets.map((m) => (
+          <li data-metric={m.id} class="glass flex flex-col rounded-2xl p-6">
+            <span class="sr-only">
+              {m.qualifier ? `${m.qualifier} ` : ''}
+              {formatMetric(m)} {m.label}
+            </span>
+            <div aria-hidden="true">
+              <p class="h-5 text-sm font-semibold text-muted">{m.qualifier}</p>
+              <p class="text-gradient-display mt-1 inline-block text-4xl font-bold tracking-tight sm:text-5xl">
+                <span
+                  data-counter
+                  data-value={m.value}
+                  data-decimals={m.decimals}
+                  data-suffix={m.suffix}
+                  class="tabular-nums"
+                >
+                  {formatMetric(m)}
+                </span>
+              </p>
+              <p class="mt-3 text-sm font-medium text-fg">{m.label.charAt(0).toUpperCase() + m.label.slice(1)}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-8 flex items-start gap-2 text-sm text-muted">
+      <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+      {metricsFootnote}
+    </p>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/metric-counters';
+</script>

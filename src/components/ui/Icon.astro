@@ -1,0 +1,46 @@
+---
+// Maps content-level icon names to Lucide components. Rendered server-side as static SVG (no client JS).
+import {
+  Activity,
+  Bot,
+  BrainCircuit,
+  Building2,
+  CodeXml,
+  Container,
+  DatabaseBackup,
+  Headset,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  TrendingDown,
+  Workflow,
+} from 'lucide-react';
+
+const icons = {
+  Activity,
+  Bot,
+  BrainCircuit,
+  Building2,
+  CodeXml,
+  Container,
+  DatabaseBackup,
+  Headset,
+  LockKeyhole,
+  Rocket,
+  ShieldCheck,
+  TrendingDown,
+  Workflow,
+};
+
+interface Props {
+  name: string;
+  class?: string;
+  strokeWidth?: number;
+}
+
+const { name, class: className, strokeWidth = 2 } = Astro.props;
+const Component = icons[name as keyof typeof icons];
+if (!Component) throw new Error(`Unknown icon "${name}". Add it to src/components/ui/Icon.astro.`);
+---
+
+<Component aria-hidden="true" className={className} strokeWidth={strokeWidth} />

@@ -1,0 +1,67 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/sections/PageHero.astro';
+import ServiceCard from '../../components/sections/ServiceCard.astro';
+import CtaBand from '../../components/sections/CtaBand.astro';
+import RoadmapCard from '../../components/sections/RoadmapCard.astro';
+import { getActiveServices, getRoadmapServices, serviceGroups, type ServiceGroup } from '../../lib/services';
+
+const services = await getActiveServices();
+const roadmap = await getRoadmapServices();
+const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
+  key,
+  ...serviceGroups[key],
+  services: services.filter((s) => s.data.group === key),
+}));
+---
+
+<BaseLayout
+  title="Services"
+  description="Nine enterprise engineering services: cloud migration, WAF hardening, high availability, CI/CD, observability, cost optimization, full-stack development, private AI and 24/7 managed infrastructure."
+>
+  <PageHero
+    eyebrow="Services"
+    title="Enterprise engineering services"
+    lead="Nine core disciplines spanning cloud infrastructure, zero-trust security, delivery automation, application engineering and private AI, each scoped to measurable target outcomes in a Statement of Work."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+  />
+
+  <div class="container-page space-y-20 py-20">
+    {
+      groups.map((group) => (
+        <section aria-labelledby={`group-${group.key}`}>
+          <div class="max-w-2xl">
+            <h2 id={`group-${group.key}`} class="text-2xl font-bold text-fg sm:text-3xl">
+              {group.title}
+            </h2>
+            <p class="mt-3 text-muted">{group.description}</p>
+          </div>
+          <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {group.services.map((service) => (
+              <ServiceCard service={service} />
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+    {
+      roadmap.length > 0 && (
+        <section aria-labelledby="roadmap-title">
+          <div class="max-w-2xl">
+            <p class="eyebrow">Roadmap</p>
+            <h2 id="roadmap-title" class="mt-3 text-2xl font-bold text-fg sm:text-3xl">
+              What we are building next
+            </h2>
+          </div>
+          <div class="mt-10 space-y-6">
+            {roadmap.map((service) => (
+              <RoadmapCard service={service} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+
+  <CtaBand />
+</BaseLayout>

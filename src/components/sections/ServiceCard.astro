@@ -1,0 +1,51 @@
+---
+import { ArrowRight } from 'lucide-react';
+import Icon from '../ui/Icon.astro';
+import { serviceHref, type Service } from '../../lib/services';
+
+interface Props {
+  service: Service;
+  headingLevel?: 'h3';
+}
+
+const { service } = Astro.props;
+const { name, icon, summary, outcome, order } = service.data;
+---
+
+<li
+  data-service-card
+  class="glass group relative flex flex-col rounded-2xl p-6 transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-accent/40 focus-within:border-accent/40 sm:p-7 motion-reduce:hover:translate-y-0"
+>
+  <div class="flex items-start justify-between gap-4">
+    <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+      <Icon name={icon} class="size-6" />
+    </span>
+    <span class="text-sm font-semibold text-muted tabular-nums" aria-hidden="true">{String(order).padStart(2, '0')}</span>
+  </div>
+
+  <h3 class="mt-5 text-lg font-semibold text-fg">
+    <a href={serviceHref(service)} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
+      {name}
+    </a>
+  </h3>
+  <p class="mt-2 text-muted">{summary}</p>
+
+  <div class="mt-auto pt-6">
+    <p class="rounded-lg border border-border bg-surface-2/70 px-3 py-2 text-sm text-fg">
+      <span class="font-semibold text-accent">Target:</span>{' '}
+      {outcome}
+    </p>
+    <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
+      Explore service
+      <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+    </p>
+  </div>
+</li>
+
+<style>
+  /* Stretched-link focus ring drawn on the card, since the link itself is visually the title. */
+  li:has(a:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+</style>

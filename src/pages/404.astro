@@ -1,0 +1,27 @@
+---
+import { ArrowRight } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout title="Page not found" description="The page you requested could not be found." noindex>
+  <section class="relative isolate overflow-hidden">
+    <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="grid-lines absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+    <div class="container-page flex min-h-[60vh] flex-col items-start justify-center py-24">
+      <p class="text-gradient-display text-7xl font-bold tracking-tight sm:text-8xl">404</p>
+      <h1 class="mt-6 text-3xl font-bold text-fg sm:text-4xl">This page could not be found</h1>
+      <p class="mt-4 max-w-xl text-lg text-muted">
+        The address may have changed or the page may no longer exist. Continue to our home page or explore our
+        services.
+      </p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <Button href="/" size="lg">
+          Back to home
+          <ArrowRight aria-hidden="true" className="size-4.5" />
+        </Button>
+        <Button href="/services" variant="secondary" size="lg">Explore services</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

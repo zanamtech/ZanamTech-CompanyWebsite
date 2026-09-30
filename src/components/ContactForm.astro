@@ -1,0 +1,175 @@
+---
+import { CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
+import { getActiveServices } from '../lib/services';
+import { NOT_SURE } from '../lib/lead';
+
+interface Props {
+  /** Unique prefix so the dialog and page instances never share element ids. */
+  idPrefix: string;
+  source: 'dialog' | 'page';
+}
+
+const { idPrefix, source } = Astro.props;
+const services = (await getActiveServices()).map((s) => ({ slug: s.id, name: s.data.name }));
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
+const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
+const id = (field: string) => `${idPrefix}-${field}`;
+const config = JSON.stringify({ services, source });
+
+const textFields = [
+  { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true },
+  { name: 'email', label: 'Work email', type: 'email', autocomplete: 'email', required: true },
+  { name: 'company', label: 'Company', type: 'text', autocomplete: 'organization', required: true },
+  { name: 'role', label: 'Role (optional)', type: 'text', autocomplete: 'organization-title', required: false },
+] as const;
+---
+
+<div x-data={`leadForm(${config})`} x-on:contact-dialog-opened.window={source === 'dialog' ? 'onOpen()' : undefined}>
+  <p class="sr-only" role="status" aria-live="polite" x-text="announcement"></p>
+
+  <form
+    method="POST"
+    action={endpoint}
+    x-show="status !== 'success'"
+    x-bind:novalidate="true"
+    x-on:submit.prevent="submit()"
+    x-on:input="revalidate()"
+    x-on:change="revalidate()"
+    class="space-y-5"
+  >
+    <input type="hidden" name="access_key" value={accessKey} />
+    <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        textFields.map((field, i) => (
+          <div>
+            <label for={id(field.name)} class="block text-sm font-semibold text-fg">
+              {field.label}
+            </label>
+            <input
+              id={id(field.name)}
+              name={field.name}
+              type={field.type}
+              autocomplete={field.autocomplete}
+              required={field.required}
+              maxlength={field.name === 'company' ? 120 : 100}
+              class="field-input mt-2"
+              data-autofocus={i === 0 && source === 'dialog' ? '' : undefined}
+              x-model={`fields.${field.name}`}
+              x-bind:aria-invalid={`errors.${field.name} ? 'true' : 'false'`}
+              x-bind:aria-describedby={`errors.${field.name} ? '${id(field.name)}-error' : null`}
+            />
+            <p
+              id={`${id(field.name)}-error`}
+              class="mt-1.5 text-sm font-medium text-danger"
+              x-show={`errors.${field.name}`}
+              x-text={`errors.${field.name}`}
+              x-cloak
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <div>
+      <label for={id('service')} class="block text-sm font-semibold text-fg">Service of interest</label>
+      <select
+        id={id('service')}
+        name="service"
+        class="field-input mt-2"
+        x-model="fields.service"
+        x-bind:aria-invalid="errors.service ? 'true' : 'false'"
+        x-bind:aria-describedby={`errors.service ? '${id('service')}-error' : null`}
+      >
+        <option value="">Select a service (optional)</option>
+        {services.map((s) => <option value={s.name}>{s.name}</option>)}
+        <option value={NOT_SURE}>{NOT_SURE}</option>
+      </select>
+      <p id={`${id('service')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.service" x-text="errors.service" x-cloak></p>
+    </div>
+
+    <div>
+      <label for={id('message')} class="block text-sm font-semibold text-fg">How can we help?</label>
+      <p id={`${id('message')}-hint`} class="mt-1 text-sm text-muted">
+        Briefly describe your environment, objectives and timeline.
+      </p>
+      <textarea
+        id={id('message')}
+        name="message"
+        rows="5"
+        required
+        minlength="20"
+        maxlength="2000"
+        class="field-input mt-2 resize-y"
+        x-model="fields.message"
+        x-bind:aria-invalid="errors.message ? 'true' : 'false'"
+        aria-describedby={`${id('message')}-hint`}
+        x-bind:aria-describedby={`errors.message ? '${id('message')}-hint ${id('message')}-error' : '${id('message')}-hint'`}
+      ></textarea>
+      <p id={`${id('message')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.message" x-text="errors.message" x-cloak></p>
+    </div>
+
+    <!-- Honeypot: hidden from people and assistive technology; automated agents tend to fill it. -->
+    <div class="hidden" aria-hidden="true">
+      <label for={id('botcheck')}>Leave this field empty</label>
+      <input id={id('botcheck')} name="botcheck" type="text" tabindex="-1" autocomplete="off" x-model="fields.botcheck" />
+    </div>
+
+    <div>
+      <div class="flex gap-3">
+        <input
+          id={id('consent')}
+          name="consent"
+          type="checkbox"
+          value="true"
+          required
+          class="mt-0.5 size-5 shrink-0 accent-(--cta)"
+          x-model="fields.consent"
+          x-bind:aria-invalid="errors.consent ? 'true' : 'false'"
+          x-bind:aria-describedby={`errors.consent ? '${id('consent')}-error' : null`}
+        />
+        <label for={id('consent')} class="text-sm text-fg">
+          I agree to the processing of my information as described in the{' '}
+          <a href="/privacy" class="font-semibold text-link underline underline-offset-2">Privacy Notice</a>.
+        </label>
+      </div>
+      <p id={`${id('consent')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+    </div>
+
+    <div
+      role="alert"
+      class="flex gap-3 rounded-xl border border-danger/50 bg-danger/10 p-4 text-sm text-fg"
+      x-show="status === 'error'"
+      x-cloak
+    >
+      <CircleAlert aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-danger" />
+      <p x-text="failure"></p>
+    </div>
+
+    <div class="flex flex-col-reverse gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
+      <p class="text-xs text-muted">Your details are used only to respond to this request.</p>
+      <button
+        type="submit"
+        class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-cta px-6 py-3 font-semibold text-cta-fg transition-colors duration-200 hover:bg-cta-hover disabled:cursor-wait disabled:opacity-80"
+        x-bind:disabled="status === 'submitting'"
+      >
+        <span x-show="status === 'submitting'" x-cloak class="inline-flex motion-safe:animate-spin">
+          <LoaderCircle aria-hidden="true" className="size-4.5" />
+        </span>
+        Send request
+      </button>
+    </div>
+  </form>
+
+  <div x-show="status === 'success'" x-cloak class="py-6 text-center">
+    <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-cyan/12 text-brand-cyan">
+      <CircleCheck aria-hidden="true" className="size-7" />
+    </span>
+    <h3 data-success-heading tabindex="-1" class="mt-5 text-2xl font-bold text-fg focus:outline-none">Request received</h3>
+    <p class="mx-auto mt-3 max-w-md text-muted">
+      Thank you. A senior engineer will review your requirements and contact you to schedule your consultation.
+    </p>
+    <slot name="success-actions" />
+  </div>
+</div>

@@ -1,0 +1,64 @@
+---
+import { CircleCheck } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import Process from '../components/sections/Process.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import { engagementModels } from '../data/engagement';
+---
+
+<BaseLayout
+  title="Approach"
+  description="ZanamTech's consultative engagement process: technical audit, custom proposal and Statement of Work, zero-downtime implementation and 24/7 managed operations."
+>
+  <PageHero
+    eyebrow="Approach"
+    title="Consultative engagement, engineered for accountability"
+    lead="We do not publish fixed packages or commodity rates. Every partnership starts with a direct architectural assessment that establishes scope, SLA commitments and measurable outcomes."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Approach' }]}
+  />
+
+  <div class="container-page pt-20">
+    <div class="max-w-2xl">
+      <p class="eyebrow">Four phases</p>
+      <h2 class="mt-3 text-3xl font-bold text-fg">From discovery to continuous operations</h2>
+    </div>
+  </div>
+  <Process detailed withIntro={false} />
+
+  <section aria-labelledby="models-title" class="border-y border-border bg-surface/60">
+    <div class="container-page py-20">
+      <div class="max-w-2xl">
+        <p class="eyebrow">Engagement models</p>
+        <h2 id="models-title" class="mt-3 text-3xl font-bold text-fg">Structured to match your objectives</h2>
+        <p class="mt-4 text-lg text-muted">
+          Commercial terms are defined transparently in each custom proposal, under one of two models.
+        </p>
+      </div>
+      <div class="mt-12 grid gap-6 md:grid-cols-2">
+        {
+          engagementModels.map((model) => (
+            <GlassCard as="article">
+              <h3 class="text-xl font-semibold text-fg">{model.name}</h3>
+              <p class="mt-3 text-muted">{model.description}</p>
+              <p class="mt-6 text-sm font-semibold text-fg">Typically suited to</p>
+              <ul class="mt-3 space-y-2">
+                {model.suitedFor.map((item) => (
+                  <li class="flex gap-2 text-sm text-fg">
+                    <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="pt-16">
+    <CtaBand />
+  </div>
+</BaseLayout>

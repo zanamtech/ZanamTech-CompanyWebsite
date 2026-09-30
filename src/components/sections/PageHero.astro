@@ -1,0 +1,56 @@
+---
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  breadcrumbs?: Crumb[];
+}
+
+const { eyebrow, title, lead, breadcrumbs = [] } = Astro.props;
+---
+
+<section class="relative isolate overflow-hidden border-b border-border">
+  <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="grid-lines absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
+  <div class="container-page pt-10 pb-16 sm:pt-14 sm:pb-20">
+    {
+      breadcrumbs.length > 0 && (
+        <nav aria-label="Breadcrumb" class="mb-8">
+          <ol class="flex flex-wrap items-center gap-1 text-sm text-muted">
+            {breadcrumbs.map((crumb, i) => (
+              <li class="flex items-center gap-1">
+                {i > 0 && (
+                  <span aria-hidden="true" class="px-1">
+                    /
+                  </span>
+                )}
+                {crumb.href ? (
+                  <a href={crumb.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
+                    {crumb.label}
+                  </a>
+                ) : (
+                  <span aria-current="page" class="font-medium text-fg">
+                    {crumb.label}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+      <div class="max-w-3xl">
+        {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+        <h1 class="mt-3 text-4xl font-bold text-fg sm:text-5xl">{title}</h1>
+        {lead && <p class="mt-5 text-lg text-muted">{lead}</p>}
+      </div>
+      <slot />
+    </div>
+  </div>
+</section>

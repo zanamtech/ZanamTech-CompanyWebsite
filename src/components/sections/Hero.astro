@@ -1,0 +1,84 @@
+---
+import { ArrowRight, Activity, Building2, ShieldCheck, CircleCheck } from 'lucide-react';
+import Button from '../ui/Button.astro';
+import { cta } from '../../data/site';
+
+const pillars = [
+  { label: 'Enterprise-grade', Icon: Building2 },
+  { label: 'High-availability', Icon: Activity },
+  { label: 'Zero-trust security', Icon: ShieldCheck },
+];
+
+const blueprint = [
+  { title: 'Technical audit & discovery', detail: 'Architecture, security perimeter, pipelines and spend' },
+  { title: 'Zero-downtime implementation', detail: 'IaC-driven, staged, validated cutovers' },
+  { title: 'Zero-trust perimeter', detail: 'WAF, rate limiting, geo-fencing, TLS enforcement' },
+  { title: 'Continuous 24/7 operations', detail: 'Observability, alert routing, incident response' },
+];
+---
+
+<section id="hero" aria-labelledby="hero-title" class="relative isolate overflow-hidden">
+  <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="grid-lines absolute inset-0 -z-10 opacity-60" aria-hidden="true"></div>
+
+  <div class="container-page grid items-center gap-12 pt-14 pb-20 sm:pt-20 lg:grid-cols-12 lg:gap-10 lg:pt-24 lg:pb-28">
+    <div class="lg:col-span-7">
+      <p class="eyebrow">Cloud · DevSecOps · Security · Private AI</p>
+      <h1 id="hero-title" class="mt-4 text-4xl font-bold text-fg sm:text-5xl lg:text-[3.4rem]">
+        Enterprise Cloud Resilience, Ironclad Cyber Security &amp; Intelligent AI Automation.
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Modernize your infrastructure, protect critical workloads, and optimize cloud spend. ZanamTech architects
+        high-availability cloud environments, zero-trust security perimeters, and secure private LLM workflows,
+        delivered by senior cloud, security and AI engineers.
+      </p>
+
+      <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Positioning pillars">
+        {
+          pillars.map(({ label, Icon }) => (
+            <li class="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-fg">
+              <Icon aria-hidden="true" className="size-4 text-brand-cyan" strokeWidth={2.25} />
+              <span>{label}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <Button href={cta.href} size="lg" contactCta>
+          {cta.primary}
+          <ArrowRight aria-hidden="true" className="size-4.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </Button>
+        <Button href={`${cta.href}?intent=proposal`} variant="secondary" size="lg" contactCta>
+          {cta.secondary}
+        </Button>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div class="glass relative rounded-3xl p-6 sm:p-8">
+        <div class="hairline-gradient absolute inset-x-8 top-0" aria-hidden="true"></div>
+        <p class="text-sm font-semibold text-accent">Engagement blueprint</p>
+        <h2 class="mt-2 text-xl font-semibold text-fg">From audit to always-on operations</h2>
+        <ol class="mt-6 space-y-4">
+          {
+            blueprint.map((step, i) => (
+              <li class="flex gap-4">
+                <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-sm font-bold text-fg">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <p class="flex items-center gap-2 font-semibold text-fg">
+                    {step.title}
+                    <CircleCheck aria-hidden="true" className="size-4 text-brand-cyan" />
+                  </p>
+                  <p class="text-sm text-muted">{step.detail}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,76 @@
+---
+import { Mail } from 'lucide-react';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import ContactForm from '../components/ContactForm.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import { site } from '../data/site';
+
+const nextSteps = [
+  { title: 'Technical discussion', body: 'A senior engineer reviews your requirements and schedules a consultation.' },
+  { title: 'Technical audit', body: 'We assess architecture, security perimeter, delivery pipelines and cloud spend.' },
+  { title: 'Custom proposal & SOW', body: 'Scope, milestones and SLA commitments are defined in a Statement of Work.' },
+  { title: 'Implementation', body: 'Zero-downtime delivery, followed by optional 24/7 managed operations.' },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Book a strategy consultation or request a custom proposal from ZanamTech's senior cloud, security and AI engineers."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Book a Strategy Consultation"
+    lead="Tell us about your environment and objectives. Every engagement starts with a technical conversation, not a sales script."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+  />
+
+  <div class="container-page grid gap-10 py-16 lg:grid-cols-12 lg:gap-14 lg:py-20">
+    <GlassCard class="lg:col-span-7">
+      <h2 class="text-xl font-bold text-fg">Consultation request</h2>
+      <p class="mt-1 mb-8 text-sm text-muted">All fields are required unless marked optional.</p>
+      <ContactForm idPrefix="page" source="page">
+        <div slot="success-actions" class="mt-8">
+          <a
+            href="/services"
+            class="inline-flex min-h-11 items-center justify-center rounded-xl border border-border-strong px-6 font-semibold text-fg hover:border-accent hover:text-accent"
+          >
+            Explore our services
+          </a>
+        </div>
+      </ContactForm>
+    </GlassCard>
+
+    <aside class="space-y-8 lg:col-span-5" aria-label="What happens next">
+      <div>
+        <h2 class="text-xl font-bold text-fg">What happens next</h2>
+        <ol class="mt-6 space-y-6">
+          {
+            nextSteps.map((step, i) => (
+              <li class="flex gap-4">
+                <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-sm font-bold text-fg">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <p class="font-semibold text-fg">{step.title}</p>
+                  <p class="text-sm text-muted">{step.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <GlassCard>
+        <p class="flex items-center gap-2 font-semibold text-fg">
+          <Mail aria-hidden="true" className="size-5 text-brand-cyan" />
+          Prefer email?
+        </p>
+        <p class="mt-2 text-sm text-muted">
+          Write to
+          <a href={`mailto:${site.email}`} class="font-semibold text-link underline underline-offset-2">{site.email}</a>
+        </p>
+      </GlassCard>
+    </aside>
+  </div>
+</BaseLayout>

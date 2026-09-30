@@ -1,0 +1,12 @@
+---
+const platforms = ['AWS', 'Microsoft Azure', 'Google Cloud', 'Kubernetes', 'Docker', 'Cloudflare', 'Linux', 'PostgreSQL'];
+---
+
+<section aria-labelledby="platforms-title" class="border-y border-border bg-surface/60">
+  <div class="container-page flex flex-col items-center gap-5 py-8 lg:flex-row lg:gap-10">
+    <h2 id="platforms-title" class="shrink-0 text-sm font-semibold text-muted">Engineering across</h2>
+    <ul class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 lg:justify-start">
+      {platforms.map((p) => <li class="text-base font-semibold tracking-tight text-fg/80">{p}</li>)}
+    </ul>
+  </div>
+</section>

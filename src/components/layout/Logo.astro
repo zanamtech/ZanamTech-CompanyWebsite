@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/brand/zanamtech-logo.png';
+
+interface Props {
+  class?: string;
+  /** Rendered height in CSS pixels. */
+  height?: number;
+  eager?: boolean;
+}
+
+const { class: className, height = 36, eager = false } = Astro.props;
+const width = Math.round((logo.width / logo.height) * height);
+---
+
+<a href="/" class:list={['inline-flex shrink-0 items-center rounded-md', className]} aria-label="ZanamTech home">
+  <Image
+    src={logo}
+    alt="ZanamTech"
+    width={width}
+    height={height}
+    densities={[1, 2]}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+    format="webp"
+  />
+</a>

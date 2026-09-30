@@ -1,0 +1,20 @@
+---
+import { Moon, Sun } from 'lucide-react';
+---
+
+<!-- Toggle-button pattern: constant name, state conveyed by aria-pressed. Hidden until Alpine runs (no-JS users cannot switch). -->
+<button
+  type="button"
+  class="inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-150 hover:bg-surface-2 hover:text-fg"
+  aria-label="Dark theme"
+  aria-pressed="false"
+  x-data
+  x-cloak
+  x-bind:aria-pressed="$store.theme.isDark.toString()"
+  x-bind:title="$store.theme.isDark ? 'Switch to light theme' : 'Switch to dark theme'"
+  x-on:click="$store.theme.toggle()"
+  data-theme-toggle
+>
+  <span class="inline-flex" x-show="!$store.theme.isDark"><Moon aria-hidden="true" className="size-5" /></span>
+  <span class="inline-flex" x-show="$store.theme.isDark"><Sun aria-hidden="true" className="size-5" /></span>
+</button>
