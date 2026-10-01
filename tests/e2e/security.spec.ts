@@ -49,7 +49,7 @@ test.describe('Security — CSP compliance', () => {
     await expect(page.locator('html')).toHaveClass(/\bdark\b/);
 
     if (testInfo.project.name === 'desktop') {
-      await page.getByRole('button', { name: 'Show services menu' }).click();
+      await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
       await expect(page.locator('#services-menu')).toBeVisible();
       await page.keyboard.press('Escape');
     }

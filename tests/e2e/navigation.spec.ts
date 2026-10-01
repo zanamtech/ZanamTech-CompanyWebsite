@@ -72,12 +72,11 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
   test('desktop services menu closes after choosing a service', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
     await page.goto('/');
-    await page.getByRole('button', { name: 'Show services menu' }).click();
+    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
     const menu = page.locator('#services-menu');
     await menu.getByRole('link', { name: 'Cloud Infrastructure Cost Optimization' }).click();
     await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);
     await expect(menu).toBeHidden();
-    await expect(page.getByRole('button', { name: 'Show services menu' })).toHaveAttribute('aria-expanded', 'false');
   });
 
   test('mobile menu closes after navigating', async ({ page }, testInfo) => {

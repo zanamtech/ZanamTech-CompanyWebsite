@@ -54,18 +54,74 @@ test.describe('US2 — Services', () => {
     await expect(page).toHaveURL(/\/services\/observability-monitoring\/?$/);
   });
 
-  test('desktop services menu opens, lists nine services and closes on Escape', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
-    await page.goto('/');
-    const toggle = page.getByRole('button', { name: 'Show services menu' });
-    await toggle.click();
-    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-    const menu = page.locator('#services-menu');
-    await expect(menu).toBeVisible();
-    await expect(menu.locator('a[href^="/services/"]')).toHaveCount(9);
-    await page.keyboard.press('Escape');
-    await expect(menu).toBeHidden();
-    await expect(toggle).toBeFocused();
+  test.describe('desktop services menu', () => {
+    test.beforeEach(({}, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
+    });
+
+    const servicesLink = (page: import('@playwright/test').Page) =>
+      page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true });
+
+    test('opens on hover, lists nine services, and closes when the pointer leaves', async ({ page }) => {
+      await page.goto('/');
+      const menu = page.locator('#services-menu');
+      await servicesLink(page).hover();
+      await expect(menu).toBeVisible();
+      await expect(menu.locator('a[href^="/services/"]')).toHaveCount(9);
+      await page.mouse.move(700, 600); // well below the header and panel
+      await expect(menu).toBeHidden();
+    });
+
+    test('stays open while the pointer crosses the gap from the trigger to the panel', async ({ page }) => {
+      await page.goto('/');
+      const link = servicesLink(page);
+      const menu = page.locator('#services-menu');
+      await link.hover();
+      await expect(menu).toBeVisible();
+      const linkBox = (await link.boundingBox())!;
+      const panelBox = (await menu.boundingBox())!;
+      // Move straight down from the trigger, through the header gap, into the panel in small steps.
+      const x = linkBox.x + linkBox.width / 2;
+      await page.mouse.move(x, panelBox.y + 40, { steps: 12 });
+      await expect(menu).toBeVisible();
+      await menu.getByRole('link', { name: 'Cloud Infrastructure Cost Optimization' }).click();
+      await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);
+    });
+
+    test('clicking "Services" navigates to the services page', async ({ page }) => {
+      await page.goto('/');
+      await servicesLink(page).click();
+      await expect(page).toHaveURL(/\/services\/?$/);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enterprise engineering services');
+    });
+
+    test('is keyboard accessible: focus opens, Tab enters the panel, Escape closes and restores focus', async ({ page }) => {
+      await page.goto('/');
+      const link = servicesLink(page);
+      const menu = page.locator('#services-menu');
+      await link.focus();
+      await expect(menu).toBeVisible();
+      await page.keyboard.press('Tab');
+      await expect(menu.getByRole('link', { name: 'View all services' })).toBeFocused();
+      await page.keyboard.press('Escape');
+      await expect(menu).toBeHidden();
+      await expect(link).toBeFocused();
+    });
+
+    test('Services text and chevron form one control with tight spacing', async ({ page }) => {
+      await page.goto('/');
+      const link = servicesLink(page);
+      await expect(link.locator('svg')).toHaveCount(1);
+      expect(await link.evaluate((el) => getComputedStyle(el).columnGap)).toBe('6px');
+      await expect(page.locator('header button[aria-controls="services-menu"]')).toHaveCount(0);
+    });
+  });
+
+  test('header logo aligns with the page content edge', async ({ page }) => {
+    await page.goto('/services');
+    const logo = (await page.locator('header a[aria-label="ZanamTech home"] img').boundingBox())!;
+    const crumb = (await page.getByRole('navigation', { name: 'Breadcrumb' }).boundingBox())!;
+    expect(Math.abs(logo.x - crumb.x)).toBeLessThanOrEqual(1);
   });
 
   for (const theme of ['light', 'dark'] as const) {

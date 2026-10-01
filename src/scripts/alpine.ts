@@ -175,6 +175,8 @@ export default (Alpine: Alpine) => {
   Alpine.data('siteHeader', () => ({
     open: false,
     services: false,
+    closeTimer: 0,
+    suppressFocusOpen: false,
 
     init() {
       // The header persists across client-side navigation: close any open menu once the new page is in place.
@@ -184,11 +186,39 @@ export default (Alpine: Alpine) => {
       });
     },
 
-    /** Escape closes the innermost open menu and returns focus to its toggle. */
+    /** Hover intent: open immediately and cancel any pending close. */
+    openServices() {
+      window.clearTimeout(this.closeTimer);
+      this.services = true;
+    },
+
+    /** Keyboard users reach the menu by focusing the Services link (Tab then moves into the panel). */
+    openServicesOnFocus() {
+      if (!this.suppressFocusOpen) this.openServices();
+    },
+
+    /** Short grace period so diagonal cursor movement toward the panel doesn't close it. */
+    closeServicesSoon() {
+      window.clearTimeout(this.closeTimer);
+      this.closeTimer = window.setTimeout(() => {
+        this.services = false;
+      }, 150);
+    },
+
+    /** Close when keyboard focus leaves the Services item (link + panel). */
+    closeServicesIfFocusLeft(event: FocusEvent) {
+      const item = event.currentTarget as HTMLElement | null;
+      if (!item?.contains(event.relatedTarget as Node | null)) this.services = false;
+    },
+
+    /** Escape closes the innermost open menu and returns focus to its trigger. */
     onEscape() {
       if (this.services) {
+        window.clearTimeout(this.closeTimer);
         this.services = false;
-        (this.$refs.servicesButton as HTMLElement | undefined)?.focus();
+        this.suppressFocusOpen = true;
+        (this.$refs.servicesLink as HTMLElement | undefined)?.focus();
+        this.suppressFocusOpen = false;
       } else if (this.open) {
         this.open = false;
         (this.$refs.menuButton as HTMLElement | undefined)?.focus();
