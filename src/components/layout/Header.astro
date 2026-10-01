@@ -26,6 +26,7 @@ const linkClass = (href: string) => [
 ---
 
 <header
+  transition:persist="site-header"
   class="glass-bar sticky top-0 z-40"
   x-data="siteHeader"
   x-on:keydown.escape.window="onEscape()"
@@ -44,6 +45,7 @@ const linkClass = (href: string) => [
               <li class="flex items-center" x-on:click.outside="services = false">
                 <a
                   href={link.href}
+                  data-nav-link="desktop"
                   aria-current={isActive(link.href) ? 'page' : undefined}
                   class:list={[...linkClass(link.href), 'pr-1']}
                 >
@@ -113,7 +115,7 @@ const linkClass = (href: string) => [
               </li>
             ) : (
               <li>
-                <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined} class:list={linkClass(link.href)}>
+                <a href={link.href} data-nav-link="desktop" aria-current={isActive(link.href) ? 'page' : undefined} class:list={linkClass(link.href)}>
                   {link.label}
                 </a>
               </li>
@@ -159,6 +161,7 @@ const linkClass = (href: string) => [
           <li>
             <a
               href={link.href}
+              data-nav-link="mobile"
               aria-current={isActive(link.href) ? 'page' : undefined}
               class="flex min-h-12 items-center rounded-lg px-2 text-base font-medium text-fg hover:text-accent"
             >

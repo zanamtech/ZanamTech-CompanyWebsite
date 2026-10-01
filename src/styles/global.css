@@ -92,6 +92,8 @@
    ------------------------------------------------------------------ */
 @layer base {
   html {
+    /* Reserve the scrollbar gutter so page width doesn't shift between short/long pages or when scroll is locked. */
+    scrollbar-gutter: stable;
     background-color: var(--bg);
     color: var(--fg);
     -webkit-text-size-adjust: 100%;

@@ -115,17 +115,24 @@ export default (Alpine: Alpine) => {
   Alpine.store('contact', contactStore);
 
   // Progressive enhancement: CTAs are plain links to /contact; with JS they open the dialog instead.
-  document.addEventListener('click', (event) => {
-    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-contact-cta]');
-    if (!link || !dialog()) return;
-    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    contactStore.open(link, new URL(link.href, location.href).searchParams);
-  });
+  // Capture phase: runs before Astro's ClientRouter link handler, which skips clicks that are already prevented.
+  document.addEventListener(
+    'click',
+    (event) => {
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-contact-cta]');
+      if (!link || !dialog()) return;
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      contactStore.open(link, new URL(link.href, location.href).searchParams);
+    },
+    { capture: true },
+  );
 
-  document.addEventListener('DOMContentLoaded', () => {
+  // The dialog persists across client-side navigation (transition:persist), so bind its listeners once.
+  const bindDialog = () => {
     const el = dialog();
-    if (!el) return;
+    if (!el || el.dataset.bound) return;
+    el.dataset.bound = 'true';
     el.addEventListener('close', () => {
       document.documentElement.classList.remove('overflow-hidden');
       window.dispatchEvent(new CustomEvent('contact-dialog-closed'));
@@ -136,12 +143,46 @@ export default (Alpine: Alpine) => {
     el.addEventListener('click', (event) => {
       if (event.target === el) el.close();
     });
+  };
+  document.addEventListener('DOMContentLoaded', bindDialog);
+  document.addEventListener('astro:page-load', bindDialog);
+
+  /* ------------------------------------------------- client-side navigation */
+  // The router replaces <html> attributes with the incoming page's (which never carry `.dark`),
+  // and the inline no-flash script does not re-run. Carry the theme into the new document before the swap.
+  document.addEventListener('astro:before-swap', (event) => {
+    const { newDocument } = event as Event & { newDocument: Document };
+    newDocument.documentElement.classList.toggle('dark', themeStore.current === 'dark');
   });
+
+  // The header persists across navigation, so its server-rendered active state must be re-synced.
+  const syncActiveNav = () => {
+    const path = location.pathname.replace(/\/$/, '') || '/';
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]').forEach((link) => {
+      const href = link.getAttribute('href') ?? '';
+      const active = path === href || path.startsWith(`${href}/`);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+      if (link.dataset.navLink === 'desktop') {
+        link.classList.toggle('text-accent', active);
+        link.classList.toggle('text-muted', !active);
+      }
+    });
+  };
+  document.addEventListener('astro:page-load', syncActiveNav);
 
   /* ------------------------------------------------------------- header */
   Alpine.data('siteHeader', () => ({
     open: false,
     services: false,
+
+    init() {
+      // The header persists across client-side navigation: close any open menu once the new page is in place.
+      document.addEventListener('astro:after-swap', () => {
+        this.open = false;
+        this.services = false;
+      });
+    },
 
     /** Escape closes the innermost open menu and returns focus to its toggle. */
     onEscape() {

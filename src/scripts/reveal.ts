@@ -6,13 +6,16 @@
  * - Only groups entirely below the fold are prepared, so there is no flash for visible content and no layout shift
  *   (opacity/transform only).
  * - Skipped entirely under prefers-reduced-motion.
+ * - Works with client-side navigation: re-runs on `astro:page-load`, and never binds a group twice.
  */
-const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+async function setup() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]:not([data-motion-bound])'));
+  if (!groups.length || reduceMotion || !('IntersectionObserver' in window)) return;
+  groups.forEach((g) => (g.dataset.motionBound = ''));
 
-async function start() {
   const { animate, inView } = await import('framer-motion/dom');
-  const belowFold = groups.filter((g) => g.getBoundingClientRect().top > window.innerHeight);
+  const belowFold = groups.filter((g) => g.isConnected && g.getBoundingClientRect().top > window.innerHeight);
 
   for (const group of belowFold) {
     const items = Array.from(group.children) as HTMLElement[];
@@ -33,8 +36,7 @@ async function start() {
   }
 }
 
-if (groups.length && !reduceMotion && 'IntersectionObserver' in window) {
-  void start();
-}
+void setup();
+document.addEventListener('astro:page-load', () => void setup());
 
 export {};
