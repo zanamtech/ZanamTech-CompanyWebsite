@@ -13,10 +13,13 @@ test.describe('US4 — Metric counters', () => {
   test('counters animate to their final values when scrolled into view', async ({ page }) => {
     await page.goto('/');
     const metrics = page.locator('#metrics');
-    await metrics.scrollIntoViewIfNeeded();
+    // Scroll each counter itself into view: on phones the section is taller than the viewport.
     const uptime = metrics.locator('[data-metric="uptime"] [data-counter]');
+    await uptime.scrollIntoViewIfNeeded();
     await expect(uptime).toHaveText('99.9%', { timeout: 5_000 });
-    await expect(metrics.locator('[data-metric="cost"] [data-counter]')).toHaveText('40%');
+    const cost = metrics.locator('[data-metric="cost"] [data-counter]');
+    await cost.scrollIntoViewIfNeeded();
+    await expect(cost).toHaveText('40%', { timeout: 5_000 });
     await expect(metrics.getByText(FOOTNOTE)).toBeVisible();
   });
 

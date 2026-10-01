@@ -177,6 +177,8 @@ export default (Alpine: Alpine) => {
     services: false,
     closeTimer: 0,
     suppressFocusOpen: false,
+    /** Pointer type of the most recent press on the Services item ('mouse' | 'touch' | 'pen' | ''). */
+    lastPointerType: '',
 
     init() {
       // The header persists across client-side navigation: close any open menu once the new page is in place.
@@ -194,7 +196,45 @@ export default (Alpine: Alpine) => {
 
     /** Keyboard users reach the menu by focusing the Services link (Tab then moves into the panel). */
     openServicesOnFocus() {
-      if (!this.suppressFocusOpen) this.openServices();
+      // A touch tap also focuses the link; the tap's click handler owns the toggle in that case.
+      if (this.suppressFocusOpen || this.isTouchPress()) return;
+      this.openServices();
+    },
+
+    rememberPointer(event: PointerEvent) {
+      this.lastPointerType = event.pointerType;
+    },
+
+    /**
+     * Touch semantics for this press? Trust the actual pointer when known (a mouse on a touch-capable laptop or an
+     * iPad trackpad still navigates); otherwise fall back to whether the device's primary input can hover.
+     */
+    isTouchPress() {
+      if (this.lastPointerType === 'mouse') return false;
+      if (this.lastPointerType === 'touch' || this.lastPointerType === 'pen') return true;
+      return window.matchMedia('(hover: none)').matches;
+    },
+
+    /** Hover-to-open is for real mice only; touch taps emit compatibility pointer/mouse events we must ignore. */
+    onServicesPointerEnter(event: PointerEvent) {
+      if (event.pointerType === 'mouse') this.openServices();
+    },
+
+    onServicesPointerLeave(event: PointerEvent) {
+      if (event.pointerType === 'mouse') this.closeServicesSoon();
+    },
+
+    /**
+     * Mouse/keyboard: let the link navigate to /services.
+     * Touch / no-hover devices: the first tap must not navigate — toggle the menu instead.
+     */
+    toggleServices(event: MouseEvent) {
+      const touch = this.isTouchPress();
+      this.lastPointerType = '';
+      if (!touch) return;
+      event.preventDefault(); // also stops Astro's ClientRouter, which skips prevented clicks
+      window.clearTimeout(this.closeTimer);
+      this.services = !this.services;
     },
 
     /** Short grace period so diagonal cursor movement toward the panel doesn't close it. */

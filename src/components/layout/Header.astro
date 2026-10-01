@@ -39,19 +39,24 @@ const linkClass = (href: string) => [
             link.href === '/services' ? (
               <li
                 class="flex items-center"
-                x-on:mouseenter="openServices()"
-                x-on:mouseleave="closeServicesSoon()"
+                x-on:pointerdown="rememberPointer($event)"
+                x-on:pointerenter="onServicesPointerEnter($event)"
+                x-on:pointerleave="onServicesPointerLeave($event)"
                 x-on:focusin="openServicesOnFocus()"
                 x-on:focusout="closeServicesIfFocusLeft($event)"
                 x-on:click.outside="services = false"
               >
-                <!-- Single trigger: click navigates to /services; hover or keyboard focus reveals the menu. -->
+                <!-- Single trigger. Mouse: hover reveals the menu, click navigates to /services.
+                     Touch/no-hover devices: tap toggles the menu (no navigation); "View all services" inside navigates. -->
                 <a
                   href={link.href}
                   data-nav-link="desktop"
                   aria-current={isActive(link.href) ? 'page' : undefined}
                   aria-controls="services-menu"
+                  aria-expanded="false"
+                  x-bind:aria-expanded="services.toString()"
                   x-ref="servicesLink"
+                  x-on:click="toggleServices($event)"
                   class:list={[...linkClass(link.href), 'gap-1.5']}
                 >
                   {link.label}

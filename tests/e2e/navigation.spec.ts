@@ -109,7 +109,7 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await page.locator('footer').getByRole('link', { name: 'ZanamTech home' }).click();
     await expect(page).toHaveURL(/\/$/);
     const metrics = page.locator('#metrics');
-    await metrics.scrollIntoViewIfNeeded();
+    await metrics.locator('[data-metric="uptime"] [data-counter]').scrollIntoViewIfNeeded();
     await expect(metrics.locator('[data-metric="uptime"] [data-counter]')).toHaveText('99.9%', { timeout: 5_000 });
   });
 

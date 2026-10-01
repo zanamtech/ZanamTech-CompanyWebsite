@@ -54,7 +54,7 @@ test.describe('Security — CSP compliance', () => {
       await page.keyboard.press('Escape');
     }
 
-    await page.locator('#metrics').scrollIntoViewIfNeeded();
+    await page.locator('#metrics [data-metric="uptime"] [data-counter]').scrollIntoViewIfNeeded();
     await expect(page.locator('#metrics [data-metric="uptime"] [data-counter]')).toHaveText('99.9%', { timeout: 5_000 });
     await page.locator('#process').scrollIntoViewIfNeeded();
     await expect(page.locator('#process [data-phase]').first()).toHaveCSS('opacity', '1', { timeout: 5_000 });
