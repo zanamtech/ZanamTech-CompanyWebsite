@@ -291,6 +291,71 @@ export default (Alpine: Alpine) => {
     },
   }));
 
+  /* ------------------------------------------------ hero blueprint stepper */
+  // Loop: each step is active for 1.8s (earlier steps stay ticked) → 2s rest with every step neutral and ticked →
+  // 0.7s reset while the ticks fade out → step 1 again. 'off' (reduced motion / before Alpine) shows the static card.
+  type StepperPhase = 'off' | 'play' | 'rest' | 'reset';
+  const STEPPER_DELAY: Record<StepperPhase, number> = { off: 0, play: 1800, rest: 2000, reset: 700 };
+
+  Alpine.data('blueprintStepper', (steps: number) => ({
+    activeStep: 0,
+    phase: 'off' as StepperPhase,
+    timer: 0,
+    isHovered: false,
+
+    init() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      this.phase = 'reset';
+      this.schedule();
+    },
+
+    destroy() {
+      window.clearTimeout(this.timer);
+    },
+
+    schedule() {
+      window.clearTimeout(this.timer);
+      this.timer = window.setTimeout(() => {
+        if (!this.isHovered && !document.hidden) this.advance();
+        this.schedule();
+      }, STEPPER_DELAY[this.phase]);
+    },
+
+    advance() {
+      if (this.phase === 'reset') {
+        this.phase = 'play';
+        this.activeStep = 1;
+      } else if (this.phase === 'play' && this.activeStep < steps) {
+        this.activeStep += 1;
+      } else if (this.phase === 'play') {
+        this.phase = 'rest';
+        this.activeStep = 0;
+      } else {
+        this.phase = 'reset';
+      }
+    },
+
+    pause() {
+      this.isHovered = true;
+      window.clearTimeout(this.timer);
+    },
+
+    resume() {
+      this.isHovered = false;
+      if (this.phase !== 'off') this.schedule();
+    },
+
+    /** 'active' (current) | 'done' (ticked, neutral) | 'idle' (upcoming, dimmed, no tick) | 'clear' (neutral, no
+     * tick); '' for the static card. */
+    stepState(step: number) {
+      if (this.phase === 'off') return '';
+      if (this.phase === 'rest') return 'done';
+      if (this.phase === 'reset') return 'clear';
+      if (step === this.activeStep) return 'active';
+      return step < this.activeStep ? 'done' : 'idle';
+    },
+  }));
+
   /* ---------------------------------------------------------- lead form */
   Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page' }) => ({
     fields: emptyLead(),

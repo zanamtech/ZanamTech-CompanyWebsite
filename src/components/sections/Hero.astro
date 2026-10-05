@@ -56,21 +56,39 @@ const blueprint = [
     </div>
 
     <div class="lg:col-span-5">
-      <div class="glass relative rounded-3xl p-6 sm:p-8">
+      <div
+        class="glass relative rounded-3xl p-6 sm:p-8"
+        x-data={`blueprintStepper(${blueprint.length})`}
+        x-on:mouseenter="pause"
+        x-on:mouseleave="resume"
+      >
         <div class="hairline-gradient absolute inset-x-8 top-0" aria-hidden="true"></div>
         <p class="text-sm font-semibold text-accent">Engagement blueprint</p>
         <h2 class="mt-2 text-xl font-semibold text-fg">From audit to always-on operations</h2>
-        <ol class="mt-6 space-y-4">
+        <ol class="mt-5 space-y-1.5">
           {
             blueprint.map((step, i) => (
-              <li class="flex gap-4">
-                <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-sm font-bold text-fg">
-                  {String(i + 1).padStart(2, '0')}
+              <li
+                class="group -mx-3 flex gap-4 rounded-xl border-l-2 border-transparent px-3 py-2 transition-all duration-700 ease-in-out data-[step=active]:border-accent data-[step=active]:bg-surface-2/60 data-[step=active]:shadow-[0_0_15px_rgb(122_43_255/0.12)]"
+                x-bind:data-step={`stepState(${i + 1})`}
+              >
+                <span class="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-surface-2 text-sm font-bold text-fg transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-white group-data-[step=active]:shadow-md group-data-[step=active]:shadow-brand-purple/25 group-data-[step=idle]:opacity-65">
+                  {/* Gradient lives on an overlay so it can fade (background-image itself can't transition). */}
+                  <span
+                    class="absolute inset-0 bg-linear-to-br from-brand-purple to-cta opacity-0 transition-opacity duration-700 ease-in-out group-data-[step=active]:opacity-100"
+                    aria-hidden="true"
+                  />
+                  <span class="relative">{String(i + 1).padStart(2, '0')}</span>
                 </span>
                 <div>
-                  <p class="flex items-center gap-2 font-semibold text-fg">
-                    {step.title}
-                    <CircleCheck aria-hidden="true" className="size-4 text-brand-cyan" />
+                  <p class="flex items-center gap-2 font-semibold">
+                    <span class="bg-linear-to-r from-link to-accent bg-clip-text text-fg transition-all duration-700 ease-in-out group-data-[step=active]:text-transparent group-data-[step=idle]:text-fg/80">
+                      {step.title}
+                    </span>
+                    <CircleCheck
+                      aria-hidden="true"
+                      className="size-4 shrink-0 text-brand-cyan transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-accent group-data-[step=active]:opacity-100 group-data-[step=clear]:opacity-0 group-data-[step=done]:scale-100 group-data-[step=done]:text-muted group-data-[step=done]:opacity-70 group-data-[step=idle]:opacity-0"
+                    />
                   </p>
                   <p class="text-sm text-muted">{step.detail}</p>
                 </div>
