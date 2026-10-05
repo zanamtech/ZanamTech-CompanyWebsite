@@ -292,10 +292,10 @@ export default (Alpine: Alpine) => {
   }));
 
   /* ------------------------------------------------ hero blueprint stepper */
-  // Loop: each step is active for 1.8s (earlier steps stay ticked) → 2s rest with every step neutral and ticked →
-  // 0.7s reset while the ticks fade out → step 1 again. 'off' (reduced motion / before Alpine) shows the static card.
+  // Loop: each step is active for 1.8s (earlier steps stay ticked) → 2s pause after step 4 (1.3s neutral with every
+  // step ticked, then 0.7s while the ticks fade out) → step 1 again. 'off' (reduced motion / before Alpine) shows the static card.
   type StepperPhase = 'off' | 'play' | 'rest' | 'reset';
-  const STEPPER_DELAY: Record<StepperPhase, number> = { off: 0, play: 1800, rest: 2000, reset: 700 };
+  const STEPPER_DELAY: Record<StepperPhase, number> = { off: 0, play: 1800, rest: 1300, reset: 700 };
 
   Alpine.data('blueprintStepper', (steps: number) => ({
     activeStep: 0,

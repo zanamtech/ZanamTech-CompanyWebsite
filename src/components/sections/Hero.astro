@@ -36,7 +36,7 @@ const blueprint = [
       <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Positioning pillars">
         {
           pillars.map(({ label, Icon }) => (
-            <li class="glass inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-fg">
+            <li class="glass inline-flex items-center gap-2 rounded-full border border-border/60 px-4 py-2 text-sm font-semibold text-fg transition-all duration-300 hover:scale-[1.02] hover:border-accent/60 hover:shadow-md hover:shadow-purple-500/10 motion-reduce:hover:scale-100">
               <Icon aria-hidden="true" className="size-4 text-brand-cyan" strokeWidth={2.25} />
               <span>{label}</span>
             </li>

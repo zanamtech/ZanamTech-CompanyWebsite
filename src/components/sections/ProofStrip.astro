@@ -14,10 +14,10 @@ const rows = platformRows.map((row, i) => ({ ...row, reverse: i % 2 === 1 }));
     </h2>
   </div>
 
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-1">
     {
       rows.map((row) => (
-        <div class="marquee marquee-mask overflow-hidden">
+        <div class="marquee marquee-mask overflow-hidden py-1.5">
           <div class:list={['marquee-track flex w-max', row.reverse ? 'animate-marquee-reverse' : 'animate-marquee']}>
             {[false, true].map((duplicate) => (
               <ul
