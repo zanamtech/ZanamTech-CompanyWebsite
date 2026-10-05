@@ -1,82 +1,241 @@
 ---
+import { Ban, Lock, Mail, ShieldCheck } from 'lucide-react';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
 import { site } from '../data/site';
 
-const updated = '29 September 2026';
+const sections = [
+  { id: 'overview', title: 'Overview & scope' },
+  { id: 'information-we-collect', title: 'Information we collect' },
+  { id: 'legal-basis', title: 'Legal basis for processing' },
+  { id: 'how-we-use-information', title: 'How we use information' },
+  { id: 'processors-infrastructure', title: 'Data processors & infrastructure' },
+  { id: 'local-storage-cookies', title: 'Local storage & cookies' },
+  { id: 'retention-security', title: 'Retention & security controls' },
+  { id: 'your-rights', title: 'Your data rights' },
+  { id: 'contact', title: 'Contact & data inquiries' },
+];
+const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
 ---
 
 <BaseLayout
   title="Privacy Notice"
-  description="How ZanamTech collects, uses and protects information submitted through this website."
+  description="How ZanamTech collects, processes, and safeguards information submitted through this platform."
 >
   <PageHero
     eyebrow="Legal"
     title="Privacy Notice"
-    lead={`How we handle information submitted through this website. Last updated ${updated}.`}
+    lead="How ZanamTech collects, processes, and safeguards information submitted through this platform."
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }]}
   />
 
-  <article class="container-page max-w-3xl section-y space-y-10 text-muted [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-fg [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-5">
-    <section>
-      <h2>Information we collect</h2>
-      <p>When you submit a consultation request, we collect the information you provide:</p>
-      <ul>
-        <li>Full name, work email address and company</li>
-        <li>Role and service of interest (optional)</li>
-        <li>The content of your message and your consent confirmation</li>
-      </ul>
-      <p>We do not ask for, and ask you not to submit, sensitive personal data or confidential system credentials.</p>
-    </section>
+  <div class="container-page section-y">
+    <div
+      class="privacy-doc space-y-14 text-muted [&_section]:max-w-5xl [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-fg [&_h3]:mt-8 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-fg [&_li]:pl-1 [&_p]:mt-4 [&_p]:leading-relaxed [&_section]:scroll-mt-28 sm:[&_section]:scroll-mt-32 [&_strong]:font-semibold [&_strong]:text-fg [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:marker:text-accent"
+    >
+      <GlassCard as="div" class="w-full max-w-full p-6! sm:p-8!">
+        <nav aria-labelledby="toc-title">
+          <p id="toc-title" class="eyebrow">On this page</p>
+          <ol class="mt-4! grid list-none! grid-cols-1 gap-3 pl-0! sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {
+              sections.map((s, i) => (
+                <li class="pl-0!">
+                  <a
+                    href={`#${s.id}`}
+                    class="group flex min-h-11 items-center gap-3 text-sm font-medium text-fg transition-colors hover:text-accent"
+                  >
+                    <span class="w-6 text-muted tabular-nums transition-colors group-hover:text-accent">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {s.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </GlassCard>
 
-    <section>
-      <h2>How we use it</h2>
-      <p>
-        Your information is used solely to respond to your request, schedule consultations and prepare any resulting
-        proposal. We do not sell your information or add it to marketing lists.
-      </p>
-    </section>
+      <section id="overview" aria-labelledby="overview-title">
+        <h2 id="overview-title"><span class="text-accent tabular-nums">{num('overview')}.</span> Overview &amp; scope</h2>
+        <p>
+          ZanamTech is committed to data privacy, transparency and zero data exploitation. This notice explains what
+          information we collect through this website, why we collect it, how it is protected and the choices available
+          to you.
+        </p>
+        <p>
+          It applies to information submitted through this website, including the consultation and custom proposal
+          forms. Information exchanged during a contracted engagement is governed by the confidentiality and data
+          protection terms of the applicable Statement of Work.
+        </p>
+      </section>
 
-    <section>
-      <h2>Form processing</h2>
-      <p>
-        Form submissions are transmitted over an encrypted connection to a third-party form processing provider, which
-        delivers them to our team by email. The provider acts on our instructions and applies automated spam
-        filtering.
-      </p>
-    </section>
+      <section id="information-we-collect" aria-labelledby="collect-title">
+        <h2 id="collect-title">
+          <span class="text-accent tabular-nums">{num('information-we-collect')}.</span> Information we collect
+        </h2>
 
-    <section>
-      <h2>Analytics and cookies</h2>
-      <p>
-        This website does not use cookies for tracking or advertising. We may use privacy-first, cookieless analytics
-        that record aggregated, anonymous usage statistics (such as page views and referrers) without identifying
-        individual visitors. Your theme preference is stored locally in your browser and never leaves your device.
-      </p>
-    </section>
+        <h3>Voluntarily provided data</h3>
+        <p>When you submit a consultation or custom proposal request, we collect the information you choose to provide:</p>
+        <ul>
+          <li>Full name and work email address</li>
+          <li>Company name and role</li>
+          <li>Service of interest</li>
+          <li>The content of your message and your consent confirmation</li>
+        </ul>
 
-    <section>
-      <h2>Retention</h2>
-      <p>
-        We retain enquiry information only for as long as necessary to respond to you and to manage any resulting
-        engagement, after which it is deleted.
-      </p>
-    </section>
+        <h3>Technical &amp; telemetry data</h3>
+        <p>
+          We may use privacy-first, cookieless analytics that record non-identifying, aggregated usage statistics, such
+          as browser type, pages viewed and referrer headers. These statistics cannot be used to identify individual
+          visitors.
+        </p>
 
-    <section>
-      <h2>Your rights</h2>
-      <p>
-        You may request access to, correction of, or deletion of the information you have submitted at any time by
-        contacting us.
-      </p>
-    </section>
+        <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-danger/10 text-danger">
+            <Ban aria-hidden="true" className="size-5" />
+          </span>
+          <div>
+            <p class="mt-0! font-semibold text-fg">Explicitly excluded</p>
+            <p class="mt-1.5! text-sm">
+              Do not submit sensitive personal data, payment card data or confidential infrastructure credentials
+              (passwords, keys, tokens or access details) through public web forms. Such information will be deleted on
+              receipt. Where credentials are required during an engagement, they are exchanged through secure channels
+              agreed in the Statement of Work.
+            </p>
+          </div>
+        </GlassCard>
+      </section>
 
-    <section>
-      <h2>Contact</h2>
-      <p>
-        For privacy questions, email
-        <a href={`mailto:${site.email}`} class="font-semibold text-link underline underline-offset-2">{site.email}</a>.
-      </p>
-    </section>
-  </article>
+      <section id="legal-basis" aria-labelledby="legal-title">
+        <h2 id="legal-title"><span class="text-accent tabular-nums">{num('legal-basis')}.</span> Legal basis for processing</h2>
+        <p>We process the information you submit on the following grounds:</p>
+        <ul>
+          <li>
+            <strong>Legitimate business interests:</strong> responding to corporate inquiries and evaluating potential
+            engagements.
+          </li>
+          <li>
+            <strong>Explicit consent:</strong> given when you submit a form and confirm the consent checkbox. You may
+            withdraw consent at any time by contacting us.
+          </li>
+        </ul>
+      </section>
+
+      <section id="how-we-use-information" aria-labelledby="use-title">
+        <h2 id="use-title">
+          <span class="text-accent tabular-nums">{num('how-we-use-information')}.</span> How we use information
+        </h2>
+        <p>Information you submit is used solely to:</p>
+        <ul>
+          <li>Evaluate your inquiry and respond to you</li>
+          <li>Schedule and conduct consultations</li>
+          <li>Prepare Statement of Work (SOW) proposals</li>
+          <li>Defend this platform against spam, fraud and abuse</li>
+        </ul>
+
+        <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+            <ShieldCheck aria-hidden="true" className="size-5" />
+          </span>
+          <div>
+            <p class="mt-0! font-semibold text-fg">Our commitment</p>
+            <p class="mt-1.5! text-sm">
+              We do not sell, rent or otherwise monetize personal data. We do not perform automated profiling, and we do
+              not add your details to third-party marketing lists.
+            </p>
+          </div>
+        </GlassCard>
+      </section>
+
+      <section id="processors-infrastructure" aria-labelledby="processors-title">
+        <h2 id="processors-title">
+          <span class="text-accent tabular-nums">{num('processors-infrastructure')}.</span> Data processors &amp; infrastructure
+        </h2>
+        <ul>
+          <li>
+            <strong>Encrypted transit:</strong> all traffic to this website and all form submissions are encrypted over
+            HTTPS using modern TLS (TLS 1.3 where supported by your browser).
+          </li>
+          <li>
+            <strong>Form delivery:</strong> submissions are transmitted to a secure third-party form delivery provider,
+            which forwards them to our team. The provider acts strictly on our instructions and may not use the data
+            for its own purposes.
+          </li>
+          <li>
+            <strong>Abuse protection:</strong> automated spam and abuse filtering is applied to every submission before
+            it reaches our team.
+          </li>
+        </ul>
+      </section>
+
+      <section id="local-storage-cookies" aria-labelledby="storage-title">
+        <h2 id="storage-title">
+          <span class="text-accent tabular-nums">{num('local-storage-cookies')}.</span> Local storage &amp; cookies
+        </h2>
+        <p>
+          This website sets <strong>no tracking or advertising cookies</strong>. Your browser's local storage
+          (<code class="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-fg">localStorage</code>) is used exclusively to
+          remember interface state, namely your light or dark theme preference. This value never leaves your device and
+          can be cleared at any time through your browser settings.
+        </p>
+      </section>
+
+      <section id="retention-security" aria-labelledby="retention-title">
+        <h2 id="retention-title">
+          <span class="text-accent tabular-nums">{num('retention-security')}.</span> Retention &amp; security controls
+        </h2>
+        <p>
+          Inquiry information is retained only for as long as necessary to respond to your inquiry and, where an
+          engagement follows, to complete client onboarding. It is then permanently deleted.
+        </p>
+        <p>
+          Access is limited to the personnel who need it to respond to you, and the website is served with strict
+          security headers, including a Content Security Policy and enforced HTTPS.
+        </p>
+      </section>
+
+      <section id="your-rights" aria-labelledby="rights-title">
+        <h2 id="rights-title"><span class="text-accent tabular-nums">{num('your-rights')}.</span> Your data rights</h2>
+        <p>Depending on your jurisdiction, you may request at any time:</p>
+        <ul>
+          <li><strong>Access:</strong> a copy of the information we hold about you</li>
+          <li><strong>Correction:</strong> rectification of inaccurate or incomplete information</li>
+          <li><strong>Portability:</strong> your information in a structured, commonly used format</li>
+          <li><strong>Deletion:</strong> complete erasure of your information (the "right to be forgotten")</li>
+        </ul>
+        <p>To exercise any of these rights, contact our data privacy team using the details below.</p>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">
+          <span class="text-accent tabular-nums">{num('contact')}.</span> Contact &amp; data inquiries
+        </h2>
+        <GlassCard as="div" class="relative mt-6! overflow-hidden p-6! sm:p-8!">
+          <div class="hairline-gradient absolute inset-x-8 top-0" aria-hidden="true"></div>
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex gap-4">
+              <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+                <Mail aria-hidden="true" className="size-6" />
+              </span>
+              <div>
+                <p class="mt-0! font-semibold text-fg">Data privacy team</p>
+                <p class="mt-1! text-sm">
+                  We respond to privacy requests promptly, and always within the timeframe required by applicable law.
+                </p>
+              </div>
+            </div>
+            <a
+              href={`mailto:${site.email}`}
+              class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface/60 px-5 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent"
+            >
+              <Lock aria-hidden="true" className="size-4" />
+              {site.email}
+            </a>
+          </div>
+        </GlassCard>
+      </section>
+    </div>
+  </div>
 </BaseLayout>

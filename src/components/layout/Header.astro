@@ -24,11 +24,15 @@ const linkClass = (href: string) => [
 
 <header
   transition:persist="site-header"
-  class="glass-bar sticky top-0 z-40"
+  class="pointer-events-none fixed inset-x-0 top-0 z-40 bg-transparent px-3 pt-2 sm:px-6 sm:pt-3 lg:px-8"
   x-data="siteHeader"
   x-on:keydown.escape.window="onEscape()"
 >
-  <div class="container-page flex h-16 items-center justify-between gap-6 lg:h-18">
+  <!-- Floating glass bar over the first section (the wrapper is transparent and click-through).
+       `relative` anchors the Services mega-menu directly beneath it. -->
+  <div
+    class="pointer-events-auto relative mx-auto flex max-w-7xl items-center justify-between gap-6 rounded-2xl border border-border/40 bg-bg/20 px-4 py-2.5 shadow-sm backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 sm:px-6"
+  >
     <!-- Trimmed, optimized brand logo (no transparent margin), so it aligns with the page content edge. -->
     <Logo eager height={24} />
 
@@ -148,16 +152,17 @@ const linkClass = (href: string) => [
     </div>
   </div>
 
+  <!-- Mobile drawer: a separate rounded card that unfolds just below the floating bar. -->
   <nav
     id="mobile-nav"
     aria-label="Mobile"
-    class="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border bg-surface lg:hidden"
+    class="pointer-events-auto mx-auto mt-2 max-h-[calc(100dvh-6.5rem)] max-w-7xl overflow-y-auto rounded-2xl border border-border/60 bg-surface shadow-lg shadow-black/5 lg:hidden dark:shadow-purple-950/20"
     x-show="open"
     x-cloak
     x-transition.opacity.duration.150ms
     x-on:click.outside="open = false"
   >
-    <ul class="container-page flex flex-col py-3">
+    <ul class="flex flex-col px-3 py-3 sm:px-4">
       {
         navLinks.map((link) => (
           <li>

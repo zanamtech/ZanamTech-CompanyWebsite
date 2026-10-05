@@ -117,11 +117,15 @@ test.describe('US2 — Services', () => {
     });
   });
 
-  test('header logo aligns with the page content edge', async ({ page }) => {
+  test('floating header bar is centred and the logo sits inside its padding', async ({ page }) => {
     await page.goto('/services');
+    const header = (await page.locator('header').boundingBox())!; // full-width fixed wrapper (excludes any scrollbar gutter)
+    const bar = (await page.locator('header > div').boundingBox())!;
     const logo = (await page.locator('header a[aria-label="ZanamTech home"] img').boundingBox())!;
-    const crumb = (await page.getByRole('navigation', { name: 'Breadcrumb' }).boundingBox())!;
-    expect(Math.abs(logo.x - crumb.x)).toBeLessThanOrEqual(1);
+    expect(Math.abs(bar.x - header.x - (header.x + header.width - bar.x - bar.width))).toBeLessThanOrEqual(1);
+    const inset = logo.x - bar.x;
+    expect(inset).toBeGreaterThanOrEqual(15);
+    expect(inset).toBeLessThanOrEqual(26);
   });
 
   for (const theme of ['light', 'dark'] as const) {

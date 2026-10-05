@@ -52,8 +52,8 @@ for (const device of [
       await expect(parts.hamburger).toBeVisible();
       await expect(parts.toggle).toBeVisible();
       expectNoOverlaps(await visibleBoxes(page, parts));
-      const header = (await page.locator('header').boundingBox())!;
-      expect(header.height).toBeLessThanOrEqual(65); // single row, no wrapping
+      const bar = (await page.locator('header > div').boundingBox())!;
+      expect(bar.height).toBeLessThanOrEqual(66); // floating bar stays a single row, no wrapping
     });
 
     test('drawer opens, navigates, and closes cleanly', async ({ page }) => {
