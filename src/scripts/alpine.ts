@@ -356,6 +356,57 @@ export default (Alpine: Alpine) => {
     },
   }));
 
+  /* --------------------------------------------- process cards reveal */
+  // Cards slide in from the right one at a time (01 → 04), each starting as the previous one settles. Cards stay
+  // visible without JS, under reduced motion, and when the section is already on screen at load (no flash).
+  const PROCESS_REVEAL_AT = [100, 700, 1300, 1900];
+
+  Alpine.data('processReveal', (count: number) => ({
+    visibleCards: count,
+    timers: [] as number[],
+    observer: null as IntersectionObserver | null,
+
+    init() {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) return;
+      if (this.$el.getBoundingClientRect().top < window.innerHeight) return;
+      this.visibleCards = 0;
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          this.observer?.disconnect();
+          this.timers = Array.from({ length: count }, (_, i) =>
+            window.setTimeout(() => (this.visibleCards = i + 1), PROCESS_REVEAL_AT[i] ?? 100 + i * 600),
+          );
+        },
+        { threshold: 0.2 },
+      );
+      this.observer.observe(this.$el);
+    },
+
+    destroy() {
+      this.observer?.disconnect();
+      this.timers.forEach((t) => window.clearTimeout(t));
+    },
+
+    isShown(card: number) {
+      return this.visibleCards >= card ? 'true' : 'false';
+    },
+  }));
+
+  /* ---------------------------------------------------- hero scroll cue */
+  // The link's href (e.g. #core-services) is the no-JS fallback; with JS, scroll smoothly (instantly under reduced motion)
+  // without letting the ClientRouter treat it as a navigation.
+  Alpine.data('scrollCue', () => ({
+    go(event: MouseEvent) {
+      const target = document.querySelector((event.currentTarget as HTMLAnchorElement).hash);
+      if (!target) return;
+      event.preventDefault();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    },
+  }));
+
   /* ---------------------------------------------------------- lead form */
   Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page' }) => ({
     fields: emptyLead(),

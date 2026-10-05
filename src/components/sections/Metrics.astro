@@ -6,7 +6,7 @@ import { metricsFootnote } from '../../data/site';
 
 <section id="metrics" aria-labelledby="metrics-title" class="relative isolate overflow-hidden border-y border-border bg-surface/60">
   <div class="mesh-bg absolute inset-0 -z-10 opacity-70" aria-hidden="true"></div>
-  <div class="container-page py-20 sm:py-24">
+  <div class="container-page section-y">
     <div class="max-w-2xl">
       <p class="eyebrow">Target outcomes</p>
       <h2 id="metrics-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">Engineering tied to measurable results</h2>
@@ -19,14 +19,22 @@ import { metricsFootnote } from '../../data/site';
     <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         metricTargets.map((m) => (
-          <li data-metric={m.id} class="glass flex flex-col rounded-2xl p-6">
+          <li
+            data-metric={m.id}
+            class="glass group relative flex flex-col overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-purple-500/10"
+          >
+            {/* Shine sweep on hover, same technique as the primary CTA. */}
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-brand-purple/10 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden dark:via-white/8"
+            />
             <span class="sr-only">
               {m.qualifier ? `${m.qualifier} ` : ''}
               {formatMetric(m)} {m.label}
             </span>
-            <div aria-hidden="true">
+            <div aria-hidden="true" class="relative">
               <p class="h-5 text-sm font-semibold text-muted">{m.qualifier}</p>
-              <p class="text-gradient-display mt-1 inline-block text-4xl font-bold tracking-tight sm:text-5xl">
+              <p class="metric-figure text-gradient-display mt-1 inline-block origin-left text-4xl font-bold tracking-tight transition-[scale,filter] duration-300 group-hover:scale-[1.04] sm:text-5xl motion-reduce:group-hover:scale-100">
                 <span
                   data-counter
                   data-value={m.value}

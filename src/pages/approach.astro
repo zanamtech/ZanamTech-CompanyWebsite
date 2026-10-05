@@ -19,7 +19,7 @@ import { engagementModels } from '../data/engagement';
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Approach' }]}
   />
 
-  <div class="container-page pt-20">
+  <div class="container-page pt-12 sm:pt-16 lg:pt-20">
     <div class="max-w-2xl">
       <p class="eyebrow">Four phases</p>
       <h2 class="mt-3 text-3xl font-bold text-fg">From discovery to continuous operations</h2>
@@ -28,7 +28,7 @@ import { engagementModels } from '../data/engagement';
   <Process detailed withIntro={false} />
 
   <section aria-labelledby="models-title" class="border-y border-border bg-surface/60">
-    <div class="container-page py-20">
+    <div class="container-page section-y">
       <div class="max-w-2xl">
         <p class="eyebrow">Engagement models</p>
         <h2 id="models-title" class="mt-3 text-3xl font-bold text-fg">Structured to match your objectives</h2>
@@ -36,10 +36,10 @@ import { engagementModels } from '../data/engagement';
           Commercial terms are defined transparently in each custom proposal, under one of two models.
         </p>
       </div>
-      <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <div class="mt-12 grid gap-6 md:grid-cols-2" data-reveal-group>
         {
           engagementModels.map((model) => (
-            <GlassCard as="article">
+            <GlassCard as="article" class="card-hover">
               <h3 class="text-xl font-semibold text-fg">{model.name}</h3>
               <p class="mt-3 text-muted">{model.description}</p>
               <p class="mt-6 text-sm font-semibold text-fg">Typically suited to</p>
@@ -58,7 +58,7 @@ import { engagementModels } from '../data/engagement';
     </div>
   </section>
 
-  <div class="pt-16">
+  <div class="pt-4 sm:pt-8 lg:pt-12">
     <CtaBand />
   </div>
 </BaseLayout>

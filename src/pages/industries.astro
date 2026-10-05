@@ -22,10 +22,10 @@ const serviceById = new Map(services.map((s) => [s.id, s]));
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Industries' }]}
   />
 
-  <div class="container-page space-y-10 py-20">
+  <div class="container-page section-y space-y-10" data-reveal-group>
     {
       segments.map((s) => (
-        <article data-segment aria-labelledby={`segment-${s.id}`} class="glass grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-12">
+        <article data-segment aria-labelledby={`segment-${s.id}`} class="glass panel-hover grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-12">
           <div class="lg:col-span-5">
             <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
               <Icon name={s.icon} class="size-6" />

@@ -90,6 +90,14 @@
   --animate-marquee: marquee 45s linear infinite;
   --animate-marquee-reverse: marquee-reverse 45s linear infinite;
 
+  /* Hero scroll cue: gentle float. */
+  --animate-float-y: float-y 2.4s ease-in-out infinite;
+
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+  }
+
   @keyframes marquee {
     from { transform: translate3d(0, 0, 0); }
     to { transform: translate3d(-50%, 0, 0); }
@@ -186,6 +194,27 @@
     @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
   }
 
+  /* Standard vertical rhythm for page sections. */
+  .section-y {
+    @apply py-12 sm:py-16 lg:py-20;
+  }
+
+  /* Shared card hover (home + subpages): lift, purple border and ambient glow. */
+  .card-hover {
+    @apply transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/10;
+  }
+
+  /* Large content panels: border/glow only, no lift. */
+  .panel-hover {
+    @apply transition-[box-shadow,border-color] duration-300 ease-out hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/10;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-hover:hover {
+      translate: none;
+    }
+  }
+
   .glass {
     background-color: var(--glass);
     border: 1px solid var(--glass-border);
@@ -252,6 +281,11 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Metric numerals are gradient-clipped text (colour is transparent), so "light up" with a purple glow instead. */
+  .group:hover .metric-figure {
+    filter: drop-shadow(0 0 12px rgb(168 85 247 / 0.35));
   }
 
   .hairline-gradient {

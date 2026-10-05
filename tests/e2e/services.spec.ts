@@ -25,13 +25,13 @@ test.describe('US2 — Services', () => {
 
   test('home page shows the nine services in canonical order', async ({ page }) => {
     await page.goto('/');
-    const names = await page.locator('#services [data-service-card] h3').allInnerTexts();
+    const names = await page.locator('#core-services [data-service-card] h3').allInnerTexts();
     expect(names.map((n) => n.trim())).toEqual(SERVICES);
   });
 
   test('every service detail page renders capabilities, outcome, footnote and two scenarios', async ({ page }) => {
     await page.goto('/');
-    const hrefs = await page.locator('#services [data-service-card] h3 a').evaluateAll((els) =>
+    const hrefs = await page.locator('#core-services [data-service-card] h3 a').evaluateAll((els) =>
       els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
     );
     expect(hrefs).toHaveLength(9);
@@ -50,7 +50,7 @@ test.describe('US2 — Services', () => {
 
   test('any service is reachable from home in two clicks', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#services [data-service-card] h3 a').nth(4).click();
+    await page.locator('#core-services [data-service-card] h3 a').nth(4).click();
     await expect(page).toHaveURL(/\/services\/observability-monitoring\/?$/);
   });
 

@@ -26,7 +26,7 @@ const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
   />
 
-  <div class="container-page space-y-20 py-20">
+  <div class="container-page section-y space-y-12 sm:space-y-16 lg:space-y-20">
     {
       groups.map((group) => (
         <section aria-labelledby={`group-${group.key}`}>

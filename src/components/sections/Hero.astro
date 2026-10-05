@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Activity, Building2, ShieldCheck, CircleCheck } from 'lucide-react';
+import { ArrowRight, Activity, Building2, ShieldCheck, CircleCheck, ChevronDown } from 'lucide-react';
 import Button from '../ui/Button.astro';
 import { cta } from '../../data/site';
 
@@ -17,11 +17,13 @@ const blueprint = [
 ];
 ---
 
-<section id="hero" aria-labelledby="hero-title" class="relative isolate overflow-hidden">
-  <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
-  <div class="grid-lines absolute inset-0 -z-10 opacity-60" aria-hidden="true"></div>
+<section id="hero" aria-labelledby="hero-title" class="relative isolate">
+  <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div class="mesh-bg absolute inset-0"></div>
+    <div class="grid-lines absolute inset-0 opacity-60"></div>
+  </div>
 
-  <div class="container-page grid items-center gap-12 pt-14 pb-20 sm:pt-20 lg:grid-cols-12 lg:gap-10 lg:pt-24 lg:pb-28">
+  <div class="container-page grid items-center gap-12 pt-10 pb-16 sm:pt-12 sm:pb-20 lg:grid-cols-12 lg:gap-10 lg:pt-14 lg:pb-24">
     <div class="lg:col-span-7">
       <p class="eyebrow">Cloud · DevSecOps · Security · Private AI</p>
       <h1 id="hero-title" class="mt-4 text-4xl font-bold text-fg sm:text-5xl lg:text-[3.4rem]">
@@ -99,4 +101,14 @@ const blueprint = [
       </div>
     </div>
   </div>
+
+  <a
+    href="#core-services"
+    x-data="scrollCue"
+    x-on:click="go($event)"
+    aria-label="Scroll to next section"
+    class="absolute -bottom-5.5 left-1/2 z-10 flex size-11 -translate-x-1/2 items-center justify-center rounded-full border border-border/60 bg-surface/80 text-muted shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-accent/60 hover:bg-purple-500/10 hover:text-accent"
+  >
+    <ChevronDown aria-hidden="true" className="size-5 animate-float-y" />
+  </a>
 </section>
