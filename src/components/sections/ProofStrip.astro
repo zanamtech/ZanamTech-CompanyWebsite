@@ -1,12 +1,38 @@
 ---
-const platforms = ['AWS', 'Microsoft Azure', 'Google Cloud', 'Kubernetes', 'Docker', 'Cloudflare', 'Linux', 'PostgreSQL'];
+import { platformRows } from '../../data/platforms';
+
+// Row 1 scrolls right → left, row 2 left → right. Each track holds the list twice so the
+// -50% translate loops seamlessly; the second copy is decorative (aria-hidden).
+const rows = platformRows.map((row, i) => ({ ...row, reverse: i % 2 === 1 }));
 ---
 
-<section aria-labelledby="platforms-title" class="border-y border-border bg-surface/60">
-  <div class="container-page flex flex-col items-center gap-5 py-8 lg:flex-row lg:gap-10">
-    <h2 id="platforms-title" class="shrink-0 text-sm font-semibold text-muted">Engineering across</h2>
-    <ul class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 lg:justify-start">
-      {platforms.map((p) => <li class="text-base font-semibold tracking-tight text-fg/80">{p}</li>)}
-    </ul>
+<section aria-labelledby="platforms-title" class="border-y border-border bg-surface/60 py-14">
+  <div class="container-page mb-8 text-center">
+    <p class="text-xs font-semibold tracking-widest text-accent uppercase">Enterprise Ecosystem</p>
+    <h2 id="platforms-title" class="mt-3 text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+      Technologies We Architect &amp; Scale
+    </h2>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    {
+      rows.map((row) => (
+        <div class="marquee marquee-mask overflow-hidden">
+          <div class:list={['marquee-track flex w-max', row.reverse ? 'animate-marquee-reverse' : 'animate-marquee']}>
+            {[false, true].map((duplicate) => (
+              <ul
+                class="marquee-group flex shrink-0 items-center gap-3 pr-3"
+                aria-label={duplicate ? undefined : row.label}
+                aria-hidden={duplicate ? 'true' : undefined}
+              >
+                {row.items.map((item) => (
+                  <li class="tech-pill">{item}</li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      ))
+    }
   </div>
 </section>

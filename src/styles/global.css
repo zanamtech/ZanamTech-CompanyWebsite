@@ -85,6 +85,20 @@
   --color-ring: var(--ring);
   --color-danger: var(--danger);
   --color-input-border: var(--input-border);
+
+  /* Proof-strip ticker: tracks hold two copies, so -50% is one seamless loop. */
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 45s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
+  }
+
+  @keyframes marquee-reverse {
+    from { transform: translate3d(-50%, 0, 0); }
+    to { transform: translate3d(0, 0, 0); }
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -130,16 +144,33 @@
     border-radius: 6px;
   }
 
-  /* Smooth theme switch; disabled under reduced motion below. */
+  /*
+   * Theme switch, fallback path (browsers without the View Transitions API).
+   * Applied only for the ~200ms of a switch (class added/removed by the theme store), so hover states,
+   * page navigation and first paint never pay for global transitions. Disabled under reduced motion below.
+   */
   html.theme-transition,
   html.theme-transition *,
   html.theme-transition *::before,
   html.theme-transition *::after {
     transition:
-      background-color 200ms ease,
-      border-color 200ms ease,
-      color 200ms ease,
-      fill 200ms ease !important;
+      background-color 0.2s ease-in-out,
+      color 0.2s ease-in-out,
+      border-color 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out,
+      outline-color 0.2s ease-in-out,
+      fill 0.2s ease-in-out,
+      stroke 0.2s ease-in-out !important;
+  }
+
+  /*
+   * Theme switch, primary path: one GPU-composited crossfade of the whole page via the View Transitions API.
+   * Scoped with .theme-vt so Astro's page-navigation transitions keep their own timing.
+   */
+  html.theme-vt::view-transition-old(root),
+  html.theme-vt::view-transition-new(root) {
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
   }
 
   [x-cloak] {
@@ -168,6 +199,38 @@
     border-bottom: 1px solid var(--glass-border);
     -webkit-backdrop-filter: blur(14px) saturate(140%);
     backdrop-filter: blur(14px) saturate(140%);
+  }
+
+  /* Ticker pills: translucent surface without backdrop-filter (blur on moving elements is costly). */
+  .tech-pill {
+    @apply rounded-full border border-border/50 bg-surface-2/40 px-4 py-2 text-sm font-semibold whitespace-nowrap text-fg/85;
+    transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out, color 0.2s ease-out;
+  }
+
+  /* Brand hover: cyan border, soft purple→cyan tint, gentle glow (matches service-card accents). */
+  .tech-pill:hover {
+    @apply text-fg;
+    border-color: rgb(33 160 255 / 0.6);
+    background-image: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--brand-purple) 10%, transparent),
+      color-mix(in srgb, var(--brand-cyan) 8%, transparent)
+    );
+    box-shadow: 0 0 15px rgb(33 160 255 / 0.15);
+  }
+
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .marquee-track {
+    will-change: transform;
+  }
+
+  /* Pause a row while hovered. */
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
   }
 
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -269,5 +332,32 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  /* Ticker becomes a static, centred wrap of badges; the duplicate copy is hidden. */
+  .marquee-track {
+    animation: none !important;
+    width: auto;
+    justify-content: center;
+  }
+
+  .marquee-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline: 1.25rem;
+  }
+
+  .marquee-group[aria-hidden="true"] {
+    display: none;
+  }
+
+  .marquee-mask {
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }

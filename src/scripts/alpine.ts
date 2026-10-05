@@ -69,15 +69,40 @@ export default (Alpine: Alpine) => {
     set(theme: Theme) {
       const root = document.documentElement;
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduceMotion) root.classList.add('theme-transition');
-      root.classList.toggle('dark', theme === 'dark');
-      this.current = theme;
       try {
         localStorage.setItem(THEME_KEY, theme);
       } catch {
         /* storage unavailable: theme applies for this page view only */
       }
-      if (!reduceMotion) window.setTimeout(() => root.classList.remove('theme-transition'), 250);
+
+      const apply = () => {
+        root.classList.toggle('dark', theme === 'dark');
+        this.current = theme;
+      };
+
+      // Reduced motion: switch instantly.
+      if (reduceMotion) {
+        apply();
+        return;
+      }
+
+      // Primary: a single 200ms crossfade snapshot (View Transitions API). Wait for Alpine to re-render
+      // reactive bits (e.g. the toggle icon) so the "new" snapshot is complete.
+      const doc = document as Document & { startViewTransition?: (cb: () => Promise<void> | void) => { finished: Promise<void> } };
+      if (typeof doc.startViewTransition === 'function') {
+        root.classList.add('theme-vt');
+        const transition = doc.startViewTransition(() => {
+          apply();
+          return Alpine.nextTick();
+        });
+        transition.finished.finally(() => root.classList.remove('theme-vt'));
+        return;
+      }
+
+      // Fallback: short CSS colour transitions, enabled only for the duration of the switch.
+      root.classList.add('theme-transition');
+      apply();
+      window.setTimeout(() => root.classList.remove('theme-transition'), 250);
     },
 
     toggle() {
