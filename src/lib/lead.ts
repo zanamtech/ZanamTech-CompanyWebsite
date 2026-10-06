@@ -4,8 +4,11 @@ export interface LeadInput {
   name: string;
   email: string;
   company: string;
-  role: string;
+  /** Optional; international format encouraged (e.g. +1 555 010 0000). */
+  phone: string;
   service: string;
+  /** Optional engagement-size band (no currency amounts, per Constitution III). */
+  budget: string;
   message: string;
   consent: boolean;
   /** Honeypot; must stay empty for genuine visitors. */
@@ -19,13 +22,24 @@ export type SubmitResult =
   | { ok: true; spam?: boolean }
   | { ok: false; reason: 'rejected' | 'server' | 'network' | 'timeout' };
 
-export const NOT_SURE = 'Not sure yet';
 export const TIMEOUT_MS = 10_000;
 
+/** Fallback choice in the required service dropdown. */
+export const OTHER_SERVICE = 'Other / Not sure yet';
+
+/** Engagement-size bands for the optional budget question; scope-based labels, no prices. */
+export const BUDGET_OPTIONS = [
+  'Focused engagement (single workload or audit)',
+  'Mid-size project (multiple systems)',
+  'Large-scale program (organization-wide)',
+  'Not sure yet',
+] as const;
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_RE = /^\+?[0-9][0-9\s().-]{6,19}$/;
 
 /** Field order used to focus the first invalid control. */
-export const FIELD_ORDER: LeadField[] = ['name', 'email', 'company', 'role', 'service', 'message', 'consent'];
+export const FIELD_ORDER: LeadField[] = ['name', 'email', 'company', 'phone', 'service', 'budget', 'message', 'consent'];
 
 export function validateLead(input: LeadInput, allowedServices: readonly string[] = []): LeadErrors {
   const errors: LeadErrors = {};
@@ -34,11 +48,16 @@ export function validateLead(input: LeadInput, allowedServices: readonly string[
   const message = input.message.trim();
 
   if (name.length < 2 || name.length > 100) errors.name = 'Please enter your full name.';
-  if (!EMAIL_RE.test(input.email.trim())) errors.email = 'Please enter a valid work email address.';
+  if (!EMAIL_RE.test(input.email.trim())) errors.email = 'Please enter a valid email address.';
   if (company.length < 1 || company.length > 120) errors.company = 'Please enter your company name.';
-  if (input.role.trim().length > 100) errors.role = 'Please keep your role under 100 characters.';
-  if (input.service && allowedServices.length > 0 && !allowedServices.includes(input.service) && input.service !== NOT_SURE) {
+  const phone = input.phone.trim();
+  if (phone && !PHONE_RE.test(phone)) errors.phone = 'Please enter a valid phone number, including the country code.';
+  if (!input.service) errors.service = 'Please select the service you need.';
+  else if (allowedServices.length > 0 && !allowedServices.includes(input.service)) {
     errors.service = 'Please choose a service from the list.';
+  }
+  if (input.budget && !(BUDGET_OPTIONS as readonly string[]).includes(input.budget)) {
+    errors.budget = 'Please choose an option from the list.';
   }
   if (message.length < 20) errors.message = 'Please describe your requirements (at least 20 characters).';
   else if (message.length > 2000) errors.message = 'Please keep your message under 2000 characters.';
@@ -73,8 +92,9 @@ export async function submitLead(input: LeadInput, options: SubmitOptions): Prom
         name: input.name.trim(),
         email: input.email.trim(),
         company: input.company.trim(),
-        role: input.role.trim(),
-        service: input.service || NOT_SURE,
+        phone: input.phone.trim(),
+        service: input.service,
+        budget: input.budget || 'Not specified',
         message: input.message.trim(),
         consent: true,
         botcheck: '',

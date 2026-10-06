@@ -1,7 +1,7 @@
 ---
 import { CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
 import { getActiveServices } from '../lib/services';
-import { NOT_SURE } from '../lib/lead';
+import { BUDGET_OPTIONS, OTHER_SERVICE } from '../lib/lead';
 
 interface Props {
   /** Unique prefix so the dialog and page instances never share element ids. */
@@ -17,10 +17,18 @@ const id = (field: string) => `${idPrefix}-${field}`;
 const config = JSON.stringify({ services, source });
 
 const textFields = [
-  { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true },
-  { name: 'email', label: 'Work email', type: 'email', autocomplete: 'email', required: true },
-  { name: 'company', label: 'Company', type: 'text', autocomplete: 'organization', required: true },
-  { name: 'role', label: 'Role (optional)', type: 'text', autocomplete: 'organization-title', required: false },
+  { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
+  { name: 'email', label: 'Email address', type: 'email', autocomplete: 'email', required: true, maxlength: 100, hint: '' },
+  { name: 'company', label: 'Company name', type: 'text', autocomplete: 'organization', required: true, maxlength: 120, hint: '' },
+  {
+    name: 'phone',
+    label: 'Phone number (optional)',
+    type: 'tel',
+    autocomplete: 'tel',
+    required: false,
+    maxlength: 20,
+    hint: 'Include your country code, e.g. +1 555 010 0000',
+  },
 ] as const;
 ---
 
@@ -35,12 +43,12 @@ const textFields = [
     x-on:submit.prevent="submit()"
     x-on:input="revalidate()"
     x-on:change="revalidate()"
-    class="space-y-5"
+    class="space-y-3"
   >
     <input type="hidden" name="access_key" value={accessKey} />
     <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
 
-    <div class="grid gap-5 sm:grid-cols-2">
+    <div class="grid gap-3 sm:grid-cols-2">
       {
         textFields.map((field, i) => (
           <div>
@@ -53,13 +61,25 @@ const textFields = [
               type={field.type}
               autocomplete={field.autocomplete}
               required={field.required}
-              maxlength={field.name === 'company' ? 120 : 100}
-              class="field-input mt-2"
+              maxlength={field.maxlength}
+              inputmode={field.type === 'tel' ? 'tel' : undefined}
+              placeholder={field.hint ? '+1 555 010 0000' : undefined}
+              class="field-input mt-1.5"
               data-autofocus={i === 0 && source === 'dialog' ? '' : undefined}
               x-model={`fields.${field.name}`}
               x-bind:aria-invalid={`errors.${field.name} ? 'true' : 'false'`}
-              x-bind:aria-describedby={`errors.${field.name} ? '${id(field.name)}-error' : null`}
+              aria-describedby={field.hint ? `${id(field.name)}-hint` : undefined}
+              x-bind:aria-describedby={
+                field.hint
+                  ? `errors.${field.name} ? '${id(field.name)}-hint ${id(field.name)}-error' : '${id(field.name)}-hint'`
+                  : `errors.${field.name} ? '${id(field.name)}-error' : null`
+              }
             />
+            {field.hint && (
+              <p id={`${id(field.name)}-hint`} class="mt-0.5 text-xs text-muted">
+                {field.hint}
+              </p>
+            )}
             <p
               id={`${id(field.name)}-error`}
               class="mt-1.5 text-sm font-medium text-danger"
@@ -72,36 +92,55 @@ const textFields = [
       }
     </div>
 
-    <div>
-      <label for={id('service')} class="block text-sm font-semibold text-fg">Service of interest</label>
-      <select
-        id={id('service')}
-        name="service"
-        class="field-input mt-2"
-        x-model="fields.service"
-        x-bind:aria-invalid="errors.service ? 'true' : 'false'"
-        x-bind:aria-describedby={`errors.service ? '${id('service')}-error' : null`}
-      >
-        <option value="">Select a service (optional)</option>
-        {services.map((s) => <option value={s.name}>{s.name}</option>)}
-        <option value={NOT_SURE}>{NOT_SURE}</option>
-      </select>
-      <p id={`${id('service')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.service" x-text="errors.service" x-cloak></p>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div>
+        <label for={id('service')} class="block text-sm font-semibold text-fg">Service needed</label>
+        <select
+          id={id('service')}
+          name="service"
+          required
+          class="field-input mt-1.5"
+          x-model="fields.service"
+          x-bind:aria-invalid="errors.service ? 'true' : 'false'"
+          x-bind:aria-describedby={`errors.service ? '${id('service')}-error' : null`}
+        >
+          <option value="">Select a service</option>
+          {services.map((s) => <option value={s.name}>{s.name}</option>)}
+          <option value={OTHER_SERVICE}>{OTHER_SERVICE}</option>
+        </select>
+        <p id={`${id('service')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.service" x-text="errors.service" x-cloak></p>
+      </div>
+
+      <div>
+        <label for={id('budget')} class="block text-sm font-semibold text-fg">Estimated engagement size (optional)</label>
+        <select
+          id={id('budget')}
+          name="budget"
+          class="field-input mt-1.5"
+          x-model="fields.budget"
+          x-bind:aria-invalid="errors.budget ? 'true' : 'false'"
+          x-bind:aria-describedby={`errors.budget ? '${id('budget')}-error' : null`}
+        >
+          <option value="">Select a range</option>
+          {BUDGET_OPTIONS.map((b) => <option value={b}>{b}</option>)}
+        </select>
+        <p id={`${id('budget')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.budget" x-text="errors.budget" x-cloak></p>
+      </div>
     </div>
 
     <div>
-      <label for={id('message')} class="block text-sm font-semibold text-fg">How can we help?</label>
-      <p id={`${id('message')}-hint`} class="mt-1 text-sm text-muted">
+      <label for={id('message')} class="block text-sm font-semibold text-fg">Project overview &amp; requirements</label>
+      <p id={`${id('message')}-hint`} class="mt-0.5 text-xs text-muted">
         Briefly describe your environment, objectives and timeline.
       </p>
       <textarea
         id={id('message')}
         name="message"
-        rows="5"
+        rows={source === 'dialog' ? 2 : 4}
         required
         minlength="20"
         maxlength="2000"
-        class="field-input mt-2 resize-y"
+        class="field-input mt-1.5 resize-y"
         x-model="fields.message"
         x-bind:aria-invalid="errors.message ? 'true' : 'false'"
         aria-describedby={`${id('message')}-hint`}
@@ -130,7 +169,7 @@ const textFields = [
           x-bind:aria-describedby={`errors.consent ? '${id('consent')}-error' : null`}
         />
         <label for={id('consent')} class="text-sm text-fg">
-          I agree to the processing of my information as described in the{' '}
+          I agree to ZanamTech processing my details to schedule the consultation, as described in the{' '}
           <a href="/privacy" class="font-semibold text-link underline underline-offset-2">Privacy Notice</a>.
         </label>
       </div>
@@ -157,7 +196,7 @@ const textFields = [
         <span x-show="status === 'submitting'" x-cloak class="inline-flex motion-safe:animate-spin">
           <LoaderCircle aria-hidden="true" className="size-4.5" />
         </span>
-        Send request
+        Send
       </button>
     </div>
   </form>

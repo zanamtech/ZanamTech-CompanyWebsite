@@ -62,11 +62,12 @@ test.describe('Security — CSP compliance', () => {
     await page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' }).click();
     const dialog = page.getByRole('dialog');
     await dialog.getByLabel('Full name').fill('Alex Morgan');
-    await dialog.getByLabel('Work email').fill('alex@example.com');
-    await dialog.getByLabel('Company').fill('Example Corp');
-    await dialog.getByLabel('How can we help?').fill('Requesting an assessment of our Kubernetes platform.');
-    await dialog.getByLabel(/I agree to the processing/).check();
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByLabel('Email address').fill('alex@example.com');
+    await dialog.getByLabel('Company name').fill('Example Corp');
+    await dialog.getByLabel('Service needed').selectOption('Other / Not sure yet');
+    await dialog.getByLabel('Project overview & requirements').fill('Requesting an assessment of our Kubernetes platform.');
+    await dialog.getByLabel(/I agree to ZanamTech processing my details/).check();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
 
     expect(violations).toEqual([]);

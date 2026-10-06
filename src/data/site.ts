@@ -11,7 +11,6 @@ export const pillars = ['Enterprise-grade', 'High-availability', 'Zero-trust sec
 
 export const cta = {
   primary: 'Book a Strategy Consultation',
-  secondary: 'Request a Custom Proposal',
   href: '/contact',
 } as const;
 

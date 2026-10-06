@@ -13,8 +13,9 @@
   "name": "string",
   "email": "string",
   "company": "string",
-  "role": "string",
-  "service": "string",
+  "phone": "string (optional, may be empty)",
+  "service": "string (required; one of the 9 active service names)",
+  "budget": "string (optional engagement-size band, or \"Not specified\")",
   "message": "string",
   "consent": true,
   "botcheck": ""

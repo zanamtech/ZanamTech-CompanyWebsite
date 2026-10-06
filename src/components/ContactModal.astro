@@ -8,22 +8,16 @@ import { cta } from '../data/site';
   transition:persist="contact-dialog"
   id="contact-dialog"
   aria-labelledby="contact-dialog-title"
-  class="contact-dialog m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-3xl border border-border bg-surface p-0 text-fg shadow-2xl"
+  class="contact-dialog m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto lg:max-h-[96vh] lg:max-w-3xl rounded-3xl border border-border bg-surface p-0 text-fg shadow-2xl"
   x-data
 >
-  <div class="relative p-6 sm:p-8">
+  <div class="relative p-5 sm:p-6">
     <div class="hairline-gradient absolute inset-x-8 top-0" aria-hidden="true"></div>
     <div class="flex items-start justify-between gap-6">
       <div>
         <p class="eyebrow">Get in touch</p>
-        <h2
-          id="contact-dialog-title"
-          class="mt-2 text-2xl font-bold text-fg"
-          x-text={`$store.contact.intent === 'proposal' ? '${cta.secondary}' : '${cta.primary}'`}
-        >
-          {cta.primary}
-        </h2>
-        <p class="mt-2 text-muted">
+        <h2 id="contact-dialog-title" class="mt-1.5 text-xl font-bold text-fg sm:text-2xl">{cta.primary}</h2>
+        <p class="mt-1 text-sm text-muted">
           Share a few details about your environment. A senior engineer will follow up to schedule a technical
           discussion.
         </p>
@@ -38,7 +32,7 @@ import { cta } from '../data/site';
       </button>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-3 sm:mt-4">
       <ContactForm idPrefix="dialog" source="dialog">
         <div slot="success-actions" class="mt-8">
           <button

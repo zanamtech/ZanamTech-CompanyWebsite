@@ -27,11 +27,13 @@ async function openDialogFromHero(page: Page) {
 
 async function fillValid(scope: ReturnType<Page['getByRole']>) {
   await scope.getByLabel('Full name').fill('Alex Morgan');
-  await scope.getByLabel('Work email').fill('alex.morgan@example.com');
-  await scope.getByLabel('Company').fill('Example Corp');
-  await scope.getByLabel('Role (optional)').fill('VP Engineering');
-  await scope.getByLabel('How can we help?').fill('We need a zero-downtime migration of our production workloads to Kubernetes.');
-  await scope.getByLabel(/I agree to the processing/).check();
+  await scope.getByLabel('Email address').fill('alex.morgan@example.com');
+  await scope.getByLabel('Company name').fill('Example Corp');
+  await scope.getByLabel('Phone number (optional)').fill('+1 555 010 0000');
+  await scope.getByLabel('Service needed').selectOption('Cloud Migration & Containerization');
+  await scope.getByLabel('Estimated engagement size (optional)').selectOption({ index: 2 });
+  await scope.getByLabel('Project overview & requirements').fill('We need a zero-downtime migration of our production workloads to Kubernetes.');
+  await scope.getByLabel(/I agree to ZanamTech processing my details/).check();
 }
 
 test.describe('US3 — Contact dialog & lead submission', () => {
@@ -46,10 +48,11 @@ test.describe('US3 — Contact dialog & lead submission', () => {
   test('shows inline errors for invalid input and focuses the first invalid field', async ({ page }) => {
     const calls = await mockEndpoint(page, 200);
     const { dialog } = await openDialogFromHero(page);
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByText('Please enter your full name.')).toBeVisible();
-    await expect(dialog.getByText('Please enter a valid work email address.')).toBeVisible();
+    await expect(dialog.getByText('Please enter a valid email address.')).toBeVisible();
     await expect(dialog.getByText('Please enter your company name.')).toBeVisible();
+    await expect(dialog.getByText('Please select the service you need.')).toBeVisible();
     await expect(dialog.getByText('Please describe your requirements (at least 20 characters).')).toBeVisible();
     await expect(dialog.getByText('Please accept the privacy notice to continue.')).toBeVisible();
     await expect(dialog.getByLabel('Full name')).toBeFocused();
@@ -61,7 +64,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     const calls = await mockEndpoint(page, 200);
     const { dialog } = await openDialogFromHero(page);
     await fillValid(dialog);
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
     expect(calls).toHaveLength(1);
     expect(calls[0]).toMatchObject({
@@ -77,12 +80,12 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     await mockEndpoint(page, 500);
     const { dialog } = await openDialogFromHero(page);
     await fillValid(dialog);
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('alert')).toContainText('could not be sent');
     await expect(dialog.getByLabel('Full name')).toHaveValue('Alex Morgan');
 
     await mockEndpoint(page, 200);
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
   });
 
@@ -91,7 +94,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     const { dialog } = await openDialogFromHero(page);
     await fillValid(dialog);
     await dialog.locator('input[name="botcheck"]').evaluate((el) => ((el as HTMLInputElement).value = 'spam'));
-    await dialog.getByRole('button', { name: 'Send request' }).click();
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
     expect(calls).toHaveLength(0);
   });
@@ -100,14 +103,14 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     await page.goto('/services/cloud-cost-optimization');
     await page.locator('section').first().getByRole('link', { name: 'Book a Strategy Consultation' }).click();
     const dialog = page.getByRole('dialog');
-    await expect(dialog.getByLabel('Service of interest')).toHaveValue('Cloud Infrastructure Cost Optimization');
+    await expect(dialog.getByLabel('Service needed')).toHaveValue('Cloud Infrastructure Cost Optimization');
   });
 
   test('contact page form works standalone and honours ?service=', async ({ page }) => {
     await page.goto('/contact?service=enterprise-ai-integration');
     const form = page.getByRole('main');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    await expect(form.getByLabel('Service of interest')).toHaveValue('Intelligent Enterprise AI Integration & Automation');
+    await expect(form.getByLabel('Service needed')).toHaveValue('Intelligent Enterprise AI Integration & Automation');
   });
 
   test('privacy page is published', async ({ page }) => {

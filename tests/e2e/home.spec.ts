@@ -14,13 +14,12 @@ test.describe('US1 — Home hero & brand', () => {
     }
 
     const primary = hero.getByRole('link', { name: 'Book a Strategy Consultation' });
-    const secondary = hero.getByRole('link', { name: 'Request a Custom Proposal' });
     await expect(primary).toBeVisible();
-    await expect(secondary).toBeVisible();
+    // A single primary CTA per section: the secondary "custom proposal" button was retired.
+    await expect(page.getByRole('link', { name: 'Request a Custom Proposal' })).toHaveCount(0);
 
     if (testInfo.project.name === 'desktop') {
       await expect(primary).toBeInViewport();
-      await expect(secondary).toBeInViewport();
     }
   });
 

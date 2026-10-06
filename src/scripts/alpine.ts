@@ -1,5 +1,5 @@
 import type { Alpine } from 'alpinejs';
-import { FIELD_ORDER, NOT_SURE, submitLead, validateLead, type LeadErrors, type LeadInput } from '../lib/lead';
+import { FIELD_ORDER, OTHER_SERVICE, submitLead, validateLead, type LeadErrors, type LeadInput } from '../lib/lead';
 
 export const THEME_KEY = 'zt-theme';
 type Theme = 'light' | 'dark';
@@ -14,7 +14,6 @@ interface ThemeStore {
 interface ContactStore {
   /** Pre-selected service slug ('' when none). */
   service: string;
-  intent: 'consultation' | 'proposal';
   /** Increments on every open so forms can react even when the service is unchanged. */
   opened: number;
   open(trigger: HTMLElement | null, params?: URLSearchParams): void;
@@ -50,8 +49,9 @@ const emptyLead = (): LeadInput => ({
   name: '',
   email: '',
   company: '',
-  role: '',
+  phone: '',
   service: '',
+  budget: '',
   message: '',
   consent: false,
   botcheck: '',
@@ -117,7 +117,6 @@ export default (Alpine: Alpine) => {
 
   const contactStore: ContactStore = {
     service: '',
-    intent: 'consultation',
     opened: 0,
 
     open(trigger, params) {
@@ -125,7 +124,6 @@ export default (Alpine: Alpine) => {
       if (!el) return;
       lastTrigger = trigger;
       this.service = params?.get('service') ?? '';
-      this.intent = params?.get('intent') === 'proposal' ? 'proposal' : 'consultation';
       this.opened += 1;
       window.dispatchEvent(new CustomEvent('contact-dialog-opened'));
       document.documentElement.classList.add('overflow-hidden');
@@ -443,7 +441,7 @@ export default (Alpine: Alpine) => {
     },
 
     validate() {
-      this.errors = validateLead(this.fields, [...config.services.map((s) => s.name), NOT_SURE]);
+      this.errors = validateLead(this.fields, [...config.services.map((s) => s.name), OTHER_SERVICE]);
       return Object.keys(this.errors).length === 0;
     },
 

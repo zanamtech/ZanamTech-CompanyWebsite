@@ -318,6 +318,11 @@
     min-height: 2.75rem;
   }
 
+  /* Denser fields inside the consultation dialog (min-height still keeps the 44px target). */
+  .contact-dialog .field-input {
+    @apply px-3 py-2 sm:py-2.5;
+  }
+
   .field-input:focus-visible {
     border-color: var(--ring);
     outline: 2px solid var(--ring);
