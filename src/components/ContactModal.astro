@@ -8,7 +8,7 @@ import { cta } from '../data/site';
   transition:persist="contact-dialog"
   id="contact-dialog"
   aria-labelledby="contact-dialog-title"
-  class="contact-dialog m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto lg:max-h-[96vh] lg:max-w-3xl rounded-3xl border border-border bg-surface p-0 text-fg shadow-2xl"
+  class="contact-dialog m-auto max-h-[90vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto md:max-w-2xl lg:max-h-[96vh] lg:max-w-4xl xl:max-w-5xl rounded-3xl border border-border bg-surface p-0 text-fg shadow-2xl"
   x-data
 >
   <div class="relative p-5 sm:p-6">
@@ -17,7 +17,7 @@ import { cta } from '../data/site';
       <div>
         <p class="eyebrow">Get in touch</p>
         <h2 id="contact-dialog-title" class="mt-1.5 text-xl font-bold text-fg sm:text-2xl">{cta.primary}</h2>
-        <p class="mt-1 text-sm text-muted">
+        <p class="mt-1 text-xs text-muted sm:text-sm">
           Share a few details about your environment. A senior engineer will follow up to schedule a technical
           discussion.
         </p>
@@ -32,7 +32,7 @@ import { cta } from '../data/site';
       </button>
     </div>
 
-    <div class="mt-3 sm:mt-4">
+    <div class="mt-2 sm:mt-3">
       <ContactForm idPrefix="dialog" source="dialog">
         <div slot="success-actions" class="mt-8">
           <button

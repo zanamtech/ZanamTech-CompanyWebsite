@@ -15,6 +15,8 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
 const config = JSON.stringify({ services, source });
+// The wide dialog lays fields out three across on desktop; the narrower /contact card keeps two.
+const fieldGrid = source === 'dialog' ? 'md:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2';
 
 const textFields = [
   { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
@@ -48,7 +50,7 @@ const textFields = [
     <input type="hidden" name="access_key" value={accessKey} />
     <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
 
-    <div class="grid gap-3 sm:grid-cols-2">
+    <div class:list={['grid grid-cols-1 gap-3 sm:gap-3.5', fieldGrid]}>
       {
         textFields.map((field, i) => (
           <div>
@@ -90,9 +92,6 @@ const textFields = [
           </div>
         ))
       }
-    </div>
-
-    <div class="grid gap-3 sm:grid-cols-2">
       <div>
         <label for={id('service')} class="block text-sm font-semibold text-fg">Service needed</label>
         <select
@@ -155,27 +154,6 @@ const textFields = [
       <input id={id('botcheck')} name="botcheck" type="text" tabindex="-1" autocomplete="off" x-model="fields.botcheck" />
     </div>
 
-    <div>
-      <div class="flex gap-3">
-        <input
-          id={id('consent')}
-          name="consent"
-          type="checkbox"
-          value="true"
-          required
-          class="mt-0.5 size-5 shrink-0 accent-(--cta)"
-          x-model="fields.consent"
-          x-bind:aria-invalid="errors.consent ? 'true' : 'false'"
-          x-bind:aria-describedby={`errors.consent ? '${id('consent')}-error' : null`}
-        />
-        <label for={id('consent')} class="text-sm text-fg">
-          I agree to ZanamTech processing my details to schedule the consultation, as described in the{' '}
-          <a href="/privacy" class="font-semibold text-link underline underline-offset-2">Privacy Notice</a>.
-        </label>
-      </div>
-      <p id={`${id('consent')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
-    </div>
-
     <div
       role="alert"
       class="flex gap-3 rounded-xl border border-danger/50 bg-danger/10 p-4 text-sm text-fg"
@@ -186,11 +164,31 @@ const textFields = [
       <p x-text="failure"></p>
     </div>
 
-    <div class="flex flex-col-reverse gap-4 pt-1 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-xs text-muted">Your details are used only to respond to this request.</p>
+    <!-- Single footer row: consent on the left, Send on the right. -->
+    <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div class="sm:max-w-xl">
+        <div class="flex gap-3">
+          <input
+            id={id('consent')}
+            name="consent"
+            type="checkbox"
+            value="true"
+            required
+            class="mt-0.5 size-5 shrink-0 accent-(--cta)"
+            x-model="fields.consent"
+            x-bind:aria-invalid="errors.consent ? 'true' : 'false'"
+            x-bind:aria-describedby={`errors.consent ? '${id('consent')}-error' : null`}
+          />
+          <label for={id('consent')} class="text-sm text-fg">
+            I agree to ZanamTech processing my details to schedule the consultation, as described in the{' '}
+            <a href="/privacy" class="font-semibold text-link underline underline-offset-2">Privacy Notice</a>.
+          </label>
+        </div>
+        <p id={`${id('consent')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+      </div>
       <button
         type="submit"
-        class="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-cta px-6 py-3 font-semibold text-cta-fg transition-colors duration-200 hover:bg-cta-hover disabled:cursor-wait disabled:opacity-80"
+        class="inline-flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-xl sm:w-auto bg-cta px-6 py-3 font-semibold text-cta-fg transition-colors duration-200 hover:bg-cta-hover disabled:cursor-wait disabled:opacity-80"
         x-bind:disabled="status === 'submitting'"
       >
         <span x-show="status === 'submitting'" x-cloak class="inline-flex motion-safe:animate-spin">
