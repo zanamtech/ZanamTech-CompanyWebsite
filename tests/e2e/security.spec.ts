@@ -64,7 +64,8 @@ test.describe('Security — CSP compliance', () => {
     await dialog.getByLabel('Full name').fill('Alex Morgan');
     await dialog.getByLabel('Email address').fill('alex@example.com');
     await dialog.getByLabel('Company name').fill('Example Corp');
-    await dialog.getByLabel('Service needed').selectOption('Other / Not sure yet');
+    await dialog.getByRole('combobox', { name: 'Service needed' }).click();
+    await dialog.getByRole('option', { name: 'Other / Not sure yet' }).click();
     await dialog.getByLabel('Project overview & requirements').fill('Requesting an assessment of our Kubernetes platform.');
     await dialog.getByLabel(/I agree to ZanamTech processing my details/).check();
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();

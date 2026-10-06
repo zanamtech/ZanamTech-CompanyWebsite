@@ -406,8 +406,15 @@ export default (Alpine: Alpine) => {
   }));
 
   /* ---------------------------------------------------------- lead form */
-  Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page' }) => ({
+  type MenuField = 'service' | 'budget';
+
+  Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page'; idPrefix: string }) => ({
     fields: emptyLead(),
+    /** Custom dropdown (select-only combobox) state. */
+    openMenu: '' as MenuField | '',
+    activeIndex: -1,
+    menuUp: false,
+    menuStyle: { maxHeight: '14rem' } as Record<string, string>,
     errors: {} as LeadErrors,
     status: 'idle' as FormStatus,
     failure: '',
@@ -433,11 +440,113 @@ export default (Alpine: Alpine) => {
 
     reset() {
       this.fields = emptyLead();
+      this.openMenu = '';
       this.errors = {};
       this.status = 'idle';
       this.failure = '';
       this.attempted = false;
       this.announcement = '';
+    },
+
+    /* ---- custom dropdowns ---- */
+    optionValues(field: MenuField): string[] {
+      const list = document.getElementById(`${config.idPrefix}-${field}-listbox`);
+      return Array.from(list?.querySelectorAll<HTMLElement>('[role="option"]') ?? []).map((o) => o.dataset.value ?? '');
+    },
+
+    trigger(field: MenuField) {
+      return document.getElementById(`${config.idPrefix}-${field}`);
+    },
+
+    /** Open towards the side with more room inside the dialog (or viewport), capping height so nothing is clipped. */
+    openMenuFor(field: MenuField) {
+      const el = this.trigger(field);
+      if (el) {
+        const r = el.getBoundingClientRect();
+        const box = el.closest('dialog')?.getBoundingClientRect();
+        const below = Math.min(box?.bottom ?? window.innerHeight, window.innerHeight) - r.bottom - 12;
+        const above = r.top - Math.max(box?.top ?? 0, 0) - 12;
+        this.menuUp = below < 224 && above > below;
+        this.menuStyle = { maxHeight: `${Math.max(120, Math.min(224, this.menuUp ? above : below))}px` };
+      }
+      const current = this.optionValues(field).indexOf(this.fields[field]);
+      this.activeIndex = current >= 0 ? current : 0;
+      this.openMenu = field;
+      this.$nextTick(() => this.scrollActiveIntoView(field));
+    },
+
+    toggleMenu(field: MenuField) {
+      if (this.openMenu === field) this.openMenu = '';
+      else this.openMenuFor(field);
+    },
+
+    closeMenuIf(field: MenuField) {
+      if (this.openMenu === field) this.openMenu = '';
+    },
+
+    chooseOption(field: MenuField, index: number) {
+      const value = this.optionValues(field)[index];
+      if (value === undefined) return;
+      this.fields[field] = value;
+      this.openMenu = '';
+      this.trigger(field)?.focus();
+      this.revalidate();
+    },
+
+    scrollActiveIntoView(field: MenuField) {
+      document.getElementById(`${config.idPrefix}-${field}-listbox-${this.activeIndex}`)?.scrollIntoView({ block: 'nearest' });
+    },
+
+    /** Keyboard model for a select-only combobox (WAI-ARIA APG): focus stays on the trigger. */
+    onMenuKey(field: MenuField, event: KeyboardEvent) {
+      const open = this.openMenu === field;
+      const count = this.optionValues(field).length;
+      const move = (to: number) => {
+        this.activeIndex = Math.max(0, Math.min(count - 1, to));
+        this.$nextTick(() => this.scrollActiveIntoView(field));
+      };
+      switch (event.key) {
+        case 'ArrowDown':
+        case 'ArrowUp':
+          event.preventDefault();
+          if (!open) this.openMenuFor(field);
+          else move(this.activeIndex + (event.key === 'ArrowDown' ? 1 : -1));
+          break;
+        case 'Home':
+        case 'End':
+          if (!open) return;
+          event.preventDefault();
+          move(event.key === 'Home' ? 0 : count - 1);
+          break;
+        case 'Enter':
+        case ' ':
+          event.preventDefault();
+          if (!open) this.openMenuFor(field);
+          else this.chooseOption(field, this.activeIndex);
+          break;
+        case 'Escape':
+          if (!open) return;
+          // Close only the menu, not the surrounding dialog.
+          event.preventDefault();
+          event.stopPropagation();
+          this.openMenu = '';
+          break;
+        case 'Tab':
+          if (open) this.openMenu = '';
+          break;
+      }
+    },
+
+    activeId(field: MenuField) {
+      return this.openMenu === field && this.activeIndex >= 0 ? `${config.idPrefix}-${field}-listbox-${this.activeIndex}` : null;
+    },
+
+    optionSelected(field: MenuField, index: number) {
+      return this.fields[field] !== '' && this.optionValues(field)[index] === this.fields[field] ? 'true' : 'false';
+    },
+
+    optionActive(field: MenuField, index: number) {
+      return this.openMenu === field && this.activeIndex === index ? 'true' : 'false';
     },
 
     validate() {
@@ -458,7 +567,12 @@ export default (Alpine: Alpine) => {
         const count = Object.keys(this.errors).length;
         this.announcement = `Please correct ${count} ${count === 1 ? 'field' : 'fields'} before sending.`;
         const first = FIELD_ORDER.find((f) => this.errors[f]);
-        this.$nextTick(() => this.$root.querySelector<HTMLElement>(`[name="${first}"]`)?.focus());
+        this.$nextTick(() =>
+          (
+            this.$root.querySelector<HTMLElement>(`[data-focus="${first}"]`) ??
+            this.$root.querySelector<HTMLElement>(`[name="${first}"]`)
+          )?.focus(),
+        );
         return;
       }
 

@@ -323,10 +323,16 @@
     @apply px-3 py-2 sm:py-2.5;
   }
 
-  .field-input:focus-visible {
-    border-color: var(--ring);
-    outline: 2px solid var(--ring);
-    outline-offset: 1px;
+  /* Thin purple border with a soft glow (matches the hero pill accents). */
+  .field-input {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .field-input:focus-visible,
+  .field-input[aria-expanded="true"] {
+    border-color: color-mix(in srgb, var(--accent) 80%, transparent);
+    box-shadow: 0 0 0 3px rgb(168 85 247 / 0.2);
+    outline: none;
   }
 
   .field-input[aria-invalid="true"] {

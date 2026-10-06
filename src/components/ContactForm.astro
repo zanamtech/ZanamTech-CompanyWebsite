@@ -1,5 +1,5 @@
 ---
-import { CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
+import { Check, ChevronDown, CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
 import { getActiveServices } from '../lib/services';
 import { BUDGET_OPTIONS, OTHER_SERVICE } from '../lib/lead';
 
@@ -14,7 +14,7 @@ const services = (await getActiveServices()).map((s) => ({ slug: s.id, name: s.d
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
-const config = JSON.stringify({ services, source });
+const config = JSON.stringify({ services, source, idPrefix });
 // The wide dialog lays fields out three across on desktop; the narrower /contact card keeps two.
 const fieldGrid = source === 'dialog' ? 'md:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2';
 
@@ -32,6 +32,24 @@ const textFields = [
     hint: 'Include your country code, e.g. +1 555 010 0000',
   },
 ] as const;
+
+// Custom listbox dropdowns (styled option menus). A native <select> stays in the markup as the no-JS fallback.
+const menus = [
+  {
+    field: 'service',
+    label: 'Service needed',
+    placeholder: 'Select a service',
+    required: true,
+    options: [...services.map((s) => s.name), OTHER_SERVICE],
+  },
+  {
+    field: 'budget',
+    label: 'Estimated engagement size (optional)',
+    placeholder: 'Select a range',
+    required: false,
+    options: [...BUDGET_OPTIONS] as string[],
+  },
+];
 ---
 
 <div x-data={`leadForm(${config})`} x-on:contact-dialog-opened.window={source === 'dialog' ? 'onOpen()' : undefined}>
@@ -92,39 +110,96 @@ const textFields = [
           </div>
         ))
       }
-      <div>
-        <label for={id('service')} class="block text-sm font-semibold text-fg">Service needed</label>
-        <select
-          id={id('service')}
-          name="service"
-          required
-          class="field-input mt-1.5"
-          x-model="fields.service"
-          x-bind:aria-invalid="errors.service ? 'true' : 'false'"
-          x-bind:aria-describedby={`errors.service ? '${id('service')}-error' : null`}
-        >
-          <option value="">Select a service</option>
-          {services.map((s) => <option value={s.name}>{s.name}</option>)}
-          <option value={OTHER_SERVICE}>{OTHER_SERVICE}</option>
-        </select>
-        <p id={`${id('service')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.service" x-text="errors.service" x-cloak></p>
-      </div>
-
-      <div>
-        <label for={id('budget')} class="block text-sm font-semibold text-fg">Estimated engagement size (optional)</label>
-        <select
-          id={id('budget')}
-          name="budget"
-          class="field-input mt-1.5"
-          x-model="fields.budget"
-          x-bind:aria-invalid="errors.budget ? 'true' : 'false'"
-          x-bind:aria-describedby={`errors.budget ? '${id('budget')}-error' : null`}
-        >
-          <option value="">Select a range</option>
-          {BUDGET_OPTIONS.map((b) => <option value={b}>{b}</option>)}
-        </select>
-        <p id={`${id('budget')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.budget" x-text="errors.budget" x-cloak></p>
-      </div>
+      {
+        menus.map((menu) => (
+          <div>
+            <label id={`${id(menu.field)}-label`} for={id(menu.field)} class="block text-sm font-semibold text-fg">
+              {menu.label}
+            </label>
+            {/* No-JS fallback: the native select is the control until Alpine starts, then it is hidden. */}
+            <select
+              name={menu.field}
+              aria-label={menu.label}
+              required={menu.required}
+              class="field-input mt-1.5"
+              x-model={`fields.${menu.field}`}
+              x-show="false"
+            >
+              <option value="">{menu.placeholder}</option>
+              {menu.options.map((o) => (
+                <option value={o}>{o}</option>
+              ))}
+            </select>
+            <div class="relative mt-1.5" x-on:click.outside={`closeMenuIf('${menu.field}')`} x-cloak>
+              <button
+                type="button"
+                id={id(menu.field)}
+                data-focus={menu.field}
+                role="combobox"
+                aria-haspopup="listbox"
+                aria-controls={`${id(menu.field)}-listbox`}
+                aria-expanded="false"
+                x-bind:aria-expanded={`openMenu === '${menu.field}' ? 'true' : 'false'`}
+                x-bind:aria-activedescendant={`activeId('${menu.field}')`}
+                x-bind:aria-invalid={`errors.${menu.field} ? 'true' : 'false'`}
+                x-bind:aria-describedby={`errors.${menu.field} ? '${id(menu.field)}-error' : null`}
+                class="field-input flex items-center justify-between gap-2 pr-3.5! text-left"
+                x-on:click={`toggleMenu('${menu.field}')`}
+                x-on:keydown={`onMenuKey('${menu.field}', $event)`}
+              >
+                <span
+                  class="truncate"
+                  x-bind:class={`fields.${menu.field} ? 'text-fg' : 'text-muted'`}
+                  x-text={`fields.${menu.field} || '${menu.placeholder}'`}
+                >
+                  {menu.placeholder}
+                </span>
+                <span
+                  class="inline-flex shrink-0 text-muted transition-transform duration-200"
+                  x-bind:class={`openMenu === '${menu.field}' && 'rotate-180'`}
+                >
+                  <ChevronDown aria-hidden="true" className="size-4" />
+                </span>
+              </button>
+              <ul
+                id={`${id(menu.field)}-listbox`}
+                role="listbox"
+                aria-labelledby={`${id(menu.field)}-label`}
+                tabindex="-1"
+                class="absolute inset-x-0 z-50 overflow-y-auto rounded-xl border border-border/80 bg-bg/95 p-1.5 shadow-xl backdrop-blur-md"
+                x-bind:class="menuUp ? 'bottom-full mb-1' : 'top-full mt-1'"
+                x-bind:style="menuStyle"
+                x-show={`openMenu === '${menu.field}'`}
+                x-transition.opacity.duration.150ms
+              >
+                {menu.options.map((o, i) => (
+                  <li
+                    id={`${id(menu.field)}-listbox-${i}`}
+                    role="option"
+                    data-value={o}
+                    aria-selected="false"
+                    x-bind:aria-selected={`optionSelected('${menu.field}', ${i})`}
+                    x-bind:data-active={`optionActive('${menu.field}', ${i})`}
+                    x-on:mouseenter={`activeIndex = ${i}`}
+                    x-on:click={`chooseOption('${menu.field}', ${i})`}
+                    class="group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-fg transition-colors hover:bg-purple-500/10 hover:text-purple-600 aria-selected:font-semibold data-[active=true]:bg-purple-500/10 data-[active=true]:text-purple-600 dark:hover:bg-purple-500/20 dark:hover:text-purple-300 dark:data-[active=true]:bg-purple-500/20 dark:data-[active=true]:text-purple-300"
+                  >
+                    <span>{o}</span>
+                    <Check aria-hidden="true" className="size-4 shrink-0 opacity-0 group-aria-selected:opacity-100" />
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p
+              id={`${id(menu.field)}-error`}
+              class="mt-1.5 text-sm font-medium text-danger"
+              x-show={`errors.${menu.field}`}
+              x-text={`errors.${menu.field}`}
+              x-cloak
+            />
+          </div>
+        ))
+      }
     </div>
 
     <div>

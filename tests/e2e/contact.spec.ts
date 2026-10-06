@@ -30,8 +30,10 @@ async function fillValid(scope: ReturnType<Page['getByRole']>) {
   await scope.getByLabel('Email address').fill('alex.morgan@example.com');
   await scope.getByLabel('Company name').fill('Example Corp');
   await scope.getByLabel('Phone number (optional)').fill('+1 555 010 0000');
-  await scope.getByLabel('Service needed').selectOption('Cloud Migration & Containerization');
-  await scope.getByLabel('Estimated engagement size (optional)').selectOption({ index: 2 });
+  await scope.getByRole('combobox', { name: 'Service needed' }).click();
+  await scope.getByRole('option', { name: 'Cloud Migration & Containerization' }).click();
+  await scope.getByRole('combobox', { name: 'Estimated engagement size (optional)' }).click();
+  await scope.getByRole('listbox', { name: 'Estimated engagement size (optional)' }).getByRole('option').nth(2).click();
   await scope.getByLabel('Project overview & requirements').fill('We need a zero-downtime migration of our production workloads to Kubernetes.');
   await scope.getByLabel(/I agree to ZanamTech processing my details/).check();
 }
@@ -103,14 +105,14 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     await page.goto('/services/cloud-cost-optimization');
     await page.locator('section').first().getByRole('link', { name: 'Book a Strategy Consultation' }).click();
     const dialog = page.getByRole('dialog');
-    await expect(dialog.getByLabel('Service needed')).toHaveValue('Cloud Infrastructure Cost Optimization');
+    await expect(dialog.getByRole('combobox', { name: 'Service needed' })).toHaveText('Cloud Infrastructure Cost Optimization');
   });
 
   test('contact page form works standalone and honours ?service=', async ({ page }) => {
     await page.goto('/contact?service=enterprise-ai-integration');
     const form = page.getByRole('main');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-    await expect(form.getByLabel('Service needed')).toHaveValue('Intelligent Enterprise AI Integration & Automation');
+    await expect(form.getByRole('combobox', { name: 'Service needed' })).toHaveText('Intelligent Enterprise AI Integration & Automation');
   });
 
   test('privacy page is published', async ({ page }) => {
