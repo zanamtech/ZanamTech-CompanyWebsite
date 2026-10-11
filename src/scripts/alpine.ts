@@ -355,12 +355,13 @@ export default (Alpine: Alpine) => {
   }));
 
   /* --------------------------------------------- process cards reveal */
-  // Cards slide in from the right one at a time (01 → 04), each starting as the previous one settles. Cards stay
+  // A single step counter drives the sequence: card 1 slides in from the right, connector segment 1 draws toward
+  // card 2, card 2 slides in and attaches, and so on (odd steps = cards, even steps = segments). Everything stays
   // visible without JS, under reduced motion, and when the section is already on screen at load (no flash).
-  const PROCESS_REVEAL_AT = [100, 700, 1300, 1900];
+  const PROCESS_STEP_AT = [100, 650, 1150, 1700, 2200, 2750, 3250];
 
   Alpine.data('processReveal', (count: number) => ({
-    visibleCards: count,
+    step: count * 2 - 1,
     timers: [] as number[],
     observer: null as IntersectionObserver | null,
 
@@ -368,13 +369,14 @@ export default (Alpine: Alpine) => {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || !('IntersectionObserver' in window)) return;
       if (this.$el.getBoundingClientRect().top < window.innerHeight) return;
-      this.visibleCards = 0;
+      const total = count * 2 - 1;
+      this.step = 0;
       this.observer = new IntersectionObserver(
         (entries) => {
           if (!entries.some((e) => e.isIntersecting)) return;
           this.observer?.disconnect();
-          this.timers = Array.from({ length: count }, (_, i) =>
-            window.setTimeout(() => (this.visibleCards = i + 1), PROCESS_REVEAL_AT[i] ?? 100 + i * 600),
+          this.timers = Array.from({ length: total }, (_, i) =>
+            window.setTimeout(() => (this.step = i + 1), PROCESS_STEP_AT[i] ?? 100 + i * 525),
           );
         },
         { threshold: 0.2 },
@@ -387,8 +389,14 @@ export default (Alpine: Alpine) => {
       this.timers.forEach((t) => window.clearTimeout(t));
     },
 
+    /** Card n (1-based) appears on step 2n-1. */
     isShown(card: number) {
-      return this.visibleCards >= card ? 'true' : 'false';
+      return this.step >= card * 2 - 1 ? 'true' : 'false';
+    },
+
+    /** Connector segment n (between card n and n+1) draws on step 2n. */
+    isDrawn(segment: number) {
+      return this.step >= segment * 2 ? 'true' : 'false';
     },
   }));
 

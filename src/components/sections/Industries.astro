@@ -22,7 +22,7 @@ import { segments } from '../../data/segments';
     <ul class="mt-12 grid gap-6 md:grid-cols-3" data-reveal-group data-reveal-distance="0" data-reveal-scale="0.95" data-reveal-stagger="0.12" data-reveal-duration="0.6">
       {
         segments.map((s) => (
-          <li data-segment class="glass rounded-2xl p-6 transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2 hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/15 sm:p-7 motion-reduce:hover:translate-y-0">
+          <li data-segment class="glass cursor-default select-none rounded-2xl p-6 transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2 hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/15 sm:p-7 motion-reduce:hover:translate-y-0">
             <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
               <Icon name={s.icon} class="size-6" />
             </span>

@@ -129,6 +129,19 @@
     min-height: 100dvh;
   }
 
+  /* Tailwind v4 preflight resets buttons to the default arrow; every clickable control shows the hand pointer. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='combobox'],
+  [role='option'],
+  summary,
+  label[for],
+  select,
+  input[type='checkbox'],
+  input[type='radio'] {
+    cursor: pointer;
+  }
+
   h1,
   h2,
   h3,
@@ -233,7 +246,7 @@
   /* Ticker pills: same shape, type and hover as the hero pillar badges. No backdrop-filter: the strip sits on a flat
      surface (blur would be invisible) and blurring ~60 moving layers costs frames on mobile. */
   .tech-pill {
-    @apply rounded-full border border-border/60 bg-surface-2/40 px-4 py-2 text-sm font-semibold whitespace-nowrap text-fg transition-all duration-300 ease-in-out;
+    @apply cursor-default select-none rounded-full border border-border/60 bg-surface-2/40 px-4 py-2 text-sm font-semibold whitespace-nowrap text-fg transition-all duration-300 ease-in-out;
   }
 
   .tech-pill:hover {
@@ -340,6 +353,7 @@
   }
 
   .contact-dialog::backdrop {
+    cursor: pointer;
     background-color: rgb(2 6 23 / 0.55);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);

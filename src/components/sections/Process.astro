@@ -34,17 +34,16 @@ const { detailed = false, withIntro = true } = Astro.props;
     )
   }
 
-  <div class:list={['relative', withIntro && 'mt-12']}>
-  <div class="hairline-gradient absolute inset-x-8 top-9 hidden lg:block" aria-hidden="true"></div>
-  <ol class="relative grid gap-6 md:grid-cols-2 lg:grid-cols-4" x-data={`processReveal(${engagementPhases.length})`}>
+  <div class:list={['relative', withIntro && 'mt-12']} x-data={`processReveal(${engagementPhases.length})`}>
+  <ol class="relative grid gap-(--process-gap) [--process-gap:--spacing(6)] md:grid-cols-2 lg:grid-cols-4 lg:[--process-gap:--spacing(10)]">
     {
       engagementPhases.map((phase) => (
         <li
           data-phase
-          class="flex data-[shown=true]:transition-all data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16 data-[shown=false]:opacity-0"
+          class="relative flex data-[shown=true]:transition-all data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16 data-[shown=false]:opacity-0"
           x-bind:data-shown={`isShown(${phase.order})`}
         >
-          <div class="glass card-hover relative flex w-full flex-col rounded-2xl p-6">
+          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6">
             <span class="flex size-12 items-center justify-center rounded-xl bg-cta text-sm font-bold text-cta-fg shadow-sm">
               {String(phase.order).padStart(2, '0')}
             </span>
@@ -61,6 +60,17 @@ const { detailed = false, withIntro = true } = Astro.props;
               </ul>
             )}
           </div>
+          {/* Connector: lives in the gap after this card (desktop row only), running from its right border to the next
+              card's left border. It draws once this card has settled, just before the next card slides in. Without
+              JS it renders fully drawn. */}
+          {phase.order < engagementPhases.length && (
+            <div class="pointer-events-none absolute top-[47px] left-full hidden h-[2px] w-(--process-gap) lg:block" aria-hidden="true">
+              <span
+                class="block h-full w-full bg-purple-500/80 shadow-[0_0_8px_rgba(168,85,247,0.5)] data-[drawn=true]:transition-[width] data-[drawn=true]:duration-500 data-[drawn=true]:ease-out data-[drawn=false]:w-0 dark:bg-purple-400/80"
+                x-bind:data-drawn={`isDrawn(${phase.order})`}
+              />
+            </div>
+          )}
         </li>
       ))
     }
