@@ -3,17 +3,14 @@ import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Button from '../ui/Button.astro';
-import Icon from '../ui/Icon.astro';
+import Badge from '../ui/Badge.astro';
+import MenuServiceLink from './MenuServiceLink.astro';
 import { navLinks as allNavLinks, cta } from '../../data/site';
 import { getServicesByPillar, serviceHref } from '../../lib/services';
 import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
 
-const FLAGSHIP_HREF = '/services/managed-cloud-devops';
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) =>
-  href === '/services'
-    ? currentPath === href || (currentPath.startsWith(`${href}/`) && !currentPath.startsWith(FLAGSHIP_HREF))
-    : currentPath === href || currentPath.startsWith(`${href}/`);
+const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 
 // Insights and Case Studies appear only when they have published / verified content (spec 002 FR-020, FR-030).
 const showInsights = await hasPublishedInsights();
@@ -24,6 +21,11 @@ const navLinks = [
 ];
 
 const groups = await getServicesByPillar();
+const pillar = Object.fromEntries(groups.map((g) => [g.pillar, g])) as Record<(typeof groups)[number]['pillar'], (typeof groups)[number]>;
+// Mega-menu balance: Cloud & DevOps Engineering is split across two sub-columns under one heading.
+const cloudSplit = Math.ceil(pillar['cloud-devops'].services.length / 2);
+const cloudColumns = [pillar['cloud-devops'].services.slice(0, cloudSplit), pillar['cloud-devops'].services.slice(cloudSplit)];
+const groupHeading = 'px-2 text-xs font-semibold tracking-wide text-muted uppercase';
 const linkClass = (href: string) => [
   'inline-flex min-h-11 items-center rounded-lg px-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 hover:text-accent xl:px-3.5',
   isActive(href) ? 'text-accent' : 'text-muted',
@@ -81,22 +83,22 @@ const linkClass = (href: string) => [
                   id="services-menu"
                   role="region"
                   aria-label="Services menu"
-                  class="absolute top-full left-1/2 mt-2 w-[min(78rem,calc(100vw-4rem))] -translate-x-1/2 rounded-2xl border border-(--glass-border) bg-surface shadow-2xl ring-1 ring-black/5 before:absolute before:inset-x-0 before:-top-7 before:h-7 before:content-['']"
+                  class="absolute top-full left-1/2 mt-2 w-[min(72rem,calc(100vw-3rem))] -translate-x-1/2 rounded-2xl border border-(--glass-border) bg-surface shadow-2xl ring-1 ring-black/5 before:absolute before:inset-x-0 before:-top-7 before:h-7 before:content-['']"
                   x-show="services"
                   x-cloak
                   x-transition.opacity.duration.150ms
                 >
                   <div class="hairline-gradient absolute inset-x-6 top-0" aria-hidden="true"></div>
-                  <div class="grid grid-cols-[12rem_repeat(4,minmax(0,1fr))] gap-5 p-5">
-                    <div class="border-r border-border pr-5">
+                  <!-- Balanced columns: intro | Managed (flagship) + Practical AI | Cloud & DevOps (2 sub-columns) | Web & SaaS.
+                       Height is capped at 70vh; the inner wrapper scrolls if a short laptop screen still needs it
+                       (the outer panel keeps its hover bridge above). -->
+                  <div class="grid max-h-[70vh] grid-cols-[9rem_minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] gap-4 overflow-y-auto p-4 xl:grid-cols-[11rem_minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] xl:gap-5 xl:p-5">
+                    <div class="border-r border-border pr-4">
                       <p class="eyebrow">Services</p>
-                      <p class="mt-2 text-base font-semibold text-fg">Enterprise engineering, end to end</p>
-                      <p class="mt-1.5 text-sm text-muted">
-                        Managed operations, cloud engineering, web and AI, each scoped in a Statement of Work.
-                      </p>
+                      <p class="mt-2 hidden text-base font-semibold text-fg xl:block">Enterprise engineering, end to end</p>
                       <a
                         href="/services"
-                        class="mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
+                        class="mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
                       >
                         View all services
                         <ArrowRight aria-hidden="true" className="size-4" />
@@ -109,33 +111,47 @@ const linkClass = (href: string) => [
                         <ArrowRight aria-hidden="true" className="size-4" />
                       </a>
                     </div>
-                    {groups.map((group) => (
-                      <div data-menu-pillar={group.pillar}>
-                        <p class="px-2 text-xs font-semibold tracking-wide text-muted uppercase">{group.title}</p>
-                        <ul class="mt-2">
-                          {group.services.map((service) => (
-                            <li>
-                              <a
-                                href={serviceHref(service)}
-                                class="group/item flex min-h-11 items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-surface-2"
-                              >
-                                <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-cyan/12 text-brand-cyan">
-                                  <Icon name={service.data.icon} class="size-4" />
-                                </span>
-                                <span class="text-sm font-medium text-fg group-hover/item:text-accent">
-                                  {service.data.name}
-                                </span>
-                              </a>
-                            </li>
-                          ))}
+
+                    <div class="space-y-3">
+                      <div data-menu-pillar="managed">
+                        <p class={groupHeading}>{pillar.managed.title}</p>
+                        <ul class="mt-1.5 rounded-xl border border-accent/40 bg-surface-2/60 p-1" data-flagship-tile>
+                          {pillar.managed.services.map((service) => <MenuServiceLink service={service} />)}
+                          <li class="px-2 pb-1">
+                            <Badge tone="accent">Flagship</Badge>
+                          </li>
                         </ul>
                       </div>
-                    ))}
+                      <div data-menu-pillar="ai">
+                        <p class={groupHeading}>{pillar.ai.title}</p>
+                        <ul class="mt-1.5">
+                          {pillar.ai.services.map((service) => <MenuServiceLink service={service} />)}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div data-menu-pillar="cloud-devops">
+                      <p class={groupHeading}>{pillar['cloud-devops'].title}</p>
+                      <div class="mt-1.5 grid grid-cols-2 gap-x-2">
+                        {cloudColumns.map((column) => (
+                          <ul>
+                            {column.map((service) => <MenuServiceLink service={service} />)}
+                          </ul>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div data-menu-pillar="web-saas">
+                      <p class={groupHeading}>{pillar['web-saas'].title}</p>
+                      <ul class="mt-1.5">
+                        {pillar['web-saas'].services.map((service) => <MenuServiceLink service={service} />)}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </li>
             ) : (
-              <li class:list={[link.href === "/insights" && "hidden xl:block"]}>
+              <li>
                 <a href={link.href} data-nav-link="desktop" aria-current={isActive(link.href) ? 'page' : undefined} class:list={linkClass(link.href)}>
                   {link.label}
                 </a>
@@ -179,18 +195,71 @@ const linkClass = (href: string) => [
   >
     <ul class="flex flex-col px-3 py-3 sm:px-4">
       {
-        navLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              data-nav-link="mobile"
-              aria-current={isActive(link.href) ? 'page' : undefined}
-              class="flex min-h-12 items-center rounded-lg px-2 text-base font-medium text-fg hover:text-accent"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))
+        navLinks.map((link) =>
+          link.href === '/services' ? (
+            <li>
+              <!-- Expandable Services: the four pillars as collapsible groups (native details/summary, collapsed). -->
+              <button
+                type="button"
+                class="flex min-h-12 w-full items-center justify-between rounded-lg px-2 text-left text-base font-medium text-fg hover:text-accent"
+                aria-controls="mobile-services"
+                aria-expanded="false"
+                x-bind:aria-expanded="mobileServices.toString()"
+                x-on:click="mobileServices = !mobileServices"
+                data-mobile-services-toggle
+              >
+                {link.label}
+                <span class="inline-flex text-muted transition-transform duration-200" x-bind:class="mobileServices && 'rotate-180'">
+                  <ChevronDown aria-hidden="true" className="size-5" />
+                </span>
+              </button>
+              <div id="mobile-services" class="pb-2 pl-2" x-show="mobileServices" x-cloak x-transition.opacity.duration.150ms>
+                <a href="/services" data-nav-link="mobile" class="flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-link">
+                  View all services
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </a>
+                <a href="/start-here" data-nav-link="mobile" class="flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-link">
+                  Start here
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                </a>
+                {groups.map((g) => (
+                  <details class="group" data-mobile-pillar={g.pillar}>
+                    <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-lg px-2 text-sm font-semibold text-fg hover:text-accent [&::-webkit-details-marker]:hidden">
+                      {g.title}
+                      <span class="inline-flex text-muted transition-transform duration-200 group-open:rotate-180">
+                        <ChevronDown aria-hidden="true" className="size-4" />
+                      </span>
+                    </summary>
+                    <ul class="pb-1 pl-2">
+                      {g.services.map((service) => (
+                        <li>
+                          <a
+                            href={serviceHref(service)}
+                            data-nav-link="mobile"
+                            class="flex min-h-11 items-center rounded-lg px-2 text-sm text-muted hover:text-accent"
+                          >
+                            {service.data.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                ))}
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={link.href}
+                data-nav-link="mobile"
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                class="flex min-h-12 items-center rounded-lg px-2 text-base font-medium text-fg hover:text-accent"
+              >
+                {link.label}
+              </a>
+            </li>
+          ),
+        )
       }
       <li class="pt-3 pb-2">
         <Button href={cta.href} contactCta class="w-full">{cta.primary}</Button>

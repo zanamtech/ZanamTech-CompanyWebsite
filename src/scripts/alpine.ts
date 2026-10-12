@@ -201,6 +201,8 @@ export default (Alpine: Alpine) => {
   Alpine.data('siteHeader', () => ({
     open: false,
     services: false,
+    /** Mobile drawer: the expandable Services group (pillars inside are native <details>). */
+    mobileServices: false,
     closeTimer: 0,
     suppressFocusOpen: false,
     /** Pointer type of the most recent press on the Services item ('mouse' | 'touch' | 'pen' | ''). */
@@ -211,6 +213,7 @@ export default (Alpine: Alpine) => {
       document.addEventListener('astro:after-swap', () => {
         this.open = false;
         this.services = false;
+        this.mobileServices = false;
       });
     },
 

@@ -65,7 +65,8 @@ for (const device of [
       await expect(drawer).toBeVisible();
       await expect(hamburger).toHaveAttribute('aria-expanded', 'true');
       await expect(drawer.getByRole('link', { name: 'Book a Strategy Consultation' })).toBeVisible();
-      for (const label of ['Services', 'Managed Services', 'How We Work', 'About']) {
+      await expect(drawer.getByRole('button', { name: 'Services', exact: true })).toBeVisible();
+      for (const label of ['How We Work', 'Insights', 'About']) {
         const link = drawer.getByRole('link', { name: label, exact: true });
         await expect(link).toBeVisible();
         expect((await link.boundingBox())!.height).toBeLessThanOrEqual(52); // no awkward wrapping
@@ -102,7 +103,7 @@ test.describe('Desktop header at the lg breakpoint — iPad Pro 12.9 (1024px)', 
     await expect(parts.hamburger).toBeHidden();
     const { nav, ...others } = await visibleBoxes(page, parts);
     expectNoOverlaps({ nav, ...others });
-    for (const label of ['Services', 'Managed Services', 'How We Work', 'About']) {
+    for (const label of ['Services', 'How We Work', 'Insights', 'About']) {
       const link = parts.nav.getByRole('link', { name: label, exact: true });
       expect(await link.evaluate((el) => el.scrollWidth <= el.clientWidth)).toBe(true);
       expect((await link.boundingBox())!.height).toBeLessThanOrEqual(44);
@@ -129,7 +130,7 @@ test.describe('Desktop mega-menu card (1440px)', () => {
     await expect(menu).toBeVisible();
     const box = (await menu.boundingBox())!;
     const header = (await page.locator('header').boundingBox())!;
-    expect(box.width).toBeLessThanOrEqual(1248); // 78rem: four pillar columns (approved design exception D1)
+    expect(box.width).toBeLessThanOrEqual(1152); // 72rem: balanced pillar columns (approved design exception D1)
     expect(Math.abs(box.x + box.width / 2 - (header.x + header.width / 2))).toBeLessThanOrEqual(2); // centred under header
     expect(box.y).toBeGreaterThan(header.y + header.height); // floats below the bar (mt-2)
     await expect(menu.locator('a[href^="/services/"] svg')).toHaveCount(published.length); // icons retained

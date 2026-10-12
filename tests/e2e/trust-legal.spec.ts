@@ -24,10 +24,10 @@ test.describe('US4 — Trust, legal and company', () => {
     expect(body).toMatch(/^Expires: \d{4}-\d{2}-\d{2}T/m);
   });
 
-  test('footer: remote-first line, contact email, Privacy / Terms / Trust, and no address', async ({ page }) => {
+  test('footer: copyright line, contact email, Privacy / Terms / Trust, and no address', async ({ page }) => {
     await page.goto('/');
     const footer = page.locator('footer');
-    await expect(footer).toContainText('ZanamTech · Remote-first Cloud, DevOps & AI engineering');
+    await expect(footer).toContainText('ZanamTech · Cloud, DevOps & AI engineering');
     await expect(footer.getByRole('link', { name: 'contact@zanamtech.com' })).toBeVisible();
     for (const label of ['Privacy', 'Terms', 'Trust']) {
       await expect(footer.getByRole('navigation', { name: 'Legal' }).getByRole('link', { name: label, exact: true })).toBeVisible();

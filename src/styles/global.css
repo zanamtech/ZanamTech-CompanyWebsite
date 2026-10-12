@@ -165,6 +165,12 @@
     border-radius: 6px;
   }
 
+  /* Rings are for keyboard users: after a mouse or touch interaction, links and controls show none (see
+     src/scripts/input-modality.ts). Text fields keep their focus style because people type into them. */
+  html[data-modality='pointer'] :is(a, button, summary, [role='button'], [tabindex]):focus-visible {
+    outline: none;
+  }
+
   /*
    * Theme switch, fallback path (browsers without the View Transitions API).
    * Applied only for the ~200ms of a switch (class added/removed by the theme store), so hover states,

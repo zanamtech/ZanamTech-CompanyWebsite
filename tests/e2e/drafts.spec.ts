@@ -31,7 +31,7 @@ test.describe('US6 — Drafts and published content', () => {
     }
   });
 
-  test('the Insights link is in the desktop nav (from xl) and the footer when articles are published', async ({ page }, testInfo) => {
+  test('the Insights link is in the desktop nav and the footer when articles are published', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav (1440px)');
     test.skip(!insights.some((a) => !a.draft), 'No published articles');
     await page.goto('/');

@@ -23,8 +23,8 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await expect(page.locator('header')).toHaveAttribute('data-probe', 'persisted');
     await expect(page.locator('header')).toHaveCount(1);
 
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Managed Services' }).click();
-    await expect(page).toHaveURL(/\/services\/managed-cloud-devops\/?$/);
+    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Insights' }).click();
+    await expect(page).toHaveURL(/\/insights\/?$/);
     await expectSameRealm(page);
   });
 

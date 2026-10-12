@@ -23,7 +23,6 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   { label: 'Services', href: '/services' },
-  { label: 'Managed Services', href: '/services/managed-cloud-devops' },
   { label: 'How We Work', href: '/approach' },
   { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
