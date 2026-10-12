@@ -1,23 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
+import ResultsBand from '../components/sections/ResultsBand.astro';
+import LogoMarquee from '../components/sections/LogoMarquee.astro';
 import ProofStrip from '../components/sections/ProofStrip.astro';
-import Pillars from '../components/sections/Pillars.astro';
-import ServicesGrid from '../components/sections/ServicesGrid.astro';
-import Metrics from '../components/sections/Metrics.astro';
+import FlagshipSpotlight from '../components/sections/FlagshipSpotlight.astro';
+import PillarGrid from '../components/sections/PillarGrid.astro';
+import EntryOffers from '../components/sections/EntryOffers.astro';
+import ArtefactBand from '../components/sections/ArtefactBand.astro';
 import Process from '../components/sections/Process.astro';
 import Industries from '../components/sections/Industries.astro';
+import TrustBand from '../components/sections/TrustBand.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Faq from '../components/sections/Faq.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
+import { homeFaq } from '../data/faq';
 ---
 
+<!-- Section order: specs/002-enterprise-repositioning/spec.md, User Story 1, scenario 4. LogoMarquee and Testimonials
+     render nothing until verified, permissioned entries exist (ADR-003). -->
 <BaseLayout>
   <Hero />
+  <ResultsBand />
+  <LogoMarquee />
   <ProofStrip />
-  <Pillars />
-  <ServicesGrid />
-  <Metrics />
+  <FlagshipSpotlight />
+  <PillarGrid />
+  <EntryOffers />
+  <ArtefactBand />
   <Process />
   <Industries />
+  <TrustBand />
+  <Testimonials />
+  <Faq items={homeFaq} />
   <div class="pt-4 sm:pt-8 lg:pt-12">
     <CtaBand />
   </div>

@@ -333,34 +333,34 @@ are dev-only.
 **Purpose**: new sections and pages, composed only from existing primitives and motion.
 
 ### Foundation for this phase
-- [ ] T059 Rename `src/components/sections/Metrics.astro` to `ResultsBand.astro`. Keep `id`,
+- [X] T059 Rename `src/components/sections/Metrics.astro` to `ResultsBand.astro`. Keep `id`,
   markup, classes, shimmer and `data-counter` attributes. Update imports in `src/pages/index.astro`.
-- [ ] T060 Remove the deprecated `group` and `status` fields from `src/content.config.ts` and all
+- [X] T060 Remove the deprecated `group` and `status` fields from `src/content.config.ts` and all
   service files. Delete the legacy `getActiveServices` alias and point every caller
   (`Header.astro`, `Footer.astro`, `ServicesGrid.astro`, `ContactForm.astro`, `industries.astro`,
   `services/index.astro`, `[slug].astro`) at `getPublishedServices` / `getServicesByPillar`.
 
 ### US1: Home
-- [ ] T061 [P] [US1] Create `src/components/sections/FlagshipSpotlight.astro`. It uses `GlassCard`,
+- [X] T061 [P] [US1] Create `src/components/sections/FlagshipSpotlight.astro`. It uses `GlassCard`,
   the module list from `getFlagship()`, a 3-tier teaser from `managed-tiers.ts` (names plus coverage
   wording), `Button` to `/services/managed-cloud-devops`, and `data-reveal-group`.
-- [ ] T062 [P] [US1] Create `src/components/sections/PillarGrid.astro`: 4 cards (`GlassCard` +
+- [X] T062 [P] [US1] Create `src/components/sections/PillarGrid.astro`: 4 cards (`GlassCard` +
   `.card-hover` + `Icon`) linking to `/services#<pillar>`, each listing its published services.
   Same grid and gap utilities as `ServicesGrid`.
-- [ ] T063 [P] [US1] Create `src/components/sections/ArtefactCard.astro` and an artefact band on Home
+- [X] T063 [P] [US1] Create `src/components/sections/ArtefactCard.astro` and an artefact band on Home
   that lists visible `resources` entries (via `isVisible`) with a `Badge` "Sample". It renders
   nothing when none are visible.
-- [ ] T064 [P] [US1] Create `src/components/sections/TrustBand.astro`:
+- [X] T064 [P] [US1] Create `src/components/sections/TrustBand.astro`:
   - Reuse the three brand-pillar cards: extract the card markup from `Pillars.astro` into a shared
     loop over the same data, so the classes are identical.
   - Add the access-model points and `commitments.ts` as `Badge`s.
   - Link to `/trust`.
-- [ ] T065 [P] [US1] Create `src/components/sections/Faq.astro`:
+- [X] T065 [P] [US1] Create `src/components/sections/Faq.astro`:
   - Native `<details>/<summary>` inside `GlassCard`.
   - Chevron uses `group-open:rotate-180 transition-transform duration-200` (the same pattern as the
     dropdown chevron).
   - Data from `faq.ts`, or a `faq` prop for service pages.
-- [ ] T066 [US1] Recompose `src/pages/index.astro` in this order:
+- [X] T066 [US1] Recompose `src/pages/index.astro` in this order:
   1. Hero
   2. ResultsBand
   3. ProofStrip (heading "Technologies we work with")
@@ -378,12 +378,12 @@ are dev-only.
   TrustBand and PillarGrid). Update `src/components/sections/ProofStrip.astro` heading copy only.
 
 ### US2: Services and flagship
-- [ ] T067 [P] [US2] Create `src/components/sections/TierTable.astro`: 3 `GlassCard` columns, with
+- [X] T067 [P] [US2] Create `src/components/sections/TierTable.astro`: 3 `GlassCard` columns, with
   the Professional card featured using the existing accent border. Shows scope and coverage
   wording only.
-- [ ] T068 [P] [US2] Create `src/components/sections/SeverityMatrix.astro`: P1–P4 definitions in a
+- [X] T068 [P] [US2] Create `src/components/sections/SeverityMatrix.astro`: P1–P4 definitions in a
   list of `GlassCard`s or a table, using the existing table/list typography.
-- [ ] T069 [US2] Extend `src/pages/services/[slug].astro`:
+- [X] T069 [US2] Extend `src/pages/services/[slug].astro`:
   - Generate paths from `getPublishedServices()`. Use `seoTitle` for `<title>` when present.
   - Add "What you get" (deliverables), engagement types (`Badge`s), the FAQ (`Faq` component) and
     the related offer card.
@@ -391,10 +391,10 @@ are dev-only.
     scenarios.
   - A flagship branch renders modules, TierTable, SeverityMatrix, cadence, the 4-week onboarding,
     exit terms and the FAQ.
-- [ ] T070 [US2] Rework `src/pages/services/index.astro`: 4 pillar sections with `id` anchors
+- [X] T070 [US2] Rework `src/pages/services/index.astro`: 4 pillar sections with `id` anchors
   (`#managed`, `#cloud-devops`, `#web-saas`, `#ai`), the flagship first, then an EntryOffers teaser.
   Uses existing `ServiceCard`.
-- [ ] T071 [US2] Rework the mega-menu and mobile drawer in `src/components/layout/Header.astro`:
+- [X] T071 [US2] Rework the mega-menu and mobile drawer in `src/components/layout/Header.astro`:
   - 4 pillar columns (`lg:grid-cols-4`; the panel widens with the existing container utilities)
     with the same item markup and icons, plus a "Start here" link.
   - Primary nav: Services, Managed Services (`/services/managed-cloud-devops`), How We Work
@@ -409,88 +409,88 @@ are dev-only.
     behaviour) and on mobile.
 
 ### US3: Entry offers and How We Work
-- [ ] T073 [P] [US3] Create `src/components/sections/OfferCard.astro` and `EntryOffers.astro`: cards
+- [X] T073 [P] [US3] Create `src/components/sections/OfferCard.astro` and `EntryOffers.astro`: cards
   from `offers.ts` showing duration, inputs, deliverables and next step, with no fees.
-- [ ] T074 [P] [US3] Create `src/components/sections/AgencyPartners.astro`: the "For software
+- [X] T074 [P] [US3] Create `src/components/sections/AgencyPartners.astro`: the "For software
   agencies" section (white-label or co-branded, NDA, mutual non-solicitation) with a CTA that
   prefills "Agency partnership".
-- [ ] T075 [US3] Create `src/pages/start-here.astro`: `PageHero` + EntryOffers (full detail) +
+- [X] T075 [US3] Create `src/pages/start-here.astro`: `PageHero` + EntryOffers (full detail) +
   `CtaBand`.
-- [ ] T076 [US3] Rework `src/pages/approach.astro` (How We Work): Process (phases; the connector
+- [X] T076 [US3] Rework `src/pages/approach.astro` (How We Work): Process (phases; the connector
   animation is unchanged), engagement models, cadence, access model, AI-tool policy summary,
   AgencyPartners, CtaBand.
 
 ### US4: Trust, About, Terms, footer, security.txt
-- [ ] T077 [P] [US4] Create `src/pages/trust.astro`, reusing the `privacy.astro` long-form layout
+- [X] T077 [P] [US4] Create `src/pages/trust.astro`, reusing the `privacy.astro` long-form layout
   (TOC grid and sections):
   - security practices, access model, AI-tool policy
   - NDA/MSA/DPA on request, sub-processor list, data-residency options
   - security contact (security@zanamtech.com)
   - no continuity claim
-- [ ] T078 [P] [US4] Create `src/pages/terms.astro` in the same layout: acceptable use, no warranty,
+- [X] T078 [P] [US4] Create `src/pages/terms.astro` in the same layout: acceptable use, no warranty,
   IP, governing law.
-- [ ] T079 [P] [US4] Rework the Leadership section of `src/pages/about.astro` from `leadership.ts`:
+- [X] T079 [P] [US4] Rework the Leadership section of `src/pages/about.astro` from `leadership.ts`:
   name, role, capability bio, LinkedIn and photo (each hidden when empty), and a "Remote-first"
   statement. No years, badges or city.
-- [ ] T080 [P] [US4] Update `src/components/layout/Footer.astro`:
+- [X] T080 [P] [US4] Update `src/components/layout/Footer.astro`:
   - The "ZanamTech · Remote-first Cloud, DevOps & AI engineering" line, contact@zanamtech.com, and
     the company LinkedIn (hidden when empty).
   - Links to Privacy, Terms and Trust. Industries stays in the footer.
   - Services listed by pillar. No address.
-- [ ] T081 [P] [US4] Create `public/.well-known/security.txt` (RFC 9116):
+- [X] T081 [P] [US4] Create `public/.well-known/security.txt` (RFC 9116):
   `Contact: mailto:security@zanamtech.com`, `Expires:` 2027-10-12 in ISO format,
   `Preferred-Languages: en`, `Canonical: https://www.zanamtech.com/.well-known/security.txt`.
-- [ ] T082 [P] [US4] Update `src/pages/industries.astro` to render the new segments with links to
+- [X] T082 [P] [US4] Update `src/pages/industries.astro` to render the new segments with links to
   published services.
 
 ### US5: Consultation form
-- [ ] T083 [US5] Extend `src/lib/lead.ts` per `contracts/lead-submission.md`:
+- [X] T083 [US5] Extend `src/lib/lead.ts` per `contracts/lead-submission.md`:
   - `region`, `companySize` and `cloudPlatform` with option constants (Company size `1–10`,
     `11–50`, `51–200`, `201–1,000`, `1,000+`).
   - `AGENCY_PARTNERSHIP` constant; validation; `FIELD_ORDER`; payload with `"Not specified"`
     defaults.
-- [ ] T084 [US5] Add 3 optional menus to the `menus` array in `src/components/ContactForm.astro`,
+- [X] T084 [US5] Add 3 optional menus to the `menus` array in `src/components/ContactForm.astro`,
   each with a hidden native select fallback. Service options are the published names, then "Agency
   partnership", then "Other / Not sure yet". Extend the `leadForm` state in
   `src/scripts/alpine.ts` only where needed: the existing dropdown machinery is generic over
   `menus`.
-- [ ] T085 [US5] Re-measure the desktop dialog fit at 1366×768 and 1280×720 against a production
+- [X] T085 [US5] Re-measure the desktop dialog fit at 1366×768 and 1280×720 against a production
   build. If a scrollbar appears, compact the layout using existing spacing utilities only. Record the
   measurements in the PHR.
 
 ### US6: Insights and resources
-- [ ] T086 [P] [US6] Create `src/pages/insights/index.astro` and `src/pages/insights/[slug].astro`:
+- [X] T086 [P] [US6] Create `src/pages/insights/index.astro` and `src/pages/insights/[slug].astro`:
   - Built from `isVisible` entries, using the `PageHero` and long-form article typography already
     used on the privacy page.
   - Draft pages show a `Badge` "DRAFT". Sources are rendered as links.
-- [ ] T087 [P] [US6] Create `src/pages/resources/[slug].astro` for visible resources, with a `Badge`
+- [X] T087 [P] [US6] Create `src/pages/resources/[slug].astro` for visible resources, with a `Badge`
   "Sample" (and "DRAFT" in dev).
 
 ### US7: Gated proof
-- [ ] T088 [P] [US7] Create `src/components/sections/LogoMarquee.astro`, reusing `.marquee*` and
+- [X] T088 [P] [US7] Create `src/components/sections/LogoMarquee.astro`, reusing `.marquee*` and
   `.tech-pill` styling. It renders only `verifiedOnly(clients)` and returns nothing when the list is
   empty.
-- [ ] T089 [P] [US7] Create `src/components/sections/Testimonials.astro` (`GlassCard` grid). It renders
+- [X] T089 [P] [US7] Create `src/components/sections/Testimonials.astro` (`GlassCard` grid). It renders
   only verified entries and nothing when there are none.
-- [ ] T090 [P] [US7] Create `src/components/sections/CaseStudyCard.astro`, plus
+- [X] T090 [P] [US7] Create `src/components/sections/CaseStudyCard.astro`, plus
   `src/pages/case-studies/index.astro` and `[slug].astro`. `getStaticPaths` uses verified entries
   only, so no pages are generated when there are none.
-- [ ] T091 [US7] Mount LogoMarquee and Testimonials on Home (after ResultsBand and before Faq
+- [X] T091 [US7] Mount LogoMarquee and Testimonials on Home (after ResultsBand and before Faq
   respectively). They render nothing at launch.
 
 ### Phase end
-- [ ] T092 Update the structure assertions in the following specs:
+- [X] T092 Update the structure assertions in the following specs:
   - `tests/e2e/responsive-header.spec.ts`: mega-menu icon count derived from published services.
   - `tests/e2e/services.spec.ts`: pillar headings and the "Start here" link.
   - `tests/e2e/navigation.spec.ts`: nav items.
   - `tests/e2e/home.spec.ts`: section order and the single CTA.
   - `tests/e2e/touch-menu.spec.ts`: the 4-pillar menu on touch tablets.
-- [ ] T093 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all
+- [X] T093 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all
   green. Run `npm run lhci` locally against the production build and record the scores against the
   Principle I budgets; any miss blocks the phase. Take a visual spot-check screenshot of Home and the
   flagship page at 1440 and 390 in both themes.
-- [ ] T094 Commit `feat(ui): v3 pages and sections composed from existing primitives`.
-- [ ] T095 Write the PHR. **STOP**: summarise Phase 3, including the screenshots and dialog
+- [X] T094 Commit `feat(ui): v3 pages and sections composed from existing primitives`.
+- [X] T095 Write the PHR. **STOP**: summarise Phase 3, including the screenshots and dialog
   measurements, and wait for approval.
 
 **Checkpoint**: every page and section from the spec exists; proof stays hidden; the design is unchanged.

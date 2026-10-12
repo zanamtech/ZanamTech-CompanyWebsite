@@ -1,0 +1,15 @@
+---
+import { severityLevels } from '../../data/managed-tiers';
+---
+
+<!-- Severity definitions only. Response targets per severity live in the SOW, never on the site. -->
+<dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" data-reveal-group>
+  {
+    severityLevels.map((s) => (
+      <div data-severity={s.level} class="glass rounded-2xl p-5">
+        <dt class="text-2xl font-bold text-gradient-display">{s.level}</dt>
+        <dd class="mt-2 text-sm text-fg">{s.definition}</dd>
+      </div>
+    ))
+  }
+</dl>

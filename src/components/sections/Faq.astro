@@ -1,0 +1,41 @@
+---
+import { ChevronDown } from 'lucide-react';
+import type { FaqItem } from '../../data/faq';
+
+interface Props {
+  items: FaqItem[];
+  id?: string;
+  title?: string;
+  eyebrow?: string;
+  /** Render as a sub-section (no container or section padding), e.g. inside a service page. */
+  embedded?: boolean;
+}
+
+const { items, id = 'faq', title = 'Frequently asked questions', eyebrow = 'FAQ', embedded = false } = Astro.props;
+---
+
+{
+  items.length > 0 && (
+    <section id={id} aria-labelledby={`${id}-title`} class:list={[!embedded && 'container-page section-y']}>
+      <div class="max-w-2xl">
+        {!embedded && <p class="eyebrow">{eyebrow}</p>}
+        <h2 id={`${id}-title`} class:list={['font-bold text-fg', embedded ? 'text-2xl' : 'mt-3 text-3xl sm:text-4xl']}>
+          {title}
+        </h2>
+      </div>
+      <div class:list={['grid gap-3', embedded ? 'mt-6' : 'mt-10 lg:grid-cols-2 lg:items-start']}>
+        {items.map((item) => (
+          <details data-faq class="glass group rounded-2xl transition-[border-color,box-shadow] duration-300 open:border-accent/40 hover:border-accent/50">
+            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-5 py-4 font-semibold text-fg focus-visible:outline-2 focus-visible:outline-offset-2 [&::-webkit-details-marker]:hidden">
+              <span>{item.q}</span>
+              <span class="inline-flex shrink-0 text-muted transition-transform duration-200 group-open:rotate-180">
+                <ChevronDown aria-hidden="true" className="size-4" />
+              </span>
+            </summary>
+            <p class="px-5 pb-5 text-muted">{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}

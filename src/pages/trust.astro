@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import LongFormDoc from '../components/sections/LongFormDoc.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import { site } from '../data/site';
+import { accessModel, aiToolPolicy } from '../data/engagement';
+
+// Trust page (spec 002 FR-024). States only what is in place today: no certifications, badges or continuity claims
+// until they are actually held (Constitution III).
+const sections = [
+  { id: 'security-practices', title: 'Security practices' },
+  { id: 'access-model', title: 'How we access your environment' },
+  { id: 'ai-tool-policy', title: 'AI-tool policy' },
+  { id: 'contracts', title: 'Contracts & data protection' },
+  { id: 'sub-processors', title: 'Sub-processors' },
+  { id: 'data-residency', title: 'Data residency' },
+  { id: 'reporting-issues', title: 'Reporting a security issue' },
+];
+const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
+---
+
+<BaseLayout
+  title="Security & Trust"
+  description="How ZanamTech protects client environments and data: least-privilege access, AI-tool policy, contracts, sub-processors, data residency and security contact."
+>
+  <PageHero
+    eyebrow="Trust"
+    title="Security & Trust"
+    lead="How we protect your environments and data, written for the security and procurement teams who review us."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Security & Trust' }]}
+  />
+
+  <LongFormDoc sections={sections}>
+    <section id="security-practices" aria-labelledby="practices-title">
+      <h2 id="practices-title"><span class="text-accent tabular-nums">{num('security-practices')}.</span> Security practices</h2>
+      <ul>
+        <li><strong>MFA everywhere:</strong> every account we use, ours and yours, is protected with multi-factor authentication.</li>
+        <li><strong>Password manager and secrets handling:</strong> credentials are stored in a password manager or your own vault, never in email, chat or code.</li>
+        <li><strong>Least privilege:</strong> access is limited to what each task needs and reviewed when the work changes.</li>
+        <li><strong>Documented changes:</strong> infrastructure changes run through code review and pipelines with an audit trail.</li>
+        <li><strong>Incident response:</strong> a written incident-response runbook covers detection, containment, communication and follow-up.</li>
+      </ul>
+    </section>
+
+    <section id="access-model" aria-labelledby="access-title">
+      <h2 id="access-title"><span class="text-accent tabular-nums">{num('access-model')}.</span> How we access your environment</h2>
+      <ul>
+        {accessModel.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>
+        Runbooks, architecture diagrams and the credentials registry live in your own repositories and vault, so anyone
+        you authorise can pick up the work. Access is removed at the end of an engagement.
+      </p>
+    </section>
+
+    <section id="ai-tool-policy" aria-labelledby="ai-title">
+      <h2 id="ai-title"><span class="text-accent tabular-nums">{num('ai-tool-policy')}.</span> AI-tool policy</h2>
+      <p>This policy applies to every engagement and is repeated in every Statement of Work.</p>
+      <ul>
+        {aiToolPolicy.map((item) => <li>{item}</li>)}
+      </ul>
+    </section>
+
+    <section id="contracts" aria-labelledby="contracts-title">
+      <h2 id="contracts-title"><span class="text-accent tabular-nums">{num('contracts')}.</span> Contracts &amp; data protection</h2>
+      <ul>
+        <li><strong>NDA:</strong> a mutual NDA is available before discovery.</li>
+        <li><strong>MSA and SOW:</strong> every engagement runs on a written Statement of Work under a master services agreement.</li>
+        <li>
+          <strong>DPA:</strong> where we process personal data on your behalf, a data processing agreement is available on
+          request, covering the obligations of a processor under Article 28 of the GDPR and UK GDPR.
+        </li>
+      </ul>
+    </section>
+
+    <section id="sub-processors" aria-labelledby="subprocessors-title">
+      <h2 id="subprocessors-title"><span class="text-accent tabular-nums">{num('sub-processors')}.</span> Sub-processors</h2>
+      <p>
+        Client data stays in your own cloud accounts and tools wherever possible. The services we use to run our own
+        business, such as email, the website form provider and document storage, are listed in a sub-processor list
+        available on request. We notify clients before adding a sub-processor that will handle their data.
+      </p>
+    </section>
+
+    <section id="data-residency" aria-labelledby="residency-title">
+      <h2 id="residency-title"><span class="text-accent tabular-nums">{num('data-residency')}.</span> Data residency</h2>
+      <p>
+        Environments are built in the Azure, AWS or Google Cloud regions you choose, including UAE and Saudi Arabia regions,
+        so data stays where your obligations require it.
+      </p>
+    </section>
+
+    <section id="reporting-issues" aria-labelledby="reporting-title">
+      <h2 id="reporting-title"><span class="text-accent tabular-nums">{num('reporting-issues')}.</span> Reporting a security issue</h2>
+      <p>
+        If you believe you have found a security issue affecting ZanamTech or this website, please email{' '}
+        <a href={`mailto:${site.securityEmail}`} class="font-semibold text-link underline underline-offset-2">{site.securityEmail}</a>.
+        Our security contact details are also published in{' '}
+        <a href="/.well-known/security.txt" class="font-semibold text-link underline underline-offset-2">security.txt</a>.
+      </p>
+    </section>
+  </LongFormDoc>
+
+  <CtaBand
+    title="Questions from your security team?"
+    body="We answer security questionnaires and walk your reviewers through our access model, AI-tool policy and contracts during the strategy consultation."
+  />
+</BaseLayout>

@@ -23,15 +23,25 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   { label: 'Services', href: '/services' },
-  { label: 'Approach', href: '/approach' },
-  { label: 'Industries', href: '/industries' },
+  { label: 'Managed Services', href: '/services/managed-cloud-devops' },
+  { label: 'How We Work', href: '/approach' },
+  { label: 'Insights', href: '/insights' },
   { label: 'About', href: '/about' },
 ];
 
 export const companyLinks: NavLink[] = [
   { label: 'About', href: '/about' },
-  { label: 'Approach', href: '/approach' },
+  { label: 'How We Work', href: '/approach' },
+  { label: 'Start here', href: '/start-here' },
   { label: 'Industries', href: '/industries' },
+  { label: 'Insights', href: '/insights' },
+  { label: 'Case Studies', href: '/case-studies' },
   { label: 'Contact', href: '/contact' },
+];
+
+/** Legal and trust links shown in the footer bar. */
+export const legalLinks: NavLink[] = [
   { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms', href: '/terms' },
+  { label: 'Trust', href: '/trust' },
 ];

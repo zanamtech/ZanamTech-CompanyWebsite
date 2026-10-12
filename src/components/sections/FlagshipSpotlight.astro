@@ -1,0 +1,55 @@
+---
+import { ArrowRight, CircleCheck } from 'lucide-react';
+import Button from '../ui/Button.astro';
+import Badge from '../ui/Badge.astro';
+import GlassCard from '../ui/GlassCard.astro';
+import { getFlagship, serviceHref } from '../../lib/services';
+import { tiers } from '../../data/managed-tiers';
+
+const flagship = await getFlagship();
+const { name, summary, capabilities } = flagship.data;
+// Module titles only ("Cloud operations: …" → "Cloud operations") keep the teaser scannable.
+const modules = capabilities.map((c) => c.split(':')[0]);
+---
+
+<!-- Flagship spotlight (spec 002 US1). Composed from GlassCard, Badge and Button with the standard reveal. -->
+<section id="flagship" aria-labelledby="flagship-title" class="container-page section-y">
+  <div class="grid gap-10 lg:grid-cols-12 lg:items-start">
+    <div class="lg:col-span-6">
+      <p class="eyebrow">Flagship service</p>
+      <h2 id="flagship-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">{name}</h2>
+      <p class="mt-4 text-lg text-muted">{summary}</p>
+      <ul class="mt-8 grid gap-3 sm:grid-cols-2" data-reveal-group data-reveal-stagger="0.06" data-reveal-distance="12">
+        {
+          modules.map((m) => (
+            <li class="flex gap-2.5 text-fg">
+              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+              <span>{m}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-10">
+        <Button href={serviceHref(flagship)} variant="secondary">
+          Explore {name}
+          <ArrowRight aria-hidden="true" className="size-4" />
+        </Button>
+      </div>
+    </div>
+
+    <ul class="space-y-4 lg:col-span-6" aria-label="Retainer tiers" data-reveal-group data-reveal-stagger="0.1" data-reveal-distance="24">
+      {
+        tiers.map((t) => (
+          <GlassCard as="li" class:list={['card-hover relative', t.featured && 'border-accent/50']}>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h3 class="text-lg font-semibold text-fg">{t.name}</h3>
+              {t.featured && <Badge tone="accent">Recommended</Badge>}
+            </div>
+            <p class="mt-1 text-sm font-medium text-accent">{t.coverage}</p>
+            <p class="mt-3 text-sm text-muted">{t.includes.slice(0, 4).join(' · ')}</p>
+          </GlassCard>
+        ))
+      }
+    </ul>
+  </div>
+</section>

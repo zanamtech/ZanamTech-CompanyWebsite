@@ -16,15 +16,15 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await markRealm(page);
     await page.locator('header').evaluate((el) => (el.dataset.probe = 'persisted'));
 
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Approach' }).click();
+    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'How We Work' }).click();
     await expect(page).toHaveURL(/\/approach\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Consultative engagement');
     await expectSameRealm(page);
     await expect(page.locator('header')).toHaveAttribute('data-probe', 'persisted');
     await expect(page.locator('header')).toHaveCount(1);
 
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Industries' }).click();
-    await expect(page).toHaveURL(/\/industries\/?$/);
+    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Managed Services' }).click();
+    await expect(page).toHaveURL(/\/services\/managed-cloud-devops\/?$/);
     await expectSameRealm(page);
   });
 
@@ -35,11 +35,11 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await nav.getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about\/?$/);
     await expect(nav.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page');
-    await expect(nav.getByRole('link', { name: 'Approach' })).not.toHaveAttribute('aria-current', 'page');
+    await expect(nav.getByRole('link', { name: 'How We Work' })).not.toHaveAttribute('aria-current', 'page');
 
-    await nav.getByRole('link', { name: 'Approach' }).click();
+    await nav.getByRole('link', { name: 'How We Work' }).click();
     await expect(page).toHaveURL(/\/approach\/?$/);
-    await expect(nav.getByRole('link', { name: 'Approach' })).toHaveAttribute('aria-current', 'page');
+    await expect(nav.getByRole('link', { name: 'How We Work' })).toHaveAttribute('aria-current', 'page');
     await expect(nav.getByRole('link', { name: 'About' })).not.toHaveAttribute('aria-current', 'page');
   });
 
@@ -85,8 +85,8 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await markRealm(page);
     await page.getByRole('button', { name: 'Open menu' }).click();
     const mobileNav = page.locator('#mobile-nav');
-    await mobileNav.getByRole('link', { name: 'Industries' }).click();
-    await expect(page).toHaveURL(/\/industries\/?$/);
+    await mobileNav.getByRole('link', { name: 'How We Work' }).click();
+    await expect(page).toHaveURL(/\/approach\/?$/);
     await expect(mobileNav).toBeHidden();
     await expectSameRealm(page);
   });

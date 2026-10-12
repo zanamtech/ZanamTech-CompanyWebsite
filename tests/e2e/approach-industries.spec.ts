@@ -1,19 +1,21 @@
 import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
 
-import { engagementPhases } from '../../src/data/engagement';
+import { engagementModelCatalog, engagementPhases } from '../../src/data/engagement';
 import { segments } from '../../src/data/segments';
 
 const PHASES = engagementPhases.map((p) => p.name);
 const SEGMENTS = segments.map((s) => s.name);
 
 test.describe('US5 — Approach, Industries & About', () => {
-  test('approach page lists the four phases in order and both engagement models without prices', async ({ page }) => {
+  test('How We Work lists the four phases in order, the five engagement models and the agency section, without prices', async ({ page }) => {
     await page.goto('/approach');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     const phases = await page.locator('[data-phase] h3').allInnerTexts();
     expect(phases.map((p) => p.trim())).toEqual(PHASES);
-    await expect(page.getByRole('heading', { name: 'Fixed-Scope Setup' })).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Monthly Retainer' })).toBeVisible();
+    for (const model of engagementModelCatalog) {
+      await expect(page.getByRole('heading', { level: 3, name: model.name, exact: true })).toBeVisible();
+    }
+    await expect(page.getByRole('heading', { name: 'Your DevOps partner, behind your brand' })).toBeVisible();
     expect(await page.locator('main').innerText()).not.toMatch(/[$€£]\s?\d|per (?:hour|month)/i);
   });
 

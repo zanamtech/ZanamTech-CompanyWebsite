@@ -1,4 +1,4 @@
-// Lead validation and submission — contract: specs/001-enterprise-website-baseline/contracts/lead-submission.md
+// Lead validation and submission — contract: specs/002-enterprise-repositioning/contracts/lead-submission.md
 
 export interface LeadInput {
   name: string;
@@ -7,6 +7,10 @@ export interface LeadInput {
   /** Optional; international format encouraged (e.g. +1 555 010 0000). */
   phone: string;
   service: string;
+  /** Optional qualifying fields (spec 002 FR-033). */
+  region: string;
+  companySize: string;
+  cloudPlatform: string;
   /** Optional engagement-size band (no currency amounts, per Constitution III). */
   budget: string;
   message: string;
@@ -27,6 +31,14 @@ export const TIMEOUT_MS = 10_000;
 /** Fallback choice in the required service dropdown. */
 export const OTHER_SERVICE = 'Other / Not sure yet';
 
+/** Agency partnership option (spec 002 FR-032); also selectable via ?service=agency-partnership. */
+export const AGENCY_PARTNERSHIP = 'Agency partnership';
+export const AGENCY_PARTNERSHIP_SLUG = 'agency-partnership';
+
+export const REGION_OPTIONS = ['US / Canada', 'UK / Europe', 'GCC', 'Other'] as const;
+export const COMPANY_SIZE_OPTIONS = ['1–10', '11–50', '51–200', '201–1,000', '1,000+'] as const;
+export const CLOUD_PLATFORM_OPTIONS = ['Azure', 'AWS', 'Both', 'Other'] as const;
+
 /** Engagement-size bands for the optional budget question; scope-based labels, no prices. */
 export const BUDGET_OPTIONS = [
   'Focused engagement (single workload or audit)',
@@ -39,7 +51,25 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_RE = /^\+?[0-9][0-9\s().-]{6,19}$/;
 
 /** Field order used to focus the first invalid control. */
-export const FIELD_ORDER: LeadField[] = ['name', 'email', 'company', 'phone', 'service', 'budget', 'message', 'consent'];
+export const FIELD_ORDER: LeadField[] = [
+  'name',
+  'email',
+  'company',
+  'phone',
+  'service',
+  'budget',
+  'region',
+  'companySize',
+  'cloudPlatform',
+  'message',
+  'consent',
+];
+
+const OPTIONAL_SELECTS = [
+  ['region', REGION_OPTIONS],
+  ['companySize', COMPANY_SIZE_OPTIONS],
+  ['cloudPlatform', CLOUD_PLATFORM_OPTIONS],
+] as const;
 
 export function validateLead(input: LeadInput, allowedServices: readonly string[] = []): LeadErrors {
   const errors: LeadErrors = {};
@@ -58,6 +88,9 @@ export function validateLead(input: LeadInput, allowedServices: readonly string[
   }
   if (input.budget && !(BUDGET_OPTIONS as readonly string[]).includes(input.budget)) {
     errors.budget = 'Please choose an option from the list.';
+  }
+  for (const [field, options] of OPTIONAL_SELECTS) {
+    if (input[field] && !(options as readonly string[]).includes(input[field])) errors[field] = 'Please choose an option from the list.';
   }
   if (message.length < 20) errors.message = 'Please describe your requirements (at least 20 characters).';
   else if (message.length > 2000) errors.message = 'Please keep your message under 2000 characters.';
@@ -94,6 +127,9 @@ export async function submitLead(input: LeadInput, options: SubmitOptions): Prom
         company: input.company.trim(),
         phone: input.phone.trim(),
         service: input.service,
+        region: input.region || 'Not specified',
+        companySize: input.companySize || 'Not specified',
+        cloudPlatform: input.cloudPlatform || 'Not specified',
         budget: input.budget || 'Not specified',
         message: input.message.trim(),
         consent: true,

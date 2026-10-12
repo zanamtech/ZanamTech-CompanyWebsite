@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/sections/PageHero.astro';
+import EntryOffers from '../components/sections/EntryOffers.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Start here"
+  description="Fixed-scope entry offers: Cloud & DevOps Health Check, Cloud Cost Review, DevOps Governance Quick-Start, AI Opportunity Sprint and AI Automation Pilot."
+>
+  <PageHero
+    eyebrow="Start here"
+    title="Low-risk ways to start"
+    lead="Fixed-scope engagements with a clear output and a defined next step, so you can judge the fit before committing to a larger project or retainer."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Start here' }]}
+  />
+
+  <EntryOffers detailed withIntro={false} />
+
+  <CtaBand
+    title="Not sure which offer fits?"
+    body="Tell us about your environment in a strategy consultation and we will recommend the right starting point, with a written proposal and Statement of Work."
+  />
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import { ArrowRight, CircleCheck } from 'lucide-react';
+import Pillars from './Pillars.astro';
+import Badge from '../ui/Badge.astro';
+import { accessModel } from '../../data/engagement';
+import { commitments } from '../../data/commitments';
+---
+
+<!-- Trust band (spec 002 US1/US4): the three brand-pillar cards plus the access model and commitments. -->
+<Pillars
+  id="trust"
+  eyebrow="Trust & security"
+  title="Built to pass your security review"
+  lead="Least-privilege access, documented delivery and work that stays in your own accounts, so procurement and security teams can say yes."
+>
+  <div class="mt-10 grid gap-8 lg:grid-cols-2">
+    <div>
+      <h3 class="text-sm font-semibold text-fg">How we access your environment</h3>
+      <ul class="mt-4 space-y-2">
+        {
+          accessModel.map((item) => (
+            <li class="flex gap-2.5 text-sm text-muted">
+              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-sm font-semibold text-fg">What we commit to</h3>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        {commitments.map((c) => (
+          <li>
+            <Badge>{c}</Badge>
+          </li>
+        ))}
+      </ul>
+      <a href="/trust" class="mt-6 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link hover:underline">
+        Security &amp; trust
+        <ArrowRight aria-hidden="true" className="size-4" />
+      </a>
+    </div>
+  </div>
+</Pillars>

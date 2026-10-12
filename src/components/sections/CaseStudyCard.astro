@@ -1,0 +1,37 @@
+---
+import { ArrowRight } from 'lucide-react';
+import Badge from '../ui/Badge.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  study: CollectionEntry<'caseStudies'>;
+}
+
+const { study } = Astro.props;
+const { title, industry, challenge, result } = study.data;
+---
+
+<li data-case-study class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
+  <Badge class="self-start">{industry}</Badge>
+  <h3 class="mt-4 text-lg font-semibold text-fg">
+    <a href={`/case-studies/${study.id}`} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
+      {title}
+    </a>
+  </h3>
+  <p class="mt-2 text-sm text-muted">{challenge}</p>
+  <p class="mt-4 rounded-lg border border-border bg-surface-2/70 px-3 py-2 text-sm text-fg">
+    <span class="font-semibold text-accent">Result:</span>{' '}
+    {result}
+  </p>
+  <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
+    Read the case study
+    <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+  </p>
+</li>
+
+<style>
+  li:has(a:focus-visible) {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+</style>

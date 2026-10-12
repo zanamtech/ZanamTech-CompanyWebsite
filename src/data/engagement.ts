@@ -37,15 +37,8 @@ export const engagementPhases: EngagementPhase[] = [
   },
 ];
 
-export interface EngagementModel {
-  name: string;
-  description: string;
-  suitedFor: string[];
-}
-
 /**
- * v3 engagement models (docs/02_Services_Catalog.md). Rendered from Phase 3 onwards; `engagementModels` below stays
- * until the How We Work page switches over.
+ * v3 engagement models (docs/02_Services_Catalog.md).
  */
 export interface EngagementModelEntry {
   id: 'assessment' | 'project' | 'retainer' | 'agency' | 'capacity';
@@ -114,18 +107,3 @@ export const aiToolPolicy = [
   'Every AI-assisted change is reviewed before it reaches a client environment.',
   'A client can opt out of AI-assisted work in its SOW.',
 ] as const;
-
-export const engagementModels: EngagementModel[] = [
-  {
-    name: 'Fixed-Scope Setup',
-    description:
-      'A one-time engineering deployment with defined deliverables, milestones and acceptance criteria, scoped in the Statement of Work.',
-    suitedFor: ['Cloud migrations and containerization', 'WAF and zero-trust perimeter hardening', 'CI/CD pipeline and observability rollouts'],
-  },
-  {
-    name: 'Monthly Retainer',
-    description:
-      'Ongoing managed operations with continuous monitoring, patching, incident response and a monthly service report.',
-    suitedFor: ['Managed cloud and DevOps operations', 'Continuous cost governance', 'Evolving platforms that need ongoing engineering'],
-  },
-];

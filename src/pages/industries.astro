@@ -5,9 +5,9 @@ import PageHero from '../components/sections/PageHero.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
 import Icon from '../components/ui/Icon.astro';
 import { segments } from '../data/segments';
-import { getActiveServices, serviceHref } from '../lib/services';
+import { getPublishedServices, serviceHref } from '../lib/services';
 
-const services = await getActiveServices();
+const services = await getPublishedServices();
 const serviceById = new Map(services.map((s) => [s.id, s]));
 ---
 

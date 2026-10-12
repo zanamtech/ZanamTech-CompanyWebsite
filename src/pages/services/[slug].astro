@@ -8,12 +8,18 @@ import CtaBand from '../../components/sections/CtaBand.astro';
 import GlassCard from '../../components/ui/GlassCard.astro';
 import Button from '../../components/ui/Button.astro';
 import Icon from '../../components/ui/Icon.astro';
-import { displayGroup, getActiveServices, serviceGroups, type Service } from '../../lib/services';
+import Badge from '../../components/ui/Badge.astro';
+import Faq from '../../components/sections/Faq.astro';
+import TierTable from '../../components/sections/TierTable.astro';
+import SeverityMatrix from '../../components/sections/SeverityMatrix.astro';
+import { getPublishedServices, servicePillars, type Service } from '../../lib/services';
 import { cta } from '../../data/site';
 import { resultsFootnote } from '../../data/results';
+import { offers } from '../../data/offers';
+import { cadence, engagementModelCatalog } from '../../data/engagement';
 
 export async function getStaticPaths() {
-  const services = await getActiveServices();
+  const services = await getPublishedServices();
   return services.map((service) => ({
     params: { slug: service.id },
     props: { service, all: services },
@@ -26,17 +32,19 @@ interface Props {
 }
 
 const { service, all } = Astro.props;
-const { name, icon, summary, capabilities, stack, outcome, scenarios } = service.data;
-const group = displayGroup(service);
+const { name, icon, summary, capabilities, stack, outcome, scenarios, deliverables, engagementTypes, faq, flagship, pillar } =
+  service.data;
 const hasReal = scenarios.some((s) => s.kind === 'real');
 const { Content } = await render(service);
-const related = all.filter((s) => displayGroup(s) === group && s.id !== service.id).slice(0, 3);
+const related = all.filter((s) => s.data.pillar === pillar && s.id !== service.id).slice(0, 3);
+const relatedOffer = offers.find((o) => o.id === service.data.relatedOffer);
+const engagementLabels = engagementModelCatalog.filter((m) => engagementTypes.includes(m.id)).map((m) => m.name);
 const contactHref = `${cta.href}?service=${service.id}`;
 ---
 
 <BaseLayout title={service.data.seoTitle ?? name} description={summary}>
   <PageHero
-    eyebrow={serviceGroups[group].title}
+    eyebrow={servicePillars[pillar].title}
     title={name}
     lead={summary}
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: name }]}
@@ -64,10 +72,24 @@ const contactHref = `${cta.href}?service=${service.id}`;
       </section>
 
       <section aria-labelledby="capabilities-title" class="mt-14">
-        <h2 id="capabilities-title" class="text-2xl font-bold text-fg">Core capabilities</h2>
+        <h2 id="capabilities-title" class="text-2xl font-bold text-fg">{flagship ? 'What the service covers' : 'Core capabilities'}</h2>
         <ul class="mt-6 space-y-4">
           {
             capabilities.map((item) => (
+              <li class="flex gap-3">
+                <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+                <span class="text-fg">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section aria-labelledby="deliverables-title" class="mt-14">
+        <h2 id="deliverables-title" class="text-2xl font-bold text-fg">What you get</h2>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {
+            deliverables.map((item) => (
               <li class="flex gap-3">
                 <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
                 <span class="text-fg">{item}</span>
@@ -92,6 +114,17 @@ const contactHref = `${cta.href}?service=${service.id}`;
       </GlassCard>
 
       <GlassCard>
+        <h2 class="text-sm font-semibold text-fg">How you can engage</h2>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {engagementLabels.map((label) => (
+            <li>
+              <Badge>{label}</Badge>
+            </li>
+          ))}
+        </ul>
+      </GlassCard>
+
+      <GlassCard>
         <h2 class="text-sm font-semibold text-fg">Technology stack</h2>
         <ul class="mt-4 flex flex-wrap gap-2">
           {
@@ -103,8 +136,85 @@ const contactHref = `${cta.href}?service=${service.id}`;
           }
         </ul>
       </GlassCard>
+
+      {
+        relatedOffer && (
+          <GlassCard class="card-hover">
+            <p class="text-sm font-semibold text-accent">A low-risk way to start</p>
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <h2 class="text-lg font-semibold text-fg">{relatedOffer.name}</h2>
+              <Badge tone="accent">{relatedOffer.duration}</Badge>
+            </div>
+            <p class="mt-2 text-sm text-muted">{relatedOffer.summary}</p>
+            <a
+              href={`/start-here#${relatedOffer.id}`}
+              class="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
+            >
+              See entry offers
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </a>
+          </GlassCard>
+        )
+      }
     </aside>
   </div>
+
+  {
+    flagship && (
+      <>
+        <section aria-labelledby="tiers-title" class="container-page section-y pt-0!">
+          <div class="max-w-2xl">
+            <p class="eyebrow">Retainer tiers</p>
+            <h2 id="tiers-title" class="mt-3 text-3xl font-bold text-fg">Choose the coverage your platform needs</h2>
+          </div>
+          <div class="mt-10">
+            <TierTable />
+          </div>
+        </section>
+
+        <section aria-labelledby="severity-title" class="container-page pb-12 sm:pb-16 lg:pb-20">
+          <div class="max-w-2xl">
+            <p class="eyebrow">Severity definitions</p>
+            <h2 id="severity-title" class="mt-3 text-3xl font-bold text-fg">How incidents are classified</h2>
+            <p class="mt-4 text-muted">Response targets for each severity are agreed in your Statement of Work.</p>
+          </div>
+          <div class="mt-10">
+            <SeverityMatrix />
+          </div>
+        </section>
+
+        <section aria-labelledby="operating-title" class="container-page pb-12 sm:pb-16 lg:pb-20">
+          <div class="grid gap-6 lg:grid-cols-3">
+            <GlassCard>
+              <h2 id="operating-title" class="text-lg font-semibold text-fg">Reporting cadence</h2>
+              <ul class="mt-4 space-y-2">
+                {cadence.map((c) => (
+                  <li class="flex gap-2 text-sm text-fg">
+                    <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
+            <GlassCard>
+              <h2 class="text-lg font-semibold text-fg">4-week onboarding</h2>
+              <p class="mt-4 text-sm text-muted">
+                Least-privilege access set up, a platform review, runbook and diagram baselines, monitoring and backup
+                checks, and an agreed reporting format before steady-state operations begin.
+              </p>
+            </GlassCard>
+            <GlassCard>
+              <h2 class="text-lg font-semibold text-fg">Exit terms</h2>
+              <p class="mt-4 text-sm text-muted">
+                A three-month minimum, then rolling with one month's notice. Runbooks, diagrams, code and credentials stay
+                in your accounts, and you receive a documented handover. No lock-in.
+              </p>
+            </GlassCard>
+          </div>
+        </section>
+      </>
+    )
+  }
 
   <section aria-labelledby="scenarios-title" class="border-y border-border bg-surface/60">
     <div class="container-page section-y">
@@ -144,6 +254,8 @@ const contactHref = `${cta.href}?service=${service.id}`;
       {hasReal && <p class="mt-6 text-sm text-muted">{resultsFootnote}</p>}
     </div>
   </section>
+
+  {faq && faq.length > 0 && <Faq items={faq} id="service-faq" title={`${name}: common questions`} />}
 
   {
     related.length > 0 && (

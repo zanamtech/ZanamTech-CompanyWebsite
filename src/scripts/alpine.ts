@@ -51,6 +51,9 @@ const emptyLead = (): LeadInput => ({
   company: '',
   phone: '',
   service: '',
+  region: '',
+  companySize: '',
+  cloudPlatform: '',
   budget: '',
   message: '',
   consent: false,
@@ -414,7 +417,7 @@ export default (Alpine: Alpine) => {
   }));
 
   /* ---------------------------------------------------------- lead form */
-  type MenuField = 'service' | 'budget';
+  type MenuField = 'service' | 'budget' | 'region' | 'companySize' | 'cloudPlatform';
 
   Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page'; idPrefix: string }) => ({
     fields: emptyLead(),

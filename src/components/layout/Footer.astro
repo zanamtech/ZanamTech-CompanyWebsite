@@ -1,9 +1,16 @@
 ---
 import Logo from './Logo.astro';
-import { site, companyLinks, pillars } from '../../data/site';
-import { getActiveServices, serviceHref } from '../../lib/services';
+import { site, companyLinks, legalLinks, pillars } from '../../data/site';
+import { leadership } from '../../data/leadership';
+import { getServicesByPillar, serviceHref } from '../../lib/services';
+import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
 
-const serviceLinks = (await getActiveServices()).map((s) => ({ label: s.data.name, href: serviceHref(s) }));
+const groups = await getServicesByPillar();
+const showInsights = await hasPublishedInsights();
+const showCaseStudies = await hasVerifiedCaseStudies();
+const company = companyLinks.filter(
+  (l) => (l.href !== '/insights' || showInsights) && (l.href !== '/case-studies' || showCaseStudies),
+);
 
 const year = new Date().getFullYear();
 ---
@@ -17,28 +24,49 @@ const year = new Date().getFullYear();
       <ul class="mt-6 flex flex-wrap gap-2" aria-label="Positioning">
         {pillars.map((p) => <li class="rounded-full border border-border-strong px-3 py-1 text-xs font-semibold text-fg">{p}</li>)}
       </ul>
+      <p class="mt-6 text-sm">
+        <a href={`mailto:${site.email}`} class="inline-flex min-h-11 items-center font-semibold text-link hover:underline sm:min-h-9">
+          {site.email}
+        </a>
+      </p>
+      {
+        leadership.companyLinkedin && (
+          <p class="text-sm">
+            <a href={leadership.companyLinkedin} rel="noopener" class="inline-flex min-h-11 items-center text-muted hover:text-accent sm:min-h-9">
+              ZanamTech on LinkedIn
+            </a>
+          </p>
+        )
+      }
     </div>
 
     <nav aria-label="Services" class="md:col-span-5">
       <h2 class="text-sm font-semibold text-fg">Services</h2>
-      <ul class="mt-4 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+      <div class="mt-4 grid gap-x-6 gap-y-5 sm:grid-cols-2">
         {
-          serviceLinks.map((link) => (
-            <li>
-              <a href={link.href} class="inline-flex min-h-11 items-center text-sm text-muted hover:text-accent sm:min-h-9">
-                {link.label}
-              </a>
-            </li>
+          groups.map((g) => (
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-muted uppercase">{g.title}</p>
+              <ul class="mt-1.5">
+                {g.services.map((s) => (
+                  <li>
+                    <a href={serviceHref(s)} class="inline-flex min-h-11 items-center text-sm text-muted hover:text-accent sm:min-h-8">
+                      {s.data.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))
         }
-      </ul>
+      </div>
     </nav>
 
     <nav aria-label="Company" class="md:col-span-3">
       <h2 class="text-sm font-semibold text-fg">Company</h2>
       <ul class="mt-4 grid gap-y-1">
         {
-          companyLinks.map((link) => (
+          company.map((link) => (
             <li>
               <a href={link.href} class="inline-flex min-h-11 items-center text-sm text-muted hover:text-accent sm:min-h-9">
                 {link.label}
@@ -51,9 +79,21 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="border-t border-border">
-    <div class="container-page flex flex-col gap-2 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-      <p>&copy; {year} {site.legalName}. All rights reserved.</p>
-      <p>Remote-first Cloud, DevOps &amp; AI engineering</p>
+    <div class="container-page flex flex-col gap-3 py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} ZanamTech · Remote-first Cloud, DevOps &amp; AI engineering</p>
+      <nav aria-label="Legal">
+        <ul class="flex gap-4">
+          {
+            legalLinks.map((link) => (
+              <li>
+                <a href={link.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
     </div>
   </div>
 </footer>

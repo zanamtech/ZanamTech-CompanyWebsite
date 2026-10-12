@@ -1,7 +1,15 @@
 ---
 import { Check, ChevronDown, CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
-import { getActiveServices } from '../lib/services';
-import { BUDGET_OPTIONS, OTHER_SERVICE } from '../lib/lead';
+import { getPublishedServices } from '../lib/services';
+import {
+  AGENCY_PARTNERSHIP,
+  AGENCY_PARTNERSHIP_SLUG,
+  BUDGET_OPTIONS,
+  CLOUD_PLATFORM_OPTIONS,
+  COMPANY_SIZE_OPTIONS,
+  OTHER_SERVICE,
+  REGION_OPTIONS,
+} from '../lib/lead';
 
 interface Props {
   /** Unique prefix so the dialog and page instances never share element ids. */
@@ -10,7 +18,11 @@ interface Props {
 }
 
 const { idPrefix, source } = Astro.props;
-const services = (await getActiveServices()).map((s) => ({ slug: s.id, name: s.data.name }));
+// Published services plus the agency partnership option (spec 002 FR-032); slugs drive ?service= preselection.
+const services = [
+  ...(await getPublishedServices()).map((s) => ({ slug: s.id, name: s.data.name })),
+  { slug: AGENCY_PARTNERSHIP_SLUG, name: AGENCY_PARTNERSHIP },
+];
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
@@ -48,6 +60,27 @@ const menus = [
     placeholder: 'Select a range',
     required: false,
     options: [...BUDGET_OPTIONS] as string[],
+  },
+  {
+    field: 'region',
+    label: 'Region (optional)',
+    placeholder: 'Select a region',
+    required: false,
+    options: [...REGION_OPTIONS] as string[],
+  },
+  {
+    field: 'companySize',
+    label: 'Company size (optional)',
+    placeholder: 'Select a size',
+    required: false,
+    options: [...COMPANY_SIZE_OPTIONS] as string[],
+  },
+  {
+    field: 'cloudPlatform',
+    label: 'Cloud platform (optional)',
+    placeholder: 'Select a platform',
+    required: false,
+    options: [...CLOUD_PLATFORM_OPTIONS] as string[],
   },
 ];
 ---

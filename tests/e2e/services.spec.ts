@@ -7,19 +7,21 @@ test.describe('US2 — Services', () => {
     await page.goto('/services');
     const names = await page.locator('[data-service-card] h3').allInnerTexts();
     expect(names.map((n) => n.trim()).sort()).toEqual([...publishedNames].sort());
-    await expect(page.getByRole('heading', { level: 2, name: 'Cloud & Infrastructure' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 2, name: 'Engineering & AI' })).toBeVisible();
+    for (const pillar of ['Managed Cloud & DevOps', 'Cloud & DevOps Engineering', 'Web & SaaS Engineering', 'Practical AI & Automation']) {
+      await expect(page.getByRole('heading', { level: 2, name: pillar, exact: true })).toBeVisible();
+    }
+    await expect(page.locator('#ai')).toBeAttached(); // /services#ai is the redirect target for the retired roadmap URL
   });
 
-  test('home page shows every published service in canonical order', async ({ page }) => {
+  test('home pillar grid lists every published service in canonical order', async ({ page }) => {
     await page.goto('/');
-    const names = await page.locator('#core-services [data-service-card] h3').allInnerTexts();
+    const names = await page.locator('#core-services [data-pillar] a[href^="/services/"]').allInnerTexts();
     expect(names.map((n) => n.trim())).toEqual(publishedNames);
   });
 
   test('every service detail page renders capabilities, outcome, footnote and its scenarios', async ({ page }) => {
     await page.goto('/');
-    const hrefs = await page.locator('#core-services [data-service-card] h3 a').evaluateAll((els) =>
+    const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
       els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
     );
     expect(hrefs).toHaveLength(published.length);
@@ -29,7 +31,8 @@ test.describe('US2 — Services', () => {
       const response = await page.goto(href!);
       expect(response?.status(), href!).toBe(200);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(service.name);
-      await expect(page.getByRole('heading', { name: 'Core capabilities' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: service.flagship ? 'What the service covers' : 'Core capabilities' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'What you get' })).toBeVisible();
       await expect(page.getByText('Outcome', { exact: true }).first()).toBeVisible();
       const hasReal = service.scenarios.some((s) => s.kind === 'real');
       // The past-engagements footnote appears only where a real result is shown.
@@ -43,7 +46,7 @@ test.describe('US2 — Services', () => {
 
   test('any service is reachable from home in two clicks', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#core-services [data-service-card] h3 a').nth(4).click();
+    await page.locator('#core-services [data-pillar] a[href^="/services/"]').nth(4).click();
     await expect(page).toHaveURL(new RegExp(`/services/${published[4].slug}/?$`));
   });
 

@@ -4,50 +4,32 @@ export type Service = CollectionEntry<'services'>;
 export type Pillar = Service['data']['pillar'];
 
 /** v3 pillars, in display order (docs/02_Services_Catalog.md, ADR-004). */
-export const servicePillars: Record<Pillar, { title: string; description: string; order: number }> = {
+export const servicePillars: Record<Pillar, { title: string; description: string; order: number; icon: string }> = {
   managed: {
     title: 'Managed Cloud & DevOps',
     description: 'We run your cloud and delivery platform: operations, environments, pipelines, backups and governance.',
     order: 1,
+    icon: 'ServerCog',
   },
   'cloud-devops': {
     title: 'Cloud & DevOps Engineering',
     description: 'Fixed-scope projects that modernise, secure and automate your Azure and AWS foundations.',
     order: 2,
+    icon: 'Layers',
   },
   'web-saas': {
     title: 'Web & SaaS Engineering',
     description: 'Cloud-native web applications, SaaS platforms, portals and integrations.',
     order: 3,
+    icon: 'CodeXml',
   },
   ai: {
     title: 'Practical AI & Automation',
     description: 'Automate manual work and put company knowledge to use, inside your own cloud tenant.',
     order: 4,
+    icon: 'BrainCircuit',
   },
 };
-
-/** Legacy (removed in T060): v1 two-column grouping used by the current UI. */
-export type ServiceGroup = 'cloud-infrastructure' | 'engineering-ai';
-
-/** Legacy (removed in T060): titles for {@link ServiceGroup}. */
-export const serviceGroups: Record<ServiceGroup, { title: string; description: string }> = {
-  'cloud-infrastructure': {
-    title: 'Cloud & Infrastructure',
-    description: 'Resilient, secure and cost-efficient foundations on Azure and AWS.',
-  },
-  'engineering-ai': {
-    title: 'Engineering & AI',
-    description: 'Managed operations, web and SaaS applications, and practical AI automation.',
-  },
-};
-
-/**
-   * Legacy (removed in T060): display group for the v1 UI: the legacy `group` when present, otherwise derived from the pillar
- * (cloud-devops → Cloud & Infrastructure; everything else → Engineering & AI), so new services always appear.
- */
-export const displayGroup = (s: Service): ServiceGroup =>
-  s.data.group ?? (s.data.pillar === 'cloud-devops' ? 'cloud-infrastructure' : 'engineering-ai');
 
 const byOrder = (a: Service, b: Service) => a.data.order - b.data.order;
 const byPillarThenOrder = (a: Service, b: Service) =>
@@ -59,7 +41,9 @@ export async function getPublishedServices(): Promise<Service[]> {
 }
 
 /** Published services grouped by pillar, in pillar order. */
-export async function getServicesByPillar(): Promise<{ pillar: Pillar; title: string; description: string; services: Service[] }[]> {
+export async function getServicesByPillar(): Promise<
+  { pillar: Pillar; title: string; description: string; icon: string; order: number; services: Service[] }[]
+> {
   const services = await getPublishedServices();
   return (Object.keys(servicePillars) as Pillar[])
     .sort((a, b) => servicePillars[a].order - servicePillars[b].order)
@@ -73,12 +57,7 @@ export async function getFlagship(): Promise<Service> {
   return flagships[0];
 }
 
-/**
-   * Legacy (removed in T060): temporary alias for the v1 UI; every published service, in the v1 global order.
- * It does not filter by group, so services added before the pillar UI ships still appear.
- */
-export async function getActiveServices(): Promise<Service[]> {
-  return (await getCollection('services', (s: Service) => s.data.published)).sort(byOrder);
-}
-
 export const serviceHref = (service: Service) => `/services/${service.id}`;
+
+/** Anchor of a pillar section on /services (e.g. /services#ai). */
+export const pillarHref = (pillar: Pillar) => `/services#${pillar}`;

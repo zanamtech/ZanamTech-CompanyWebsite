@@ -43,10 +43,6 @@ const services = defineCollection({
     relatedOffer: z.enum(offerIds).optional(),
     faq: z.array(z.object({ q: z.string(), a: z.string() })).max(6).optional(),
     scenarios: z.array(scenario).min(1).max(2),
-    /** Legacy v1 grouping, kept only until the pillar-based UI ships (tasks T060). */
-    group: z.enum(['cloud-infrastructure', 'engineering-ai']).optional(),
-    /** Legacy v1 roadmap flag, kept only until the roadmap section is removed (tasks T055/T060). */
-    status: z.enum(['active', 'roadmap']).optional(),
   }),
 });
 
