@@ -19,7 +19,7 @@ capabilities:
   - Point-in-time recovery configuration and validation
   - Scheduled restore tests and disaster recovery drills
   - Recovery runbooks with documented RPO and RTO
-stack: [PostgreSQL, MySQL, MS SQL, MongoDB, Azure SQL, AWS RDS, Linux Shell Automation]
+stack: [PostgreSQL, MySQL, MS SQL, MongoDB, AWS RDS, Azure SQL, Google Cloud SQL, Linux Shell Automation]
 outcome: Recovery objectives that are documented, tested and proven in practice rather than assumed
 relatedOffer: health-check
 faq:

@@ -135,7 +135,7 @@ const linkClass = (href: string) => [
                 </div>
               </li>
             ) : (
-              <li>
+              <li class:list={[link.href === "/insights" && "hidden xl:block"]}>
                 <a href={link.href} data-nav-link="desktop" aria-current={isActive(link.href) ? 'page' : undefined} class:list={linkClass(link.href)}>
                   {link.label}
                 </a>

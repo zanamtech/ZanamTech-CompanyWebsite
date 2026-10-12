@@ -37,7 +37,7 @@ export const AGENCY_PARTNERSHIP_SLUG = 'agency-partnership';
 
 export const REGION_OPTIONS = ['US / Canada', 'UK / Europe', 'GCC', 'Other'] as const;
 export const COMPANY_SIZE_OPTIONS = ['1–10', '11–50', '51–200', '201–1,000', '1,000+'] as const;
-export const CLOUD_PLATFORM_OPTIONS = ['Azure', 'AWS', 'Both', 'Other'] as const;
+export const CLOUD_PLATFORM_OPTIONS = ['AWS', 'Azure', 'Google Cloud', 'Multi-cloud', 'Other'] as const;
 
 /** Engagement-size bands for the optional budget question; scope-based labels, no prices. */
 export const BUDGET_OPTIONS = [

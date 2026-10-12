@@ -14,12 +14,12 @@ deliverables:
   - Monitoring of blocked traffic with a review cadence
 engagementTypes: [assessment, project]
 capabilities:
-  - WAF deployment and custom rule engineering with Cloudflare WAF and AWS WAF & Shield
+  - WAF deployment and custom rule engineering with Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall and Google Cloud Armor
   - Zero-trust network firewalls, IP allow/deny filtering and rate limiting
   - Geographic access controls (geo-fencing) and automated bot filtering
   - End-to-end SSL/TLS enforcement and operating system hardening
   - Attack-surface audits and active threat mitigation
-stack: [Cloudflare WAF, AWS WAF & Shield, Azure Front Door, SSL/TLS, Security Audit Tooling]
+stack: [Cloudflare WAF, AWS WAF & Shield, Azure Front Door & WAF, Google Cloud Armor, SSL/TLS, Security Audit Tooling]
 outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 relatedOffer: health-check
 faq:
@@ -41,6 +41,6 @@ scenarios:
 ZanamTech deploys layered defences that shield web applications, enterprise portals and public or internal APIs
 against distributed denial-of-service attacks, automated bots, exploit probes and unauthorised access.
 
-By combining Cloudflare WAF, AWS WAF & Shield, zero-trust network firewalls, geographic access fencing, rate limiting
+By combining Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall, Google Cloud Armor, zero-trust network firewalls, geographic access fencing, rate limiting
 and strict SSL/TLS enforcement, every public endpoint is verified, filtered and encrypted. Regular reviews keep the
 perimeter aligned with evolving threats.

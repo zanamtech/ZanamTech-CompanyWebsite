@@ -22,14 +22,14 @@ dev shop, a staff-augmentation marketplace or a design agency.
 ZanamTech already delivers every day: cloud operations, Dev/QA/UAT/Prod environments, CI/CD
 pipelines, backups, and repository governance and SOPs.
 
-**Platforms:** Microsoft Azure and Amazon Web Services are primary. Google Cloud is presented as also supported (technology marquee and relevant service stacks), never as the headline platform.
+**Platforms:** AWS, Microsoft Azure and Google Cloud are treated equally. Wherever a cloud is named in general copy, all three are named, in that order (AWS, Azure, Google Cloud). Real past scenarios keep the cloud they actually ran on.
 
 ## 3. Target clients (ICPs)
 
 | # | Segment | Buyer | Why they buy | When |
 | --- | --- | --- | --- | --- |
 | 1 | B2B SaaS, roughly 10–200 staff, no in-house DevOps | CTO, technical co-founder | Releases, environments and cloud bills are nobody's full-time job | Now |
-| 2 | Mid-market firms on Azure or AWS (logistics, professional services, e-commerce) | IT director, CIO | Modernising without hiring a platform team | Now |
+| 2 | Mid-market firms on AWS, Azure or Google Cloud (logistics, professional services, e-commerce) | IT director, CIO | Modernising without hiring a platform team | Now |
 | 3 | Software agencies and software houses | Agency owner, delivery head | They win app projects but lack DevOps; ZanamTech runs it white-label or co-branded | Now |
 | 4 | GCC enterprises and scale-ups | IT and digital leads | UAE/KSA cloud regions, data-residency awareness, same-day time-zone overlap | Now, often through agency partners |
 | 5 | Data-sensitive organisations (finance, legal, health) wanting AI | Head of operations, CISO | AI automation without leaking data | Later: after 2–3 delivered AI projects and a security certification |
@@ -43,7 +43,7 @@ The light/dark design system and the single primary CTA, "Book a Strategy Consul
 ## 5. Home hero
 
 - **H1:** "Managed Cloud, DevOps & AI Engineering for Businesses That Can't Afford Downtime."
-- **Sub:** "We run, secure and modernise your Azure and AWS platforms, build cloud-native SaaS, and
+- **Sub:** "We run, secure and modernise your AWS, Azure and Google Cloud platforms, build cloud-native SaaS, and
   automate manual work with practical AI. Documented runbooks, transparent reporting, no lock-in."
 
 ## 6. How engagements are described

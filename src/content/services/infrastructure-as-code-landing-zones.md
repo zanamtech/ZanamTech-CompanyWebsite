@@ -5,7 +5,7 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: Layers
-summary: Terraform or Bicep foundations for Azure and AWS, covering network, identity, policy and environments, so every resource is reviewable, repeatable and rebuilt from code.
+summary: Terraform or Bicep foundations for AWS, Azure and Google Cloud, covering network, identity, policy and environments, so every resource is reviewable, repeatable and rebuilt from code.
 deliverables:
   - Landing zone design covering subscriptions or accounts, network, identity and policy
   - Terraform or Bicep modules in your repository
@@ -14,19 +14,19 @@ deliverables:
   - Architecture diagrams and an operating guide
 engagementTypes: [assessment, project]
 capabilities:
-  - Landing zone design aligned with Azure and AWS well-architected guidance
+  - Landing zone design aligned with AWS, Azure and Google Cloud architecture frameworks
   - Reusable Terraform and Bicep modules with versioning
   - Network segmentation, private endpoints and identity foundations
   - Policy as code for tagging, regions and security baselines
   - Drift detection and pipeline-driven infrastructure changes
-stack: [Terraform, Bicep, Microsoft Azure, AWS, Google Cloud, Azure DevOps, GitHub Actions]
+stack: [Terraform, Bicep, AWS, Microsoft Azure, Google Cloud, GitHub Actions, Azure DevOps]
 outcome: Cloud foundations defined entirely in code, reviewed through pull requests and rebuilt consistently in every environment
 relatedOffer: health-check
 faq:
   - q: Can you bring existing hand-built resources under code?
     a: Yes. Existing resources are imported into Terraform or Bicep state step by step, so the platform moves under code without being rebuilt.
   - q: Terraform or Bicep?
-    a: Terraform suits multi-cloud teams and AWS; Bicep suits Azure-only estates. The recommendation follows your platform and team.
+    a: Terraform suits AWS, Google Cloud and multi-cloud teams; Bicep suits Azure-only estates. The recommendation follows your platform and team.
 scenarios:
   - kind: illustrative
     problem: A SaaS company's Azure resources had been created by hand over time, and nobody could rebuild an environment with confidence.

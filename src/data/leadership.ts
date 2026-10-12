@@ -17,7 +17,7 @@ export const leadership: LeadershipProfile = {
   role: 'Founder & Lead Architect',
   bio: [
     'Leads every ZanamTech engagement from architecture through delivery and reporting.',
-    'Runs production Azure estates end to end: App Services, load balancing, managed databases, Dev/QA/UAT/Prod environments, CI/CD pipelines, backups and repository governance with written SOPs.',
+    'Runs production cloud estates end to end: app platforms, load balancing, managed databases, Dev/QA/UAT/Prod environments, CI/CD pipelines, backups and repository governance with written SOPs.',
     'Builds cloud-native web applications and practical AI automations on managed cloud services.',
   ],
   linkedin: '',

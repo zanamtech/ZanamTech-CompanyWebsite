@@ -5,7 +5,7 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: TrendingDown
-summary: Architectural reviews of Azure and AWS estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
+summary: Architectural reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
 deliverables:
   - Spend analysis by service, environment and team
   - Right-sizing and clean-up changes applied
@@ -14,12 +14,12 @@ deliverables:
   - A savings roadmap for the remaining opportunities
 engagementTypes: [assessment, project, retainer]
 capabilities:
-  - Billing and utilisation analysis across Azure and AWS
+  - Billing and utilisation analysis across AWS, Azure and Google Cloud
   - Compute right-sizing and idle capacity consolidation
   - Automated clean-up of orphaned disks, unattached IPs and stale environments
   - Budget alerts and spend guardrails
   - Reserved capacity, savings plans and spot strategy
-stack: [Azure Cost Management, AWS Cost Explorer, Google Cloud Billing, Architecture Auditing Tools]
+stack: [AWS Cost Explorer, Azure Cost Management, Google Cloud Billing, Architecture Auditing Tools]
 outcome: Lower cloud bills through architecture rather than compromise; a past engagement cut recurring spend by up to 40%
 relatedOffer: cost-review
 faq:
@@ -38,7 +38,7 @@ scenarios:
     outcome: Wasteful spend was eliminated and unbudgeted cost overruns were prevented going forward.
 ---
 
-ZanamTech reviews active Azure and AWS infrastructure, and Google Cloud where you run it, to remove wasted spend. Utilisation data drives right-sizing,
+ZanamTech reviews active AWS, Azure and Google Cloud infrastructure to remove wasted spend. Utilisation data drives right-sizing,
 consolidation and clean-up decisions, while automated guardrails keep spending aligned with budget.
 
 Savings come from architecture rather than compromise: availability and performance objectives stay intact while

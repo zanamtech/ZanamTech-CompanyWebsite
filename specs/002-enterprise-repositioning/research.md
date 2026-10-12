@@ -72,7 +72,7 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
   hidden native selects as the no-JS fallback.
   - Company size: `1–10`, `11–50`, `51–200`, `201–1,000`, `1,000+` (user decision).
   - Region: `US / Canada`, `UK / Europe`, `GCC`, `Other`.
-  - Cloud platform: `Azure`, `AWS`, `Both`, `Other`.
+  - Cloud platform: `AWS`, `Azure`, `Google Cloud`, `Multi-cloud`, `Other` (owner review).
   - Service options: published service names, then `Agency partnership`, then `Other / Not sure yet`.
 
   Dialog grid stays `md:grid-cols-2 lg:grid-cols-3`. The 9 inputs fill 3 rows plus the textarea and
@@ -97,6 +97,8 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
     (`\b\d+\s*[-–]?\s*(?:min(?:ute)?s?|hours?|hrs?)\b`, e.g. "30-minute", "2 hours"). The
     consultation has no stated length (owner decision U1). Weeks and business days stay allowed.
   - "I + verb" first-person pattern
+  - two-cloud generic phrasing ("Azure and AWS", "AWS and Azure", "Azure or AWS", "AWS or Azure"); general copy names
+    all three clouds
   - "gig", "hourly" (rate sense), "packages from". The allow-list includes "hourly encrypted backups" for technical frequencies
 
   An `ALLOW` list exempts exactly "Written proposal within 2 business days" and "We reply within 1

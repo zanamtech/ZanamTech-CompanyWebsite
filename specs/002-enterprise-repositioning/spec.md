@@ -41,8 +41,8 @@ Full-Stack Web App Development" name and slug. Work stays on the dev branch."
   content review.
 - Q (clarify): Does Google Cloud (GCP) stay on the site? → A: No. There is no real GCP work to show,
   so GCP is removed everywhere: headline copy, service text, stacks and the technology marquee.
-  *Superseded at owner review (2026-10-12): Google Cloud is supported. Azure and AWS stay primary, and GCP
-  appears in the marquee and relevant service stacks (see FR-006a).*
+  *Superseded at owner review (2026-10-12): AWS, Azure and Google Cloud are treated equally across the site
+  (see FR-006a).*
 - Q (clarify): How many results does the Home results strip show? → A: All 8, in a 4×2 grid on
   desktop (stacked on mobile), the same count as today's metrics section.
 - Q (clarify): Where are draft articles and artefacts reviewed? → A: Only on the local development
@@ -88,7 +88,7 @@ Full-Stack Web App Development" name and slug. Work stays on the dev branch."
 ### User Story 1 - Understand the offer and see real results (Priority: P1)
 
 A CTO or IT director lands on the Home page. Within one screen they understand that ZanamTech runs,
-secures and modernises Azure and AWS platforms, builds cloud-native web applications and automates
+secures and modernises AWS, Azure and Google Cloud platforms, builds cloud-native web applications and automates
 manual work with practical AI. They immediately see results achieved on past engagements.
 
 **Why this priority**: the Home page is the main entry point, and real results are the strongest proof available today.
@@ -241,7 +241,7 @@ endpoint. Check the options, the optional fields, the payload and the next-step 
 1. **Given** the service selector, **When** it opens, **Then** it lists every published service plus
    "Agency partnership" and "Other / Not sure yet".
 2. **Given** the form, **When** it renders, **Then** it offers optional Region (US/Canada, UK/Europe,
-   GCC, Other), Company size and Cloud platform (Azure, AWS, Both, Other) fields in addition to the
+   GCC, Other), Company size and Cloud platform (AWS, Azure, Google Cloud, Multi-cloud, Other) fields in addition to the
    existing fields, and the existing dropdown styling and keyboard behaviour apply to them.
 3. **Given** a valid submission, **When** it succeeds, **Then** the confirmation and the Contact page's
    next steps describe the process: "We reply within 1 business day", a consultation call, and
@@ -368,9 +368,9 @@ Remove it; they pass.
   - "Nine disciplines" or nine-service wording
   
   This covers every page, menu, form message, page metadata and structured data.
-- **FR-006a** (revised 2026-10-12, owner review): Microsoft Azure and AWS MUST be presented as the primary
-  platforms. Google Cloud MAY appear as also supported: in the technology marquee and in relevant service stacks
-  (migration, IaC, cost, managed AI services), never as the headline platform.
+- **FR-006a** (revised twice at owner review, 2026-10-12): AWS, Microsoft Azure and Google Cloud MUST be treated
+  equally. Wherever general copy, stacks, flagship modules, FAQs, the Trust page or metadata name a cloud, all three
+  are named (in that order). Real past scenarios keep the cloud they actually ran on.
 - **FR-007**: Site-wide descriptive text (page metadata, social previews, structured data, footer) MUST
   use the v3 positioning statement. Structured data MUST contain no address.
 

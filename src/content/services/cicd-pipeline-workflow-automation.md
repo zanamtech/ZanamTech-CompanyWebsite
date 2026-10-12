@@ -5,7 +5,7 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: Workflow
-summary: Automated build, test, security-scanning and deployment pipelines with Azure DevOps, Bitbucket, GitHub Actions and Jenkins that remove manual release friction and make releases routine.
+summary: Automated build, test, security-scanning and deployment pipelines on GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build or Jenkins, so releases become routine.
 deliverables:
   - Pipeline architecture and environment promotion strategy
   - Automated build, test and security-scanning stages
@@ -14,17 +14,17 @@ deliverables:
   - Handover documentation and team walkthrough
 engagementTypes: [assessment, project]
 capabilities:
-  - End-to-end CI/CD architecture with Azure DevOps, Bitbucket, GitHub Actions and Jenkins
+  - End-to-end CI/CD architecture with GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build and Jenkins
   - Automated testing, static analysis and build validation
   - Blue/green and canary deployment models with staging parity
   - One-click automated rollback for fast failure mitigation
   - Developer environment standardisation and DevSecOps integration
-stack: [Azure DevOps, Bitbucket, GitHub Actions, Jenkins, Bash/Shell Automation]
+stack: [GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build, Jenkins, Bash/Shell Automation]
 outcome: Routine, low-risk releases; past engagements achieved 50% faster deployments and 35% fewer release errors
 relatedOffer: governance-quick-start
 faq:
   - q: Do you work with our existing tools?
-    a: Yes. Pipelines are built on the platform you already use, whether that is Azure DevOps, Bitbucket, GitHub or Jenkins, unless there is a clear reason to change.
+    a: Yes. Pipelines are built on the platform you already use, whether that is GitHub, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build or Jenkins, unless there is a clear reason to change.
   - q: Do you also set up branch governance?
     a: Yes. Branch restrictions, merge checks and release SOPs are part of the delivery, and are also available on their own as the DevOps Governance Quick-Start.
 scenarios:

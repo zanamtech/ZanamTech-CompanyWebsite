@@ -32,7 +32,7 @@ export const segments: TargetSegment[] = [
   {
     id: 'mid-market',
     icon: 'Building2',
-    name: 'Mid-Market Firms on Azure and AWS',
+    name: 'Mid-Market Firms on AWS, Azure and Google Cloud',
     profile:
       'Established firms in logistics, professional services and e-commerce modernising their platforms without hiring a full platform team.',
     decisionMakers: ['CIOs', 'IT directors', 'Heads of infrastructure'],

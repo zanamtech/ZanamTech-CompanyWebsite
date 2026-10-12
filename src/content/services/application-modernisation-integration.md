@@ -16,10 +16,10 @@ engagementTypes: [assessment, project]
 capabilities:
   - Incremental refactoring of legacy applications
   - API design and gateway configuration
-  - Migration to managed services such as Azure App Service and managed databases
+  - Migration to managed services such as AWS Elastic Beanstalk, Azure App Service or Google Cloud Run, with managed databases
   - ERP, CRM and third-party system integration
   - Automated testing to protect behaviour during change
-stack: [REST / GraphQL APIs, Azure App Service, AWS Elastic Beanstalk, Azure API Management, Message Queues]
+stack: [REST / GraphQL APIs, AWS Elastic Beanstalk, Azure App Service, Google Cloud Run, AWS API Gateway, Azure API Management, Message Queues]
 outcome: Legacy systems modernised step by step, connected through clean APIs, with less to maintain
 relatedOffer: health-check
 faq:

@@ -18,7 +18,7 @@ time. There is no database.
 | deliverables | string[] (3–8) | "What you get" |
 | engagementTypes | enum[] of `assessment \| project \| retainer \| agency \| capacity` | ≥ 1 |
 | capabilities | string[] (3–7) | For the flagship, these are the 7 modules |
-| stack | string[] ≥ 1 | Azure/AWS primary; Google Cloud where relevant |
+| stack | string[] ≥ 1 | AWS, Azure and Google Cloud equivalents where a cloud tool is listed |
 | outcome | string | Achieved-result wording or a qualitative outcome; never "target" or "guarantee" |
 | scenarios | Scenario[] (1–2) | See below |
 | faq | {q, a}[] (0–6) | Optional |

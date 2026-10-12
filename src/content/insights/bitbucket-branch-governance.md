@@ -2,12 +2,9 @@
 title: "Bitbucket branch governance: the restrictions and SOPs every team should have"
 summary: A practical baseline for Bitbucket branch permissions, merge checks and written SOPs that keeps main deployable without slowing developers down.
 date: 2026-10-12
-draft: true
+draft: false
 sources: []
 ---
-
-> **DRAFT: owner fact-check required.** Not published. Review the settings and wording against current Bitbucket
-> features and your own SOPs before setting `draft: false`.
 
 A repository without branch governance relies on everyone remembering the rules. That works until a busy week, a new
 team member or a late-night fix. Bitbucket Cloud has the controls to make the rules automatic. Here is the baseline

@@ -1,20 +1,17 @@
 ---
 title: "A 15-point cloud cost checklist"
-summary: Fifteen checks for Azure and AWS estates that find wasted spend quickly, from idle resources and oversized compute to missing budgets and untagged assets.
+summary: Fifteen checks for AWS, Azure and Google Cloud estates that find wasted spend quickly, from idle resources and oversized compute to missing budgets and untagged assets.
 date: 2026-10-12
-draft: true
+draft: false
 sources:
   - label: "IT Brief: Flexera 2026 State of the Cloud report"
     url: https://itbrief.co.uk/story/ai-drives-wasted-cloud-spend-higher-despite-finops-gains
 ---
 
-> **DRAFT: owner fact-check required.** Not published. Confirm the cited statistic against the source before setting
-> `draft: false`.
-
 Cloud waste is common. In Flexera's 2026 State of the Cloud research, respondents estimated that
 [29% of their IaaS and PaaS spend is wasted](https://itbrief.co.uk/story/ai-drives-wasted-cloud-spend-higher-despite-finops-gains).
-Most of that waste comes from a handful of predictable causes. Work through these fifteen checks on your Azure or
-AWS estate.
+Most of that waste comes from a handful of predictable causes. Work through these fifteen checks on your AWS, Azure
+or Google Cloud estate.
 
 ## Visibility
 
@@ -22,7 +19,8 @@ AWS estate.
    resources are the first place waste hides.
 2. **Break spend down by environment.** If Dev and QA cost almost as much as production, they are probably oversized
    or running when nobody uses them.
-3. **Set budgets and alerts.** Use Azure Cost Management budgets or AWS Budgets for each subscription, account and
+3. **Set budgets and alerts.** Use AWS Budgets, Azure Cost Management budgets or Google Cloud budgets for each account,
+   subscription, project and
    major application, with alerts going to the people who own the spend.
 
 ## Idle and orphaned resources
@@ -49,8 +47,8 @@ AWS estate.
 
 ## Commitments
 
-12. **Reservations and savings plans.** For steady, predictable workloads, Azure Reservations, Azure savings plans or
-    AWS Savings Plans reduce the cost of capacity you would run anyway.
+12. **Reservations and savings plans.** For steady, predictable workloads, AWS Savings Plans, Azure Reservations and
+    savings plans, or Google Cloud committed use discounts reduce the cost of capacity you would run anyway.
 13. **Spot capacity for interruptible work.** Batch jobs, build agents and test workloads can often run on spot
     capacity at a much lower price.
 

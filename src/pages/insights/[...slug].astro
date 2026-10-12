@@ -15,18 +15,21 @@ type Article = CollectionEntry<'insights'>;
 export async function getStaticPaths() {
   const articles = (await getCollection('insights', isVisible)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   if (articles.length === 0) return [];
+  // The Samples link appears only when at least one sample is visible, so it never points at a missing page.
+  const hasSamples = (await getCollection('resources', isVisible)).length > 0;
   return [
-    { params: { slug: undefined }, props: { article: undefined, articles } },
-    ...articles.map((article) => ({ params: { slug: article.id }, props: { article, articles } })),
+    { params: { slug: undefined }, props: { article: undefined, articles, hasSamples } },
+    ...articles.map((article) => ({ params: { slug: article.id }, props: { article, articles, hasSamples } })),
   ];
 }
 
 interface Props {
   article?: Article;
   articles: Article[];
+  hasSamples: boolean;
 }
 
-const { article, articles } = Astro.props;
+const { article, articles, hasSamples } = Astro.props;
 const dateLabel = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const Content = article ? (await render(article)).Content : undefined;
 ---
@@ -94,6 +97,15 @@ const Content = article ? (await render(article)).Content : undefined;
             </li>
           ))}
         </ul>
+        {hasSamples && (
+          <p class="mt-10 text-muted">
+            Looking for practical examples? See our{' '}
+            <a href="/resources" class="font-semibold text-link underline underline-offset-2">
+              sample architectures, procedures and reports
+            </a>
+            .
+          </p>
+        )}
       </div>
       <CtaBand />
     </BaseLayout>

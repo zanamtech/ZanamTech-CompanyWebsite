@@ -5,7 +5,10 @@
 > Principle III). No prices appear here or on the site.
 
 The catalogue is one flagship retainer plus 12 services in 4 pillars, 5 entry offers and 5 engagement
-models. A service is published only when it can be delivered today. Anything not ready stays
+models. A service is published only when it can be delivered today.
+
+**Platforms:** AWS, Microsoft Azure and Google Cloud are supported equally. General copy names all three, in that
+order; real past scenarios keep the cloud they actually ran on. Anything not ready stays
 unpublished, with no "coming soon".
 
 ## Pillar 1: Managed Cloud & DevOps (flagship)
@@ -14,7 +17,7 @@ unpublished, with no "coming soon".
 
 | Module | Scope |
 | --- | --- |
-| Cloud operations | App Services, VMs/containers, load balancers/Front Door, managed databases, monitoring and alerting, patching, scaling |
+| Cloud operations | App platforms, VMs/containers, load balancers, managed databases, monitoring and alerting, patching, scaling on AWS, Azure or Google Cloud |
 | Environment lifecycle | Dev, QA, UAT and Prod parity, release scheduling, rollbacks |
 | CI/CD operations | Pipeline ownership, build health, secrets, approval gates |
 | Backup, DR & resilience | Daily/weekly backups, scheduled restore tests, documented RPO/RTO |

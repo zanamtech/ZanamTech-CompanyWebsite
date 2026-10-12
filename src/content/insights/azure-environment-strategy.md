@@ -2,12 +2,9 @@
 title: "Dev, QA, UAT, Prod on Azure: an environment strategy that survives real releases"
 summary: How to structure Azure environments so code moves predictably from a developer's branch to production, with parity, isolation and controlled promotion at every step.
 date: 2026-10-12
-draft: true
+draft: false
 sources: []
 ---
-
-> **DRAFT: owner fact-check required.** Not published. Review the technical claims and adjust them to match your
-> practice before setting `draft: false`.
 
 Most release problems are not code problems. They are environment problems: a setting that exists in QA but not in
 production, a database that drifted, a hotfix that skipped testing because UAT was "busy". A clear environment

@@ -19,7 +19,7 @@ timeout, responses and client guarantees are unchanged; only the request body gr
   "service": "string (required; a published service name | \"Agency partnership\" | \"Other / Not sure yet\")",
   "region": "string (optional; \"US / Canada\" | \"UK / Europe\" | \"GCC\" | \"Other\" | \"Not specified\")",
   "companySize": "string (optional; \"1–10\" | \"11–50\" | \"51–200\" | \"201–1,000\" | \"1,000+\" | \"Not specified\")",
-  "cloudPlatform": "string (optional; \"Azure\" | \"AWS\" | \"Both\" | \"Other\" | \"Not specified\")",
+  "cloudPlatform": "string (optional; \"AWS\" | \"Azure\" | \"Google Cloud\" | \"Multi-cloud\" | \"Other\" | \"Not specified\")",
   "budget": "string (optional engagement-size band, or \"Not specified\")",
   "message": "string (20–2000)",
   "consent": true,

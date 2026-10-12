@@ -508,6 +508,8 @@ are dev-only.
   - `certified`, `\b(?:Ltd|Inc|LLC)\b`, "our offices"
   - local/on-premise/self-hosted LLM, fine-tuned model
   - first-person "I + verb"
+  - two-cloud generic phrasing ("Azure and AWS", "AWS and Azure", "Azure or AWS", "AWS or Azure"): general copy
+    names AWS, Azure and Google Cloud together
   - gig, hourly (rate sense), packages from; allow "hourly encrypted backups" (technical frequency)
   - clock times `\b\d{1,2}:\d{2}\b`
   - time-zone labels, case-sensitive:
@@ -587,7 +589,7 @@ are dev-only.
 - [ ] T113 Grep audit of `dist/`. Expect zero hits for:
   - "senior engineer", "24/7", "Nine", "guarantee", "local LLM", "PM-led"
   - "target" in results
-  - Google Cloud presented as primary or headline (it may appear only as also supported)
+  - two-cloud generic phrasing ("Azure and AWS", "Azure or AWS") anywhere in the built site
   - clock times
   - draft slugs
 - [ ] T114 SC-001 design-freeze check: screenshot the unchanged components (header, hero frame,

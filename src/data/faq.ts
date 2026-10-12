@@ -23,7 +23,7 @@ export const homeFaq: FaqItem[] = [
   },
   {
     q: 'Can our data stay in a specific region?',
-    a: 'Yes. Environments can be designed for the Azure or AWS regions you choose, including UAE and Saudi Arabia regions, to support your data-residency requirements.',
+    a: 'Yes. Environments can be designed for the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia regions, to support your data-residency requirements.',
   },
   {
     q: 'How do you use AI tools in delivery?',

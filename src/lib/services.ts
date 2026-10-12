@@ -13,7 +13,7 @@ export const servicePillars: Record<Pillar, { title: string; description: string
   },
   'cloud-devops': {
     title: 'Cloud & DevOps Engineering',
-    description: 'Fixed-scope projects that modernise, secure and automate your Azure and AWS foundations.',
+    description: 'Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.',
     order: 2,
     icon: 'Layers',
   },

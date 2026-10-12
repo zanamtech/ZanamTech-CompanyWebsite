@@ -5,7 +5,7 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: Activity
-summary: Visibility into clusters, containers, memory, latency and database performance with Azure Monitor, Prometheus, Grafana and Zabbix, and alerts routed before users are affected.
+summary: Visibility into clusters, containers, memory, latency and database performance with CloudWatch, Azure Monitor, Google Cloud Monitoring, Prometheus and Grafana, and alerts routed before users are affected.
 deliverables:
   - Monitoring and alerting baseline for your critical services
   - Dashboards for infrastructure, application and database health
@@ -16,17 +16,17 @@ engagementTypes: [assessment, project]
 capabilities:
   - Metrics, logs and traces for servers, containers and databases
   - Proactive threshold and anomaly alerting
-  - Dashboards with Grafana and Azure Monitor workbooks
+  - Dashboards with Grafana, Amazon CloudWatch, Azure Monitor and Google Cloud Monitoring
   - Alert routing by severity to the right channel
   - Incident telemetry that shortens recovery
-stack: [Azure Monitor, Prometheus, Grafana, Zabbix]
+stack: [Amazon CloudWatch, Azure Monitor, Google Cloud Monitoring, Prometheus, Grafana, Zabbix]
 outcome: Problems found before users notice; past engagements achieved 45% faster incident detection and a 30% improvement in mean time to recovery
 relatedOffer: health-check
 faq:
   - q: Will we drown in alerts?
     a: No. Alerts are tied to severity levels and tuned against real traffic, so the team sees what needs action rather than noise.
   - q: Can you use the monitoring tools we already have?
-    a: Yes. We extend what you run today, such as Azure Monitor or an existing Prometheus stack, before introducing anything new.
+    a: Yes. We extend what you run today, such as CloudWatch, Azure Monitor, Google Cloud Monitoring or an existing Prometheus stack, before introducing anything new.
 scenarios:
   - kind: real
     problem: A B2B SaaS platform experienced unexpected crashes caused by undetected background memory leaks.

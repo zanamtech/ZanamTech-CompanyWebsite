@@ -43,4 +43,4 @@ regular management report, is automated end to end on your real data, with human
 matters and a full audit log of every action.
 
 Every build starts small: an AI Opportunity Sprint picks the right process, and a pilot runs alongside the current
-way of working before you commit to anything larger. Solutions run on managed AI services in your own cloud tenant, on Azure, AWS or Google Cloud.
+way of working before you commit to anything larger. Solutions run on managed AI services in your own cloud tenant, on AWS, Azure or Google Cloud.

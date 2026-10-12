@@ -5,7 +5,7 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: Container
-summary: Staged, validated migration from legacy or unoptimised hosting to elastic Azure or AWS, with workloads containerised where it pays off for automated scaling and self-healing.
+summary: Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
 deliverables:
   - Migration plan with sequencing, risks and rollback points
   - Target landing zone and Infrastructure as Code
@@ -19,12 +19,12 @@ capabilities:
   - Production Kubernetes with horizontal pod auto-scaling and ingress load balancing
   - Staged database and traffic cutover with validation at every step
   - Infrastructure as Code (IaC) and Linux instance optimisation
-stack: [Microsoft Azure, AWS, Google Cloud, Docker, Kubernetes, Terraform, Linux]
+stack: [AWS, Microsoft Azure, Google Cloud, Docker, Kubernetes, Terraform, Linux]
 outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 relatedOffer: health-check
 faq:
   - q: Do you containerise everything?
-    a: No. Containers and Kubernetes are used where scaling and portability justify them. Many workloads run best on managed PaaS services such as Azure App Service.
+    a: No. Containers and Kubernetes are used where scaling and portability justify them. Many workloads run best on managed platform services such as AWS Elastic Beanstalk, Azure App Service or Google Cloud Run.
   - q: How do you protect live traffic during cutover?
     a: Every cutover is staged and validated, with a documented rollback plan agreed in advance.
 scenarios:
@@ -39,7 +39,7 @@ scenarios:
 ---
 
 ZanamTech moves workloads from legacy on-premise hardware or unoptimised hosting to elastic environments on
-Microsoft Azure and Amazon Web Services, with Google Cloud also supported. Monolithic stacks are decomposed into modular services where it pays off,
+Amazon Web Services, Microsoft Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off,
 containerised with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the
 simpler, cheaper option.
 
