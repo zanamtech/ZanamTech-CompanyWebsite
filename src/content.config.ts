@@ -2,27 +2,93 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-/** Mirrors specs/001-enterprise-website-baseline/contracts/service-content.schema.json */
-const scenario = z.object({
-  problem: z.string().min(1),
-  solution: z.string().min(1),
-  outcome: z.string().min(1),
-});
+/**
+ * Service front matter v2. Mirrors specs/002-enterprise-repositioning/contracts/service-content.schema.json.
+ * Constitution III: illustrative scenarios carry no numbers, so any digit is rejected when kind is 'illustrative'.
+ */
+const DIGIT = /\d/;
+
+const scenario = z
+  .object({
+    kind: z.enum(['real', 'illustrative']),
+    problem: z.string().min(1),
+    solution: z.string().min(1),
+    outcome: z.string().min(1),
+    evidenceId: z.string().optional(),
+  })
+  .refine((s) => s.kind === 'real' || ![s.problem, s.solution, s.outcome].some((t) => DIGIT.test(t)), {
+    message: 'Illustrative scenarios must not contain numbers (Constitution III).',
+  });
+
+export const pillarIds = ['managed', 'cloud-devops', 'web-saas', 'ai'] as const;
+export const offerIds = ['health-check', 'cost-review', 'governance-quick-start', 'ai-opportunity-sprint', 'ai-automation-pilot'] as const;
 
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: z.object({
     order: z.number().int().min(1),
     name: z.string().min(3),
-    group: z.enum(['cloud-infrastructure', 'engineering-ai']),
+    seoTitle: z.string().min(3).optional(),
+    pillar: z.enum(pillarIds),
+    flagship: z.boolean().default(false),
+    /** Readiness gate: unpublished services are excluded from every menu, grid, page, form option and the sitemap. */
+    published: z.boolean().default(true),
     icon: z.string(),
     summary: z.string().max(220),
-    capabilities: z.array(z.string()).min(3).max(6),
+    deliverables: z.array(z.string()).min(3).max(8),
+    engagementTypes: z.array(z.enum(['assessment', 'project', 'retainer', 'agency', 'capacity'])).min(1),
+    capabilities: z.array(z.string()).min(3).max(7),
     stack: z.array(z.string()).min(1),
     outcome: z.string(),
-    scenarios: z.array(scenario).length(2),
-    status: z.enum(['active', 'roadmap']).default('active'),
+    relatedOffer: z.enum(offerIds).optional(),
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).max(6).optional(),
+    scenarios: z.array(scenario).min(1).max(2),
+    /** Legacy v1 grouping, kept only until the pillar-based UI ships (tasks T060). */
+    group: z.enum(['cloud-infrastructure', 'engineering-ai']).optional(),
+    /** Legacy v1 roadmap flag, kept only until the roadmap section is removed (tasks T055/T060). */
+    status: z.enum(['active', 'roadmap']).optional(),
   }),
 });
 
-export const collections = { services };
+const insights = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/insights' }),
+  schema: z.object({
+    title: z.string().min(3),
+    summary: z.string().max(240),
+    date: z.coerce.date(),
+    /** Drafts render only in `astro dev`; every build excludes them (spec 002 FR-036). */
+    draft: z.boolean().default(true),
+    sources: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
+  }),
+});
+
+const resources = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/resources' }),
+  schema: z.object({
+    title: z.string().min(3),
+    summary: z.string().max(240),
+    date: z.coerce.date(),
+    draft: z.boolean().default(true),
+    /** Proof artefacts are always labelled "Sample". */
+    sample: z.literal(true),
+  }),
+});
+
+/** Named case studies render only from verified, permissioned entries (ADR-003). Ships empty. */
+const caseStudies = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/case-studies' }),
+  schema: z.object({
+    title: z.string().min(3),
+    industry: z.string(),
+    challenge: z.string(),
+    approach: z.string(),
+    result: z.string(),
+    stack: z.array(z.string()).min(1),
+    timeline: z.string(),
+    verified: z.boolean(),
+    permissionDate: z.coerce.date(),
+    evidence: z.string().min(1),
+  }),
+});
+
+export const collections = { services, insights, resources, caseStudies };

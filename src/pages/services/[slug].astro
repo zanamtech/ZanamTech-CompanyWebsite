@@ -8,7 +8,7 @@ import CtaBand from '../../components/sections/CtaBand.astro';
 import GlassCard from '../../components/ui/GlassCard.astro';
 import Button from '../../components/ui/Button.astro';
 import Icon from '../../components/ui/Icon.astro';
-import { getActiveServices, serviceGroups, type Service } from '../../lib/services';
+import { displayGroup, getActiveServices, serviceGroups, type Service } from '../../lib/services';
 import { cta, metricsFootnote } from '../../data/site';
 
 export async function getStaticPaths() {
@@ -25,9 +25,10 @@ interface Props {
 }
 
 const { service, all } = Astro.props;
-const { name, icon, summary, capabilities, stack, outcome, scenarios, group } = service.data;
+const { name, icon, summary, capabilities, stack, outcome, scenarios } = service.data;
+const group = displayGroup(service);
 const { Content } = await render(service);
-const related = all.filter((s) => s.data.group === group && s.id !== service.id).slice(0, 3);
+const related = all.filter((s) => displayGroup(s) === group && s.id !== service.id).slice(0, 3);
 const contactHref = `${cta.href}?service=${service.id}`;
 ---
 

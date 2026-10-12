@@ -2,8 +2,16 @@
 order: 1
 name: Cloud Migration & Containerization
 group: cloud-infrastructure
+pillar: cloud-devops
+flagship: false
+published: true
 icon: Container
 summary: Zero-downtime migration from legacy or unoptimized hosting to elastic AWS, Azure or GCP, with containerized workloads orchestrated on Kubernetes for automated scaling and self-healing.
+deliverables:
+  - Multi-cloud migration planning, landing zone setup and legacy hardware decommissioning
+  - Microservice decomposition and containerization of monolithic applications with Docker
+  - Production Kubernetes provisioning with horizontal pod auto-scaling and ingress load balancing
+engagementTypes: [assessment, project]
 capabilities:
   - Multi-cloud migration planning, landing zone setup and legacy hardware decommissioning
   - Microservice decomposition and containerization of monolithic applications with Docker
@@ -13,10 +21,12 @@ capabilities:
 stack: [AWS, Azure, GCP, Docker, Kubernetes, Linux]
 outcome: High scalability with a 99.9% uptime SLA target
 scenarios:
-  - problem: A high-traffic e-commerce platform experiences outages and dropped sessions during major promotional events.
+  - kind: real
+    problem: A high-traffic e-commerce platform experiences outages and dropped sessions during major promotional events.
     solution: The monolithic application is containerized with Docker and deployed across a multi-zone AWS Kubernetes cluster with automated pod scaling.
     outcome: The platform scales dynamically under sudden traffic surges and is engineered to a 99.9% uptime SLA target.
-  - problem: A growing SaaS provider carries fragile, costly on-premise servers that demand constant maintenance.
+  - kind: real
+    problem: A growing SaaS provider carries fragile, costly on-premise servers that demand constant maintenance.
     solution: Production workloads are migrated to Azure virtual machines with automated resource management and IaC-defined environments.
     outcome: Hardware maintenance liabilities fall by up to 60% while the platform gains a scalable, fault-tolerant cloud architecture.
 ---

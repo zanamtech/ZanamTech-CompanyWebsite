@@ -2,8 +2,16 @@
 order: 4
 name: CI/CD Pipeline & Workflow Automation
 group: engineering-ai
+pillar: cloud-devops
+flagship: false
+published: true
 icon: Workflow
 summary: Automated build, test, security scanning and deployment pipelines with Jenkins, Bitbucket and GitHub Actions that remove manual release friction and enable zero-downtime rollouts.
+deliverables:
+  - End-to-end CI/CD architecture with Jenkins, Bitbucket and GitHub Actions
+  - Automated testing, static analysis and build validation
+  - Blue/green and canary deployment models with staging parity
+engagementTypes: [assessment, project]
 capabilities:
   - End-to-end CI/CD architecture with Jenkins, Bitbucket and GitHub Actions
   - Automated testing, static analysis and build validation
@@ -13,10 +21,12 @@ capabilities:
 stack: [Jenkins, Bitbucket, GitHub Actions, Bash/Shell Automation]
 outcome: 50% faster deployments and 35% fewer release errors targets
 scenarios:
-  - problem: An enterprise software team suffers frequent defects and downtime caused by manual production uploads.
+  - kind: real
+    problem: An enterprise software team suffers frequent defects and downtime caused by manual production uploads.
     solution: A fully automated Jenkins pipeline is engineered with staging verification checks and gated promotions.
     outcome: Deployment execution time is cut by up to 50% and production release errors fall by up to 35%.
-  - problem: A web and mobile team needs days to package and ship critical hotfixes.
+  - kind: real
+    problem: A web and mobile team needs days to package and ship critical hotfixes.
     solution: Workflow orchestration is automated with GitHub Actions and scripted, repeatable deployment stages.
     outcome: Critical patches reach production significantly faster with improved deployment stability.
 ---

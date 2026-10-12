@@ -5,7 +5,7 @@ import ThemeToggle from './ThemeToggle.astro';
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 import { navLinks, cta } from '../../data/site';
-import { getActiveServices, serviceGroups, serviceHref, type ServiceGroup } from '../../lib/services';
+import { displayGroup, getActiveServices, serviceGroups, serviceHref, type ServiceGroup } from '../../lib/services';
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
@@ -14,7 +14,7 @@ const services = await getActiveServices();
 const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
   key,
   title: serviceGroups[key].title,
-  services: services.filter((s) => s.data.group === key),
+  services: services.filter((s) => displayGroup(s) === key),
 }));
 const linkClass = (href: string) => [
   'inline-flex min-h-11 items-center rounded-lg px-3.5 text-sm font-medium transition-colors duration-150 hover:text-accent',

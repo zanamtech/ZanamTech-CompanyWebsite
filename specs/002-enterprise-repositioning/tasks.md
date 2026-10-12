@@ -68,20 +68,20 @@ tasks to spec user stories:
 **Purpose**: introduce the v2 schema and data modules alongside the old fields, so every later phase
 builds on them. The site must look and behave exactly as before at the end of this phase.
 
-- [ ] T007 Extend the `services` schema in `src/content.config.ts` per
+- [X] T007 Extend the `services` schema in `src/content.config.ts` per
   `contracts/service-content.schema.json`:
   - **Add:** `pillar`, `flagship`, `published`, `seoTitle?`, `deliverables`, `engagementTypes`,
     `faq?`, `relatedOffer?`.
   - **Scenarios:** add `kind` with a Zod refinement that rejects any digit (`\d`) in the
     problem, solution and outcome of illustrative scenarios. Relax to 1–2 scenarios and capabilities to 3–7.
   - **Temporary:** keep `group` and `status` as optional deprecated fields (removed in T060).
-- [ ] T008 Add the `insights`, `resources` and `caseStudies` collections to
+- [X] T008 Add the `insights`, `resources` and `caseStudies` collections to
   `src/content.config.ts`, with schemas from data-model.md:
   - `draft` boolean on insights and resources; `sample: true` on resources.
   - `verified`, `permissionDate` and `evidence` required on case studies.
   - Create empty directories `src/content/insights/`, `src/content/resources/` and
     `src/content/case-studies/`, each with a `.gitkeep`.
-- [ ] T009 Migrate the front matter of all 10 existing files in `src/content/services/`. Copy and
+- [X] T009 Migrate the front matter of all 10 existing files in `src/content/services/`. Copy and
   rendering stay unchanged.
   - Pillars:
     - cloud-devops: migration, security, HA/DR, CI/CD, observability, cost
@@ -92,7 +92,7 @@ builds on them. The site must look and behave exactly as before at the end of th
     `published: true` everywhere except `agentic-ai-llmops` (`false`).
   - Fields: `deliverables` (3 items from the existing capabilities), `engagementTypes`, and
     `kind: real` on every existing scenario (user decision).
-- [ ] T010 [P] Create `src/data/results.ts`:
+- [X] T010 [P] Create `src/data/results.ts`:
   - `Result` type per data-model.md.
   - The 8 existing figures with achieved-result `label`.
   - `context` derived from the matching real scenario in `src/content/services/`:
@@ -107,25 +107,25 @@ builds on them. The site must look and behave exactly as before at the end of th
   - Export `resultsFootnote = 'Results from past engagements; outcomes vary by environment.
     Commitments are defined per Statement of Work.'`.
   - Not yet rendered.
-- [ ] T011 [P] Create `src/data/managed-tiers.ts`:
+- [X] T011 [P] Create `src/data/managed-tiers.ts`:
   - `tiers`: Essentials, Professional (featured) and Enterprise, each with `coverage` wording and
     `includes`, with no digits in `coverage`.
   - `severityLevels`: P1–P4 definitions from v3 section B.
-- [ ] T012 [P] Create `src/data/offers.ts` with the 5 entry offers. Each has id, name, duration in
+- [X] T012 [P] Create `src/data/offers.ts` with the 5 entry offers. Each has id, name, duration in
   weeks, inputs, deliverables, nextStep and creditsToFollowOn, from v3 section B.
-- [ ] T013 [P] Create `src/data/commitments.ts`: "Written proposal within 2 business days", "We
+- [X] T013 [P] Create `src/data/commitments.ts`: "Written proposal within 2 business days", "We
   reply within 1 business day", "Weekly status reports", "Monthly service review", "No lock-in
   handover". Create `src/data/faq.ts` with 6 Home FAQ entries (contracts and SOW, IP ownership,
   data residency, NDA available before discovery, how engagements start, working in client accounts).
-- [ ] T014 [P] Create the proof data files, all shipped empty:
+- [X] T014 [P] Create the proof data files, all shipped empty:
   - `src/data/leadership.ts`: name "Mubashir Ahmed", role "Founder & Lead Architect", capability
     bio with no years, `linkedin: ''`, `companyLinkedin: ''`, `photo: ''`, `certifications: []`.
   - `src/data/clients.ts` and `src/data/testimonials.ts`: typed `ProofEntry` arrays exported as
     `[]`.
-- [ ] T015 Extend `src/data/engagement.ts`, keeping the existing exports:
+- [X] T015 Extend `src/data/engagement.ts`, keeping the existing exports:
   - `engagementModels`: 5 models, including the agency partnership and the retainer exit terms.
   - `cadence`, `accessModel` and `aiToolPolicy` arrays from v3 section C.
-- [ ] T016 Add pillars to `src/lib/services.ts`:
+- [X] T016 Add pillars to `src/lib/services.ts`:
   - `servicePillars` with titles and descriptions per data-model.md (no GCP).
   - `getPublishedServices()` (filters `published`, sorted by pillar order then `order`).
   - `getServicesByPillar()` and `getFlagship()`.
@@ -135,14 +135,14 @@ builds on them. The site must look and behave exactly as before at the end of th
     shows every published service, including the ones created in Phase 2.
   - Remove `getRoadmapServices` only once its only caller (T055) is gone. Mark it `@deprecated`
     for now.
-- [ ] T017 [P] Create `src/lib/content.ts`:
+- [X] T017 [P] Create `src/lib/content.ts`:
   - `isVisible(entry)`: `!entry.data.draft || import.meta.env.DEV`.
   - `verifiedOnly<T extends { verified: boolean }>(list)`.
   - `hasVerifiedCaseStudies()` and `hasPublishedInsights()`.
-- [ ] T018 Run the gates (check, lint:content, check:csp, full Playwright + axe). Expected: green
+- [X] T018 Run the gates (check, lint:content, check:csp, full Playwright + axe). Expected: green
   with no test edits, since the UI is unchanged.
-- [ ] T019 Commit `feat(content): v3 content model (additive)`.
-- [ ] T020 Write the PHR. **STOP**: summarise Phase 1 and wait for approval.
+- [X] T019 Commit `feat(content): v3 content model (additive)`.
+- [X] T020 Write the PHR. **STOP**: summarise Phase 1 and wait for approval.
 
 **Checkpoint**: the new model and data exist; the site is visually and behaviourally identical.
 

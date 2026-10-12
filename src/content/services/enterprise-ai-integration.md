@@ -2,8 +2,16 @@
 order: 8
 name: Intelligent Enterprise AI Integration & Automation
 group: engineering-ai
+pillar: ai
+flagship: false
+published: true
 icon: BrainCircuit
 summary: Private LLM assistants and secure Retrieval-Augmented Generation (RAG) search deployed inside your perimeter, automating workflows without exposing proprietary data to public AI services.
+deliverables:
+  - Private LLM deployment and vector database architecture within isolated perimeters
+  - Retrieval-Augmented Generation (RAG) over internal documents, manuals and databases
+  - Automated operational assistants and multi-channel support agents
+engagementTypes: [project]
 capabilities:
   - Private LLM deployment and vector database architecture within isolated perimeters
   - Retrieval-Augmented Generation (RAG) over internal documents, manuals and databases
@@ -13,10 +21,12 @@ capabilities:
 stack: [Private LLMs, Secure Vector Workflows, Enterprise Knowledge Retrievers]
 outcome: Automated operational efficiency without exposing proprietary data
 scenarios:
-  - problem: A high-volume retailer's support operation is overwhelmed during peak periods.
+  - kind: real
+    problem: A high-volume retailer's support operation is overwhelmed during peak periods.
     solution: A secure, custom-trained AI assistant is integrated into the web platform, grounded in approved knowledge sources.
     outcome: Complex customer questions are answered around the clock, substantially reducing manual support workload.
-  - problem: An operations department loses significant billable time searching scattered PDF documentation.
+  - kind: real
+    problem: An operations department loses significant billable time searching scattered PDF documentation.
     solution: A private document-retrieval assistant is deployed over internal repositories within the corporate perimeter.
     outcome: Staff receive fast, accurate answers to operational queries while proprietary data remains inside the organization.
 ---

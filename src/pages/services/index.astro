@@ -4,14 +4,14 @@ import PageHero from '../../components/sections/PageHero.astro';
 import ServiceCard from '../../components/sections/ServiceCard.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import RoadmapCard from '../../components/sections/RoadmapCard.astro';
-import { getActiveServices, getRoadmapServices, serviceGroups, type ServiceGroup } from '../../lib/services';
+import { displayGroup, getActiveServices, getRoadmapServices, serviceGroups, type ServiceGroup } from '../../lib/services';
 
 const services = await getActiveServices();
 const roadmap = await getRoadmapServices();
 const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
   key,
   ...serviceGroups[key],
-  services: services.filter((s) => s.data.group === key),
+  services: services.filter((s) => displayGroup(s) === key),
 }));
 ---
 

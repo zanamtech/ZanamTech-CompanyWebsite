@@ -2,8 +2,16 @@
 order: 6
 name: Cloud Infrastructure Cost Optimization
 group: cloud-infrastructure
+pillar: cloud-devops
+flagship: false
+published: true
 icon: TrendingDown
 summary: Architectural audits of AWS, Azure and GCP estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
+deliverables:
+  - Multi-cloud billing telemetry analysis and utilization audits
+  - Compute right-sizing and idle capacity consolidation
+  - Automated cleanup of orphaned volumes, unattached IPs and stale environments
+engagementTypes: [assessment, project]
 capabilities:
   - Multi-cloud billing telemetry analysis and utilization audits
   - Compute right-sizing and idle capacity consolidation
@@ -13,10 +21,12 @@ capabilities:
 stack: [AWS Billing Telemetry, Azure Cost Management, GCP Billing, Architecture Auditing Tools]
 outcome: Up to 40% monthly cloud infrastructure savings target
 scenarios:
-  - problem: A high-growth scale-up runs its compute fleet at under 20% average CPU utilization.
+  - kind: real
+    problem: A high-growth scale-up runs its compute fleet at under 20% average CPU utilization.
     solution: Instance allocation is audited and compute nodes are right-sized to match measured application demand.
     outcome: Recurring cloud infrastructure spend is reduced by up to 40% with no loss of performance.
-  - problem: A corporate enterprise accumulates inflated bills from forgotten, continuously running staging servers.
+  - kind: real
+    problem: A corporate enterprise accumulates inflated bills from forgotten, continuously running staging servers.
     solution: A resource audit removes orphaned assets and establishes automated spend alerts and guardrails.
     outcome: Wasteful spend is eliminated and unbudgeted cost overruns are prevented going forward.
 ---
