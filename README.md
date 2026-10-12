@@ -65,12 +65,14 @@ On first run, install the test browser with `npx playwright install chromium`.
 | Target segments | `src/data/segments.ts` |
 | Navigation, CTAs, pillars | `src/data/site.ts` |
 
-Brand rules (Constitution III):
+Brand, content and proof rules (Constitution III, v2.0.0):
 
-- Strictly corporate tone.
-- No years-of-experience claims, public pricing or competitor names.
-- Worked examples are labelled "Representative Engagement Scenarios".
-- Roadmap items are labelled "In Development".
+- Strictly corporate tone. No years-of-experience claims, public pricing or competitor names.
+- Testimonials, client logos, case studies and badges render only from verified, permissioned data.
+  Fabricated or placeholder proof is never allowed.
+- Past-project % are worded as achieved results, with the past-engagements footnote.
+- No team-structure claims, clock hours, response times, address, or "guarantee" wording.
+- The visual design and animations are frozen (Constitution IV).
 
 ## Docker
 

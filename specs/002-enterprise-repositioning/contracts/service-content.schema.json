@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceContent v2",
+  "description": "Front-matter contract for src/content/services/*.md (spec 002). Mirrored by the Zod schema in src/content.config.ts.",
+  "type": "object",
+  "required": ["order", "name", "pillar", "flagship", "published", "icon", "summary", "deliverables", "engagementTypes", "capabilities", "stack", "outcome", "scenarios"],
+  "additionalProperties": false,
+  "properties": {
+    "order": { "type": "integer", "minimum": 1 },
+    "name": { "type": "string", "minLength": 3 },
+    "seoTitle": { "type": "string", "minLength": 3 },
+    "pillar": { "enum": ["managed", "cloud-devops", "web-saas", "ai"] },
+    "flagship": { "type": "boolean" },
+    "published": { "type": "boolean" },
+    "icon": { "type": "string" },
+    "summary": { "type": "string", "maxLength": 220 },
+    "deliverables": { "type": "array", "items": { "type": "string" }, "minItems": 3, "maxItems": 8 },
+    "engagementTypes": {
+      "type": "array",
+      "items": { "enum": ["assessment", "project", "retainer", "agency", "capacity"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "capabilities": { "type": "array", "items": { "type": "string" }, "minItems": 3, "maxItems": 7 },
+    "stack": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "outcome": { "type": "string" },
+    "relatedOffer": { "enum": ["health-check", "cost-review", "governance-quick-start", "ai-opportunity-sprint", "ai-automation-pilot"] },
+    "faq": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["q", "a"],
+        "properties": { "q": { "type": "string" }, "a": { "type": "string" } }
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["kind", "problem", "solution", "outcome"],
+        "properties": {
+          "kind": { "enum": ["real", "illustrative"] },
+          "problem": { "type": "string", "minLength": 1 },
+          "solution": { "type": "string", "minLength": 1 },
+          "outcome": { "type": "string", "minLength": 1 },
+          "evidenceId": { "type": "string" }
+        },
+        "if": { "properties": { "kind": { "const": "illustrative" } } },
+        "then": {
+          "properties": {
+            "problem": { "not": { "pattern": "\\d" } },
+            "solution": { "not": { "pattern": "\\d" } },
+            "outcome": { "not": { "pattern": "\\d" } }
+          }
+        }
+      }
+    }
+  }
+}

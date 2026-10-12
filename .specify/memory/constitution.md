@@ -1,21 +1,32 @@
 <!--
 Sync Impact Report
-- Version change: template (unversioned) → 1.0.0
-- Modified principles: all placeholders replaced (initial ratification)
-  - [PRINCIPLE_1_NAME] → I. Static-First Performance
-  - [PRINCIPLE_2_NAME] → II. Accessibility & HCI Compliance (NON-NEGOTIABLE)
-  - [PRINCIPLE_3_NAME] → III. Brand & Content Integrity
-  - [PRINCIPLE_4_NAME] → IV. Design-System Discipline
-  - [PRINCIPLE_5_NAME] → V. Zero-Trust Web Security & Privacy
-  - [PRINCIPLE_6_NAME] → VI. Mandated Technology Stack
-  - Added → VII. Verification Gates & Smallest Viable Change
-- Added sections: Content & Brand Standards; Development Workflow; Governance
+- Version change: 1.0.0 → 2.0.0 (MAJOR: Principle III redefined, Roadmap rule removed)
+- Source of truth: docs/03_Master_Plan_v3.md (approved; overrides docs/01_Brand_Positioning.md,
+  docs/02_Services_Catalog.md and the original Master Execution Plan where they differ)
+- Modified principles:
+  - III. Brand & Content Integrity → III. Brand, Content & Proof Integrity (redefined)
+    - Removed: metrics as "target outcomes", mandatory "Representative Engagement Scenarios" label,
+      Roadmap "In Development" rule
+    - Added: verified-only social proof; ban on fabricated proof; achieved-results wording and new
+      footnote; real/illustrative scenario record; no team-structure claims; no clock hours, time
+      zones or response times (two approved commitments excepted); no address/offices/legal suffix;
+      "certified" only when held; no self-hosted LLM claims; results-section title rule
+  - IV. Design-System Discipline: added the non-negotiable design-freeze rule and reuse mandate
+  - VII. Verification Gates: content-lint scope expanded (banned phrases, clock-hour patterns,
+    verified-data checks)
+- Added sections: none (Content & Brand Standards rewritten)
 - Removed sections: none
 - Templates requiring updates:
-  - ✅ .specify/templates/plan-template.md (Constitution Check is filled per plan; no edit needed)
+  - ✅ .specify/templates/plan-template.md (Constitution Check gates derive from this file; no edit)
   - ✅ .specify/templates/spec-template.md (no mandatory-section change)
-  - ✅ .specify/templates/tasks-template.md (verification-gate tasks are generated per feature; no edit needed)
+  - ✅ .specify/templates/tasks-template.md (lint/test gate tasks generated per feature; no edit)
   - ✅ .specify/templates/commands/ (directory not present; nothing to sync)
+  - ✅ README.md brand-rules block updated to v2.0.0
+  - ⚠ README.md "Content" table (9 core + roadmap, target metrics): update during implementation
+    of specs/002-enterprise-repositioning
+  - ⚠ docs/01_Brand_Positioning.md, docs/02_Services_Catalog.md: rewrite from v3 (Phase 0 task)
+  - ⚠ scripts/lint-content.mjs and tests/e2e/*: bring in line with v2.0.0 during implementation
+  - ⚠ specs/001-enterprise-website-baseline/spec.md FR-009, FR-013, FR-018: superseded by spec 002
 - Follow-up TODOs: none
 -->
 
@@ -47,23 +58,58 @@ The site MUST meet WCAG 2.1 AA in **both** light and dark themes:
 
 Rationale: accessibility is a quality and compliance signal for regulated enterprise buyers.
 
-### III. Brand & Content Integrity
+### III. Brand, Content & Proof Integrity
 
-Copy MUST maintain a strictly corporate tone and MUST NOT contain:
+Copy MUST maintain a strictly corporate tone. Canonical positioning, service names and offers come
+from `docs/03_Master_Plan_v3.md` (and the catalogue docs once rewritten from it).
 
-- Any years-of-experience claim (in any numeric or worded form).
+**Prohibited on the site:**
+
+- Any years-of-experience claim, in any numeric or worded form.
 - Public pricing, rates, or currency figures.
 - Competitor names.
+- Team-structure claims: "PM-led", "project-manager-led", "direct access to senior engineers",
+  "our senior engineering team", "one accountable lead", headcount figures, or "our team" pages.
+- Clock hours, time zones, and support response or resolution times. The ONLY permitted time
+  commitments are "Written proposal within 2 business days" and "We reply within 1 business day".
+- A street address, city, or "our offices"; legal suffixes (Ltd, Inc, LLC) until a company is
+  registered. The site describes ZanamTech as remote-first.
+- "Certified", certification badges, or partner badges/tiers until actually held.
+- "Guarantee", "guaranteed uptime", "zero downtime", "zero data loss", "100%", and unqualified "24/7".
+- Claims of self-hosted, local, on-premise, or fine-tuned LLMs.
 
-Metrics MUST be presented as target outcomes with the footnote "Outcomes vary by environment; SLA
-commitments are defined per Statement of Work." Worked examples MUST be labelled
-"Representative Engagement Scenarios". Roadmap offerings MUST be labelled "In Development".
-Canonical service names come from `docs/02_Services_Catalog.md`.
+**Proof rules:**
 
-Rationale: credibility with enterprise buyers depends on precise, verifiable, non-inflated claims.
+- Testimonials, client logos, named case studies, project counts and certification/partner badges
+  MUST render only from verified data: `verified: true`, a `permissionDate`, and an evidence note.
+  A real result is not permission to use a client's name or logo; that requires written consent.
+  These components ship empty and hidden until real entries exist.
+- Fabricated, placeholder, sample or self-written testimonials, logos, case studies or counts are
+  prohibited in every environment, including drafts.
+- Past-project percentage results MUST be worded as achieved results, never as promises or targets
+  (e.g. "cut deployment time by 50% for a B2B SaaS platform"), and carry the footnote:
+  "Results from past engagements; outcomes vary by environment. Commitments are defined per
+  Statement of Work."
+- The results section is titled "Selected results from past engagements" and carries no per-card
+  credit line, so it neither claims the clients were ZanamTech's nor describes a team.
+- A real/illustrative record MUST be kept for every scenario. Real, anonymised past projects MAY
+  carry their real numbers; illustrative examples MUST carry no numbers.
+- Third-party statistics MUST cite a linked source.
+- The single primary CTA is "Book a Strategy Consultation".
+
+Rationale: enterprise procurement verifies claims; only real, permissioned, evidence-backed proof
+survives a reference check and complies with FTC, UK CAP/DMCC, EU and GCC advertising rules.
 
 ### IV. Design-System Discipline
 
+- **Design freeze (NON-NEGOTIABLE):** the existing visual design, colours, typography, spacing,
+  radii, light/dark themes, layout style, animations, transitions, the reveal engine, the hover
+  system (`.card-hover`, `.panel-hover`), marquees and micro-interactions MUST NOT change.
+- New sections MUST be composed from existing primitives (`GlassCard`, `Badge`, `Button`,
+  `PageHero`, `CtaBand`) and existing motion patterns, so they read as original parts of the site.
+  The existing metric counters and shimmer are reused in the results strip; the three brand-pillar
+  cards are reused in the Trust band.
+- No new UI libraries, fonts, or colour tokens.
 - Colours, spacing, radii, and shadows MUST come from semantic design tokens; no raw hex values in
   components.
 - Light is the default theme; dark is available via a persistent toggle with no flash of the wrong theme.
@@ -71,7 +117,8 @@ Rationale: credibility with enterprise buyers depends on precise, verifiable, no
 - The brand gradient (`#21A0FF` → `#7A2BFF`) is reserved for accents: logo, hairlines, CTA sheen,
   and display-size numerals. It MUST NOT be used behind body text.
 
-Rationale: a disciplined token system keeps the premium corporate look consistent and auditable.
+Rationale: a disciplined, frozen design system keeps the premium corporate look consistent while
+content and structure evolve.
 
 ### V. Zero-Trust Web Security & Privacy
 
@@ -97,7 +144,9 @@ Rationale: a fixed stack keeps delivery predictable and aligned with the approve
 Every change MUST pass, before merge:
 
 - `astro check` and a production build.
-- Content lint (prohibited phrases, pricing patterns, competitor names).
+- Content lint: years claims, pricing patterns, competitor names, every Principle III banned phrase,
+  clock-hour and time-zone patterns, response-time figures, and verified-data checks (every client,
+  testimonial and case-study entry has `verified` and `permissionDate`; third-party % cite a source).
 - End-to-end smoke tests with automated accessibility scans in light and dark themes.
 - Lighthouse CI against the budgets in Principle I.
 
@@ -108,18 +157,22 @@ Rationale: automated gates make the principles above enforceable rather than asp
 
 ## Content & Brand Standards
 
-- Voice: authoritative, precise, outcome-focused; no hype, slang, or emoji.
+- Voice: authoritative, precise, outcome-focused; no hype, slang, or emoji. "We" is used for the
+  company.
 - Positioning pillars, used verbatim: **Enterprise-grade**, **High-availability**, **Zero-trust security**.
-- Preferred terms: "senior engineering expertise", "target outcome", "Statement of Work (SOW)",
-  "Representative Engagement Scenario".
-- Avoided terms: "guarantee" and "zero-loss" without SOW qualification; years-of-experience phrasing.
+- Describe the process a client gets (SOW, kickoff, weekly status, monthly service review,
+  runbooks, handover), never who sits behind it.
+- Preferred terms: "Statement of Work (SOW)", "achieved result", "remote-first", "documented
+  runbooks", "no lock-in", "least-privilege access".
+- Avoided terms: "senior engineering expertise", "target outcome", "Representative Engagement
+  Scenario" as a mandatory label, and every term prohibited in Principle III.
 
 ## Development Workflow
 
-1. `/sp.specify` → `/sp.clarify` → `/sp.plan` → `/sp.tasks` → `/sp.implement`.
+1. `/sp.specify` → `/sp.clarify` → `/sp.plan` → `/sp.tasks` → `/sp.analyze` → `/sp.implement`.
 2. A PHR is created under `history/prompts/` for every user prompt.
 3. Architecturally significant decisions are proposed as ADRs and created only with user consent.
-4. Work is delivered in independently testable user-story increments.
+4. Work is delivered in independently testable increments, one reviewed phase at a time.
 
 ## Governance
 
@@ -130,4 +183,4 @@ guidance, PATCH for clarifications and wording. Every implementation plan MUST i
 Constitution Check; violations MUST be justified in its Complexity Tracking table. Reviewers verify
 compliance on every pull request.
 
-**Version**: 1.0.0 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-09-29
+**Version**: 2.0.0 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12

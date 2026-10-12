@@ -29,3 +29,6 @@ pnpm-debug.log*
 test-results/
 playwright-report/
 .lighthouseci/
+
+# internal-only business documents (never committed)
+docs/internal/
