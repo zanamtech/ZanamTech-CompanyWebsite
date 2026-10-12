@@ -89,7 +89,10 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
   - guarantee, zero downtime/data loss, `100%`, unqualified `24/7`
   - `certified`, legal suffixes `\b(?:Ltd|Inc|LLC)\b`, "our offices"
   - local/on-premise/self-hosted LLM, fine-tuned model, GCP/Google Cloud
-  - clock times `\b\d{1,2}:\d{2}\b`, time zones `\b(?:PKT|GST|GMT|UTC[+-]\d)\b`
+  - clock times `\b\d{1,2}:\d{2}\b`
+  - time-zone labels, matched case-sensitively:
+    `\b(?:PKT|GST|GMT|BST|UTC|EST|EDT|CST|CDT|MST|MDT|PST|PDT|CET|CEST)\b` and `\b(?:UTC|GMT)\s?[+±-]\s?\d`.
+    The phrase "time-zone overlap" is allow-listed.
   - minute and hour figures in any form, site-wide including insights and resources
     (`\b\d+\s*[-–]?\s*(?:min(?:ute)?s?|hours?|hrs?)\b`, e.g. "30-minute", "2 hours"). The
     consultation has no stated length (owner decision U1). Weeks and business days stay allowed.

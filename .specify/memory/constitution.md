@@ -1,5 +1,11 @@
 <!--
-Sync Impact Report
+Sync Impact Report (2.0.1)
+- Version change: 2.0.0 → 2.0.1 (PATCH: clarifies the Principle III time rule. Time-zone labels and
+  minute/hour figures are named explicitly; "time-zone overlap" and week durations are permitted.)
+- Templates requiring updates: none. spec 002 FR-038, research R7, tasks T096/T097 and docs/01
+  were aligned in the same change.
+
+Sync Impact Report (2.0.0)
 - Version change: 1.0.0 → 2.0.0 (MAJOR: Principle III redefined, Roadmap rule removed)
 - Source of truth: docs/03_Master_Plan_v3.md (approved; overrides docs/01_Brand_Positioning.md,
   docs/02_Services_Catalog.md and the original Master Execution Plan where they differ)
@@ -70,8 +76,10 @@ from `docs/03_Master_Plan_v3.md` (and the catalogue docs once rewritten from it)
 - Competitor names.
 - Team-structure claims: "PM-led", "project-manager-led", "direct access to senior engineers",
   "our senior engineering team", "one accountable lead", headcount figures, or "our team" pages.
-- Clock hours, time zones, and support response or resolution times. The ONLY permitted time
-  commitments are "Written proposal within 2 business days" and "We reply within 1 business day".
+- Clock hours, time-zone labels (e.g. PKT, GMT, EST, UTC±n), minute or hour figures, and support
+  response or resolution times. The generic phrase "time-zone overlap" is permitted. Durations in
+  weeks are permitted. The ONLY permitted business-day commitments are "Written proposal within 2
+  business days" and "We reply within 1 business day".
 - A street address, city, or "our offices"; legal suffixes (Ltd, Inc, LLC) until a company is
   registered. The site describes ZanamTech as remote-first.
 - "Certified", certification badges, or partner badges/tiers until actually held.
@@ -183,4 +191,4 @@ guidance, PATCH for clarifications and wording. Every implementation plan MUST i
 Constitution Check; violations MUST be justified in its Complexity Tracking table. Reviewers verify
 compliance on every pull request.
 
-**Version**: 2.0.0 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12
+**Version**: 2.0.1 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12

@@ -53,7 +53,7 @@ The website describes the process a client gets, never who sits behind it.
 - **Cadence:** kickoff and RACI · weekly status · monthly service report (retainers) · quarterly
   architecture review · runbooks and full handover.
 - **Access model:** least privilege, read-only first, MFA, client-owned accounts and repositories,
-  NDA before discovery, DPA on request.
+  NDA available before discovery, DPA on request.
 - **AI-tool policy:**
   - AI tools are used only under business terms that exclude training on customer data.
   - No client secrets, credentials or personal data are pasted into AI tools.
@@ -64,8 +64,8 @@ The website describes the process a client gets, never who sits behind it.
 
 - "Every engagement runs on a written SOW, a kickoff, weekly status reports and a monthly service review."
 - "You get documented runbooks, architecture diagrams and a full handover. No lock-in."
-- "We work in your accounts and repositories with least-privilege access and MFA, with an NDA
-  available before discovery."
+- "We work in your accounts and repositories with least-privilege access and MFA. NDA available
+  before discovery."
 - "As your scope grows, delivery scales with vetted engineers working to the same standards and
   access controls."
 - **Time commitments (the only ones allowed):** "Written proposal within 2 business days" and "We
@@ -82,7 +82,9 @@ The website describes the process a client gets, never who sits behind it.
   unqualified "24/7", "on-call engineers 24/7".
 - **Unearned status:** "certified" (until held), Ltd/Inc/LLC (until registered), "our offices".
 - **AI hosting:** "local LLM", "on-premise LLM", "fine-tuned model".
-- **Time figures:** clock times, time zones, minute or hour figures. Durations in weeks are allowed.
+- **Time figures:** clock times (e.g. "10:00"), time-zone labels (PKT, GMT, BST, EST, PST, GST,
+  UTC±n, etc.), and minute or hour figures (e.g. "30-minute", "2 hours"). Allowed: the phrase
+  "time-zone overlap", durations in weeks, and the two business-day commitments.
 - **Also prohibited:** any years-of-experience claim, public prices, and competitor names.
 
 ## 7. Proof and trust

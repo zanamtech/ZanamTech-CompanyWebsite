@@ -116,7 +116,7 @@ builds on them. The site must look and behave exactly as before at the end of th
 - [ ] T013 [P] Create `src/data/commitments.ts`: "Written proposal within 2 business days", "We
   reply within 1 business day", "Weekly status reports", "Monthly service review", "No lock-in
   handover". Create `src/data/faq.ts` with 6 Home FAQ entries (contracts and SOW, IP ownership,
-  data residency, NDA before discovery, how engagements start, working in client accounts).
+  data residency, NDA available before discovery, how engagements start, working in client accounts).
 - [ ] T014 [P] Create the proof data files, all shipped empty:
   - `src/data/leadership.ts`: name "Mubashir Ahmed", role "Founder & Lead Architect", capability
     bio with no years, `linkedin: ''`, `companyLinkedin: ''`, `photo: ''`, `certifications: []`.
@@ -509,13 +509,17 @@ are dev-only.
   - local/on-premise/self-hosted LLM, fine-tuned model, GCP/Google Cloud
   - first-person "I + verb"
   - gig, hourly, packages from
-  - clock times `\b\d{1,2}:\d{2}\b` and time zones `\b(?:PKT|GST|GMT|UTC[+-]\d)\b`
+  - clock times `\b\d{1,2}:\d{2}\b`
+  - time-zone labels, case-sensitive:
+    `\b(?:PKT|GST|GMT|BST|UTC|EST|EDT|CST|CDT|MST|MDT|PST|PDT|CET|CEST)\b` and
+    `\b(?:UTC|GMT)\s?[+±-]\s?\d`
   - minute and hour figures in any form, site-wide including insights and resources
     (`\b\d+\s*[-–]?\s*(?:min(?:ute)?s?|hours?|hrs?)\b`, e.g. "30-minute", "2 hours")
   - weeks and business days stay allowed (offer durations, the 4-week onboarding, the two
     commitments)
 - [ ] T097 [US8] Add an `ALLOW` list to `scripts/lint-content.mjs` (exactly the two commitment
-  phrases) and a path exemption for `public/.well-known/security.txt` from the clock rule only.
+  phrases plus "time-zone overlap") and a path exemption for `public/.well-known/security.txt` from
+  the clock rule only.
 - [ ] T098 [US8] Add a verified-data pass to `scripts/lint-content.mjs`:
   - every entry in `src/data/clients.ts`, `src/data/testimonials.ts` and
     `src/content/case-studies/*.md` has `verified` and `permissionDate`

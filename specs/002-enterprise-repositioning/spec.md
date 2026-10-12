@@ -319,7 +319,7 @@ Remove it; they pass.
    - "guarantee", "zero downtime", "zero data loss" or "100%"
    - "certified", or a legal suffix
    - "local LLM"
-   - a clock time or time zone, or a response-time figure
+   - a clock time, a time-zone label, or a minute/hour figure
 2. **Given** the two approved commitment phrases, **When** content checks run, **Then** they pass.
 
 ### Edge Cases
@@ -477,9 +477,10 @@ Remove it; they pass.
 **Guardrails and source documents**
 
 - **FR-038**: Automated content checks MUST fail on every term prohibited by Constitution III, on clock
-  times and time zones, on minute and hour figures in any form (site-wide, articles included), and on
-  proof entries missing verification fields. Weeks and business days are allowed; the only
-  business-day phrases are the two approved commitments.
+  times, on time-zone labels (PKT, GMT, BST, EST, PST, GST, UTC±n, etc.), on minute and hour figures
+  in any form (site-wide, articles included), and on proof entries missing verification fields. The
+  phrase "time-zone overlap" and durations in weeks are allowed; the only business-day phrases are
+  the two approved commitments.
 - **FR-039**: The internal brand-positioning and services-catalogue documents MUST be rewritten from v3,
   with years claims, citation artefacts, senior-team wording, guarantee wording, local-LLM claims and
   the competitor matrix removed. Internal SOW response defaults are kept out of the public site.
