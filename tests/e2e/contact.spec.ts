@@ -1,5 +1,12 @@
 import type { Page, Route } from '@playwright/test';
 import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { published } from './catalog';
+
+// Menu order follows the pillar order used by getPublishedServices() (managed, cloud-devops, web-saas, ai).
+const PILLAR_ORDER = ['managed', 'cloud-devops', 'web-saas', 'ai'];
+const publishedNamesInPillarOrder = [...published]
+  .sort((a, b) => PILLAR_ORDER.indexOf(a.pillar) - PILLAR_ORDER.indexOf(b.pillar) || a.order - b.order)
+  .map((s) => s.name);
 
 const ENDPOINT = '**/submit';
 
@@ -113,6 +120,49 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     const form = page.getByRole('main');
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(form.getByRole('combobox', { name: 'Service needed' })).toHaveText('AI Assistants on Company Data');
+  });
+
+  test('qualifying fields: keyboard selection, payload values and "Not specified" defaults', async ({ page }) => {
+    const calls = await mockEndpoint(page, 200);
+    const { dialog } = await openDialogFromHero(page);
+    await fillValid(dialog);
+
+    // Keyboard only: open with ArrowDown, move, choose with Enter (APG select-only combobox).
+    const region = dialog.getByRole('combobox', { name: 'Region (optional)' });
+    await region.focus();
+    await page.keyboard.press('ArrowDown');
+    await expect(dialog.getByRole('listbox', { name: 'Region (optional)' })).toBeVisible();
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('ArrowDown');
+    await page.keyboard.press('Enter');
+    await expect(region).toHaveText('GCC');
+
+    await dialog.getByRole('combobox', { name: 'Cloud platform (optional)' }).click();
+    for (const option of ['AWS', 'Azure', 'Google Cloud', 'Multi-cloud', 'Other']) {
+      await expect(dialog.getByRole('listbox', { name: 'Cloud platform (optional)' }).getByRole('option', { name: option, exact: true })).toBeVisible();
+    }
+    await dialog.getByRole('listbox', { name: 'Cloud platform (optional)' }).getByRole('option', { name: 'Multi-cloud', exact: true }).click();
+
+    await dialog.getByRole('button', { name: 'Send', exact: true }).click();
+    await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
+    expect(calls[0]).toMatchObject({ region: 'GCC', cloudPlatform: 'Multi-cloud', companySize: 'Not specified' });
+  });
+
+  test('service options include every published service, Agency partnership and Other', async ({ page }) => {
+    const { dialog } = await openDialogFromHero(page);
+    await dialog.getByRole('combobox', { name: 'Service needed' }).click();
+    const options = await dialog.locator('#dialog-service-listbox [role="option"]').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.value));
+    expect(options).toEqual([...publishedNamesInPillarOrder, 'Agency partnership', 'Other / Not sure yet']);
+  });
+
+  test('the desktop dialog fits without a vertical scrollbar', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop only (FR-035)');
+    for (const size of [{ width: 1440, height: 900 }, { width: 1366, height: 768 }, { width: 1280, height: 720 }]) {
+      await page.setViewportSize(size);
+      const { dialog } = await openDialogFromHero(page);
+      const overflow = await dialog.evaluate((el) => el.scrollHeight - el.clientHeight);
+      expect(overflow, `${size.width}x${size.height}`).toBeLessThanOrEqual(0);
+    }
   });
 
   test('privacy page is published', async ({ page }) => {

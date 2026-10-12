@@ -11,6 +11,11 @@ const ROUTES = [
   '/about',
   '/contact',
   '/privacy',
+  '/start-here',
+  '/trust',
+  '/terms',
+  '/insights',
+  '/insights/cloud-cost-checklist',
 ];
 
 test.describe('US7 — Theme toggle & accessible browsing', () => {

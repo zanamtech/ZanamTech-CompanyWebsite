@@ -47,7 +47,7 @@ If you change the form endpoint or enable analytics, add the new origins to the 
 | Command | Checks |
 | --- | --- |
 | `npm run check` | `astro check`: types and templates |
-| `npm run lint:content` | No years-of-experience claims, pricing or competitor names in `src/` or `public/` |
+| `npm run lint:content` | Constitution III/VII content rules in `src/` and `public/`: years, pricing, competitors, team-structure, guarantee and time-figure wording, unearned status, self-hosted LLM claims, two-cloud phrasing, and verified-proof fields |
 | `npm run build` | Production build to `dist/` |
 | `npm run check:csp` | Inline-script hashes and required origins match the CSP; no inline styles or data: fonts |
 | `npm run test:e2e` | Playwright end-to-end tests with axe WCAG 2.1 AA scans in light and dark themes, plus CSP enforcement (desktop and mobile) |

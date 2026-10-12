@@ -500,7 +500,7 @@ are dev-only.
 ## Phase 4: Guardrails and tests (US8 + coverage for US1–US7)
 
 ### US8: Content lint
-- [ ] T096 [US8] Extend `RULES` in `scripts/lint-content.mjs` per research R7:
+- [X] T096 [US8] Extend `RULES` in `scripts/lint-content.mjs` per research R7:
   - competitors (Folio3, Systems Limited, Arbisoft, Tkxel, Devsinc, Simform, ScienceSoft,
     Accenture, 10Pearls)
   - team-structure phrases
@@ -519,63 +519,63 @@ are dev-only.
     (`\b\d+\s*[-–]?\s*(?:min(?:ute)?s?|hours?|hrs?)\b`, e.g. "30-minute", "2 hours")
   - weeks and business days stay allowed (offer durations, the 4-week onboarding, the two
     commitments)
-- [ ] T097 [US8] Add an `ALLOW` list to `scripts/lint-content.mjs` (exactly the two commitment
+- [X] T097 [US8] Add an `ALLOW` list to `scripts/lint-content.mjs` (exactly the two commitment
   phrases plus "time-zone overlap" and "hourly encrypted backups") and a path exemption for `public/.well-known/security.txt` from
   the clock rule only.
-- [ ] T098 [US8] Add a verified-data pass to `scripts/lint-content.mjs`:
+- [X] T098 [US8] Add a verified-data pass to `scripts/lint-content.mjs`:
   - every entry in `src/data/clients.ts`, `src/data/testimonials.ts` and
     `src/content/case-studies/*.md` has `verified` and `permissionDate`
   - every `%` statistic in `src/content/insights/*.md` sits in a paragraph or list item with a link,
     or the article lists `sources`
-- [ ] T099 [US8] Run a lint mutation check:
+- [X] T099 [US8] Run a lint mutation check:
   1. Temporarily insert one banned phrase per rule family into a scratch copy under `src/` and
      confirm `npm run lint:content` fails, naming the file and line.
   2. Remove the scratch copy and confirm it passes.
   3. Record the results in the PHR.
 
 ### E2E coverage
-- [ ] T100 [P] [US1] Create `tests/e2e/home-v3.spec.ts`:
+- [X] T100 [P] [US1] Create `tests/e2e/home-v3.spec.ts`:
   - the results band title, 8 cards, context lines and footnote
   - the Home section order
   - TrustBand reuses the 3 pillar headings
   - FAQ toggles with Enter and Space
   - on Pixel 7, the top of the first result card is within 1.5 viewport heights (SC-006)
-- [ ] T101 [P] [US2] Create `tests/e2e/services-v3.spec.ts`:
+- [X] T101 [P] [US2] Create `tests/e2e/services-v3.spec.ts`:
   - 4 pillars, flagship first
   - every published service is reachable in 2 clicks or fewer
   - flagship shows modules, 3 tiers and P1–P4, and its tier text matches no time or response pattern
   - each service page shows deliverables and FAQ
   - illustrative scenarios show "Example engagement" and no "%"
   - old slugs return 404 in preview
-- [ ] T102 [P] [US2] Create `tests/e2e/redirects-config.spec.ts`: parse `nginx/nginx.conf` and
+- [X] T102 [P] [US2] Create `tests/e2e/redirects-config.spec.ts`: parse `nginx/nginx.conf` and
   assert the 3 `return 301` rules (pattern and target) sit before `location /`, and that each target
   page exists in `dist/` (no browser needed).
-- [ ] T103 [P] [US3] Create `tests/e2e/offers-approach.spec.ts`: `/start-here` lists 5 offers with
+- [X] T103 [P] [US3] Create `tests/e2e/offers-approach.spec.ts`: `/start-here` lists 5 offers with
   durations and no fees; How We Work shows 5 engagement models and the agency section; the agency
   CTA prefills "Agency partnership".
-- [ ] T104 [P] [US4] Create `tests/e2e/trust-legal.spec.ts`:
+- [X] T104 [P] [US4] Create `tests/e2e/trust-legal.spec.ts`:
   - `/trust` and `/terms` return 200 with their key headings
   - `/.well-known/security.txt` contains `Contact: mailto:security@zanamtech.com`
   - footer has the Remote-first line and the Privacy, Terms and Trust links
   - no address
   - About has no years text
-- [ ] T105 [P] [US5] Extend `tests/e2e/contact.spec.ts`:
+- [X] T105 [P] [US5] Extend `tests/e2e/contact.spec.ts`:
   - Region, Company size and Cloud platform comboboxes with keyboard selection
   - payload includes `region`, `companySize`, `cloudPlatform` (and `"Not specified"` when empty)
   - "Agency partnership" option
   - success copy
   - desktop dialog has no vertical scrollbar
-- [ ] T106 [P] [US6] Create `tests/e2e/drafts.spec.ts` against the production preview:
+- [X] T106 [P] [US6] Create `tests/e2e/drafts.spec.ts` against the production preview:
   `/insights/*` and `/resources/*` draft slugs return 404, and no Insights nav link appears while all
   articles are drafts.
-- [ ] T107 [P] [US7] Create `tests/e2e/proof-gating.spec.ts`: no testimonial, logo-marquee,
+- [X] T107 [P] [US7] Create `tests/e2e/proof-gating.spec.ts`: no testimonial, logo-marquee,
   case-study or badge elements and no Case Studies nav link with empty data. `/case-studies` returns
   404.
-- [ ] T108 Extend `tests/e2e/theme-a11y.spec.ts` routes with `/start-here`, `/trust`, `/terms`,
+- [X] T108 Extend `tests/e2e/theme-a11y.spec.ts` routes with `/start-here`, `/trust`, `/terms`,
   `/services/managed-cloud-devops` and one new service page, so axe runs in light and dark.
-- [ ] T109 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all green.
-- [ ] T110 Commit `test: v3 guardrails, lint rules and coverage`.
-- [ ] T111 Write the PHR. **STOP**: summarise Phase 4 (rules added, mutation-check results, test
+- [X] T109 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all green.
+- [X] T110 Commit `test: v3 guardrails, lint rules and coverage`.
+- [X] T111 Write the PHR. **STOP**: summarise Phase 4 (rules added, mutation-check results, test
   counts) and wait for approval.
 
 ---

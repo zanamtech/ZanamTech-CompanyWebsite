@@ -1,6 +1,6 @@
 /**
  * Target segments (docs/01_Brand_Positioning.md §3). Current focus only: the data-sensitive AI segment is a later
- * focus and is not presented. Wording follows Constitution III (no targets, guarantees or time figures).
+ * focus and is not presented. Wording follows Constitution III.
  */
 export interface TargetSegment {
   id: string;
