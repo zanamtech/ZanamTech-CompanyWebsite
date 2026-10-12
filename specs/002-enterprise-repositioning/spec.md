@@ -41,6 +41,8 @@ Full-Stack Web App Development" name and slug. Work stays on the dev branch."
   content review.
 - Q (clarify): Does Google Cloud (GCP) stay on the site? → A: No. There is no real GCP work to show,
   so GCP is removed everywhere: headline copy, service text, stacks and the technology marquee.
+  *Superseded at owner review (2026-10-12): Google Cloud is supported. Azure and AWS stay primary, and GCP
+  appears in the marquee and relevant service stacks (see FR-006a).*
 - Q (clarify): How many results does the Home results strip show? → A: All 8, in a 4×2 grid on
   desktop (stacked on mobile), the same count as today's metrics section.
 - Q (clarify): Where are draft articles and artefacts reviewed? → A: Only on the local development
@@ -366,8 +368,9 @@ Remove it; they pass.
   - "Nine disciplines" or nine-service wording
   
   This covers every page, menu, form message, page metadata and structured data.
-- **FR-006a**: Google Cloud (GCP) MUST NOT appear anywhere on the site (copy, stacks, technology
-  marquee, metadata). The platforms presented are Azure and AWS.
+- **FR-006a** (revised 2026-10-12, owner review): Microsoft Azure and AWS MUST be presented as the primary
+  platforms. Google Cloud MAY appear as also supported: in the technology marquee and in relevant service stacks
+  (migration, IaC, cost, managed AI services), never as the headline platform.
 - **FR-007**: Site-wide descriptive text (page metadata, social previews, structured data, footer) MUST
   use the v3 positioning statement. Structured data MUST contain no address.
 

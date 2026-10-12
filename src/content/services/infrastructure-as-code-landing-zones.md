@@ -19,7 +19,7 @@ capabilities:
   - Network segmentation, private endpoints and identity foundations
   - Policy as code for tagging, regions and security baselines
   - Drift detection and pipeline-driven infrastructure changes
-stack: [Terraform, Bicep, Microsoft Azure, AWS, Azure DevOps, GitHub Actions]
+stack: [Terraform, Bicep, Microsoft Azure, AWS, Google Cloud, Azure DevOps, GitHub Actions]
 outcome: Cloud foundations defined entirely in code, reviewed through pull requests and rebuilt consistently in every environment
 relatedOffer: health-check
 faq:

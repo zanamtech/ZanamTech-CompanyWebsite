@@ -19,7 +19,7 @@ capabilities:
   - Production Kubernetes with horizontal pod auto-scaling and ingress load balancing
   - Staged database and traffic cutover with validation at every step
   - Infrastructure as Code (IaC) and Linux instance optimisation
-stack: [Microsoft Azure, AWS, Docker, Kubernetes, Terraform, Linux]
+stack: [Microsoft Azure, AWS, Google Cloud, Docker, Kubernetes, Terraform, Linux]
 outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 relatedOffer: health-check
 faq:
@@ -39,7 +39,7 @@ scenarios:
 ---
 
 ZanamTech moves workloads from legacy on-premise hardware or unoptimised hosting to elastic environments on
-Microsoft Azure and Amazon Web Services. Monolithic stacks are decomposed into modular services where it pays off,
+Microsoft Azure and Amazon Web Services, with Google Cloud also supported. Monolithic stacks are decomposed into modular services where it pays off,
 containerised with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the
 simpler, cheaper option.
 

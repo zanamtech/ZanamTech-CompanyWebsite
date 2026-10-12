@@ -19,7 +19,7 @@ capabilities:
   - Automated clean-up of orphaned disks, unattached IPs and stale environments
   - Budget alerts and spend guardrails
   - Reserved capacity, savings plans and spot strategy
-stack: [Azure Cost Management, AWS Cost Explorer, AWS Billing, Architecture Auditing Tools]
+stack: [Azure Cost Management, AWS Cost Explorer, Google Cloud Billing, Architecture Auditing Tools]
 outcome: Lower cloud bills through architecture rather than compromise; a past engagement cut recurring spend by up to 40%
 relatedOffer: cost-review
 faq:
@@ -38,7 +38,7 @@ scenarios:
     outcome: Wasteful spend was eliminated and unbudgeted cost overruns were prevented going forward.
 ---
 
-ZanamTech reviews active Azure and AWS infrastructure to remove wasted spend. Utilisation data drives right-sizing,
+ZanamTech reviews active Azure and AWS infrastructure, and Google Cloud where you run it, to remove wasted spend. Utilisation data drives right-sizing,
 consolidation and clean-up decisions, while automated guardrails keep spending aligned with budget.
 
 Savings come from architecture rather than compromise: availability and performance objectives stay intact while

@@ -22,7 +22,7 @@ dev shop, a staff-augmentation marketplace or a design agency.
 ZanamTech already delivers every day: cloud operations, Dev/QA/UAT/Prod environments, CI/CD
 pipelines, backups, and repository governance and SOPs.
 
-**Primary platforms:** Microsoft Azure and Amazon Web Services. Google Cloud is not presented.
+**Platforms:** Microsoft Azure and Amazon Web Services are primary. Google Cloud is presented as also supported (technology marquee and relevant service stacks), never as the headline platform.
 
 ## 3. Target clients (ICPs)
 
@@ -77,7 +77,7 @@ The website describes the process a client gets, never who sits behind it.
 
 - **Team structure:** "direct access to senior engineers", "our senior engineering team", "PM-led",
   "project-manager-led", "one accountable lead", any headcount figure, first-person "I".
-- **Low-ticket framing:** "gig", "hourly", "packages from".
+- **Low-ticket framing:** "gig", "hourly" (as a rate), "packages from". Technical frequencies such as "hourly encrypted backups" are allowed.
 - **Over-promising:** "guarantee", "guaranteed uptime", "zero downtime", "zero data loss", "100%",
   unqualified "24/7", "on-call engineers 24/7".
 - **Unearned status:** "certified" (until held), Ltd/Inc/LLC (until registered), "our offices".

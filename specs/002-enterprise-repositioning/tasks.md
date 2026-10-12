@@ -506,9 +506,9 @@ are dev-only.
   - team-structure phrases
   - guarantee, zero downtime/data loss, `100%`, unqualified 24/7
   - `certified`, `\b(?:Ltd|Inc|LLC)\b`, "our offices"
-  - local/on-premise/self-hosted LLM, fine-tuned model, GCP/Google Cloud
+  - local/on-premise/self-hosted LLM, fine-tuned model
   - first-person "I + verb"
-  - gig, hourly, packages from
+  - gig, hourly (rate sense), packages from; allow "hourly encrypted backups" (technical frequency)
   - clock times `\b\d{1,2}:\d{2}\b`
   - time-zone labels, case-sensitive:
     `\b(?:PKT|GST|GMT|BST|UTC|EST|EDT|CST|CDT|MST|MDT|PST|PDT|CET|CEST)\b` and
@@ -518,7 +518,7 @@ are dev-only.
   - weeks and business days stay allowed (offer durations, the 4-week onboarding, the two
     commitments)
 - [ ] T097 [US8] Add an `ALLOW` list to `scripts/lint-content.mjs` (exactly the two commitment
-  phrases plus "time-zone overlap") and a path exemption for `public/.well-known/security.txt` from
+  phrases plus "time-zone overlap" and "hourly encrypted backups") and a path exemption for `public/.well-known/security.txt` from
   the clock rule only.
 - [ ] T098 [US8] Add a verified-data pass to `scripts/lint-content.mjs`:
   - every entry in `src/data/clients.ts`, `src/data/testimonials.ts` and
@@ -587,7 +587,7 @@ are dev-only.
 - [ ] T113 Grep audit of `dist/`. Expect zero hits for:
   - "senior engineer", "24/7", "Nine", "guarantee", "local LLM", "PM-led"
   - "target" in results
-  - "GCP" / "Google Cloud"
+  - Google Cloud presented as primary or headline (it may appear only as also supported)
   - clock times
   - draft slugs
 - [ ] T114 SC-001 design-freeze check: screenshot the unchanged components (header, hero frame,

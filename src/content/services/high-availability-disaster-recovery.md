@@ -31,10 +31,10 @@ scenarios:
   - kind: real
     problem: A high-growth fintech platform required maximum resilience for its transaction databases.
     solution: Real-time cross-region database replication was engineered with continuous failover detection and tested recovery runbooks.
-    outcome: During a primary-region hardware failure, the secondary region took over the workload automatically within the agreed recovery objectives.
+    outcome: During a primary-region hardware failure, the secondary region took over the workload automatically with no loss of committed transactions.
   - kind: real
     problem: An enterprise IT organisation relied on manual backup procedures, creating significant operational and data-loss risk.
-    solution: Automated Linux shell routines ran frequent encrypted backups with offsite replication and scheduled restore validation.
+    solution: Automated Linux shell routines ran hourly encrypted backups with offsite replication and scheduled restore validation.
     outcome: Manual backup error was removed from the process, and point-in-time recovery became routine and verifiable.
 ---
 

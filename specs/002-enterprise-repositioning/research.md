@@ -88,7 +88,7 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
   - team-structure phrases
   - guarantee, zero downtime/data loss, `100%`, unqualified `24/7`
   - `certified`, legal suffixes `\b(?:Ltd|Inc|LLC)\b`, "our offices"
-  - local/on-premise/self-hosted LLM, fine-tuned model, GCP/Google Cloud
+  - local/on-premise/self-hosted LLM, fine-tuned model
   - clock times `\b\d{1,2}:\d{2}\b`
   - time-zone labels, matched case-sensitively:
     `\b(?:PKT|GST|GMT|BST|UTC|EST|EDT|CST|CDT|MST|MDT|PST|PDT|CET|CEST)\b` and `\b(?:UTC|GMT)\s?[+±-]\s?\d`.
@@ -97,7 +97,7 @@ All Technical Context unknowns are resolved below. Format: Decision / Rationale 
     (`\b\d+\s*[-–]?\s*(?:min(?:ute)?s?|hours?|hrs?)\b`, e.g. "30-minute", "2 hours"). The
     consultation has no stated length (owner decision U1). Weeks and business days stay allowed.
   - "I + verb" first-person pattern
-  - "gig", "hourly", "packages from"
+  - "gig", "hourly" (rate sense), "packages from". The allow-list includes "hourly encrypted backups" for technical frequencies
 
   An `ALLOW` list exempts exactly "Written proposal within 2 business days" and "We reply within 1
   business day". The `.well-known/security.txt` `Expires:` ISO timestamp is exempt from the clock

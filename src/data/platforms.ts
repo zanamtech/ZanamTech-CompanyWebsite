@@ -13,6 +13,7 @@ export const platformRows: PlatformRow[] = [
     items: [
       'AWS',
       'Microsoft Azure',
+      'Google Cloud',
       'Flexential Cloud',
       'Kubernetes',
       'Docker',
@@ -25,7 +26,6 @@ export const platformRows: PlatformRow[] = [
       'Claude Code',
       'Ollama',
       'OpenClaw',
-      'Hermes',
     ],
   },
   {

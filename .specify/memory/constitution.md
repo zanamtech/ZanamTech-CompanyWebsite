@@ -1,4 +1,8 @@
 <!--
+Sync Impact Report (2.0.2)
+- Version change: 2.0.1 → 2.0.2 (PATCH: Content & Brand Standards platform note. Azure and AWS primary, Google
+  Cloud also supported.) No template changes; spec 002 FR-006a, research R7 and tasks T096/T113 aligned.
+
 Sync Impact Report (2.0.1)
 - Version change: 2.0.0 → 2.0.1 (PATCH: clarifies the Principle III time rule. Time-zone labels and
   minute/hour figures are named explicitly; "time-zone overlap" and week durations are permitted.)
@@ -168,6 +172,8 @@ Rationale: automated gates make the principles above enforceable rather than asp
 - Voice: authoritative, precise, outcome-focused; no hype, slang, or emoji. "We" is used for the
   company.
 - Positioning pillars, used verbatim: **Enterprise-grade**, **High-availability**, **Zero-trust security**.
+- Platforms: Microsoft Azure and AWS are primary; Google Cloud is presented as also supported, never as the
+  headline platform.
 - Describe the process a client gets (SOW, kickoff, weekly status, monthly service review,
   runbooks, handover), never who sits behind it.
 - Preferred terms: "Statement of Work (SOW)", "achieved result", "remote-first", "documented
@@ -191,4 +197,4 @@ guidance, PATCH for clarifications and wording. Every implementation plan MUST i
 Constitution Check; violations MUST be justified in its Complexity Tracking table. Reviewers verify
 compliance on every pull request.
 
-**Version**: 2.0.1 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12
+**Version**: 2.0.2 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12

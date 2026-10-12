@@ -19,7 +19,7 @@ capabilities:
   - Permission-aware retrieval that respects existing access rights
   - Evaluation and monitoring of answer quality
   - Integration into internal tools, websites and support channels
-stack: [Azure OpenAI, Azure AI Search, Amazon Bedrock, Vector Search, Python]
+stack: [Azure OpenAI, Amazon Bedrock, Google Vertex AI, Azure AI Search, Vector Search, Python]
 outcome: Fast, cited answers from company knowledge, without sending data outside your own cloud tenant
 relatedOffer: ai-automation-pilot
 faq:
