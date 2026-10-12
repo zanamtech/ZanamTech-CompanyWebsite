@@ -1,7 +1,7 @@
 ---
 import { ChevronDown } from 'lucide-react';
 import Logo from './Logo.astro';
-import { site, companyLinks, legalLinks, pillars } from '../../data/site';
+import { site, companyLinks, legalLinks, pillars, footerCopy } from '../../data/site';
 import { leadership } from '../../data/leadership';
 import { getServicesByPillar, serviceHref } from '../../lib/services';
 import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
@@ -30,8 +30,8 @@ const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
     <!-- Brand block: a column from xl, a single row at lg, stacked below. -->
     <div class="lg:col-span-12 lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 lg:gap-y-3 xl:col-span-3 xl:block">
       <Logo height={24} />
-      <p class="mt-4 max-w-sm text-sm text-muted md:hidden">{site.tagline}</p>
-      <p class="mt-4 hidden max-w-md text-sm text-muted md:block lg:mt-0 lg:max-w-xl xl:mt-4 xl:max-w-sm">{site.description}</p>
+      <p class="mt-4 max-w-sm text-sm text-muted md:hidden">{footerCopy.tagline}</p>
+      <p class="mt-4 hidden max-w-md text-sm text-muted md:block lg:mt-0 lg:max-w-xl xl:mt-4 xl:max-w-sm">{footerCopy.description}</p>
       <ul class="mt-4 hidden flex-wrap gap-2 md:flex lg:mt-0 xl:mt-4" aria-label="Positioning">
         {pillars.map((p) => <li class="rounded-full border border-border-strong px-3 py-1 text-xs font-semibold text-fg">{p}</li>)}
       </ul>

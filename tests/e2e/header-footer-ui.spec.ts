@@ -84,6 +84,11 @@ test.describe('Mobile menu: expandable Services', () => {
 });
 
 test.describe('Footer', () => {
+  test('never says "remote-first" at any width', async ({ page }) => {
+    await page.goto('/');
+    expect(await page.locator('footer').evaluate((el) => el.textContent ?? '')).not.toMatch(/remote-first/i);
+  });
+
   test('fits within one screen at 1440x900 with every service listed', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop footer');
     await page.goto('/');
@@ -105,5 +110,6 @@ test.describe('Footer', () => {
     await groups.first().locator('summary').tap();
     await expect(groups.first()).toHaveAttribute('open', '');
     await expect(page.locator('footer').getByText('ZanamTech · Cloud, DevOps & AI engineering')).toBeVisible();
+    await expect(page.locator('footer').getByText('Cloud, DevOps & AI engineering', { exact: true })).toBeVisible();
   });
 });
