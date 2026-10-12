@@ -1,39 +1,46 @@
 ---
-order: 3
+order: 6
 name: High Availability & Disaster Recovery
-group: cloud-infrastructure
 pillar: cloud-devops
 flagship: false
 published: true
 icon: DatabaseBackup
-summary: Protection for mission-critical PostgreSQL, MySQL, AWS RDS and MongoDB systems through cross-region replication, validated automated backups and rapid failover protocols.
+summary: Protection for business-critical PostgreSQL, MySQL, SQL Server and MongoDB systems through cross-region replication, validated automated backups and tested failover runbooks.
 deliverables:
-  - Cross-region active/passive and active/active database replication
-  - Automated, encrypted hourly snapshots with offsite cloud storage synchronization
-  - High-availability cluster orchestration with automated failover triggers
+  - Documented recovery objectives (RPO and RTO) agreed with you
+  - Cross-region replication or standby design
+  - Automated, encrypted backups with offsite copies
+  - Scheduled restore tests with recorded results
+  - Disaster recovery runbook
 engagementTypes: [assessment, project]
 capabilities:
-  - Cross-region active/passive and active/active database replication
-  - Automated, encrypted hourly snapshots with offsite cloud storage synchronization
-  - High-availability cluster orchestration with automated failover triggers
-  - Continuous backup integrity validation and routine disaster recovery simulations
-  - Recovery Time Objective (RTO) and Recovery Point Objective (RPO) optimization
-stack: [PostgreSQL, MySQL, AWS RDS, MongoDB, Linux Shell Automation, Cross-Region Replication]
-outcome: Near-zero data loss (RPO) and rapid automated failover targets
+  - Database replication and automated failover design
+  - Automated, encrypted backups with offsite replication
+  - Point-in-time recovery configuration and validation
+  - Scheduled restore tests and disaster recovery drills
+  - Recovery runbooks with documented RPO and RTO
+stack: [PostgreSQL, MySQL, MS SQL, MongoDB, Azure SQL, AWS RDS, Linux Shell Automation]
+outcome: Recovery objectives that are documented, tested and proven in practice rather than assumed
+relatedOffer: health-check
+faq:
+  - q: How do we know backups actually work?
+    a: Restore tests run on a schedule and the results are recorded, so recovery is proven rather than assumed.
+  - q: Do we need a second region?
+    a: Not always. The design follows the recovery objectives your business needs; some workloads only need robust backups and tested restores.
 scenarios:
   - kind: real
-    problem: A high-growth fintech platform requires maximum resilience for its transaction databases.
-    solution: Real-time cross-region database replication is engineered with continuous failover detection and tested recovery runbooks.
-    outcome: During a primary-region hardware failure, the secondary region assumes the workload automatically with no loss of committed transactions.
+    problem: A high-growth fintech platform required maximum resilience for its transaction databases.
+    solution: Real-time cross-region database replication was engineered with continuous failover detection and tested recovery runbooks.
+    outcome: During a primary-region hardware failure, the secondary region took over the workload automatically within the agreed recovery objectives.
   - kind: real
-    problem: An enterprise IT organization relies on manual backup procedures, creating significant operational and data-loss risk.
-    solution: Automated Linux shell routines execute hourly encrypted backups with offsite replication and scheduled restore validation.
-    outcome: Manual backup error is removed from the process and point-in-time recovery becomes routine and verifiable.
+    problem: An enterprise IT organisation relied on manual backup procedures, creating significant operational and data-loss risk.
+    solution: Automated Linux shell routines ran frequent encrypted backups with offsite replication and scheduled restore validation.
+    outcome: Manual backup error was removed from the process, and point-in-time recovery became routine and verifiable.
 ---
 
-ZanamTech safeguards mission-critical database systems against hardware failure, data corruption and regional
-outages. Automated cross-region replication pipelines, hourly validated backups and instant failover protocols keep
-data available and consistent when primary infrastructure fails.
+ZanamTech safeguards business-critical databases against hardware failure, data corruption and regional outages.
+Automated replication, validated backups and tested failover runbooks keep data available and consistent when
+primary infrastructure fails.
 
-Recovery objectives are defined with each client and verified through routine disaster recovery simulations, so
-continuity plans are proven in practice rather than assumed on paper.
+Recovery objectives are defined with each client and verified through routine restore tests and recovery drills,
+so continuity plans are proven in practice rather than assumed on paper.

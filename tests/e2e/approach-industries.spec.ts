@@ -1,17 +1,10 @@
 import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
 
-const PHASES = [
-  'Technical Audit & Infrastructure Discovery',
-  'Custom Proposal & Statement of Work',
-  'Onboarding & Zero-Downtime Implementation',
-  'Continuous 24/7 Support & Managed Retainer',
-];
+import { engagementPhases } from '../../src/data/engagement';
+import { segments } from '../../src/data/segments';
 
-const SEGMENTS = [
-  'High-Growth B2B SaaS & Tech Scale-Ups',
-  'Mid-Market Enterprises & Digital Transformation Leaders',
-  'Data-Sensitive Organizations Seeking Enterprise AI',
-];
+const PHASES = engagementPhases.map((p) => p.name);
+const SEGMENTS = segments.map((s) => s.name);
 
 test.describe('US5 — Approach, Industries & About', () => {
   test('approach page lists the four phases in order and both engagement models without prices', async ({ page }) => {
@@ -30,7 +23,7 @@ test.describe('US5 — Approach, Industries & About', () => {
     expect(phases.map((p) => p.trim())).toEqual(PHASES);
   });
 
-  test('industries page lists the three target segments', async ({ page }) => {
+  test('industries page lists the current target segments', async ({ page }) => {
     await page.goto('/industries');
     const names = await page.locator('[data-segment] h2').allInnerTexts();
     expect(names.map((n) => n.trim())).toEqual(SEGMENTS);

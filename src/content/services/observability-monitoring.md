@@ -1,38 +1,45 @@
 ---
-order: 5
-name: Active System Observability & Monitoring
-group: cloud-infrastructure
+order: 7
+name: Observability & Monitoring
 pillar: cloud-devops
 flagship: false
 published: true
 icon: Activity
-summary: Real-time visibility into clusters, containers, memory, latency and database performance using Prometheus, Grafana and Zabbix, with proactive alert routing before users are affected.
+summary: Visibility into clusters, containers, memory, latency and database performance with Azure Monitor, Prometheus, Grafana and Zabbix, and alerts routed before users are affected.
 deliverables:
-  - Prometheus exporters, Zabbix agents and Grafana dashboards
-  - Memory leak, CPU load and disk utilization telemetry
-  - Database query performance tracing and bottleneck isolation
+  - Monitoring and alerting baseline for your critical services
+  - Dashboards for infrastructure, application and database health
+  - Alert routing with severity levels
+  - Incident runbooks for the most common failure modes
+  - A review of alert noise and coverage
 engagementTypes: [assessment, project]
 capabilities:
-  - Prometheus exporters, Zabbix agents and Grafana dashboards
-  - Memory leak, CPU load and disk utilization telemetry
-  - Database query performance tracing and bottleneck isolation
-  - Proactive alert routing to chat, email and paging systems
-  - Incident telemetry and Mean Time to Recovery (MTTR) diagnostics
-stack: [Prometheus, Grafana, Zabbix]
-outcome: 45% faster incident detection and 30% MTTR improvement targets
+  - Metrics, logs and traces for servers, containers and databases
+  - Proactive threshold and anomaly alerting
+  - Dashboards with Grafana and Azure Monitor workbooks
+  - Alert routing by severity to the right channel
+  - Incident telemetry that shortens recovery
+stack: [Azure Monitor, Prometheus, Grafana, Zabbix]
+outcome: Problems found before users notice; past engagements achieved 45% faster incident detection and a 30% improvement in mean time to recovery
+relatedOffer: health-check
+faq:
+  - q: Will we drown in alerts?
+    a: No. Alerts are tied to severity levels and tuned against real traffic, so the team sees what needs action rather than noise.
+  - q: Can you use the monitoring tools we already have?
+    a: Yes. We extend what you run today, such as Azure Monitor or an existing Prometheus stack, before introducing anything new.
 scenarios:
   - kind: real
-    problem: A B2B SaaS platform experiences unexpected crashes caused by undetected background memory leaks.
-    solution: Zabbix and Prometheus telemetry are integrated with automated threshold alerts for memory consumption.
-    outcome: Infrastructure anomalies are detected and resolved up to 45% faster, before they escalate into downtime.
+    problem: A B2B SaaS platform experienced unexpected crashes caused by undetected background memory leaks.
+    solution: Zabbix and Prometheus telemetry were integrated with automated threshold alerts for memory consumption.
+    outcome: Infrastructure anomalies were detected and resolved 45% faster, before they escalated into downtime.
   - kind: real
-    problem: An enterprise portal slows severely during peak user activity.
-    solution: Grafana dashboards are built to isolate slow database queries and memory bottlenecks in real time.
-    outcome: Query bottlenecks are resolved and Mean Time to Recovery improves by up to 30%.
+    problem: An enterprise portal slowed severely during peak user activity.
+    solution: Grafana dashboards were built to isolate slow database queries and memory bottlenecks in real time.
+    outcome: Query bottlenecks were resolved and mean time to recovery improved by 30%.
 ---
 
-ZanamTech deploys active observability stacks that give engineering teams real-time insight into server clusters,
-container health, memory usage, network latency and database query performance.
+ZanamTech deploys observability stacks that give teams real-time insight into server clusters, container health,
+memory usage, network latency and database query performance.
 
-Proactive thresholds, intelligent alert routing and purpose-built dashboards let teams identify and resolve
-bottlenecks before service degradation reaches end users, while incident telemetry shortens every recovery cycle.
+Thresholds, severity-based alert routing and purpose-built dashboards let teams identify and resolve bottlenecks
+before service degradation reaches end users, while incident telemetry shortens every recovery cycle.

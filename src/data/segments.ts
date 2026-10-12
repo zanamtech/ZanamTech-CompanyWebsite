@@ -1,7 +1,10 @@
-/** Target segments (docs/01_Brand_Positioning.md §4), rewritten without revenue figures or unqualified guarantees. */
+/**
+ * Target segments (docs/01_Brand_Positioning.md §3). Current focus only: the data-sensitive AI segment is a later
+ * focus and is not presented. Wording follows Constitution III (no targets, guarantees or time figures).
+ */
 export interface TargetSegment {
   id: string;
-  icon: 'Rocket' | 'Building2' | 'LockKeyhole';
+  icon: 'Rocket' | 'Building2' | 'Handshake' | 'Globe';
   name: string;
   profile: string;
   decisionMakers: string[];
@@ -14,46 +17,61 @@ export const segments: TargetSegment[] = [
   {
     id: 'saas',
     icon: 'Rocket',
-    name: 'High-Growth B2B SaaS & Tech Scale-Ups',
-    profile: 'SaaS companies experiencing rapid growth in users, traffic and infrastructure complexity.',
-    decisionMakers: ['CTOs', 'VPs of Engineering', 'Lead DevOps Architects'],
+    name: 'B2B SaaS Companies',
+    profile: 'SaaS companies of roughly 10 to 200 people with no in-house DevOps, where releases, environments and cloud bills are nobody’s full-time job.',
+    decisionMakers: ['CTOs', 'Technical co-founders', 'VPs of Engineering'],
     challenges: [
-      'Unpredictable cloud bill escalation',
+      'Unpredictable cloud bill growth',
       'Brittle, manual deployment pipelines',
-      'Limited observability into production',
-      'Need for Kubernetes auto-scaling',
+      'Limited visibility into production',
+      'Environments that drift apart',
     ],
-    value: ['Up to 40% cloud cost reduction target', 'Automated CI/CD pipelines', '99.9% uptime SLA target'],
-    services: ['cloud-cost-optimization', 'cicd-pipeline-workflow-automation', 'observability-monitoring'],
+    value: ['Managed Cloud & DevOps operations', 'Automated CI/CD pipelines', 'Cloud cost governance'],
+    services: ['managed-cloud-devops', 'cicd-pipeline-workflow-automation', 'cloud-cost-optimization'],
   },
   {
-    id: 'enterprise',
+    id: 'mid-market',
     icon: 'Building2',
-    name: 'Mid-Market Enterprises & Digital Transformation Leaders',
+    name: 'Mid-Market Firms on Azure and AWS',
     profile:
-      'Established organizations in healthcare, logistics, e-commerce and professional services moving from legacy hardware to modern cloud.',
-    decisionMakers: ['CIOs', 'VPs of IT', 'Directors of Infrastructure'],
+      'Established firms in logistics, professional services and e-commerce modernising their platforms without hiring a full platform team.',
+    decisionMakers: ['CIOs', 'IT directors', 'Heads of infrastructure'],
     challenges: [
-      'Cyber security threats and DDoS exposure',
-      'Complex data migrations',
-      'High hardware maintenance overhead',
+      'Legacy hosting and high maintenance overhead',
+      'Security exposure on public endpoints',
+      'Manual processes that slow operations',
     ],
-    value: ['Zero-downtime cloud migration', 'WAF and zero-trust perimeter setup', '80% attack surface reduction target'],
-    services: ['cloud-migration-containerization', 'enterprise-security-waf-hardening', 'high-availability-disaster-recovery'],
+    value: ['Staged cloud migration', 'WAF and zero-trust perimeter hardening', 'Practical AI workflow automation'],
+    services: ['cloud-migration-containerization', 'enterprise-security-waf-hardening', 'ai-workflow-document-automation'],
   },
   {
-    id: 'data-sensitive',
-    icon: 'LockKeyhole',
-    name: 'Data-Sensitive Organizations Seeking Enterprise AI',
+    id: 'software-agencies',
+    icon: 'Handshake',
+    name: 'Software Agencies & Software Houses',
     profile:
-      'Financial, legal, medical and corporate organizations that need AI automation without exposing proprietary records to public AI services.',
-    decisionMakers: ['Enterprise Operations Directors', 'Chief Risk Officers', 'Innovation Leads'],
+      'Agencies that win application projects but lack DevOps capacity, and need a partner to run cloud and delivery for their clients, white-label or co-branded.',
+    decisionMakers: ['Agency owners', 'Delivery heads', 'Technical directors'],
     challenges: [
-      'Inefficient manual document processing',
-      'Strict data privacy and compliance requirements',
-      'Risk of data leakage through third-party AI APIs',
+      'Client projects without reliable environments and pipelines',
+      'No dedicated DevOps capacity',
+      'Hosting and support handed back to developers',
     ],
-    value: ['Private, isolated LLM deployments', 'Secure document retrieval (RAG)', 'Compliance-aligned local AI workflows'],
-    services: ['enterprise-ai-integration', 'full-stack-web-app-development', 'managed-infrastructure-24-7'],
+    value: ['White-label or co-branded DevOps', 'Environment and pipeline setup per client project', 'Managed operations after launch'],
+    services: ['managed-cloud-devops', 'cicd-pipeline-workflow-automation', 'infrastructure-as-code-landing-zones'],
+  },
+  {
+    id: 'gcc',
+    icon: 'Globe',
+    name: 'GCC Enterprises & Scale-Ups',
+    profile:
+      'Organisations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centres, with data-residency awareness and same-day time-zone overlap.',
+    decisionMakers: ['IT leads', 'Digital transformation leads', 'Heads of engineering'],
+    challenges: [
+      'Data-residency requirements for regional cloud hosting',
+      'Modernising legacy applications',
+      'Limited in-house cloud operations capacity',
+    ],
+    value: ['Platforms in UAE and Saudi Arabia cloud regions', 'Infrastructure as Code foundations', 'Managed operations and reporting'],
+    services: ['infrastructure-as-code-landing-zones', 'managed-cloud-devops', 'application-modernisation-integration'],
   },
 ];

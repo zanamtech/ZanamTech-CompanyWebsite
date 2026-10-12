@@ -1,40 +1,46 @@
 ---
-order: 2
-name: Enterprise Security & WAF Hardening
-group: cloud-infrastructure
+order: 5
+name: Security Hardening & WAF
 pillar: cloud-devops
 flagship: false
 published: true
 icon: ShieldCheck
-summary: Multi-layered, zero-trust defense for web applications, portals and APIs against DDoS, botnets, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+summary: Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 deliverables:
-  - WAF deployment and custom rule engineering with Cloudflare WAF and AWS WAF & Shield
-  - Zero-trust network firewalls, IP allow/deny filtering and rate-limiting enforcement
-  - Geographic access controls (geo-fencing) and automated botnet filtering
+  - Attack-surface review with prioritised findings
+  - WAF policies, rate limits and bot controls in place
+  - TLS enforcement and hardened server baselines
+  - Access and firewall rules documented
+  - Monitoring of blocked traffic with a review cadence
 engagementTypes: [assessment, project]
 capabilities:
   - WAF deployment and custom rule engineering with Cloudflare WAF and AWS WAF & Shield
-  - Zero-trust network firewalls, IP allow/deny filtering and rate-limiting enforcement
-  - Geographic access controls (geo-fencing) and automated botnet filtering
+  - Zero-trust network firewalls, IP allow/deny filtering and rate limiting
+  - Geographic access controls (geo-fencing) and automated bot filtering
   - End-to-end SSL/TLS enforcement and operating system hardening
-  - Vulnerability probes, attack surface audits and real-time threat mitigation
-stack: [Cloudflare WAF, AWS WAF & Shield, Zero-Trust Firewalls, SSL/TLS, Security Audit Tooling]
-outcome: 80% attack surface and security risk reduction target
+  - Attack-surface audits and active threat mitigation
+stack: [Cloudflare WAF, AWS WAF & Shield, Azure Front Door, SSL/TLS, Security Audit Tooling]
+outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
+relatedOffer: health-check
+faq:
+  - q: Will security rules block legitimate users?
+    a: Rules are introduced in monitoring mode first and tuned against real traffic before enforcement, so legitimate users are not disrupted.
+  - q: Do you provide a security operations centre?
+    a: No. We harden and configure your perimeter and hand over monitoring with clear runbooks. Ongoing review can continue under the managed retainer.
 scenarios:
   - kind: real
-    problem: A healthcare portal faces persistent attacks and probing aimed at sensitive patient data.
-    solution: An enterprise WAF is deployed with strict geo-fencing rules, untrusted IP spaces are blocked and TLS is enforced end to end.
-    outcome: Unauthorized intrusion attempts drop sharply and patient-facing endpoints operate behind a hardened zero-trust perimeter.
+    problem: A healthcare portal faced persistent attacks and probing aimed at sensitive patient data.
+    solution: An enterprise WAF was deployed with strict geo-fencing rules, untrusted IP ranges were blocked and TLS was enforced end to end.
+    outcome: Unauthorised intrusion attempts dropped sharply, and patient-facing endpoints now operate behind a hardened zero-trust perimeter.
   - kind: real
-    problem: A high-volume B2B platform suffers performance degradation from aggressive automated bot traffic.
-    solution: Geographic access blocks, rate-limiting policies and automated DDoS mitigation rules are implemented at the edge.
-    outcome: The malicious attack surface is reduced by up to 80% without adding friction for legitimate enterprise users.
+    problem: A high-volume B2B platform suffered performance degradation from aggressive automated bot traffic.
+    solution: Geographic access blocks, rate-limiting policies and automated DDoS mitigation rules were implemented at the edge.
+    outcome: The malicious attack surface was reduced by 80% without adding friction for legitimate business users.
 ---
 
-ZanamTech deploys multi-layered defense frameworks that shield web applications, enterprise portals and public or
-internal APIs against distributed denial-of-service attacks, automated botnet intrusions, zero-day exploit probes and
-unauthorized access.
+ZanamTech deploys layered defences that shield web applications, enterprise portals and public or internal APIs
+against distributed denial-of-service attacks, automated bots, exploit probes and unauthorised access.
 
 By combining Cloudflare WAF, AWS WAF & Shield, zero-trust network firewalls, geographic access fencing, rate limiting
-and strict SSL/TLS enforcement, every public endpoint is verified, filtered and encrypted. Continuous audits keep the
-perimeter aligned with evolving threats and compliance obligations.
+and strict SSL/TLS enforcement, every public endpoint is verified, filtered and encrypted. Regular reviews keep the
+perimeter aligned with evolving threats.

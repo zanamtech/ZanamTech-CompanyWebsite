@@ -1,12 +1,12 @@
 import { test, expect } from './fixtures';
+import { RESULTS_FOOTNOTE as FOOTNOTE } from './catalog';
 
-const FOOTNOTE = 'Outcomes vary by environment; SLA commitments are defined per Statement of Work.';
-
-test.describe('US4 — Metric counters', () => {
+test.describe('US1 — Selected results from past engagements', () => {
   test('final values and footnote are present in the server-rendered HTML', async ({ request }) => {
     const html = await (await request.get('/')).text();
     expect(html).toContain('99.9%');
-    expect(html).toContain('uptime SLA target');
+    expect(html).toContain('availability achieved');
+    expect(html).toContain('Selected results from past engagements');
     expect(html).toContain(FOOTNOTE);
   });
 
@@ -38,11 +38,11 @@ test.describe('US4 — Metric counters', () => {
 
   test('screen readers get the full metric statement', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#metrics [data-metric="uptime"] .sr-only')).toHaveText(/99\.9% uptime SLA target/);
+    await expect(page.locator('#metrics [data-metric="uptime"] .sr-only')).toHaveText(/99\.9% availability achieved/);
   });
 });
 
-test.describe('US4 — without JavaScript', () => {
+test.describe('Results — without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
   test('final values are shown', async ({ page }) => {

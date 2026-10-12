@@ -1,10 +1,12 @@
 export const site = {
   name: 'ZanamTech',
   legalName: 'ZanamTech',
-  tagline: 'Enterprise Cloud, Security & AI Engineering',
+  tagline: 'Remote-first Cloud, DevOps & AI engineering',
   description:
-    'ZanamTech architects high-availability cloud environments, zero-trust security perimeters, DevSecOps automation and secure private AI workflows for growth-focused enterprises.',
+    'ZanamTech is a remote-first Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',
   email: 'contact@zanamtech.com',
+  privacyEmail: 'privacy@zanamtech.com',
+  securityEmail: 'security@zanamtech.com',
 } as const;
 
 export const pillars = ['Enterprise-grade', 'High-availability', 'Zero-trust security'] as const;
@@ -13,9 +15,6 @@ export const cta = {
   primary: 'Book a Strategy Consultation',
   href: '/contact',
 } as const;
-
-export const metricsFootnote =
-  'Outcomes vary by environment; SLA commitments are defined per Statement of Work.';
 
 export interface NavLink {
   label: string;

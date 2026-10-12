@@ -1,39 +1,48 @@
 ---
-order: 7
+order: 9
 name: Custom Full-Stack Web App Development
-group: engineering-ai
+seoTitle: Custom Web Application Development
 pillar: web-saas
 flagship: false
 published: true
 icon: CodeXml
-summary: Cloud-native web applications, multi-tenant SaaS platforms and enterprise portals engineered to scale, secured behind WAF perimeters and delivered through automated pipelines.
+summary: Cloud-native web applications and multi-tenant SaaS platforms, from MVP to scale, with authentication, billing, admin dashboards and APIs delivered through automated pipelines.
 deliverables:
-  - Full-stack application development on modern, scalable web frameworks
-  - RESTful and GraphQL API architecture with enterprise database integration
-  - Cloud-native deployment for high-concurrency traffic
+  - Product architecture and delivery plan
+  - Production web application or SaaS platform in your repository
+  - Authentication, role-based access and admin dashboards
+  - REST or GraphQL APIs with documentation
+  - CI/CD pipeline and hosted environments
+  - Handover documentation
 engagementTypes: [project]
 capabilities:
-  - Full-stack application development on modern, scalable web frameworks
-  - RESTful and GraphQL API architecture with enterprise database integration
-  - Cloud-native deployment for high-concurrency traffic
-  - Administration dashboards, role-based access control (RBAC) and user management
-  - Integration with CI/CD pipelines and WAF security perimeters
-stack: [Modern Full-Stack Frameworks, REST / GraphQL APIs, Cloud-Native Application Frameworks]
-outcome: Rapid enterprise MVP delivery to scalable production
+  - Full-stack development on modern, scalable web frameworks
+  - Multi-tenant SaaS architecture with subscription billing
+  - Authentication, role-based access control (RBAC) and user management
+  - REST and GraphQL API design with database integration
+  - Cloud-native deployment through CI/CD, behind WAF protection
+stack: [Modern Full-Stack Frameworks, REST / GraphQL APIs, Microsoft Azure, AWS, PostgreSQL, Docker]
+outcome: Production-grade web applications and SaaS platforms that ship quickly and scale without a rebuild
+relatedOffer: health-check
+faq:
+  - q: Do we own the code?
+    a: Yes. Code, infrastructure definitions and documentation are delivered into your own repositories and cloud accounts.
+  - q: Can you build a multi-tenant SaaS product?
+    a: Yes. Tenant isolation, subscription billing, role-based access and admin tooling are designed in from the start.
 scenarios:
   - kind: real
-    problem: A technology startup needs a production-ready web MVP for investor presentations, faster than a typical development cycle allows.
-    solution: A cloud-hosted, fully functional web application is engineered and deployed in four weeks.
-    outcome: The founder presents a scalable, production-grade product and advances fundraising conversations.
+    problem: A technology startup needed a production-ready web MVP for investor presentations, faster than a typical development cycle allows.
+    solution: A cloud-hosted, fully functional web application was engineered and deployed in four weeks.
+    outcome: The founder presented a scalable, production-grade product and advanced fundraising conversations.
   - kind: real
-    problem: A healthcare network requires a secure, compliant application to coordinate scheduling and clinic operations.
-    solution: An intuitive web platform is delivered on isolated, secured cloud architecture with role-based access.
-    outcome: Operations are streamlined while strict data-access controls are maintained across staff tiers.
+    problem: A healthcare network required a secure application to coordinate scheduling and clinic operations.
+    solution: A web platform was delivered on isolated, secured cloud architecture with role-based access.
+    outcome: Operations were streamlined while strict data-access controls were maintained across staff roles.
 ---
 
-ZanamTech engineers scalable full-stack web applications, multi-tenant SaaS platforms and enterprise management
-portals designed to run natively on cloud infrastructure.
+ZanamTech builds custom web applications and multi-tenant SaaS platforms designed to run natively on cloud
+infrastructure, from a first MVP through to a product serving many customers.
 
-Applications are built from day one on production-grade architecture: modern frameworks, well-defined APIs and
-microservice back ends, integrated directly into automated release pipelines and protected by enterprise WAF
-perimeters.
+Applications are built on production-grade architecture from day one: modern frameworks, well-defined APIs,
+authentication, billing, role-based access and admin dashboards, deployed through automated pipelines and protected
+by WAF perimeters.

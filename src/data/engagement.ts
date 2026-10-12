@@ -1,4 +1,4 @@
-/** Engagement process (docs/02_Services_Catalog.md §4). */
+/** Engagement process (docs/02_Services_Catalog.md). Process wording only: no team structure or time figures. */
 export interface EngagementPhase {
   order: number;
   name: string;
@@ -11,7 +11,7 @@ export const engagementPhases: EngagementPhase[] = [
     order: 1,
     name: 'Technical Audit & Infrastructure Discovery',
     summary:
-      'Senior architects assess cloud configuration, database replication, security perimeters, CI/CD pipelines and monthly resource expenditure.',
+      'A structured assessment of cloud configuration, database replication, security perimeters, CI/CD pipelines and monthly resource spend.',
     details: ['Bottleneck and single-point-of-failure analysis', 'Vulnerability and attack surface review', 'Cost-reduction opportunities'],
   },
   {
@@ -19,21 +19,21 @@ export const engagementPhases: EngagementPhase[] = [
     name: 'Custom Proposal & Statement of Work',
     summary:
       'A detailed technical Statement of Work defines architecture, deliverables, milestones and service level commitments.',
-    details: ['Architectural specifications and deliverables', 'Deployment milestones and schedule', 'SLA, uptime and security benchmarks'],
+    details: ['Architectural specifications and deliverables', 'Deployment milestones and schedule', 'Service levels and security benchmarks'],
   },
   {
     order: 3,
-    name: 'Onboarding & Zero-Downtime Implementation',
+    name: 'Onboarding & Staged Implementation',
     summary:
-      'Senior cloud and DevSecOps engineers deliver through Infrastructure as Code, staging validation and zero-downtime cutovers.',
+      'Delivery through Infrastructure as Code, staging validation and staged cutovers, with weekly status reports throughout.',
     details: ['IaC-driven, repeatable environments', 'Staged validation before every cutover', 'Operational continuity throughout'],
   },
   {
     order: 4,
-    name: 'Continuous 24/7 Support & Managed Retainer',
+    name: 'Continuous Managed Operations',
     summary:
       'For ongoing operations, ZanamTech assumes accountability for stability, monitoring, security updates and incident resolution.',
-    details: ['Proactive monitoring and alert routing', 'Continuous security patching', 'Monthly performance and SLA reviews'],
+    details: ['Proactive monitoring and alert routing', 'Continuous security patching', 'Monthly service reviews'],
   },
 ];
 
@@ -125,7 +125,7 @@ export const engagementModels: EngagementModel[] = [
   {
     name: 'Monthly Retainer',
     description:
-      'Ongoing managed operations with continuous monitoring, patching, incident response and monthly SLA reporting.',
-    suitedFor: ['24/7 managed infrastructure', 'Continuous cost governance', 'Evolving platforms that need a standing engineering partner'],
+      'Ongoing managed operations with continuous monitoring, patching, incident response and a monthly service report.',
+    suitedFor: ['Managed cloud and DevOps operations', 'Continuous cost governance', 'Evolving platforms that need ongoing engineering'],
   },
 ];

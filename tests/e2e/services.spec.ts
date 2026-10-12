@@ -1,57 +1,50 @@
 import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
 
-const SERVICES = [
-  'Cloud Migration & Containerization',
-  'Enterprise Security & WAF Hardening',
-  'High Availability & Disaster Recovery',
-  'CI/CD Pipeline & Workflow Automation',
-  'Active System Observability & Monitoring',
-  'Cloud Infrastructure Cost Optimization',
-  'Custom Full-Stack Web App Development',
-  'Intelligent Enterprise AI Integration & Automation',
-  '24/7 Managed Infrastructure & Incident Resolution',
-];
-
-const FOOTNOTE = 'Outcomes vary by environment; SLA commitments are defined per Statement of Work.';
+import { bySlug, published, publishedNames, RESULTS_FOOTNOTE } from './catalog';
 
 test.describe('US2 — Services', () => {
-  test('services index lists all nine services, grouped', async ({ page }) => {
+  test('services index lists every published service, grouped', async ({ page }) => {
     await page.goto('/services');
     const names = await page.locator('[data-service-card] h3').allInnerTexts();
-    expect(names.map((n) => n.trim()).sort()).toEqual([...SERVICES].sort());
+    expect(names.map((n) => n.trim()).sort()).toEqual([...publishedNames].sort());
     await expect(page.getByRole('heading', { level: 2, name: 'Cloud & Infrastructure' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: 'Engineering & AI' })).toBeVisible();
   });
 
-  test('home page shows the nine services in canonical order', async ({ page }) => {
+  test('home page shows every published service in canonical order', async ({ page }) => {
     await page.goto('/');
     const names = await page.locator('#core-services [data-service-card] h3').allInnerTexts();
-    expect(names.map((n) => n.trim())).toEqual(SERVICES);
+    expect(names.map((n) => n.trim())).toEqual(publishedNames);
   });
 
-  test('every service detail page renders capabilities, outcome, footnote and two scenarios', async ({ page }) => {
+  test('every service detail page renders capabilities, outcome, footnote and its scenarios', async ({ page }) => {
     await page.goto('/');
     const hrefs = await page.locator('#core-services [data-service-card] h3 a').evaluateAll((els) =>
       els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
     );
-    expect(hrefs).toHaveLength(9);
+    expect(hrefs).toHaveLength(published.length);
 
     for (const [i, href] of hrefs.entries()) {
+      const service = published[i];
       const response = await page.goto(href!);
       expect(response?.status(), href!).toBe(200);
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(SERVICES[i]);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(service.name);
       await expect(page.getByRole('heading', { name: 'Core capabilities' })).toBeVisible();
-      await expect(page.getByText('Target outcome', { exact: true })).toBeVisible();
-      await expect(page.getByText(FOOTNOTE).first()).toBeVisible();
-      await expect(page.locator('[data-scenario]')).toHaveCount(2);
-      await expect(page.getByText(/Representative Engagement Scenario/).first()).toBeVisible();
+      await expect(page.getByText('Outcome', { exact: true }).first()).toBeVisible();
+      const hasReal = service.scenarios.some((s) => s.kind === 'real');
+      // The past-engagements footnote appears only where a real result is shown.
+      await expect(page.getByText(RESULTS_FOOTNOTE)).toHaveCount(hasReal ? 2 : 0);
+      await expect(page.locator('[data-scenario]')).toHaveCount(service.scenarios.length);
+      const examples = service.scenarios.filter((s) => s.kind === 'illustrative').length;
+      await expect(page.locator('[data-scenario]').getByText('Example engagement', { exact: true })).toHaveCount(examples);
+      await expect(page.getByText(/Representative Engagement Scenario/)).toHaveCount(0);
     }
   });
 
   test('any service is reachable from home in two clicks', async ({ page }) => {
     await page.goto('/');
     await page.locator('#core-services [data-service-card] h3 a').nth(4).click();
-    await expect(page).toHaveURL(/\/services\/observability-monitoring\/?$/);
+    await expect(page).toHaveURL(new RegExp(`/services/${published[4].slug}/?$`));
   });
 
   test.describe('desktop services menu', () => {
@@ -62,12 +55,12 @@ test.describe('US2 — Services', () => {
     const servicesLink = (page: import('@playwright/test').Page) =>
       page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true });
 
-    test('opens on hover, lists nine services, and closes when the pointer leaves', async ({ page }) => {
+    test('opens on hover, lists every published service, and closes when the pointer leaves', async ({ page }) => {
       await page.goto('/');
       const menu = page.locator('#services-menu');
       await servicesLink(page).hover();
       await expect(menu).toBeVisible();
-      await expect(menu.locator('a[href^="/services/"]')).toHaveCount(9);
+      await expect(menu.locator('a[href^="/services/"]')).toHaveCount(published.length);
       await page.mouse.move(700, 600); // well below the header and panel
       await expect(menu).toBeHidden();
     });
@@ -84,7 +77,7 @@ test.describe('US2 — Services', () => {
       const x = linkBox.x + linkBox.width / 2;
       await page.mouse.move(x, panelBox.y + 40, { steps: 12 });
       await expect(menu).toBeVisible();
-      await menu.getByRole('link', { name: 'Cloud Infrastructure Cost Optimization' }).click();
+      await menu.getByRole('link', { name: bySlug('cloud-cost-optimization').name }).click();
       await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);
     });
 
@@ -138,27 +131,20 @@ test.describe('US2 — Services', () => {
   }
 });
 
-test.describe('US6 — Roadmap', () => {
-  const ROADMAP = 'Advanced Agentic AI Workflows & Dedicated LLMOps';
+test.describe('Retired services', () => {
+  const RETIRED = ['agentic-ai-llmops', 'managed-infrastructure-24-7', 'enterprise-ai-integration'];
 
-  test('roadmap item is shown below the grid, labelled In Development, with no purchase CTA', async ({ page }) => {
+  test('no roadmap section and no "In Development" label on /services', async ({ page }) => {
     await page.goto('/services');
-    const card = page.locator('[data-roadmap]');
-    await expect(card).toHaveCount(1);
-    await expect(card.getByRole('heading', { name: ROADMAP })).toBeVisible();
-    await expect(card.getByText('In Development', { exact: true })).toBeVisible();
-    await expect(card.getByRole('link', { name: /consultation|proposal/i })).toHaveCount(0);
-    await expect(card.locator('[data-contact-cta]')).toHaveCount(0);
+    await expect(page.locator('[data-roadmap]')).toHaveCount(0);
+    await expect(page.getByText('In Development')).toHaveCount(0);
+    await expect(page.getByText('What we are building next')).toHaveCount(0);
   });
 
-  test('roadmap item is excluded from the core grid, menus and lead options', async ({ page }) => {
-    await page.goto('/services');
-    await expect(page.locator('[data-service-card]')).toHaveCount(9);
-    await expect(page.locator('#services-menu')).not.toContainText(ROADMAP);
-    await expect(page.locator('footer')).not.toContainText(ROADMAP);
-    const options = await page.locator('#contact-dialog select[name="service"] option').allInnerTexts();
-    expect(options).not.toContain(ROADMAP);
-    const response = await page.request.get('/services/agentic-ai-llmops');
-    expect(response.status()).toBe(404);
-  });
+  for (const slug of RETIRED) {
+    test(`/services/${slug} is no longer a page (nginx redirects it in production)`, async ({ page }) => {
+      const response = await page.request.get(`/services/${slug}`);
+      expect(response.status()).toBe(404);
+    });
+  }
 });

@@ -1,5 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { test, expect, expectNoA11yViolations, gotoWithTheme } from './fixtures';
+import { published } from './catalog';
 
 type Box = { x: number; y: number; width: number; height: number };
 
@@ -131,6 +132,6 @@ test.describe('Desktop mega-menu card (1440px)', () => {
     expect(box.width).toBeLessThanOrEqual(1024); // max-w-5xl
     expect(Math.abs(box.x + box.width / 2 - (header.x + header.width / 2))).toBeLessThanOrEqual(2); // centred under header
     expect(box.y).toBeGreaterThan(header.y + header.height); // floats below the bar (mt-2)
-    await expect(menu.locator('a[href^="/services/"] svg')).toHaveCount(9); // icons retained
+    await expect(menu.locator('a[href^="/services/"] svg')).toHaveCount(published.length); // icons retained
   });
 });

@@ -3,11 +3,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
 import ServiceCard from '../../components/sections/ServiceCard.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
-import RoadmapCard from '../../components/sections/RoadmapCard.astro';
-import { displayGroup, getActiveServices, getRoadmapServices, serviceGroups, type ServiceGroup } from '../../lib/services';
+import { displayGroup, getActiveServices, serviceGroups, type ServiceGroup } from '../../lib/services';
 
 const services = await getActiveServices();
-const roadmap = await getRoadmapServices();
 const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
   key,
   ...serviceGroups[key],
@@ -17,12 +15,12 @@ const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
 
 <BaseLayout
   title="Services"
-  description="Nine enterprise engineering services: cloud migration, WAF hardening, high availability, CI/CD, observability, cost optimization, full-stack development, private AI and 24/7 managed infrastructure."
+  description="Managed Cloud & DevOps, cloud and DevOps engineering, web and SaaS development, and practical AI automation on Azure and AWS, each scoped in a Statement of Work."
 >
   <PageHero
     eyebrow="Services"
     title="Enterprise engineering services"
-    lead="Nine core disciplines spanning cloud infrastructure, zero-trust security, delivery automation, application engineering and private AI, each scoped to measurable target outcomes in a Statement of Work."
+    lead="We run, secure and modernise Azure and AWS platforms, build cloud-native web applications and automate manual work with practical AI. Every engagement is scoped in a Statement of Work."
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
   />
 
@@ -43,23 +41,6 @@ const groups = (Object.keys(serviceGroups) as ServiceGroup[]).map((key) => ({
           </ul>
         </section>
       ))
-    }
-    {
-      roadmap.length > 0 && (
-        <section aria-labelledby="roadmap-title">
-          <div class="max-w-2xl">
-            <p class="eyebrow">Roadmap</p>
-            <h2 id="roadmap-title" class="mt-3 text-2xl font-bold text-fg sm:text-3xl">
-              What we are building next
-            </h2>
-          </div>
-          <div class="mt-10 space-y-6">
-            {roadmap.map((service) => (
-              <RoadmapCard service={service} />
-            ))}
-          </div>
-        </section>
-      )
     }
   </div>
 

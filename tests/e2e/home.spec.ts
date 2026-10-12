@@ -1,6 +1,6 @@
 import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
 
-const HEADLINE = 'Enterprise Cloud Resilience, Ironclad Cyber Security & Intelligent AI Automation.';
+const HEADLINE = "Managed Cloud, DevOps & AI Engineering for Businesses That Can't Afford Downtime.";
 
 test.describe('US1 — Home hero & brand', () => {
   test('shows headline, pillars and both CTAs', async ({ page }, testInfo) => {

@@ -1,39 +1,46 @@
 ---
 order: 4
-name: CI/CD Pipeline & Workflow Automation
-group: engineering-ai
+name: CI/CD & DevOps Transformation
 pillar: cloud-devops
 flagship: false
 published: true
 icon: Workflow
-summary: Automated build, test, security scanning and deployment pipelines with Jenkins, Bitbucket and GitHub Actions that remove manual release friction and enable zero-downtime rollouts.
+summary: Automated build, test, security-scanning and deployment pipelines with Azure DevOps, Bitbucket, GitHub Actions and Jenkins that remove manual release friction and make releases routine.
 deliverables:
-  - End-to-end CI/CD architecture with Jenkins, Bitbucket and GitHub Actions
-  - Automated testing, static analysis and build validation
-  - Blue/green and canary deployment models with staging parity
+  - Pipeline architecture and environment promotion strategy
+  - Automated build, test and security-scanning stages
+  - Gated deployments with automated rollback
+  - Branch and release policies documented as SOPs
+  - Handover documentation and team walkthrough
 engagementTypes: [assessment, project]
 capabilities:
-  - End-to-end CI/CD architecture with Jenkins, Bitbucket and GitHub Actions
+  - End-to-end CI/CD architecture with Azure DevOps, Bitbucket, GitHub Actions and Jenkins
   - Automated testing, static analysis and build validation
   - Blue/green and canary deployment models with staging parity
-  - Single-click automated rollback for immediate failure mitigation
-  - Developer environment standardization and DevSecOps integration
-stack: [Jenkins, Bitbucket, GitHub Actions, Bash/Shell Automation]
-outcome: 50% faster deployments and 35% fewer release errors targets
+  - One-click automated rollback for fast failure mitigation
+  - Developer environment standardisation and DevSecOps integration
+stack: [Azure DevOps, Bitbucket, GitHub Actions, Jenkins, Bash/Shell Automation]
+outcome: Routine, low-risk releases; past engagements achieved 50% faster deployments and 35% fewer release errors
+relatedOffer: governance-quick-start
+faq:
+  - q: Do you work with our existing tools?
+    a: Yes. Pipelines are built on the platform you already use, whether that is Azure DevOps, Bitbucket, GitHub or Jenkins, unless there is a clear reason to change.
+  - q: Do you also set up branch governance?
+    a: Yes. Branch restrictions, merge checks and release SOPs are part of the delivery, and are also available on their own as the DevOps Governance Quick-Start.
 scenarios:
   - kind: real
-    problem: An enterprise software team suffers frequent defects and downtime caused by manual production uploads.
-    solution: A fully automated Jenkins pipeline is engineered with staging verification checks and gated promotions.
-    outcome: Deployment execution time is cut by up to 50% and production release errors fall by up to 35%.
+    problem: An enterprise software team suffered frequent defects and downtime caused by manual production uploads.
+    solution: A fully automated Jenkins pipeline was engineered with staging verification checks and gated promotions.
+    outcome: Deployment time was cut by 50% and production release errors fell by 35%.
   - kind: real
-    problem: A web and mobile team needs days to package and ship critical hotfixes.
-    solution: Workflow orchestration is automated with GitHub Actions and scripted, repeatable deployment stages.
-    outcome: Critical patches reach production significantly faster with improved deployment stability.
+    problem: A web and mobile team needed days to package and ship critical hotfixes.
+    solution: Workflow orchestration was automated with GitHub Actions and scripted, repeatable deployment stages.
+    outcome: Critical patches reached production significantly faster, with improved deployment stability.
 ---
 
-ZanamTech eliminates manual release friction, deployment errors and delivery bottlenecks by engineering continuous
-integration and continuous deployment pipelines. Code compilation, security scanning, testing and production
-releases are automated end to end.
+ZanamTech removes manual release friction, deployment errors and delivery bottlenecks by engineering continuous
+integration and continuous deployment pipelines. Builds, security scans, tests and production releases run
+automatically, with approval gates where your process needs them.
 
-Blue/green and canary strategies, combined with instant rollback, allow teams to release more frequently with less
-risk, while DevSecOps controls keep security checks inside the delivery flow rather than after it.
+Blue/green and canary strategies, combined with automated rollback, let teams release more often with less risk,
+while branch policies and written SOPs keep the delivery process consistent as the team grows.

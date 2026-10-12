@@ -154,121 +154,121 @@ builds on them. The site must look and behave exactly as before at the end of th
 components wherever possible.
 
 ### Services catalogue (US2)
-- [ ] T021 [US2] Rename `src/content/services/managed-infrastructure-24-7.md` to
+- [X] T021 [US2] Rename `src/content/services/managed-infrastructure-24-7.md` to
   `managed-cloud-devops.md`:
   - Name "Managed Cloud & DevOps", `pillar: managed`, `flagship: true`.
   - The 7 modules as capabilities; deliverables, engagementTypes `[retainer]`, FAQ, and
     `relatedOffer: governance-quick-start`.
   - No 24/7, "on-call engineers", "senior" or SLA-guarantee wording. Scenarios stay `kind: real`,
     reworded as achieved results.
-- [ ] T022 [P] [US2] Rewrite `src/content/services/cloud-migration-containerization.md`:
+- [X] T022 [P] [US2] Rewrite `src/content/services/cloud-migration-containerization.md`:
   - Name "Cloud Migration & Modernisation", Azure/AWS only.
   - Remove "zero-downtime" (use "staged, validated cutover").
   - Outcome and scenarios worded as achieved results (99.9% availability achieved; up to 60%
     hardware maintenance cost reduction).
   - Add deliverables, FAQ and `relatedOffer: health-check`.
-- [ ] T023 [P] [US2] Rewrite `src/content/services/enterprise-security-waf-hardening.md`: name
+- [X] T023 [P] [US2] Rewrite `src/content/services/enterprise-security-waf-hardening.md`: name
   "Security Hardening & WAF", achieved-result wording (80% attack-surface reduction), deliverables,
   FAQ, `relatedOffer: health-check`.
-- [ ] T024 [P] [US2] Rewrite `src/content/services/high-availability-disaster-recovery.md`:
+- [X] T024 [P] [US2] Rewrite `src/content/services/high-availability-disaster-recovery.md`:
   - Remove "near-zero data loss" and "no loss of committed transactions"; use documented RPO/RTO
     wording.
   - Add deliverables, FAQ and `relatedOffer: health-check`.
-- [ ] T025 [P] [US2] Rewrite `src/content/services/cicd-pipeline-workflow-automation.md`: name "CI/CD
+- [X] T025 [P] [US2] Rewrite `src/content/services/cicd-pipeline-workflow-automation.md`: name "CI/CD
   & DevOps Transformation", achieved results (50% faster deployments, 35% fewer release errors),
   deliverables, FAQ, `relatedOffer: governance-quick-start`.
-- [ ] T026 [P] [US2] Rewrite `src/content/services/observability-monitoring.md`: name "Observability
+- [X] T026 [P] [US2] Rewrite `src/content/services/observability-monitoring.md`: name "Observability
   & Monitoring", achieved results (45% faster detection, 30% MTTR improvement), deliverables, FAQ,
   `relatedOffer: health-check`.
-- [ ] T027 [P] [US2] Rewrite `src/content/services/cloud-cost-optimization.md`: name "Cloud Cost
+- [X] T027 [P] [US2] Rewrite `src/content/services/cloud-cost-optimization.md`: name "Cloud Cost
   Optimisation", achieved result (up to 40% savings), Azure/AWS billing only (no GCP), deliverables,
   FAQ, `relatedOffer: cost-review`.
-- [ ] T028 [P] [US2] Rewrite `src/content/services/full-stack-web-app-development.md`:
+- [X] T028 [P] [US2] Rewrite `src/content/services/full-stack-web-app-development.md`:
   - Keep the name "Custom Full-Stack Web App Development" and the slug; set
     `seoTitle: Custom Web Application Development`.
   - Content covers web apps and multi-tenant SaaS (auth, billing, admin dashboards, RBAC,
     REST/GraphQL APIs, cloud-native CI/CD).
   - Existing scenarios stay `kind: real`. Add deliverables and FAQ.
-- [ ] T029 [P] [US2] Create `src/content/services/infrastructure-as-code-landing-zones.md`:
+- [X] T029 [P] [US2] Create `src/content/services/infrastructure-as-code-landing-zones.md`:
   `pillar: cloud-devops`, Terraform/Bicep, network, identity and policy foundations, and 1–2
   `kind: illustrative` scenarios with no digits.
-- [ ] T030 [P] [US2] Create `src/content/services/enterprise-portals-internal-tools.md`:
+- [X] T030 [P] [US2] Create `src/content/services/enterprise-portals-internal-tools.md`:
   `pillar: web-saas`, with 1–2 illustrative scenarios with no digits.
-- [ ] T031 [P] [US2] Create `src/content/services/application-modernisation-integration.md`:
+- [X] T031 [P] [US2] Create `src/content/services/application-modernisation-integration.md`:
   `pillar: web-saas`, with 1–2 illustrative scenarios with no digits.
-- [ ] T032 [P] [US2] Create `src/content/services/ai-workflow-document-automation.md`:
+- [X] T032 [P] [US2] Create `src/content/services/ai-workflow-document-automation.md`:
   - `pillar: ai`.
   - Covers one process automated end to end (reports or document intake), with human approval
     points and audit logs.
   - `relatedOffer: ai-opportunity-sprint` and 1–2 illustrative scenarios with no digits.
-- [ ] T033 [US2] Replace `src/content/services/enterprise-ai-integration.md` with
+- [X] T033 [US2] Replace `src/content/services/enterprise-ai-integration.md` with
   `ai-assistants-company-data.md`:
   - `pillar: ai`, "AI Assistants on Company Data".
   - RAG on managed AI services inside the client's own cloud tenant, with citations, permissions
     and evaluation. No private, local or self-hosted LLM wording.
   - Keep the existing scenarios as `kind: real` with LLM-hosting claims removed.
   - `relatedOffer: ai-automation-pilot`.
-- [ ] T034 [US2] Delete `src/content/services/agentic-ai-llmops.md`.
-- [ ] T072 [US2] Add the 3 permanent redirects to `nginx/nginx.conf` before `location /`, per
+- [X] T034 [US2] Delete `src/content/services/agentic-ai-llmops.md`.
+- [X] T072 [US2] Add the 3 permanent redirects to `nginx/nginx.conf` before `location /`, per
   `contracts/routes-and-redirects.md`. Each uses `location ~ ^/services/<old>/?$ { include
   /etc/nginx/security-headers.conf; return 301 <target>; }`. This task was moved into Phase 2 so
   the retired slugs and their redirects land in the same commit.
-- [ ] T035 [US2] Set the `order` values per pillar so they follow spec User Story 2, Scenario 1. Every
+- [X] T035 [US2] Set the `order` values per pillar so they follow spec User Story 2, Scenario 1. Every
   service gets `published: true`.
   - **Readiness list for the owner:** put all 13 services in the Phase 2 STOP summary for
     confirmation.
 
 ### Results and site copy (US1)
-- [ ] T036 [US1] Switch `src/components/sections/Metrics.astro` to read `src/data/results.ts`:
+- [X] T036 [US1] Switch `src/components/sections/Metrics.astro` to read `src/data/results.ts`:
   - Eyebrow becomes "Selected results from past engagements".
   - Title and lead copy are rewritten as achieved results.
   - Add the context line under each label, using the existing `text-sm text-muted` paragraph
     style.
   - Footnote becomes `resultsFootnote`.
   - Markup, grid (`sm:grid-cols-2 lg:grid-cols-4`), shimmer and counters are untouched.
-- [ ] T037 [US1] Update `src/components/sections/Hero.astro`:
+- [X] T037 [US1] Update `src/components/sections/Hero.astro`:
   - H1 and sub-line from v3 A.
   - Eyebrow without "Private AI".
   - Rename the stepper steps without "Zero-downtime" and "24/7", e.g. "Staged, validated cutover"
     and "Continuous managed operations".
   - Remove "delivered by senior … engineers".
   - Markup, classes and stepper logic unchanged.
-- [ ] T038 [US1] Update `src/data/site.ts`:
+- [X] T038 [US1] Update `src/data/site.ts`:
   - `description` becomes the v3 positioning statement; `tagline`; `email: contact@zanamtech.com`.
   - Footer line "Remote-first Cloud, DevOps & AI engineering".
   - Replace `metricsFootnote` usages with `resultsFootnote`, then remove it.
   - Update `src/layouts/BaseLayout.astro` JSON-LD: description, `knowsAbout` without "Private
     LLM" or GCP, no address.
-- [ ] T039 [P] [US1] Update `src/components/sections/Pillars.astro`: remove "with direct access to
+- [X] T039 [P] [US1] Update `src/components/sections/Pillars.astro`: remove "with direct access to
   senior engineers". `src/components/sections/ServicesGrid.astro`: remove "Nine disciplines" and
   "round-the-clock operations", and use pillar-neutral wording.
-- [ ] T040 [P] [US1] Update `src/data/platforms.ts`: remove Google Cloud. Check that no other
+- [X] T040 [P] [US1] Update `src/data/platforms.ts`: remove Google Cloud. Check that no other
   marquee item implies a partnership.
 
 ### Engagement, trust and company copy (US3, US4)
-- [ ] T041 [P] [US3] Update `src/data/engagement.ts`:
+- [X] T041 [P] [US3] Update `src/data/engagement.ts`:
   - Phase names and summaries without "Senior architects", "Senior … engineers", "Zero-Downtime"
     or "24/7" (e.g. "Onboarding & Staged Implementation", "Continuous Managed Operations").
   - Rewrite `suitedFor` without "24/7" or "standing engineering partner".
-- [ ] T042 [P] [US4] Update `src/pages/about.astro`:
+- [X] T042 [P] [US4] Update `src/pages/about.astro`:
   - Remove "Direct senior access" and the "senior architects" copy; replace the value with
     "Documented, accountable delivery" (process wording, no team claim).
   - Remove "Private LLM" and "24/7 managed infrastructure retainers" from the capabilities, and
     "zero-downtime reliability" from the copy.
-- [ ] T043 [P] [US4] Update `src/pages/approach.astro` metadata: no "zero-downtime" or "24/7",
+- [X] T043 [P] [US4] Update `src/pages/approach.astro` metadata: no "zero-downtime" or "24/7",
   title "How We Work".
-- [ ] T044 [P] [US4] Update `src/pages/privacy.astro`:
+- [X] T044 [P] [US4] Update `src/pages/privacy.astro`:
   - Replace "our team" / "data privacy team" with "privacy contact" (privacy@zanamtech.com).
   - Replace "zero data exploitation".
   - Add GDPR/UK GDPR processor language and UAE/KSA PDPL references in the existing section
     structure.
-- [ ] T045 [P] [US4] Update `src/data/segments.ts`:
+- [X] T045 [P] [US4] Update `src/data/segments.ts`:
   - Re-map the slugs to the new services.
   - Add `software-agencies` and `gcc` (UAE/KSA cloud regions, data-residency awareness).
   - Remove the data-sensitive AI segment and the "Zero-downtime" and "target" wording.
 
 ### Contact copy (US5)
-- [ ] T046 [P] [US5] Update the contact copy:
+- [X] T046 [P] [US5] Update the contact copy:
   - `src/pages/contact.astro`: the next steps use "We reply within 1 business day", a
     consultation call, and "Written proposal within 2 business days". Metadata has no "senior …
     engineers".
@@ -277,33 +277,33 @@ components wherever possible.
   - `src/components/ContactModal.astro` subtitle: no "our team".
 
 ### Drafts (US6), clearly marked for owner review
-- [ ] T047 [P] [US6] Draft `src/content/insights/azure-environment-strategy.md`: "Dev, QA, UAT, Prod
+- [X] T047 [P] [US6] Draft `src/content/insights/azure-environment-strategy.md`: "Dev, QA, UAT, Prod
   on Azure: an environment strategy that survives real releases". Set `draft: true`, add a
   "DRAFT — owner fact-check required" note at the top of the body, and include no client details.
   This applies to all of T047–T049: no clock times, no minute or hour figures, and no time zones.
   Describe schedules qualitatively (e.g. "an off-peak backup window").
-- [ ] T048 [P] [US6] Draft `src/content/insights/bitbucket-branch-governance.md`: "Bitbucket branch
+- [X] T048 [P] [US6] Draft `src/content/insights/bitbucket-branch-governance.md`: "Bitbucket branch
   governance: the restrictions and SOPs every team should have". Set `draft: true` and add the DRAFT
   note.
-- [ ] T049 [P] [US6] Draft `src/content/insights/cloud-cost-checklist.md`: "A 15-point cloud cost
+- [X] T049 [P] [US6] Draft `src/content/insights/cloud-cost-checklist.md`: "A 15-point cloud cost
   checklist". Cite Flexera 2026 (29% estimated waste) with a source link in `sources`. Set
   `draft: true` and add the DRAFT note.
-- [ ] T050 [P] [US6] Draft `src/content/resources/azure-reference-architecture.md`: an Azure
+- [X] T050 [P] [US6] Draft `src/content/resources/azure-reference-architecture.md`: an Azure
   Dev/QA/UAT/Prod reference architecture. Set `draft: true` and `sample: true`, label it "Sample",
   and write it fresh.
-- [ ] T051 [P] [US6] Draft `src/content/resources/branch-governance-sop-template.md`: a Bitbucket
+- [X] T051 [P] [US6] Draft `src/content/resources/branch-governance-sop-template.md`: a Bitbucket
   branch-governance SOP template. Set `draft: true` and `sample: true`, and label it "Sample".
-- [ ] T052 [P] [US6] Draft `src/content/resources/sample-monthly-service-report.md`: a sample monthly
+- [X] T052 [P] [US6] Draft `src/content/resources/sample-monthly-service-report.md`: a sample monthly
   service report (health, cost, risk, changes) with no client data or response times. Set
   `draft: true` and `sample: true`, and label it "Sample".
 
 ### Tests touched by copy changes
-- [ ] T053 Update the assertions in `tests/e2e/home.spec.ts` (HEADLINE) and
+- [X] T053 Update the assertions in `tests/e2e/home.spec.ts` (HEADLINE) and
   `tests/e2e/metrics.spec.ts`:
   - results wording and footnote
   - the `uptime` and `cost` values are still 99.9% and 40%
   - the sr-only text uses achieved wording
-- [ ] T054 Update the assertions in the following specs:
+- [X] T054 Update the assertions in the following specs:
   - `tests/e2e/services.spec.ts`: derive `SERVICES` from the built `/services` page or the
     collection order, not a hard-coded list. Use the new FOOTNOTE. The scenario label is no longer
     mandatory. The roadmap suite becomes "old roadmap path is not a page" (404).
@@ -314,12 +314,12 @@ components wherever possible.
   - `tests/e2e/theme-a11y.spec.ts`: the route list uses `managed-cloud-devops`.
   - `tests/e2e/touch-menu.spec.ts`: service names.
   - `tests/e2e/security.spec.ts`: routes and service options.
-- [ ] T055 Remove the roadmap section and its imports from `src/pages/services/index.astro`, and
+- [X] T055 Remove the roadmap section and its imports from `src/pages/services/index.astro`, and
   delete `src/components/sections/RoadmapCard.astro`. Remove `getRoadmapServices` from
   `src/lib/services.ts`. Update the `/services` metadata and lead to remove "Nine".
-- [ ] T056 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all green.
-- [ ] T057 Commit `feat(content): v3 services, achieved results, copy rewrites and drafts`.
-- [ ] T058 Write the PHR. **STOP**: present to the owner the readiness list of 13 services, the 8
+- [X] T056 Run the gates (check, lint:content, check:csp, full Playwright + axe) and confirm all green.
+- [X] T057 Commit `feat(content): v3 services, achieved results, copy rewrites and drafts`.
+- [X] T058 Write the PHR. **STOP**: present to the owner the readiness list of 13 services, the 8
   results with their derived context lines, and the 3 article drafts and 3 artefact drafts. Wait
   for approval.
 

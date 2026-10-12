@@ -34,11 +34,11 @@ export type ServiceGroup = 'cloud-infrastructure' | 'engineering-ai';
 export const serviceGroups: Record<ServiceGroup, { title: string; description: string }> = {
   'cloud-infrastructure': {
     title: 'Cloud & Infrastructure',
-    description: 'Resilient, secure and cost-efficient foundations across AWS, Azure and GCP.',
+    description: 'Resilient, secure and cost-efficient foundations on Azure and AWS.',
   },
   'engineering-ai': {
     title: 'Engineering & AI',
-    description: 'Delivery automation, cloud-native applications, private AI and managed operations.',
+    description: 'Managed operations, web and SaaS applications, and practical AI automation.',
   },
 };
 
@@ -79,11 +79,6 @@ export async function getFlagship(): Promise<Service> {
  */
 export async function getActiveServices(): Promise<Service[]> {
   return (await getCollection('services', (s: Service) => s.data.published)).sort(byOrder);
-}
-
-/** Legacy (removed in T055): roadmap offerings. */
-export async function getRoadmapServices(): Promise<Service[]> {
-  return (await getCollection('services', (s: Service) => s.data.status === 'roadmap')).sort(byOrder);
 }
 
 export const serviceHref = (service: Service) => `/services/${service.id}`;
