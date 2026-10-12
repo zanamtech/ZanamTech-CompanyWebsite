@@ -59,19 +59,27 @@ On first run, install the test browser with `npx playwright install chromium`.
 
 | What | Where |
 | --- | --- |
-| Services (9 core + roadmap) | `src/content/services/*.md`, validated by the schema in `src/content.config.ts` |
-| Target metrics | `src/data/metrics.ts`. Always framed as targets, with the SOW footnote |
-| Engagement phases and models | `src/data/engagement.ts` |
+| Services: flagship + 12 in 4 pillars | `src/content/services/*.md` (schema in `src/content.config.ts`). Set `published: false` to hide a service everywhere |
+| Pillars, published-services lookup | `src/lib/services.ts` |
+| Results from past engagements | `src/data/results.ts`. Achieved results with context, plus the past-engagements footnote |
+| Retainer tiers, severity levels | `src/data/managed-tiers.ts`. Coverage wording only; response targets live in each SOW |
+| Entry offers, commitments, Home FAQ | `src/data/offers.ts`, `src/data/commitments.ts`, `src/data/faq.ts` |
+| Engagement phases, models, cadence, access, AI-tool policy | `src/data/engagement.ts` |
 | Target segments | `src/data/segments.ts` |
-| Navigation, CTAs, pillars | `src/data/site.ts` |
+| Leadership profile | `src/data/leadership.ts`. Empty LinkedIn/photo values stay hidden |
+| Client logos, testimonials, case studies | `src/data/clients.ts`, `src/data/testimonials.ts`, `src/content/case-studies/`. Render only with `verified: true`, `permissionDate` and `evidence` |
+| Insights articles, sample artefacts | `src/content/insights/`, `src/content/resources/`. `draft: true` shows only in `npm run dev` |
+| Navigation, CTA, pillars, contact emails | `src/data/site.ts` |
+| Retired service URLs (301) | `nginx/nginx.conf` |
 
-Brand, content and proof rules (Constitution III, v2.0.0):
+Brand, content and proof rules (Constitution III, v2.0.3):
 
 - Strictly corporate tone. No years-of-experience claims, public pricing or competitor names.
 - Testimonials, client logos, case studies and badges render only from verified, permissioned data.
   Fabricated or placeholder proof is never allowed.
 - Past-project % are worded as achieved results, with the past-engagements footnote.
-- No team-structure claims, clock hours, response times, address, or "guarantee" wording.
+- No team-structure claims, clock times, time zones, minute/hour figures, address, or "guarantee" wording.
+- AWS, Azure and Google Cloud are named together wherever a cloud is named.
 - The visual design and animations are frozen (Constitution IV).
 
 ## Docker

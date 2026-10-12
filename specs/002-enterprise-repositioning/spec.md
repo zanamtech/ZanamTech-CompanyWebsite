@@ -55,6 +55,8 @@ Full-Stack Web App Development" name and slug. Work stays on the dev branch."
   mobile.
 - Q (analysis remediation): How is performance verified? → A: Lighthouse runs locally against the
   production build at the end of the components phase and at release. Linux CI is a later follow-up.
+- Q (Phase 4 review): Results sit at about 1.9 screen heights on a phone because the hero is tall. Change the
+  hero? → A: No. Keep the hero unchanged; SC-006 becomes "within two scrolls on phones".
 
 ## Scope
 
@@ -525,8 +527,8 @@ Remove it; they pass.
 - **SC-004**: 100% of retired service addresses resolve to their replacement pages.
 - **SC-005**: With empty proof data, zero testimonial, logo, case-study, count or badge elements
   appear on any page. With one verified entry, its section appears.
-- **SC-006**: A first-time visitor sees achieved results within one scroll of landing on Home, on both
-  desktop and mobile.
+- **SC-006** (revised 2026-10-12, owner decision): A first-time visitor sees achieved results within one scroll
+  of landing on Home on desktop, and within two scrolls on phones. The hero is unchanged.
 - **SC-007**: Zero critical or serious accessibility violations on every page, new pages included,
   in both themes.
 - **SC-008**: The site keeps the existing performance budgets (Performance ≥ 95; Accessibility, Best

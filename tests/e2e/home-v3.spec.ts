@@ -46,14 +46,12 @@ test.describe('US1 — Home v3', () => {
     await expect(item).not.toHaveAttribute('open', '');
   });
 
-  // KNOWN GAP (Phase 4 review): on Pixel 7 the first result card starts at about 1.9 viewport heights because the
-  // hero (headline, sub-line, pillars, CTA, blueprint stepper) is tall on phones. Fixing it means changing the hero
-  // layout, which the design freeze forbids without owner approval. Re-enable once SC-006 is decided.
-  test.fixme('results are reached within one scroll on a phone (SC-006)', async ({ page }, testInfo) => {
+  // SC-006 (revised at owner review): within two scrolls on phones; the hero stays unchanged.
+  test('results are reached within two scrolls on a phone (SC-006)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'mobile', 'Phone viewport only');
     await page.goto('/');
     const viewport = page.viewportSize()!;
     const firstCard = (await page.locator('#metrics [data-metric]').first().boundingBox())!;
-    expect(firstCard.y).toBeLessThanOrEqual(viewport.height * 1.5);
+    expect(firstCard.y).toBeLessThanOrEqual(viewport.height * 2);
   });
 });

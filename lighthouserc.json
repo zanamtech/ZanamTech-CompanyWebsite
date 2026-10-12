@@ -10,7 +10,9 @@
         "http://localhost/about/index.html",
         "http://localhost/services/managed-cloud-devops/index.html",
         "http://localhost/start-here/index.html",
-        "http://localhost/trust/index.html"
+        "http://localhost/trust/index.html",
+        "http://localhost/insights/index.html",
+        "http://localhost/insights/cloud-cost-checklist/index.html"
       ],
       "numberOfRuns": 1,
       "settings": {

@@ -5,6 +5,11 @@
 **Status**: Draft
 **Input**: User description: "Create a comprehensive baseline specification for the ZanamTech Enterprise Website from the `docs/` folder, including the 9 core services, the brand positioning (Enterprise-grade, high-availability, zero-trust security), and the exact tech stack (Astro 4.0, Tailwind CSS, Framer Motion, Alpine.js, Docker). Strictly corporate tone; no years-of-experience claims."
 
+> **Superseded in part (2026-10-12):** `specs/002-enterprise-repositioning/spec.md` (Master Plan v3, constitution
+> v2.0.x) supersedes FR-009 (nine-service catalogue), FR-013 (roadmap item labelled "In Development") and FR-018
+> (lead form service options), plus every requirement that frames metrics as targets or labels worked examples as
+> "Representative Engagement Scenarios". The rest of this baseline still applies.
+
 ## Clarifications
 
 ### Session 2026-09-29

@@ -539,7 +539,7 @@ are dev-only.
   - the Home section order
   - TrustBand reuses the 3 pillar headings
   - FAQ toggles with Enter and Space
-  - on Pixel 7, the top of the first result card is within 1.5 viewport heights (SC-006)
+  - on Pixel 7, the top of the first result card is within 2 viewport heights (SC-006, revised at owner review)
 - [X] T101 [P] [US2] Create `tests/e2e/services-v3.spec.ts`:
   - 4 pillars, flagship first
   - every published service is reachable in 2 clicks or fewer
@@ -582,31 +582,31 @@ are dev-only.
 
 ## Phase 5: Verification and release
 
-- [ ] T112 Run the full gates on a fresh build: `npm run check`, `npm run lint:content`,
+- [X] T112 Run the full gates on a fresh build: `npm run check`, `npm run lint:content`,
   `npm run check:csp`, and the full `npm run test:e2e` (desktop and mobile, light and dark) via the
   temporary QA config. Then run the `contact` and `security` specs ×3 to check for flakiness. Run
   `npm run lhci` locally on the production build and record the scores.
-- [ ] T113 Grep audit of `dist/`. Expect zero hits for:
+- [X] T113 Grep audit of `dist/`. Expect zero hits for:
   - "senior engineer", "24/7", "Nine", "guarantee", "local LLM", "PM-led"
   - "target" in results
   - two-cloud generic phrasing ("Azure and AWS", "Azure or AWS") anywhere in the built site
   - clock times
   - draft slugs
-- [ ] T114 SC-001 design-freeze check: screenshot the unchanged components (header, hero frame,
+- [X] T114 SC-001 design-freeze check: screenshot the unchanged components (header, hero frame,
   service card, button, footer, Process connector) at 1440 and 390 in both themes, plus the open
   services menu at 1440 and 1024. Compare against baseline screenshots from a worktree checkout of
   commit `e2e656c` (pre-repositioning) and confirm only the text differs, apart from the approved
   4-column menu width. Report any visual delta.
-- [ ] T115 Re-measure the dialog fit and confirm reduced-motion behaviour (results show final values;
+- [X] T115 Re-measure the dialog fit and confirm reduced-motion behaviour (results show final values;
   no slide-ins) on a production build.
-- [ ] T116 Run `npm run lhci` locally against the production build. `lighthouserc.json` budgets:
+- [X] T116 Run `npm run lhci` locally against the production build. `lighthouserc.json` budgets:
   Performance ≥ 95; Accessibility, Best Practices and SEO = 100; LCP < 2.5 s; CLS < 0.1. Any miss
   blocks the release. Record Linux CI as a follow-up to spec 001 T061.
-- [ ] T117 Update `README.md` (Content table: pillars, results.ts, proof data, drafts) and mark spec
+- [X] T117 Update `README.md` (Content table: pillars, results.ts, proof data, drafts) and mark spec
   001 FR-009, FR-013 and FR-018 as superseded with a note at the top of
   `specs/001-enterprise-website-baseline/spec.md`.
-- [ ] T118 Commit `chore: v3 release verification`. Push to `origin/dev` only when the user says so.
-- [ ] T119 Write the PHR. **STOP**: present the release summary.
+- [X] T118 Commit `chore: v3 release verification`. Push to `origin/dev` only when the user says so.
+- [X] T119 Write the PHR. **STOP**: present the release summary.
 
 ---
 
