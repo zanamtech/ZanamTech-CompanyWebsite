@@ -55,6 +55,8 @@ If you change the form endpoint or enable analytics, add the new origins to the 
 
 On first run, install the test browser with `npx playwright install chromium`.
 
+The tests always build and serve a fresh production preview on a free port, never a running dev server. Set `PLAYWRIGHT_PORT` to pin the port (for example `PLAYWRIGHT_PORT=4330 npm run test:e2e`); the run fails if that port is already in use.
+
 ## Content
 
 | What | Where |

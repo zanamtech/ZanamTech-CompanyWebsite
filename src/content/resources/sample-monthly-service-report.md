@@ -1,5 +1,5 @@
 ---
-title: "Sample: monthly service report"
+title: "Sample: Monthly service report"
 summary: A sample of the monthly service report Managed Cloud & DevOps clients receive, covering platform health, changes, incidents, backups, cost and risks.
 date: 2026-10-12
 draft: true

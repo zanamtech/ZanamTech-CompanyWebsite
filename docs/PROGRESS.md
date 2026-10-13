@@ -12,7 +12,7 @@
 | UI fixes, round 2 (scroll cue, menu badge, card illustrations, FAQ animation, footer Company row) | ✅ Complete (13 Oct) |
 | Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green |
 | Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 13 Oct on `/`, `/insights` and one article: 98–99 / 100 / 100 / 100, CLS 0.001 |
-| Pushed to `origin/dev` | Pushed up to `37d4e6b` (spec 002, the first UI fixes and this report). The 13 Oct UI fixes are committed locally, not pushed |
+| Pushed to `origin/dev` | All of spec 002 and both rounds of UI fixes, including the 13 Oct follow-ups (section 3a) |
 
 ## 2. What was completed in spec 002
 
@@ -111,6 +111,10 @@
 - **Tests and checks:**
   - Tests: the menu test now checks the flagship has no badge or tile. New tests cover the footer Company row (1440, 1024, 768), the scroll cue, the FAQ animation (including reduced motion) and the Insights illustrations.
   - Checks: `check`, `lint:content`, `check:csp` and the full Playwright + axe suite pass (235 passed, 51 skipped by project). The new tests also passed 3 repeat runs.
+- **Follow-ups (13 Oct):**
+  - The third sample's title now reads "Monthly service report". The other two already start with a capital.
+  - Playwright now builds and serves the preview on a free port, or on `PLAYWRIGHT_PORT` when that's set, and never reuses a running server.
+  - The stale dev server on port 4321 was stopped. The full suite passed again.
 - **Screenshots:** 64 images (6 views × 4 widths × 2 themes, plus the page headers) in `docs/internal/screenshots/2026-10-13-ui-fixes/` (gitignored). The sample cards are drafts, so they were captured from `astro dev`.
 
 ## 4. Owner decisions (binding)
@@ -149,7 +153,7 @@
 - [ ] Post-launch: analytics goal events for consultation bookings and form submissions (needs a CSP review).
 
 ## 6. Next steps
-1. Review the 13 Oct UI fixes (screenshots above), then push `dev`.
+1. Done: the 13 Oct UI fixes are pushed to `origin/dev`.
 2. Close the launch items in section 5: legal review, Trust-page practices, LinkedIn and photo, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.
