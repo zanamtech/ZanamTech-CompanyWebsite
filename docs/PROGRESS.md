@@ -1,7 +1,7 @@
 # ZanamTech Website: Progress Report
 
 **Branch:** `dev` · **Spec:** `specs/002-enterprise-repositioning/` · **Source of truth:** `docs/03_Master_Plan_v3.md`
-**Constitution:** v2.0.3 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-12
+**Constitution:** v2.0.3 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-13
 
 ## 1. Status at a glance
 
@@ -9,9 +9,10 @@
 | --- | --- |
 | Spec 002 (Master Plan v3 repositioning) | ✅ Complete: 119 of 119 tasks across Phases 0–5 |
 | UI fixes (menu, footer, focus rings, header) | ✅ Complete |
+| UI fixes, round 2 (scroll cue, menu badge, card illustrations, FAQ animation, footer Company row) | ✅ Complete (13 Oct) |
 | Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green |
-| Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001 |
-| Pushed to `origin/dev` | Spec 002 pushed (up to `1bebbea`). The UI fixes and this report are committed locally, not pushed |
+| Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 13 Oct on `/`, `/insights` and one article: 98–99 / 100 / 100 / 100, CLS 0.001 |
+| Pushed to `origin/dev` | Pushed up to `37d4e6b` (spec 002, the first UI fixes and this report). The 13 Oct UI fixes are committed locally, not pushed |
 
 ## 2. What was completed in spec 002
 
@@ -89,6 +90,29 @@
   - The separate "Managed Services" item is removed; the flagship stays first in the Services menu.
   - Insights shows from 1024 px, and the CTA fits.
 
+## 3a. UI fixes, round 2 (13 Oct)
+- **Hero scroll cue:**
+  - Fixed: the hero now stacks above the results band (`z-10`), so the button is fully visible at every width, in both themes and in Chromium, Firefox and WebKit.
+  - It now scrolls to the flagship section. Scroll margins put the eyebrow 24 px below the floating header at every width.
+  - Smooth scrolling, or a jump with reduced motion. Accessible name: "Scroll to the flagship service: Managed Cloud & DevOps".
+- **Services menu:** the "Flagship" badge and the highlighted tile are gone. Managed Cloud & DevOps is listed like every other service and stays first. The mobile drawer never had a badge.
+- **Card illustrations:**
+  - What they are: decorative inline SVGs (`src/components/ui/Illustration.astro`), one motif per sample and per Insights article, drawn with colour tokens only and `aria-hidden`.
+  - Size: 2:1 on cards and 16:9 in the article and sample page headers.
+  - Cost: no image requests, about 1.2 KB gzipped on `/insights`.
+- **FAQ accordion:**
+  - Height and chevron animate over 280 ms on both open and close.
+  - The animation is CSS (`::details-content` with `interpolate-size`) where the browser supports it. Elsewhere `src/scripts/faq-accordion.ts` does it with the Web Animations API (Firefox, Safari), which needs no CSP change.
+  - Native `details`/`summary` is kept. Instant with reduced motion.
+- **Footer:**
+  - Desktop and tablet: the separate Company column is removed and the service groups span to the right edge.
+  - The Company links now form a single labelled row under the services. At 1440 it sits on the same line as the contact email.
+  - Phones are unchanged, and the first group label stays "Managed Cloud & DevOps".
+- **Tests and checks:**
+  - Tests: the menu test now checks the flagship has no badge or tile. New tests cover the footer Company row (1440, 1024, 768), the scroll cue, the FAQ animation (including reduced motion) and the Insights illustrations.
+  - Checks: `check`, `lint:content`, `check:csp` and the full Playwright + axe suite pass (235 passed, 51 skipped by project). The new tests also passed 3 repeat runs.
+- **Screenshots:** 64 images (6 views × 4 widths × 2 themes, plus the page headers) in `docs/internal/screenshots/2026-10-13-ui-fixes/` (gitignored). The sample cards are drafts, so they were captured from `astro dev`.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -125,7 +149,7 @@
 - [ ] Post-launch: analytics goal events for consultation bookings and form submissions (needs a CSP review).
 
 ## 6. Next steps
-1. Review the UI fixes and this report, then push `dev`.
+1. Review the 13 Oct UI fixes (screenshots above), then push `dev`.
 2. Close the launch items in section 5: legal review, Trust-page practices, LinkedIn and photo, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.

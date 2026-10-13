@@ -376,6 +376,40 @@
     }
   }
 
+  /* FAQ accordion: height and chevron animate together on open and close. Where interpolate-size is supported the
+     native ::details-content does it in CSS; elsewhere src/scripts/faq-accordion.ts animates [data-faq-body]. */
+  [data-faq-chevron] {
+    transition: rotate 280ms ease;
+  }
+
+  [data-faq][open]:not([data-closing]) [data-faq-chevron] {
+    rotate: 180deg;
+  }
+
+  @supports (interpolate-size: allow-keywords) {
+    [data-faq] {
+      interpolate-size: allow-keywords;
+    }
+
+    [data-faq]::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      transition:
+        block-size 280ms ease,
+        content-visibility 280ms allow-discrete;
+    }
+
+    [data-faq][open]::details-content {
+      block-size: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-faq]::details-content {
+      transition: none;
+    }
+  }
+
   .sr-only-focusable:not(:focus):not(:focus-within) {
     @apply sr-only;
   }

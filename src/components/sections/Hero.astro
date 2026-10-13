@@ -17,7 +17,8 @@ const blueprint = [
 ];
 ---
 
-<section id="hero" aria-labelledby="hero-title" class="relative isolate">
+<!-- z-10 lifts the hero's stacking context above the results band, so the scroll cue on the boundary stays fully visible. -->
+<section id="hero" aria-labelledby="hero-title" class="relative isolate z-10">
   <div class="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
     <div class="mesh-bg absolute inset-0"></div>
     <div class="grid-lines absolute inset-0 opacity-60"></div>
@@ -99,10 +100,10 @@ const blueprint = [
   </div>
 
   <a
-    href="#metrics"
+    href="#flagship"
     x-data="scrollCue"
     x-on:click="go($event)"
-    aria-label="Scroll to next section"
+    aria-label="Scroll to the flagship service: Managed Cloud & DevOps"
     class="absolute -bottom-5.5 left-1/2 z-10 flex size-11 -translate-x-1/2 items-center justify-center rounded-full border border-border/60 bg-surface/80 text-muted shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-accent/60 hover:bg-purple-500/10 hover:text-accent"
   >
     <ChevronDown aria-hidden="true" className="size-5 animate-float-y" />

@@ -46,6 +46,62 @@ test.describe('US1 — Home v3', () => {
     await expect(item).not.toHaveAttribute('open', '');
   });
 
+  test('FAQ height animates on open and close, and is instant under reduced motion', async ({ page, browser }) => {
+    await page.goto('/');
+    const item = page.locator('#faq [data-faq]').first();
+    await item.scrollIntoViewIfNeeded();
+    const closed = (await item.boundingBox())!.height;
+    await item.locator('summary').click();
+    await page.waitForTimeout(100);
+    const midOpen = (await item.boundingBox())!.height;
+    await page.waitForTimeout(500);
+    const open = (await item.boundingBox())!.height;
+    expect(midOpen).toBeGreaterThan(closed);
+    expect(midOpen).toBeLessThan(open);
+    await expect(item.locator('[data-faq-chevron]')).toHaveCSS('rotate', '180deg');
+    await item.locator('summary').click();
+    await page.waitForTimeout(100);
+    const midClose = (await item.boundingBox())!.height;
+    expect(midClose).toBeGreaterThan(closed);
+    expect(midClose).toBeLessThan(open);
+    await expect(item).not.toHaveAttribute('open', '');
+    await expect.poll(async () => (await item.boundingBox())!.height).toBe(closed);
+
+    const reduced = await browser.newContext({ reducedMotion: 'reduce', viewport: page.viewportSize()! });
+    const still = await reduced.newPage();
+    await still.goto('/');
+    const first = still.locator('#faq [data-faq]').first();
+    await first.scrollIntoViewIfNeeded();
+    await first.locator('summary').click();
+    expect((await first.boundingBox())!.height).toBe(open);
+    await reduced.close();
+  });
+
+  test('hero scroll cue is fully in front of the results band and lands on the flagship heading below the header', async ({ page }) => {
+    await page.goto('/');
+    const cue = page.getByRole('link', { name: 'Scroll to the flagship service: Managed Cloud & DevOps' });
+    await expect(cue).toHaveAttribute('href', '#flagship');
+    const unobscured = await cue.evaluate((a) => {
+      a.scrollIntoView({ block: 'center', behavior: 'instant' });
+      const b = a.getBoundingClientRect();
+      const points = [
+        [b.left + 3, b.top + b.height / 2],
+        [b.right - 3, b.top + b.height / 2],
+        [b.left + b.width / 2, b.top + 2],
+        [b.left + b.width / 2, b.bottom - 2],
+      ];
+      return points.every(([x, y]) => document.elementFromPoint(x, y)?.closest('a') === a);
+    });
+    expect(unobscured).toBe(true);
+
+    await cue.click();
+    const eyebrow = page.locator('#flagship .eyebrow');
+    await expect.poll(async () => (await eyebrow.boundingBox())!.y, { timeout: 3_000 }).toBeLessThan(200);
+    const headerBottom = await page.locator('header > div').first().evaluate((el) => el.getBoundingClientRect().bottom);
+    await expect.poll(async () => (await eyebrow.boundingBox())!.y).toBeGreaterThanOrEqual(headerBottom + 8);
+    await expect(page.locator('#flagship-title')).toBeInViewport();
+  });
+
   // SC-006 (revised at owner review): within two scrolls on phones; the hero stays unchanged.
   test('results are reached within two scrolls on a phone (SC-006)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'mobile', 'Phone viewport only');

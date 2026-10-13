@@ -6,6 +6,7 @@ import ArticleBody from '../../components/sections/ArticleBody.astro';
 import ArtefactCard from '../../components/sections/ArtefactCard.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import Badge from '../../components/ui/Badge.astro';
+import Illustration from '../../components/ui/Illustration.astro';
 import { isVisible } from '../../lib/content';
 
 type Artefact = CollectionEntry<'resources'>;
@@ -39,7 +40,11 @@ const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
         title={title}
         lead={artefact.data.summary}
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples', href: '/resources' }, { label: title }]}
-      />
+      >
+        <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
+          <Illustration topic={artefact.id} variant="header" />
+        </div>
+      </PageHero>
       <article class="container-page section-y">
         <div class="mb-6 flex flex-wrap gap-2">
           <Badge tone="accent">Sample</Badge>

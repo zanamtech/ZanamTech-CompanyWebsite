@@ -45,6 +45,29 @@ test.describe('US6 — Drafts and published content', () => {
     await expect(page.locator('#artefacts')).toHaveCount(0);
   });
 
+  test('Insights cards carry a decorative 2:1 illustration; the article header repeats it at 16:9', async ({ page }) => {
+    test.skip(!insights.some((a) => !a.draft), 'No published articles');
+    await page.goto('/insights');
+    const cards = page.locator('[data-insight]');
+    const motifs: string[] = [];
+    for (const card of await cards.all()) {
+      const art = card.locator('svg[data-illustration]');
+      await expect(art).toHaveAttribute('aria-hidden', 'true');
+      const box = (await art.boundingBox())!;
+      expect(box.width / box.height).toBeCloseTo(2, 1);
+      motifs.push((await art.getAttribute('data-illustration'))!);
+    }
+    expect(new Set(motifs).size, 'one motif per topic').toBe(motifs.length);
+    expect(motifs).not.toContain('generic');
+
+    await page.goto('/insights/cloud-cost-checklist');
+    const header = page.locator('section').first().locator('svg[data-illustration]');
+    await expect(header).toHaveAttribute('data-illustration', 'cost');
+    const box = (await header.boundingBox())!;
+    expect(box.width / box.height).toBeCloseTo(16 / 9, 1);
+    expect(await page.locator('section').first().locator('img').count()).toBe(0);
+  });
+
   test('published articles cite third-party statistics with a source link', async ({ page }) => {
     await page.goto('/insights/cloud-cost-checklist');
     await expect(page.getByRole('heading', { name: 'Sources', exact: true })).toBeVisible();

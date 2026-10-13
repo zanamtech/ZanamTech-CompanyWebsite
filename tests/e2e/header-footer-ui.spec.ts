@@ -30,9 +30,16 @@ test.describe('Services mega-menu (desktop)', () => {
       expect(box.height, 'menu height').toBeLessThanOrEqual(height * 0.7);
       expect(box.x).toBeGreaterThanOrEqual(0);
       expect(box.x + box.width).toBeLessThanOrEqual(width);
-      // Flagship first and highlighted; no list taller than four items.
+      // Flagship first, shown like every other service (no badge, no highlighted tile); no list taller than four items.
       await expect(menu.locator('[data-menu-pillar]').first()).toHaveAttribute('data-menu-pillar', 'managed');
-      await expect(menu.locator('[data-flagship-tile]')).toBeVisible();
+      await expect(menu.locator('a[href^="/services/"]').first()).toHaveAttribute('href', '/services/managed-cloud-devops');
+      await expect(menu.getByText('Flagship', { exact: true })).toHaveCount(0);
+      const [flagshipLink, otherLink] = await Promise.all(
+        ['/services/managed-cloud-devops', '/services/observability-monitoring'].map((href) =>
+          menu.locator(`a[href="${href}"]`).evaluate((a) => `${a.className}|${getComputedStyle(a.parentElement!.parentElement!).borderTopWidth}`),
+        ),
+      );
+      expect(flagshipLink).toBe(otherLink);
       for (const count of await menu.locator('ul').evaluateAll((uls) => uls.map((u) => u.querySelectorAll('a[href^="/services/"]').length))) {
         expect(count).toBeLessThanOrEqual(4);
       }
@@ -76,6 +83,9 @@ test.describe('Mobile menu: expandable Services', () => {
     await expect(cloud).toHaveAttribute('open', '');
     await expect(cloud.getByRole('link').first()).toBeVisible();
 
+    // The flagship is listed like any other service in the drawer too.
+    await expect(drawer.getByText('Flagship', { exact: true })).toHaveCount(0);
+
     // Keyboard on the Services toggle collapses it again.
     await toggle.focus();
     await page.keyboard.press('Enter');
@@ -99,6 +109,30 @@ test.describe('Footer', () => {
     await expect(services).toHaveCount(published.length);
     await expect(footer.locator('[data-footer-pillar]').first()).toHaveAttribute('data-footer-pillar', 'managed');
   });
+
+  for (const width of [1440, 1024, 768]) {
+    test(`Company links form one row under the services, which span to the right edge, at ${width}px`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Desktop and tablet footer');
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      const footer = page.locator('footer');
+      const company = footer.locator('[data-footer-company]');
+      await expect(company.getByRole('heading', { name: 'Company' })).toBeVisible();
+      const tops = await company.getByRole('link').evaluateAll((links) => links.map((a) => Math.round(a.getBoundingClientRect().top)));
+      expect(new Set(tops).size, 'single row').toBe(1);
+      const services = (await footer.locator('[data-footer-services]').boundingBox())!;
+      const container = (await footer.locator('.container-page').first().boundingBox())!;
+      // No separate Company column: the service groups reach the container's right padding edge.
+      expect(container.x + container.width - (services.x + services.width)).toBeLessThanOrEqual(40);
+      const companyBox = (await company.boundingBox())!;
+      expect(companyBox.y).toBeGreaterThan(services.y + services.height);
+      if (width >= 1280) {
+        // At xl the row sits on the same line as the email in the brand column.
+        const email = (await footer.locator('a[href^="mailto:"]').boundingBox())!;
+        expect(Math.abs(companyBox.y + companyBox.height - (email.y + email.height))).toBeLessThanOrEqual(2);
+      }
+    });
+  }
 
   test('on phones the pillar groups are collapsed and expand on tap', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'mobile', 'Phone footer');

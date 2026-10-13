@@ -6,6 +6,7 @@ import PageHero from '../../components/sections/PageHero.astro';
 import ArticleBody from '../../components/sections/ArticleBody.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import Badge from '../../components/ui/Badge.astro';
+import Illustration from '../../components/ui/Illustration.astro';
 import { isVisible } from '../../lib/content';
 
 type Article = CollectionEntry<'insights'>;
@@ -42,7 +43,11 @@ const Content = article ? (await render(article)).Content : undefined;
         title={article.data.title}
         lead={article.data.summary}
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights' }, { label: article.data.title }]}
-      />
+      >
+        <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
+          <Illustration topic={article.id} variant="header" />
+        </div>
+      </PageHero>
       <article class="container-page section-y">
         <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-muted">
           {article.data.draft && <Badge tone="accent">Draft</Badge>}
@@ -80,6 +85,9 @@ const Content = article ? (await render(article)).Content : undefined;
         <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
           {articles.map((a) => (
             <li data-insight class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
+              <div class="mb-5 overflow-hidden rounded-xl border border-border">
+                <Illustration topic={a.id} />
+              </div>
               <div class="flex flex-wrap items-center gap-2 text-sm text-muted">
                 {a.data.draft && <Badge tone="accent">Draft</Badge>}
                 <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
