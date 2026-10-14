@@ -29,8 +29,9 @@ const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
 
 <footer class="relative mt-9 border-t sm:mt-12 lg:mt-14 border-border bg-surface">
   <div class="hairline-gradient absolute inset-x-0 top-0" aria-hidden="true"></div>
-  <!-- From xl: a fixed brand column (wide enough for the description in four lines) and the services area, with a wider gap between them than between service columns. -->
-  <div class="container-page grid gap-8 py-10 lg:py-12 xl:grid-cols-[20rem_minmax(0,1fr)] xl:gap-x-12">
+  <!-- From xl: a fixed brand column (wide enough for the description in four lines) and the services area, with a wider gap between them than between service columns.
+       From md the bottom padding matches the Company row's top padding (16px), so the row sits evenly between the divider and the bottom bar. -->
+  <div class="container-page grid gap-8 pt-10 pb-10 md:pb-4 lg:pt-12 xl:grid-cols-[20rem_minmax(0,1fr)] xl:gap-x-12">
     <!-- Brand block: a column from xl (email pinned to the bottom, level with the Company row), a single row at lg, stacked below. -->
     <div class="lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 lg:gap-y-3 xl:flex-col xl:flex-nowrap xl:items-start xl:gap-0">
       <Logo height={24} />
