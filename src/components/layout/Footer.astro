@@ -25,6 +25,8 @@ const linkClass = 'inline-flex min-h-11 items-center text-sm text-muted hover:te
 const serviceList = 'mt-2 space-y-1';
 const serviceLink = 'block py-1 text-sm text-muted hover:text-accent';
 const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
+// Company row (md+): equal-growth spacer between the label and each pair of links.
+const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basis-6 md:self-stretch';
 ---
 
 <footer class="relative mt-9 border-t sm:mt-12 lg:mt-14 border-border bg-surface">
@@ -129,18 +131,20 @@ const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
         }
       </nav>
 
-      <!-- Company: a two-column list on phones; from md a single row whose links are spread evenly across the full width
-           of the services area, after a clear gap behind the label. The dots are flex items too, so justify-between
-           centres each one in the gap between two links. -->
-      <nav aria-label="Company" class="md:mt-auto md:flex md:items-baseline md:gap-x-10 md:border-t md:border-border md:pt-4" data-footer-company>
+      <!-- Company: a two-column list on phones; from md a single row spanning the services area. Between the label and
+           each pair of links sits a spacer (24px minimum, equal growth), so every gap in the row is the same width; the
+           spacers between links carry a dot centred in the gap. From md the list is `display: contents` (role="list"
+           keeps its semantics), so the label, spacers and links share one flex row. -->
+      <nav aria-label="Company" class="md:mt-auto md:flex md:items-baseline md:border-t md:border-border md:pt-4" data-footer-company>
         <h2 class={headingClass}>Company</h2>
-        <ul class="mt-2 grid grid-cols-2 gap-x-6 md:mt-0 md:flex md:flex-1 md:flex-wrap md:items-baseline md:justify-between md:gap-x-6">
+        <span aria-hidden="true" class={spacerClass}></span>
+        <ul role="list" class="mt-2 grid grid-cols-2 gap-x-6 md:contents">
           {
             company.map((link, i) => (
               <>
                 {i > 0 && (
-                  <li aria-hidden="true" class="hidden text-sm text-muted md:block">
-                    ·
+                  <li aria-hidden="true" class={spacerClass} data-footer-dot>
+                    <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-muted">·</span>
                   </li>
                 )}
                 <li>
