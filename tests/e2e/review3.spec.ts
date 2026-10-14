@@ -106,14 +106,13 @@ test.describe('Header', () => {
     expect(box.width).toBeGreaterThanOrEqual(page.viewportSize()!.width - 20);
   });
 
-  test('active page: accent colour and a static underline on that one link only; no indicator element', async ({ page }, testInfo) => {
+  test('active page: accent colour only, no underline or indicator', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
-    await page.goto('/contact');
+    await page.goto('/approach');
     const links = page.locator('[data-nav-link="desktop"]');
     for (const deco of await links.evaluateAll((els) => els.map((e) => getComputedStyle(e).textDecorationLine))) expect(deco).toBe('none');
-    await page.goto('/approach');
-    const decorated = await links.evaluateAll((els) => els.filter((e) => getComputedStyle(e).textDecorationLine === 'underline').map((e) => e.textContent?.trim()));
-    expect(decorated).toEqual(['How We Work']);
+    const accent = await links.evaluateAll((els) => els.filter((e) => e.classList.contains('text-accent')).map((e) => e.textContent?.trim()));
+    expect(accent).toEqual(['How We Work']);
   });
 
   test('a mega-menu link to the current page closes the menu and scrolls to the top without navigating', async ({ page }, testInfo) => {
@@ -178,14 +177,23 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
 });
 
 test.describe('About', () => {
-  test('LinkedIn button sits under the role; capabilities are two lists of at most four with "View all services"', async ({ page }) => {
+  test('LinkedIn button: top-right level with the name from 768px, under the role on phones; capabilities 2 × 4 with "View all services"', async ({ page }, testInfo) => {
     await page.goto('/about');
-    const role = (await page.locator('section[aria-labelledby="leadership-title"]').getByText('Founder & Lead Architect').boundingBox())!;
+    const card = page.locator('section[aria-labelledby="leadership-title"]');
+    const name = (await card.getByRole('heading', { name: 'Mubashir Ahmed' }).boundingBox())!;
+    const role = (await card.getByText('Founder & Lead Architect').boundingBox())!;
     const linkedin = page.locator('[data-founder-linkedin]');
     await expect(linkedin).toHaveText('LinkedIn');
     const box = (await linkedin.boundingBox())!;
-    expect(box.y).toBeGreaterThan(role.y + role.height - 1);
-    expect(Math.abs(box.x - role.x)).toBeLessThanOrEqual(1);
+    if (testInfo.project.name === 'desktop') {
+      expect(box.y).toBeLessThan(name.y + name.height);
+      expect(box.x).toBeGreaterThan(name.x + name.width);
+      const text = (await card.locator('p', { hasText: 'Leads every ZanamTech engagement' }).boundingBox())!;
+      expect(Math.round(box.x + box.width)).toBe(Math.round(text.x + text.width));
+    } else {
+      expect(box.y).toBeGreaterThan(role.y + role.height - 1);
+      expect(Math.abs(box.x - role.x)).toBeLessThanOrEqual(1);
+    }
     const lists = page.locator('section[aria-labelledby="capabilities-title"] ul');
     await expect(lists).toHaveCount(2);
     for (const n of await lists.evaluateAll((uls) => uls.map((ul) => ul.children.length))) expect(n).toBeLessThanOrEqual(4);

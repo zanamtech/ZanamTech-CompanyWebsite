@@ -18,7 +18,8 @@
 | Fix round from the full-site video review (contact path, header, reveal, grids, services, Insights, About, legal) | ✅ Done (14 Oct, section 3e) |
 | Follow-up: About "At a glance", company LinkedIn | ✅ Done (14 Oct, section 3f) |
 | Fix round from video review #3 (external links, transitions, header, offer cards, About, article TOC) | ✅ Done (14 Oct, section 3g) |
-| Pushed to `origin/dev` | Everything up to and including section 3g |
+| Tweaks: no active underline, LinkedIn button top-right | ✅ Done (14 Oct, section 3h) |
+| Pushed to `origin/dev` | Everything up to and including section 3h |
 
 ## 2. What was completed in spec 002
 
@@ -187,6 +188,12 @@
 - **About:** the LinkedIn button (icon + "LinkedIn", outlined) sits directly under "Founder & Lead Architect". Core capabilities: two lists of four plus "View all services →".
 - **Articles:** "On this page" links at 14px in the muted token on a stronger rail; the section being read is highlighted (IntersectionObserver) with `aria-current="location"`.
 - **Checks:** affected specs plus the new `review3.spec.ts` (314 tests: 252 passed, 62 skipped by design, 0 failed); `npm run check` 0 errors; `lint:content` and `check:csp` pass. No cross-browser sweep.
+
+## 3h. UI tweaks (14 Oct)
+- **Header nav:** the active-page underline from 3g is removed. The active page is the purple text colour only; hover changes colour only.
+- **About founder card:** the outlined "LinkedIn" button (icon + text, new tab) is back in the top-right corner, level with the name, from 768px. Below 768px it sits under "Founder & Lead Architect". Core capabilities unchanged (two lists of four).
+- **Test fix:** the "mouse click leaves no ring" test now waits for focus to reach `<main>` after the navigation before pressing Tab (it raced with the 3g focus move; 10/10 after the fix).
+- **Checks:** affected specs (review3, review-fixes, approach-industries, trust-legal, header-footer-ui, navigation): all pass; `npm run check` 0 errors.
 
 ## 4. Owner decisions (binding)
 

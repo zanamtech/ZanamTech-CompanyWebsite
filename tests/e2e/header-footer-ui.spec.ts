@@ -8,6 +8,8 @@ test.describe('Focus rings: keyboard only', () => {
     const logo = page.locator('header a[aria-label="ZanamTech home"]');
     await logo.click();
     await page.waitForLoadState('load');
+    // The client-side navigation then moves focus to <main>; wait for it so Tab starts from there.
+    await expect(page.locator('main#main')).toBeFocused();
     const outlineAfterClick = await page.evaluate(() => getComputedStyle(document.activeElement as Element).outlineStyle);
     expect(outlineAfterClick).toBe('none');
 

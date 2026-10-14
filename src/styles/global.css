@@ -234,14 +234,6 @@
     }
   }
 
-  /* Desktop nav: the active page is the accent colour plus a small static underline on that one link; hover changes
-     the text colour only. No moving or animated indicator. */
-  [data-nav-link='desktop'][aria-current='page'] {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 8px;
-  }
-
   header[data-astro-transition-persist] {
     view-transition-name: site-header;
   }
