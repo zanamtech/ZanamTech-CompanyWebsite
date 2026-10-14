@@ -1,7 +1,7 @@
 # ZanamTech Website: Progress Report
 
 **Branch:** `dev` · **Spec:** `specs/002-enterprise-repositioning/` · **Source of truth:** `docs/03_Master_Plan_v3.md`
-**Constitution:** v2.0.3 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-14
+**Constitution:** v2.0.4 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-14
 
 ## 1. Status at a glance
 
@@ -14,12 +14,13 @@
 | Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green (14 Oct: 3 repeat runs, 747 passed, 0 flaky) |
 | Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 14 Oct on 12 pages: 98–99 / 100 / 100 / 100, LCP ≤ 2.21 s, CLS 0.001 |
 | Owner decisions from the QA report (naming, Azure, samples, footer copy) | ✅ Applied (14 Oct, section 3c) |
-| Pushed to `origin/dev` | Everything up to and including the owner decisions (section 3c) |
+| Footer spacing, Company row dots, "remote-first" removed | ✅ Done (14 Oct, section 3d) |
+| Pushed to `origin/dev` | Everything up to and including section 3d |
 
 ## 2. What was completed in spec 002
 
 ### Governance (Phase 0)
-- **Constitution:** amended to v2.0.0, then patched to 2.0.1, 2.0.2 and 2.0.3.
+- **Constitution:** amended to v2.0.0, then patched to 2.0.1, 2.0.2, 2.0.3 and 2.0.4.
   - Principle III was redefined as "Brand, Content & Proof Integrity".
   - Principle IV gained a design freeze: no change to colours, fonts, spacing, themes or animations.
 - **Docs:** `docs/01_Brand_Positioning.md` and `docs/02_Services_Catalog.md` were rewritten from v3.
@@ -87,7 +88,7 @@
   - Uses the same grouping as the menu and fits one screen at 1440×900 (457 px).
   - Phones get collapsible pillar groups.
   - Copyright line: "© 2026 ZanamTech · Cloud, DevOps & AI engineering".
-  - The footer never says "remote-first".
+  - The site never says "remote-first" (content lint rule since 14 Oct).
 - **Header:**
   - The separate "Managed Services" item is removed; the flagship stays first in the Services menu.
   - Insights shows from 1024 px, and the CTA fits.
@@ -147,6 +148,12 @@
 - **Footer description shortened** to "Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernise cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in." It is 4 lines on desktop: the brand column went from 17rem to 20rem and its gap from 64 to 48px, so the service columns keep their wrapping. The email is pinned to the column bottom, so it stays level with the Company row. The footer is 439px at 1440×900.
 - **Checks:** affected Playwright specs (232 tests: 192 passed, 40 skipped by design, 0 failed), `npm run check` 0 errors, `lint:content` and `check:csp` pass. No full cross-browser sweep this round, as agreed.
 
+## 3d. Footer spacing and "remote-first" removed (14 Oct)
+- **Service lists:** back to the earlier 32px row pitch in every column and sub-column; the Company row and email move up with them and stay level. The footer is 427px at 1440×900.
+- **Company row:** dot separators restored between every link (this replaces "no dots" in 3c); each dot sits centred in its gap, and the row still spans to the right edge.
+- **"Remote-first" removed site-wide:** tab title is now "ZanamTech | Cloud, DevOps & AI Engineering"; the site description, meta, Open Graph/Twitter tags and JSON-LD (all from `site.ts`) and the About copy no longer use it. The content lint bans it, and constitution v2.0.4 lists it as prohibited wording.
+- **Checks:** `npm run check` 0 errors, `lint:content` pass, `npm run build` pass; zero "remote-first" matches in `src/`, `public/` and `dist/`.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -159,7 +166,7 @@
 | **SC-006:** results appear within one scroll on desktop and within two scrolls on phones; the hero is unchanged | Spec SC-006, `tests/e2e/home-v3.spec.ts` |
 | **The visual design is unchanged:** colours, fonts, spacing, themes, animations. Approved exceptions: the wider multi-column Services menu, and tighter header link padding at lg | Constitution IV, design-freeze comparison |
 | **Naming (14 Oct):** "How We Work" in title case everywhere; "Azure", not "Microsoft Azure"; the footer Company row uses even spacing without dots | `src/data/site.ts`, `src/data/platforms.ts`, service content |
-| Also decided: no prices; no competitor names; no fabricated or placeholder proof; single CTA "Book a Strategy Consultation"; "Custom Full-Stack Web App Development" name kept; remote-first with no address on the site; Google Cloud supported | Constitution III, spec |
+| Also decided: no prices; no competitor names; no fabricated or placeholder proof; single CTA "Book a Strategy Consultation"; "Custom Full-Stack Web App Development" name kept; no address on the site and no "remote-first" wording; Google Cloud supported | Constitution III, spec |
 
 ## 5. Open before launch
 

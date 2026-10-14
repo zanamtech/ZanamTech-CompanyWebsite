@@ -1,4 +1,9 @@
 <!--
+Sync Impact Report (2.0.4)
+- Version change: 2.0.3 → 2.0.4 (PATCH: "remote-first" moved from preferred terms to prohibited wording; the
+  statement that the site describes ZanamTech as remote-first is removed.) No template changes; content lint
+  already bans it.
+
 Sync Impact Report (2.0.3)
 - Version change: 2.0.2 → 2.0.3 (PATCH: platform note. AWS, Azure and Google Cloud treated equally.) No template
   changes; spec 002 FR-006a, research R6/R7, the lead contract and tasks T096/T113 aligned.
@@ -89,7 +94,8 @@ from `docs/03_Master_Plan_v3.md` (and the catalogue docs once rewritten from it)
   weeks are permitted. The ONLY permitted business-day commitments are "Written proposal within 2
   business days" and "We reply within 1 business day".
 - A street address, city, or "our offices"; legal suffixes (Ltd, Inc, LLC) until a company is
-  registered. The site describes ZanamTech as remote-first.
+  registered.
+- "Remote-first" (or "remote first") in any form.
 - "Certified", certification badges, or partner badges/tiers until actually held.
 - "Guarantee", "guaranteed uptime", "zero downtime", "zero data loss", "100%", and unqualified "24/7".
 - Claims of self-hosted, local, on-premise, or fine-tuned LLMs.
@@ -180,7 +186,7 @@ Rationale: automated gates make the principles above enforceable rather than asp
   order); real past scenarios keep the cloud they actually ran on.
 - Describe the process a client gets (SOW, kickoff, weekly status, monthly service review,
   runbooks, handover), never who sits behind it.
-- Preferred terms: "Statement of Work (SOW)", "achieved result", "remote-first", "documented
+- Preferred terms: "Statement of Work (SOW)", "achieved result", "documented
   runbooks", "no lock-in", "least-privilege access".
 - Avoided terms: "senior engineering expertise", "target outcome", "Representative Engagement
   Scenario" as a mandatory label, and every term prohibited in Principle III.
@@ -201,4 +207,4 @@ guidance, PATCH for clarifications and wording. Every implementation plan MUST i
 Constitution Check; violations MUST be justified in its Complexity Tracking table. Reviewers verify
 compliance on every pull request.
 
-**Version**: 2.0.3 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-12
+**Version**: 2.0.4 | **Ratified**: 2026-09-29 | **Last Amended**: 2026-10-14

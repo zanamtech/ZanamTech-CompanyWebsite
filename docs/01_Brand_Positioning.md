@@ -6,7 +6,7 @@
 
 ## 1. Positioning statement
 
-"ZanamTech is a remote-first Cloud, DevOps & AI engineering firm. We run, secure and modernise the
+"ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the
 cloud platforms growing businesses depend on, and automate the work that slows them down, with
 documented runbooks, transparent reporting and no lock-in."
 
@@ -110,7 +110,7 @@ The website describes the process a client gets, never who sits behind it.
 
 ## 8. Location and company presentation
 
-- The website says **remote-first** and shows no address or city. Delivery location is stated
+- The website never says "remote-first" (banned by the content lint) and shows no address or city. Delivery location is stated
   plainly on calls and in proposals.
 - **Never:**
   - a virtual-office address presented as a headquarters

@@ -74,7 +74,7 @@ The tests always build and serve a fresh production preview on a free port, neve
 | Navigation, CTA, pillars, contact emails | `src/data/site.ts` |
 | Retired service URLs (301) | `nginx/nginx.conf` |
 
-Brand, content and proof rules (Constitution III, v2.0.3):
+Brand, content and proof rules (Constitution III, v2.0.4):
 
 - Strictly corporate tone. No years-of-experience claims, public pricing or competitor names.
 - Testimonials, client logos, case studies and badges render only from verified, permissioned data.
