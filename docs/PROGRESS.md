@@ -13,7 +13,8 @@
 | UI polish and full QA pass (footer, section spacing, "How we engage" fix, cross-browser QA) | ✅ Complete (14 Oct). Report: `docs/internal/qa-2026-10-14.md` |
 | Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green (14 Oct: 3 repeat runs, 747 passed, 0 flaky) |
 | Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 14 Oct on 12 pages: 98–99 / 100 / 100 / 100, LCP ≤ 2.21 s, CLS 0.001 |
-| Pushed to `origin/dev` | Everything up to and including the 14 Oct QA pass (section 3b) |
+| Owner decisions from the QA report (naming, Azure, samples, footer copy) | ✅ Applied (14 Oct, section 3c) |
+| Pushed to `origin/dev` | Everything up to and including the owner decisions (section 3c) |
 
 ## 2. What was completed in spec 002
 
@@ -42,7 +43,7 @@
 - **Results:** the 8 past-project results are worded as achieved results, under "Selected results from past engagements", with the footnote.
 - **Copy:** rewritten across the site. No team-structure claims, no "24/7", no "zero downtime", no self-hosted LLM claims.
 - **Privacy notice:** updated with GDPR Article 28 processor terms and UAE/KSA PDPL references.
-- **Drafts:** 3 Insights articles, now approved and published, and 3 sample artefacts, still drafts.
+- **Drafts:** 3 Insights articles, now approved and published, and 3 sample artefacts, published on 14 Oct after owner approval.
 
 ### Components and pages (Phase 3)
 - **Home, in order:** results band, flagship spotlight, service pillars, entry offers, artefact band, How We Work, industries, trust band, FAQ.
@@ -138,6 +139,14 @@
   - The full report, with the issues list, WebKit items to verify on real Safari, and owner decisions, is `docs/internal/qa-2026-10-14.md`.
 - **Screenshots:** `docs/internal/screenshots/2026-10-14-qa/` (gitignored), with before and after for the footer, spacing and "How we engage" at 1440, 1024 and 390 in light and dark.
 
+## 3c. Owner decisions from the QA report (14 Oct)
+- **"How We Work"** in title case everywhere, including the home link under "How we engage" and the page eyebrow.
+- **"Azure"**, never "Microsoft Azure": service technology lists, the technology marquee and the structured data. The structured data and the migration copy also say "AWS" instead of "Amazon Web Services".
+- **Company row:** even spacing, no dots (unchanged).
+- **Samples published:** the 3 samples are `draft: false`, so `/resources`, the sample pages and the home sample band are live. The "DRAFT: owner fact-check" notes became a plain "SAMPLE" note.
+- **Footer description shortened** to "Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernise cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in." It is 4 lines on desktop: the brand column went from 17rem to 20rem and its gap from 64 to 48px, so the service columns keep their wrapping. The email is pinned to the column bottom, so it stays level with the Company row. The footer is 439px at 1440×900.
+- **Checks:** affected Playwright specs (232 tests: 192 passed, 40 skipped by design, 0 failed), `npm run check` 0 errors, `lint:content` and `check:csp` pass. No full cross-browser sweep this round, as agreed.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -149,6 +158,7 @@
 | **No clock hours, time zones or minute/hour figures on the site.** Weeks and the two commitments ("Written proposal within 2 business days", "We reply within 1 business day") are allowed, as is the technical "hourly encrypted backups" | Constitution III, lint allow-list |
 | **SC-006:** results appear within one scroll on desktop and within two scrolls on phones; the hero is unchanged | Spec SC-006, `tests/e2e/home-v3.spec.ts` |
 | **The visual design is unchanged:** colours, fonts, spacing, themes, animations. Approved exceptions: the wider multi-column Services menu, and tighter header link padding at lg | Constitution IV, design-freeze comparison |
+| **Naming (14 Oct):** "How We Work" in title case everywhere; "Azure", not "Microsoft Azure"; the footer Company row uses even spacing without dots | `src/data/site.ts`, `src/data/platforms.ts`, service content |
 | Also decided: no prices; no competitor names; no fabricated or placeholder proof; single CTA "Book a Strategy Consultation"; "Custom Full-Stack Web App Development" name kept; remote-first with no address on the site; Google Cloud supported | Constitution III, spec |
 
 ## 5. Open before launch
@@ -158,7 +168,7 @@
 - [ ] Put the practices stated on `/trust` in place: MFA everywhere, a password manager, the incident-response runbook, and the sub-processor list.
 - [ ] Complete the internal drafts in `docs/internal/` (`incident-response-runbook.md`, `sub-processor-list.md`): fill the "to be set" fields and confirm regions.
 - [ ] Add LinkedIn URLs (personal and company) and a photo in `src/data/leadership.ts`. They stay hidden while empty.
-- [ ] Review and approve the 3 sample artefacts in `src/content/resources/` (set `draft: false`).
+- [x] Review and approve the 3 sample artefacts in `src/content/resources/` (published 14 Oct).
 - [ ] Collect evidence records for the 8 results (`evidenceId` in `src/data/results.ts`) and be ready to describe each project on calls.
 
 **Infrastructure and operations**
@@ -174,8 +184,8 @@
 - [ ] Post-launch: analytics goal events for consultation bookings and form submissions (needs a CSP review).
 
 ## 6. Next steps
-1. Done: the 13 Oct UI fixes and the 14 Oct QA pass are pushed to `origin/dev`. Decide the 6 open questions in `docs/internal/qa-2026-10-14.md` §6, and check the WebKit items in §5 on a real Mac or iPhone.
+1. Done: the 13 Oct UI fixes and the 14 Oct QA pass are pushed to `origin/dev`. The owner decisions from `docs/internal/qa-2026-10-14.md` §6 are applied (section 3c); still to do: check the phone spacing on a real phone, and check the WebKit items in §5 on a real Mac or iPhone.
 2. Close the launch items in section 5: legal review, Trust-page practices, LinkedIn and photo, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.
-5. After launch: gather the first verified testimonials and case studies (they switch on automatically), add evidence records, approve the samples, and keep publishing Insights.
+5. After launch: gather the first verified testimonials and case studies (they switch on automatically), add evidence records, and keep publishing Insights.

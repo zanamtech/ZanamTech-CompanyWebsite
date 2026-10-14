@@ -2,12 +2,11 @@
 title: "Sample: Azure Dev/QA/UAT/Prod reference architecture"
 summary: A sample reference architecture for a web application on Azure with four isolated environments, Infrastructure as Code, Key Vault per environment and slot-based releases.
 date: 2026-10-12
-draft: true
+draft: false
 sample: true
 ---
 
-> **SAMPLE · DRAFT: owner fact-check required.** A generic reference written for illustration. It is not taken from
-> any client engagement. Review it before setting `draft: false`.
+> **SAMPLE.** A generic reference written for illustration. It is not taken from any client engagement.
 
 ## Purpose
 

@@ -12,7 +12,7 @@ export const platformRows: PlatformRow[] = [
     label: 'Cloud, DevOps, infrastructure and AI',
     items: [
       'AWS',
-      'Microsoft Azure',
+      'Azure',
       'Google Cloud',
       'Flexential Cloud',
       'Kubernetes',

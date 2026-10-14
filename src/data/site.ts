@@ -13,7 +13,7 @@ export const site = {
 export const footerCopy = {
   tagline: 'Cloud, DevOps & AI engineering',
   description:
-    'ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',
+    'Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernise cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in.',
 } as const;
 
 export const pillars = ['Enterprise-grade', 'High-availability', 'Zero-trust security'] as const;

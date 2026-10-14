@@ -22,7 +22,7 @@ capabilities:
   - "Repository and delivery governance: branch restrictions, access reviews, SOPs, change control and audit trail"
   - "Cost governance: monthly spend review, rightsizing, budgets and alerts"
   - "Reporting: weekly status and a monthly service report covering health, cost, risk and changes"
-stack: [AWS, Microsoft Azure, Google Cloud, GitHub Actions, Azure DevOps, Bitbucket, Terraform, Docker]
+stack: [AWS, Azure, Google Cloud, GitHub Actions, Azure DevOps, Bitbucket, Terraform, Docker]
 outcome: Your cloud and delivery platform operated to written runbooks, with every change, backup and risk reported monthly
 relatedOffer: governance-quick-start
 faq:

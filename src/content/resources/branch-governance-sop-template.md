@@ -2,12 +2,11 @@
 title: "Sample: Bitbucket branch-governance SOP template"
 summary: A sample standard operating procedure for branch naming, pull requests, reviews, releases, hotfixes and access changes in Bitbucket.
 date: 2026-10-12
-draft: true
+draft: false
 sample: true
 ---
 
-> **SAMPLE · DRAFT: owner fact-check required.** A generic template written for illustration. It is not copied from
-> any client's SOPs. Review it before setting `draft: false`.
+> **SAMPLE.** A generic template written for illustration. It is not copied from any client's SOPs.
 
 ## SOP: Source control and branch governance
 

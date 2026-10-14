@@ -2,12 +2,11 @@
 title: "Sample: Monthly service report"
 summary: A sample of the monthly service report Managed Cloud & DevOps clients receive, covering platform health, changes, incidents, backups, cost and risks.
 date: 2026-10-12
-draft: true
+draft: false
 sample: true
 ---
 
-> **SAMPLE · DRAFT: owner fact-check required.** Illustrative layout only. Every value below is a placeholder, not
-> real client data. Review it before setting `draft: false`.
+> **SAMPLE.** Illustrative layout only. Every value below is a placeholder, not real client data.
 
 ## Monthly service report
 
