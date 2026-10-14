@@ -368,41 +368,85 @@ export default (Alpine: Alpine) => {
 
   Alpine.data('processReveal', (count: number) => ({
     step: count * 2 - 1,
+    /** True once the sequence has finished: cards then carry no reveal styles at all (data-shown="done"). */
+    done: true,
+    started: false,
     timers: [] as number[],
     observer: null as IntersectionObserver | null,
+    watchdog: null as (() => void) | null,
 
     init() {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (reduce || !('IntersectionObserver' in window)) return;
       if (this.$el.getBoundingClientRect().top < window.innerHeight) return;
-      const total = count * 2 - 1;
       this.step = 0;
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((e) => e.isIntersecting)) return;
-          this.observer?.disconnect();
-          this.timers = Array.from({ length: total }, (_, i) =>
-            window.setTimeout(() => (this.step = i + 1), PROCESS_STEP_AT[i] ?? 100 + i * 525),
-          );
-        },
-        { threshold: 0.2 },
-      );
+      this.done = false;
+      this.observer = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && this.start(), { threshold: 0.2 });
       this.observer.observe(this.$el);
+      // Safety net: if the observer misses the entry (scroll restoration on reload, a back/forward-cache restore, a
+      // jump past the section, a tab hidden mid-load), start as soon as any part of the steps is on screen.
+      let queued = false;
+      const check = () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          const r = this.$el.getBoundingClientRect();
+          if (r.bottom <= 0) this.finish();
+          else if (r.top < window.innerHeight) this.start();
+        });
+      };
+      this.watchdog = check;
+      window.addEventListener('scroll', check, { passive: true });
+      window.addEventListener('pageshow', check);
+      document.addEventListener('visibilitychange', check);
+    },
+
+    start() {
+      if (this.started || this.done) return;
+      this.started = true;
+      this.stopWatching();
+      const total = count * 2 - 1;
+      this.timers = Array.from({ length: total }, (_, i) =>
+        window.setTimeout(() => (this.step = i + 1), PROCESS_STEP_AT[i] ?? 100 + i * 525),
+      );
+      const last = PROCESS_STEP_AT[total - 1] ?? 100 + (total - 1) * 525;
+      this.timers.push(window.setTimeout(() => (this.done = true), last + 900));
+    },
+
+    /** Already scrolled past (fast scroll, jump, scroll restoration): show the finished state without animating. */
+    finish() {
+      this.stopWatching();
+      this.timers.forEach((t) => window.clearTimeout(t));
+      this.started = true;
+      this.step = count * 2 - 1;
+      this.done = true;
+    },
+
+    stopWatching() {
+      this.observer?.disconnect();
+      if (this.watchdog) {
+        window.removeEventListener('scroll', this.watchdog);
+        window.removeEventListener('pageshow', this.watchdog);
+        document.removeEventListener('visibilitychange', this.watchdog);
+        this.watchdog = null;
+      }
     },
 
     destroy() {
-      this.observer?.disconnect();
+      this.stopWatching();
       this.timers.forEach((t) => window.clearTimeout(t));
     },
 
-    /** Card n (1-based) appears on step 2n-1. */
+    /** Card n (1-based) appears on step 2n-1; "done" once the whole sequence has played. */
     isShown(card: number) {
+      if (this.done) return 'done';
       return this.step >= card * 2 - 1 ? 'true' : 'false';
     },
 
     /** Connector segment n (between card n and n+1) draws on step 2n. */
     isDrawn(segment: number) {
-      return this.step >= segment * 2 ? 'true' : 'false';
+      return this.done || this.step >= segment * 2 ? 'true' : 'false';
     },
   }));
 

@@ -134,6 +134,33 @@ test.describe('Footer', () => {
     });
   }
 
+  for (const width of [1440, 1024]) {
+    test(`service columns: equal gaps, same first-link height, even item spacing at ${width}px`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name !== 'desktop', 'Desktop and tablet footer');
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/');
+      const lists = await page.locator('footer [data-footer-services] ul').evaluateAll((uls) =>
+        uls.map((ul) => {
+          const r = ul.getBoundingClientRect();
+          const links = [...ul.querySelectorAll('a')].map((a) => a.getBoundingClientRect());
+          return {
+            left: Math.round(r.left),
+            right: Math.round(r.right),
+            firstTop: Math.round(links[0].top),
+            gaps: links.slice(1).map((b, i) => Math.round(b.top - links[i].bottom)),
+            group: ul.closest('[data-footer-pillar]')!.getAttribute('data-footer-pillar'),
+          };
+        }),
+      );
+      // One list per column, first rows level: the first list of each column (the AI list sits under Managed).
+      const columns = lists.filter((l) => l.group !== 'ai');
+      expect(new Set(columns.map((c) => c.firstTop)).size, 'first links start at the same height').toBe(1);
+      const gaps = columns.slice(1).map((c, i) => c.left - columns[i].right);
+      expect(new Set(gaps).size, `equal column gaps: ${gaps.join(',')}`).toBe(1);
+      expect(new Set(lists.flatMap((l) => l.gaps)).size, 'even spacing between items').toBe(1);
+    });
+  }
+
   test('on phones the pillar groups are collapsed and expand on tap', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'mobile', 'Phone footer');
     await page.goto('/');

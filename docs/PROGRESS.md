@@ -1,7 +1,7 @@
 # ZanamTech Website: Progress Report
 
 **Branch:** `dev` · **Spec:** `specs/002-enterprise-repositioning/` · **Source of truth:** `docs/03_Master_Plan_v3.md`
-**Constitution:** v2.0.3 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-13
+**Constitution:** v2.0.3 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-14
 
 ## 1. Status at a glance
 
@@ -10,9 +10,10 @@
 | Spec 002 (Master Plan v3 repositioning) | ✅ Complete: 119 of 119 tasks across Phases 0–5 |
 | UI fixes (menu, footer, focus rings, header) | ✅ Complete |
 | UI fixes, round 2 (scroll cue, menu badge, card illustrations, FAQ animation, footer Company row) | ✅ Complete (13 Oct) |
-| Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green |
-| Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 13 Oct on `/`, `/insights` and one article: 98–99 / 100 / 100 / 100, CLS 0.001 |
-| Pushed to `origin/dev` | All of spec 002 and both rounds of UI fixes, including the 13 Oct follow-ups (section 3a) |
+| UI polish and full QA pass (footer, section spacing, "How we engage" fix, cross-browser QA) | ✅ Complete (14 Oct). Report: `docs/internal/qa-2026-10-14.md` |
+| Quality gates | ✅ `npm run check` 0 errors / 0 warnings · `lint:content` pass · `check:csp` pass · Playwright + axe all green (14 Oct: 3 repeat runs, 747 passed, 0 flaky) |
+| Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 14 Oct on 12 pages: 98–99 / 100 / 100 / 100, LCP ≤ 2.21 s, CLS 0.001 |
+| Pushed to `origin/dev` | Everything up to and including the 14 Oct QA pass (section 3b) |
 
 ## 2. What was completed in spec 002
 
@@ -117,6 +118,26 @@
   - The stale dev server on port 4321 was stopped. The full suite passed again.
 - **Screenshots:** 64 images (6 views × 4 widths × 2 themes, plus the page headers) in `docs/internal/screenshots/2026-10-13-ui-fixes/` (gitignored). The sample cards are drafts, so they were captured from `astro dev`.
 
+## 3b. UI polish and full QA pass (14 Oct)
+- **Footer (desktop and tablet):**
+  - Fixed 17 rem brand column with a 64 px gap; every service column, including the two Cloud sub-columns, is 32 px apart.
+  - Independent lists with an even 16 px text gap; every first link starts at the same height.
+  - The Company row stays level with the email and spreads evenly to the right edge, with no dots.
+  - 42 px above the divider; 457 px tall at 1440×900. The phone layout is unchanged.
+- **Section spacing:**
+  - New `section-y` / `section-t` / `section-b` scale: 36 / 48 / 56 px, down from 48 / 64 / 80. Sections sit 72 / 96 / 112 px apart on phone / tablet / desktop.
+  - Applied to every page, the page header, the CTA band and the footer. The CTA-to-footer gap went from 176 px to 112 px.
+- **"How we engage" cards:**
+  - Root cause: the global `scroll-behavior: smooth` animated the browser's scroll restoration on reload. That glide started the 3.25-second card sequence off-screen, so a visitor scrolling back saw cards 03 and 04 still blank.
+  - Fixes: smooth scrolling only while something is focused (`html:focus-within`); sections already scrolled past show immediately; a watchdog for missed observer events; the fade runs on the card, not its parent; cards drop all reveal styles when done.
+  - The shared reveal engine got the same fixes, plus a threshold that works for groups taller than the screen.
+  - Regression tests: `tests/e2e/reveal.spec.ts`.
+- **QA:**
+  - 1,176 page loads (28 routes × 7 widths × 2 themes × Chromium, Firefox and WebKit), plus the draft samples in dev, a Tab-focus scan, a link check, the existing suite in all three engines, and Lighthouse on 12 pages.
+  - Also fixed: phone overflow from wide tables on two samples, the `/resources` heading order, scroll-cue offsets after the spacing change, and 4 US spellings.
+  - The full report, with the issues list, WebKit items to verify on real Safari, and owner decisions, is `docs/internal/qa-2026-10-14.md`.
+- **Screenshots:** `docs/internal/screenshots/2026-10-14-qa/` (gitignored), with before and after for the footer, spacing and "How we engage" at 1440, 1024 and 390 in light and dark.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -153,7 +174,7 @@
 - [ ] Post-launch: analytics goal events for consultation bookings and form submissions (needs a CSP review).
 
 ## 6. Next steps
-1. Done: the 13 Oct UI fixes are pushed to `origin/dev`.
+1. Done: the 13 Oct UI fixes and the 14 Oct QA pass are pushed to `origin/dev`. Decide the 6 open questions in `docs/internal/qa-2026-10-14.md` §6, and check the WebKit items in §5 on a real Mac or iPhone.
 2. Close the launch items in section 5: legal review, Trust-page practices, LinkedIn and photo, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.

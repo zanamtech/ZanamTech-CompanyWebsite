@@ -6,9 +6,12 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   artefact: CollectionEntry<'resources'>;
+  /** h3 under a section heading (home band); h2 directly under the page H1 (/resources). */
+  headingLevel?: 2 | 3;
 }
 
-const { artefact } = Astro.props;
+const { artefact, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
 const { title, summary, draft } = artefact.data;
 ---
 
@@ -20,11 +23,11 @@ const { title, summary, draft } = artefact.data;
     <Badge tone="accent">Sample</Badge>
     {draft && <Badge>Draft</Badge>}
   </div>
-  <h3 class="mt-4 text-lg font-semibold text-fg">
+  <Heading class="mt-4 text-lg font-semibold text-fg">
     <a href={`/resources/${artefact.id}`} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
       {title.replace(/^Sample:\s*/, '')}
     </a>
-  </h3>
+  </Heading>
   <p class="mt-2 text-sm text-muted">{summary}</p>
   <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
     View sample

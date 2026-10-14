@@ -12,7 +12,7 @@ interface Props {
 const { detailed = false, withIntro = true } = Astro.props;
 ---
 
-<section id="process" aria-labelledby={withIntro ? 'process-title' : undefined} aria-label={withIntro ? undefined : 'Engagement phases'} class:list={['container-page overflow-x-clip', withIntro ? 'section-y' : 'pt-8 pb-12 sm:pb-16 lg:pb-20']}>
+<section id="process" aria-labelledby={withIntro ? 'process-title' : undefined} aria-label={withIntro ? undefined : 'Engagement phases'} class:list={['container-page overflow-x-clip', withIntro ? 'section-y' : 'section-b pt-8']}>
   {
     withIntro && (
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -40,10 +40,13 @@ const { detailed = false, withIntro = true } = Astro.props;
       engagementPhases.map((phase) => (
         <li
           data-phase
-          class="relative flex data-[shown=true]:transition-all data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16 data-[shown=false]:opacity-0"
+          class="group/phase relative flex data-[shown=true]:transition-[translate] data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16"
           x-bind:data-shown={`isShown(${phase.order})`}
         >
-          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6">
+          {/* The fade runs on the glass card itself, never on an ancestor: an ancestor below opacity 1 becomes the card's
+              backdrop root, and browsers can leave the backdrop-filtered card unpainted until something (a hover)
+              forces a repaint. data-shown="done" (after the sequence) drops every reveal style. */}
+          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6 group-data-[shown=false]/phase:opacity-0 group-data-[shown=true]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[shown=true]/phase:duration-700 group-data-[shown=true]/phase:ease-out">
             <span class="flex size-12 items-center justify-center rounded-xl bg-cta text-sm font-bold text-cta-fg shadow-sm">
               {String(phase.order).padStart(2, '0')}
             </span>

@@ -50,22 +50,34 @@ test.describe('US1 — Home v3', () => {
     await page.goto('/');
     const item = page.locator('#faq [data-faq]').first();
     await item.scrollIntoViewIfNeeded();
-    const closed = (await item.boundingBox())!.height;
-    await item.locator('summary').click();
-    await page.waitForTimeout(100);
-    const midOpen = (await item.boundingBox())!.height;
-    await page.waitForTimeout(500);
-    const open = (await item.boundingBox())!.height;
-    expect(midOpen).toBeGreaterThan(closed);
-    expect(midOpen).toBeLessThan(open);
+
+    // Click, then read the animations the click started on this item (CSS transition on ::details-content in
+    // Chromium, Web Animations fallback elsewhere). Checking the started animation rather than sampling one frame
+    // keeps the test stable in engines that paint few frames while headless.
+    const toggle = () =>
+      item.evaluate((details) => {
+        (details.querySelector('summary') as HTMLElement).click();
+        return document
+          .getAnimations()
+          .filter((a) => {
+            const effect = a.effect as KeyframeEffect | null;
+            return !!effect?.target && details.contains(effect.target) && !(effect.target as Element).matches('[data-faq-chevron]');
+          })
+          .map((a) => Number((a.effect as KeyframeEffect).getComputedTiming().duration));
+      });
+
+    const closed = Math.round((await item.boundingBox())!.height);
+    const opening = await toggle();
+    expect(opening.some((d) => d >= 250 && d <= 300), `height animation on open: ${opening.join(',')}ms`).toBe(true);
+    await expect.poll(async () => Math.round((await item.boundingBox())!.height)).toBeGreaterThan(closed);
+    await page.waitForTimeout(400);
+    const open = Math.round((await item.boundingBox())!.height);
     await expect(item.locator('[data-faq-chevron]')).toHaveCSS('rotate', '180deg');
-    await item.locator('summary').click();
-    await page.waitForTimeout(100);
-    const midClose = (await item.boundingBox())!.height;
-    expect(midClose).toBeGreaterThan(closed);
-    expect(midClose).toBeLessThan(open);
+
+    const closing = await toggle();
+    expect(closing.some((d) => d >= 250 && d <= 300), `height animation on close: ${closing.join(',')}ms`).toBe(true);
     await expect(item).not.toHaveAttribute('open', '');
-    await expect.poll(async () => (await item.boundingBox())!.height).toBe(closed);
+    await expect.poll(async () => Math.round((await item.boundingBox())!.height)).toBe(closed);
 
     const reduced = await browser.newContext({ reducedMotion: 'reduce', viewport: page.viewportSize()! });
     const still = await reduced.newPage();
@@ -73,7 +85,7 @@ test.describe('US1 — Home v3', () => {
     const first = still.locator('#faq [data-faq]').first();
     await first.scrollIntoViewIfNeeded();
     await first.locator('summary').click();
-    expect((await first.boundingBox())!.height).toBe(open);
+    expect(Math.round((await first.boundingBox())!.height)).toBe(open);
     await reduced.close();
   });
 

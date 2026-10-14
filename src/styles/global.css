@@ -119,6 +119,11 @@
     background-color: var(--bg);
     color: var(--fg);
     -webkit-text-size-adjust: 100%;
+  }
+
+  /* Smooth only while something is focused (in-page links, the skip link). A plain html rule would also animate the
+     browser's own scroll restoration on reload, gliding the page down from the top and past the reveal sections. */
+  html:focus-within {
     scroll-behavior: smooth;
   }
 
@@ -214,8 +219,18 @@
   }
 
   /* Standard vertical rhythm for page sections. */
+  /* Section rhythm: one vertical padding scale for every section (36 / 48 / 56px), so adjacent sections sit
+     72 / 96 / 112px apart on phone / tablet / desktop. section-t and section-b are the one-sided variants. */
   .section-y {
-    @apply py-12 sm:py-16 lg:py-20;
+    @apply py-9 sm:py-12 lg:py-14;
+  }
+
+  .section-t {
+    @apply pt-9 sm:pt-12 lg:pt-14;
+  }
+
+  .section-b {
+    @apply pb-9 sm:pb-12 lg:pb-14;
   }
 
   /* Shared card hover (home + subpages): lift, purple border and ambient glow. */
@@ -419,7 +434,8 @@
    Reduced motion (Constitution II)
    ------------------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  html:focus-within {
     scroll-behavior: auto;
   }
 

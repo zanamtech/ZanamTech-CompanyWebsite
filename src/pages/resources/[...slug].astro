@@ -70,7 +70,7 @@ const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
       <div class="container-page section-y">
         <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
           {artefacts.map((a) => (
-            <ArtefactCard artefact={a} />
+            <ArtefactCard artefact={a} headingLevel={2} />
           ))}
         </ul>
       </div>
