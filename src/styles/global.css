@@ -208,6 +208,43 @@
   [x-cloak] {
     display: none !important;
   }
+
+  /*
+   * Page navigation (ClientRouter, View Transitions API): sequential, never a cross-fade. The old page fades out
+   * completely (120ms), then the new page fades in (180ms), so the two are never visible in the same frame. The
+   * persisted header has its own transition group, so it stays put. Reduced motion: no animation (see below).
+   */
+  html:not(.theme-vt)::view-transition-old(root) {
+    animation: zt-page-out 120ms ease-in both;
+  }
+
+  html:not(.theme-vt)::view-transition-new(root) {
+    animation: zt-page-in 180ms ease-out 120ms both;
+  }
+
+  @keyframes zt-page-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes zt-page-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* Desktop nav: the active page is the accent colour plus a small static underline on that one link; hover changes
+     the text colour only. No moving or animated indicator. */
+  [data-nav-link='desktop'][aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+
+  header[data-astro-transition-persist] {
+    view-transition-name: site-header;
+  }
 }
 
 /* ------------------------------------------------------------------
@@ -285,13 +322,15 @@
 
   /* Floating header bar: near-opaque so purple CTAs and badges scrolling underneath don't bleed through, with a
      subtle blur kept for depth. */
-  .header-bar {
+  .header-bar,
+  .header-backdrop {
     background-color: rgb(255 255 255 / 0.88);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
 
-  .dark .header-bar {
+  .dark .header-bar,
+  .dark .header-backdrop {
     background-color: rgb(11 17 32 / 0.88);
   }
 
@@ -462,8 +501,9 @@
     transition-duration: 0.01ms !important;
   }
 
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
     animation: none !important;
   }
 

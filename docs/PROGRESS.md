@@ -17,7 +17,8 @@
 | Footer spacing, Company row dots, "remote-first" removed | ✅ Done (14 Oct, section 3d) |
 | Fix round from the full-site video review (contact path, header, reveal, grids, services, Insights, About, legal) | ✅ Done (14 Oct, section 3e) |
 | Follow-up: About "At a glance", company LinkedIn | ✅ Done (14 Oct, section 3f) |
-| Pushed to `origin/dev` | Everything up to and including section 3f |
+| Fix round from video review #3 (external links, transitions, header, offer cards, About, article TOC) | ✅ Done (14 Oct, section 3g) |
+| Pushed to `origin/dev` | Everything up to and including section 3g |
 
 ## 2. What was completed in spec 002
 
@@ -176,6 +177,16 @@
 - **About:** the "What we stand for" card (it repeated the Philosophy cards) is replaced by "At a glance": Clouds (AWS, Azure, Google Cloud), Regions served (North America, UK & Europe, GCC), Engagement (Assessment, Fixed-scope project, Managed retainer).
 - **Company LinkedIn** (`https://www.linkedin.com/company/zanamtech/`): an icon link beside the footer email (new tab, `rel="noopener noreferrer"`, `aria-label="ZanamTech on LinkedIn"`) and in the Organization JSON-LD `sameAs`. The founder's personal LinkedIn stays on the About card. The CSP needed no change (it does not restrict outbound links); there is no separate link checker.
 - **Checks:** affected specs (review-fixes, header-footer-ui, trust-legal, approach-industries, security, theme-a11y, navigation): 95 passed, 21 skipped by design, 0 failed; `npm run check` 0 errors; `lint:content` and `check:csp` pass.
+
+## 3g. Fix round from video review #3 (14 Oct)
+- **External links, site-wide:** `src/middleware.ts` gives every link to another origin `target="_blank" rel="noopener noreferrer"` while pages render (dev and static build), including Markdown article sources. The founder LinkedIn link had no `target`, which is why it opened in the same tab. Astro's ClientRouter already skips other origins, `target="_blank"`, `download`, `mailto:`/`tel:`, Ctrl/Cmd/Shift/Alt and non-left clicks, so it needed no change.
+- **Page transitions:** sequential instead of a cross-fade. The old page fades out over 120ms, then the new page fades in over 180ms (it starts at 120ms), so they never share a frame. The persisted header has its own transition group and stays put. Reduced motion: no animation.
+- **Focus:** after a client-side navigation focus moves to `<main>` (no outline). The router used to drop `data-modality` from `<html>` on every navigation, so a mouse-clicked header link (logo, "About") showed a keyboard ring; the flag is now carried into the new page.
+- **Header:** once scrolled, a full-width backdrop (same 0.88 background and blur) fills the strip from the top of the screen to the bar's bottom edge. Active page: accent colour plus a small static underline on that link only; hover changes colour only. There was no sliding indicator element in the markup; the bars seen in the video were most likely the mega-menu's 150ms fade-out (its gradient hairline and panel) caught in the page transition, so the menu now closes instantly (it still fades in). A menu link to the current page closes the menu and smooth-scrolls to the top without navigating.
+- **"Low-risk ways to start" (Home and /services):** five compact cards (icon, name, duration pill, one-line output, "View offer"), each linking to `/start-here#<offer>`, with the shared card hover. 5 across from 1280px, 3 + 2 centred from 768px, a horizontal scroll-snap row on phones. Header row with subline "Fixed scope, a clear written output, no long-term commitment."
+- **About:** the LinkedIn button (icon + "LinkedIn", outlined) sits directly under "Founder & Lead Architect". Core capabilities: two lists of four plus "View all services →".
+- **Articles:** "On this page" links at 14px in the muted token on a stronger rail; the section being read is highlighted (IntersectionObserver) with `aria-current="location"`.
+- **Checks:** affected specs plus the new `review3.spec.ts` (314 tests: 252 passed, 62 skipped by design, 0 failed); `npm run check` 0 errors; `lint:content` and `check:csp` pass. No cross-browser sweep.
 
 ## 4. Owner decisions (binding)
 

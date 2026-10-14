@@ -675,3 +675,15 @@ Not counted in the 119 tasks above. Light test policy: affected specs + check, l
   breadcrumbs verified below the header on /trust and /terms.
 - [X] R12 CTA band to footer gap ~40% smaller. New spec `tests/e2e/review-fixes.spec.ts`.
 
+## Fix round: video review #3 (2026-10-14)
+
+- [X] R13 External links: render-time rule (`src/middleware.ts`) adds `target="_blank" rel="noopener noreferrer"` to
+  every other-origin link; popup test for both LinkedIn links.
+- [X] R14 Sequential page transition (out 120ms, in 180ms after it); focus to `<main>` after navigation; input
+  modality preserved across swaps.
+- [X] R15 Header backdrop when scrolled; static active underline, no indicator; mega-menu closes instantly and handles
+  same-URL clicks.
+- [X] R16 Compact entry-offer cards (icon, duration, output) on Home and /services; 5 / 3 + 2 / scroll-snap.
+- [X] R17 About: LinkedIn button under the role; capabilities 2 × 4 with "View all services".
+- [X] R18 Article "On this page": 14px muted links, active section with aria-current. New spec `review3.spec.ts`.
+

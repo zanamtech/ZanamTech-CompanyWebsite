@@ -102,7 +102,7 @@ test.describe('About', () => {
     await expect(card.locator('img[data-founder-photo]')).toBeVisible();
     const linkedin = card.locator('[data-founder-linkedin]');
     await expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/mubashir-ahmed-088800174');
-    await expect(linkedin).toHaveAttribute('rel', 'noopener');
+    await expect(linkedin).toHaveAttribute('rel', 'noopener noreferrer');
     await expect(linkedin).toHaveAttribute('aria-label', 'Mubashir Ahmed on LinkedIn');
     const line = card.getByText(/time-zone overlap across North America/);
     await expect(line).toHaveCSS('font-size', '16px');

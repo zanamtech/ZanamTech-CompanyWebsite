@@ -2,7 +2,11 @@
 export interface Offer {
   id: 'health-check' | 'cost-review' | 'governance-quick-start' | 'ai-opportunity-sprint' | 'ai-automation-pilot';
   name: string;
+  /** Icon name from src/components/ui/Icon.astro (compact cards on Home and /services). */
+  icon: string;
   duration: string;
+  /** One-line written output shown on the compact cards. No prices, no response times. */
+  output: string;
   summary: string;
   inputs: string[];
   deliverables: string[];
@@ -14,7 +18,9 @@ export const offers: Offer[] = [
   {
     id: 'health-check',
     name: 'Cloud & DevOps Health Check',
+    icon: 'Activity',
     duration: '2–3 weeks',
+    output: 'Scorecard and prioritised backlog',
     summary: 'An independent review of one cloud environment against reliability, security, cost and delivery practices.',
     inputs: ['Read-only access to the cloud account', 'Read access to repositories and pipelines', 'A named technical owner'],
     deliverables: ['Scorecard across reliability, security, cost and delivery', 'Findings with evidence', 'Prioritised backlog with cost and risk'],
@@ -24,7 +30,9 @@ export const offers: Offer[] = [
   {
     id: 'cost-review',
     name: 'Cloud Cost Review',
+    icon: 'TrendingDown',
     duration: '1–2 weeks',
+    output: 'Savings plan with quick wins',
     summary: 'A focused analysis of cloud spend that applies quick wins and plans the rest.',
     inputs: ['Billing and cost-management read access', 'Current architecture overview'],
     deliverables: ['Spend analysis by service and environment', 'Quick wins applied', '90-day savings roadmap'],
@@ -34,7 +42,9 @@ export const offers: Offer[] = [
   {
     id: 'governance-quick-start',
     name: 'DevOps Governance Quick-Start',
+    icon: 'LockKeyhole',
     duration: '2 weeks',
+    output: 'Branch rules, pipeline gates and SOPs',
     summary: 'Branch protection, pipeline gates and written SOPs for a delivery process your team can rely on.',
     inputs: ['Admin access to the repository workspace', 'Current release process walkthrough'],
     deliverables: ['Branch restrictions and merge policies', 'Pipeline approval gates', 'Written SOPs', 'Access review'],
@@ -44,7 +54,9 @@ export const offers: Offer[] = [
   {
     id: 'ai-opportunity-sprint',
     name: 'AI Opportunity Sprint',
+    icon: 'BrainCircuit',
     duration: '1–2 weeks',
+    output: 'Ranked automation candidates and pilot spec',
     summary: 'Find the manual processes where automation pays back, and specify the first pilot.',
     inputs: ['Process owners for a short interview each', 'Sample documents or reports'],
     deliverables: ['Processes ranked by hours saved × volume', 'Data and risk assessment', 'Pilot specification'],
@@ -54,7 +66,9 @@ export const offers: Offer[] = [
   {
     id: 'ai-automation-pilot',
     name: 'AI Automation Pilot',
+    icon: 'Bot',
     duration: '3–4 weeks',
+    output: 'One working automation with approval points',
     summary: 'One workflow automated on real data, run alongside the current process before any larger commitment.',
     inputs: ['A named process owner', 'Representative real data', 'Access to the target systems'],
     deliverables: ['Working automation with human approval points', 'Audit log', 'Go/no-go report'],

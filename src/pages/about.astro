@@ -1,5 +1,5 @@
 ---
-import { CircleCheck, Compass, Target, Users } from 'lucide-react';
+import { ArrowRight, CircleCheck, Compass, Target, Users } from 'lucide-react';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
@@ -23,7 +23,6 @@ const capabilities = [
       'Cloud migration and modernisation on AWS, Azure and Google Cloud',
       'Kubernetes and Docker architecture',
       'Active observability and monitoring',
-      'Cloud cost optimisation audits',
       'High availability and disaster recovery',
     ],
   },
@@ -33,7 +32,6 @@ const capabilities = [
       'Custom full-stack web applications',
       'AI workflow automation and assistants on company data',
       'DevSecOps CI/CD pipeline automation',
-      'Zero-trust security and WAF hardening',
       'Managed Cloud & DevOps retainers',
     ],
   },
@@ -118,25 +116,21 @@ const principles = [
           data-founder-photo
         />
         <div>
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <h2 id="leadership-title" class="text-2xl font-bold text-fg">{leadership.name}</h2>
-              <p class="mt-1 font-semibold text-accent">{leadership.role}</p>
-            </div>
-            {
-              leadership.linkedin && (
-                <a
-                  href={leadership.linkedin}
-                  rel="noopener"
-                  aria-label={`${leadership.name} on LinkedIn`}
-                  class="inline-flex size-11 shrink-0 items-center justify-center rounded-xl border border-border-strong text-muted transition-colors duration-200 hover:border-accent hover:text-accent"
-                  data-founder-linkedin
-                >
-                  <LinkedInIcon />
-                </a>
-              )
-            }
-          </div>
+          <h2 id="leadership-title" class="text-2xl font-bold text-fg">{leadership.name}</h2>
+          <p class="mt-1 font-semibold text-accent">{leadership.role}</p>
+          {
+            leadership.linkedin && (
+              <a
+                href={leadership.linkedin}
+                aria-label={`${leadership.name} on LinkedIn`}
+                class="mt-3 inline-flex min-h-9 items-center gap-2 rounded-lg border border-border-strong px-3 text-sm font-semibold text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
+                data-founder-linkedin
+              >
+                <LinkedInIcon class="size-4" />
+                LinkedIn
+              </a>
+            )
+          }
           <div class="mt-4 space-y-3 text-muted">
             {leadership.bio.map((line) => <p>{line}</p>)}
             <p>
@@ -201,6 +195,10 @@ const principles = [
         ))
       }
     </div>
+    <a href="/services" class="mt-6 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link hover:underline" data-view-all-services>
+      View all services
+      <ArrowRight aria-hidden="true" className="size-4" />
+    </a>
   </section>
 
   <section aria-labelledby="model-title" class="container-page pb-12">

@@ -108,9 +108,25 @@ export default (Alpine: Alpine) => {
   /* ------------------------------------------------- client-side navigation */
   // The router replaces <html> attributes with the incoming page's (which never carry `.dark`),
   // and the inline no-flash script does not re-run. Carry the theme into the new document before the swap.
+  // The same applies to the input modality (data-modality): without it, a link clicked with the mouse would show a
+  // keyboard focus ring after the swap.
   document.addEventListener('astro:before-swap', (event) => {
     const { newDocument } = event as Event & { newDocument: Document };
     newDocument.documentElement.classList.toggle('dark', themeStore.current === 'dark');
+    const modality = document.documentElement.dataset.modality;
+    if (modality) newDocument.documentElement.dataset.modality = modality;
+  });
+
+  // After a client-side navigation, move focus to <main> (tabindex="-1", no outline) so screen readers start at the
+  // new content and focus never stays on the clicked link. The first page load keeps the browser's default focus.
+  let navigated = false;
+  document.addEventListener('astro:after-swap', () => {
+    navigated = true;
+  });
+  document.addEventListener('astro:page-load', () => {
+    if (!navigated) return;
+    navigated = false;
+    document.getElementById('main')?.focus({ preventScroll: true });
   });
 
   // The header persists across navigation, so its server-rendered active state must be re-synced.
@@ -139,8 +155,17 @@ export default (Alpine: Alpine) => {
     suppressFocusOpen: false,
     /** Pointer type of the most recent press on the Services item ('mouse' | 'touch' | 'pen' | ''). */
     lastPointerType: '',
+    /** True once the page is scrolled: shows the full-width backdrop behind the floating bar. */
+    scrolled: false,
 
     init() {
+      const onScroll = () => {
+        this.scrolled = window.scrollY > 0;
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      document.addEventListener('astro:page-load', onScroll);
+
       // The header persists across client-side navigation: close every menu as soon as a navigation starts (before
       // the page transition runs), and again after the swap as a safety net.
       const closeAll = () => {
@@ -154,11 +179,22 @@ export default (Alpine: Alpine) => {
       document.addEventListener('astro:after-swap', closeAll);
     },
 
-    /** A link chosen inside the mega-menu closes it immediately, before any navigation or transition. */
+    /**
+     * Any link chosen inside the mega-menu closes it immediately, before any navigation or transition. A link to the
+     * page already shown does not navigate: the menu closes and the page scrolls smoothly to the top.
+     */
     closeServicesOnLink(event: MouseEvent) {
-      if (!(event.target as Element | null)?.closest('a')) return;
+      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a');
+      if (!link) return;
       window.clearTimeout(this.closeTimer);
       this.services = false;
+      const url = new URL(link.href, location.href);
+      const here = (p: string) => p.replace(/\/$/, '') || '/';
+      if (url.origin === location.origin && here(url.pathname) === here(location.pathname) && !url.hash) {
+        event.preventDefault(); // also stops Astro's ClientRouter, which skips prevented clicks
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      }
     },
 
     /** Hover intent: open immediately and cancel any pending close. */

@@ -37,6 +37,14 @@ const linkClass = (href: string) => [
   x-data="siteHeader"
   x-on:keydown.escape.window="onEscape()"
 >
+  <!-- Once the page is scrolled, a full-width backdrop (same background and blur as the bar) fills the strip from the
+       top of the screen to the bar's bottom edge, so no page text shows above or beside the floating bar. -->
+  <span
+    aria-hidden="true"
+    class="header-backdrop pointer-events-none absolute inset-0 -z-10 block opacity-0 transition-opacity duration-200"
+    x-bind:class="scrolled && 'opacity-100'"
+    data-header-backdrop
+  ></span>
   <!-- Floating glass bar over the first section (the wrapper is transparent and click-through).
        `relative` anchors the Services mega-menu directly beneath it. -->
   <div
@@ -86,9 +94,12 @@ const linkClass = (href: string) => [
                   x-show="services"
                   x-on:click="closeServicesOnLink($event)"
                   x-cloak
-                  x-transition.opacity.duration.150ms
+                  x-transition:enter="transition-opacity duration-150"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
                 >
                   <div class="hairline-gradient absolute inset-x-6 top-0" aria-hidden="true"></div>
+                  <!-- Opens with a short fade; closes instantly, so nothing of it lingers into a page transition. -->
                   <!-- Balanced columns: intro | Managed + Practical AI | Cloud & DevOps (2 sub-columns) | Web & SaaS.
                        Height is capped at 70vh; the inner wrapper scrolls if a short laptop screen still needs it
                        (the outer panel keeps its hover bridge above). -->
