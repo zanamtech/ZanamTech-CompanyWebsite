@@ -61,6 +61,17 @@ test.describe('Home', () => {
     await page.goto('/');
     await expect(page.locator('footer')).not.toContainText('Zero-trust security');
   });
+
+  test('footer: company LinkedIn icon beside the email, opening in a new tab; listed in Organization sameAs', async ({ page }) => {
+    await page.goto('/');
+    const link = page.locator('footer [data-footer-linkedin]');
+    await expect(link).toHaveAttribute('href', 'https://www.linkedin.com/company/zanamtech/');
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    await expect(link).toHaveAttribute('aria-label', 'ZanamTech on LinkedIn');
+    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((t) => JSON.parse(t));
+    expect(ld.find((j) => j['@type'] === 'Organization')?.sameAs).toEqual(['https://www.linkedin.com/company/zanamtech/']);
+  });
 });
 
 test.describe('5-card sets centre the second row on desktop', () => {
@@ -85,7 +96,7 @@ test.describe('5-card sets centre the second row on desktop', () => {
 });
 
 test.describe('About', () => {
-  test('founder card: photo, LinkedIn icon link, time-zone line in body text, new values', async ({ page }) => {
+  test('founder card: photo, LinkedIn icon link, time-zone line in body text; "At a glance" facts', async ({ page }) => {
     await page.goto('/about');
     const card = page.locator('section[aria-labelledby="leadership-title"]');
     await expect(card.locator('img[data-founder-photo]')).toBeVisible();
@@ -95,9 +106,14 @@ test.describe('About', () => {
     await expect(linkedin).toHaveAttribute('aria-label', 'Mubashir Ahmed on LinkedIn');
     const line = card.getByText(/time-zone overlap across North America/);
     await expect(line).toHaveCSS('font-size', '16px');
-    for (const value of ['Verified outcomes', 'Documented, accountable delivery', 'Privacy by design']) {
-      await expect(page.locator('main').getByText(value, { exact: true }).first()).toBeVisible();
-    }
+    await expect(page.getByText('What we stand for')).toHaveCount(0);
+    const glance = page.locator('[data-at-a-glance]');
+    await expect(glance.locator('dt')).toHaveText(['Clouds', 'Regions served', 'Engagement']);
+    await expect(glance.locator('dd')).toHaveText([
+      'AWS, Azure, Google Cloud',
+      'North America, UK & Europe, GCC',
+      'Assessment, Fixed-scope project, Managed retainer',
+    ]);
     await expect(page.getByRole('heading', { name: 'Pragmatic, enterprise-first' })).toBeVisible();
   });
 });

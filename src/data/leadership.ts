@@ -21,7 +21,7 @@ export const leadership: LeadershipProfile = {
     'Builds cloud-native web applications and practical AI automations on managed cloud services.',
   ],
   linkedin: 'https://www.linkedin.com/in/mubashir-ahmed-088800174',
-  companyLinkedin: '',
+  companyLinkedin: 'https://www.linkedin.com/company/zanamtech/',
   /** The photo is src/assets/team/mubashir.jpg, imported by /about so Astro resizes it (never the full original). */
   photo: 'team/mubashir.jpg',
   certifications: [],

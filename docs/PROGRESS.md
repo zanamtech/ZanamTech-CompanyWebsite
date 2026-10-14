@@ -16,7 +16,8 @@
 | Owner decisions from the QA report (naming, Azure, samples, footer copy) | ✅ Applied (14 Oct, section 3c) |
 | Footer spacing, Company row dots, "remote-first" removed | ✅ Done (14 Oct, section 3d) |
 | Fix round from the full-site video review (contact path, header, reveal, grids, services, Insights, About, legal) | ✅ Done (14 Oct, section 3e) |
-| Pushed to `origin/dev` | Everything up to and including section 3e |
+| Follow-up: About "At a glance", company LinkedIn | ✅ Done (14 Oct, section 3f) |
+| Pushed to `origin/dev` | Everything up to and including section 3f |
 
 ## 2. What was completed in spec 002
 
@@ -170,6 +171,12 @@
 - **Spacing:** CTA band to footer gap ~40% smaller (44 / 58 / 68px).
 - **Checks:** 17 affected Playwright specs plus the new `review-fixes.spec.ts` (306 tests: 251 passed, 55 skipped by design, 0 failed); `npm run check` 0 errors; `lint:content`, `check:csp` pass. No cross-browser sweep this round.
 
+## 3f. Follow-up to the review round (14 Oct)
+- **Engagement chips approved** as added in 3e (Managed: Assessment + Agency partnership; Portals and Full-stack: Extended engineering capacity).
+- **About:** the "What we stand for" card (it repeated the Philosophy cards) is replaced by "At a glance": Clouds (AWS, Azure, Google Cloud), Regions served (North America, UK & Europe, GCC), Engagement (Assessment, Fixed-scope project, Managed retainer).
+- **Company LinkedIn** (`https://www.linkedin.com/company/zanamtech/`): an icon link beside the footer email (new tab, `rel="noopener noreferrer"`, `aria-label="ZanamTech on LinkedIn"`) and in the Organization JSON-LD `sameAs`. The founder's personal LinkedIn stays on the About card. The CSP needed no change (it does not restrict outbound links); there is no separate link checker.
+- **Checks:** affected specs (review-fixes, header-footer-ui, trust-legal, approach-industries, security, theme-a11y, navigation): 95 passed, 21 skipped by design, 0 failed; `npm run check` 0 errors; `lint:content` and `check:csp` pass.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -191,7 +198,6 @@
 - [ ] Put the practices stated on `/trust` in place: MFA everywhere, a password manager, the incident-response runbook, and the sub-processor list.
 - [ ] Complete the internal drafts in `docs/internal/` (`incident-response-runbook.md`, `sub-processor-list.md`): fill the "to be set" fields and confirm regions.
 - [x] Founder photo and personal LinkedIn on /about (14 Oct).
-- [ ] Add the company LinkedIn URL in `src/data/leadership.ts` (`companyLinkedin`); the footer link stays hidden while empty.
 - [x] Review and approve the 3 sample artefacts in `src/content/resources/` (published 14 Oct).
 - [ ] Collect evidence records for the 8 results (`evidenceId` in `src/data/results.ts`) and be ready to describe each project on calls.
 
@@ -209,7 +215,7 @@
 
 ## 6. Next steps
 1. Done: the 13 Oct UI fixes and the 14 Oct QA pass are pushed to `origin/dev`. The owner decisions from `docs/internal/qa-2026-10-14.md` §6 are applied (section 3c); still to do: check the phone spacing on a real phone, and check the WebKit items in §5 on a real Mac or iPhone.
-2. Close the launch items in section 5: legal review, Trust-page practices, company LinkedIn, form key, domain and email.
+2. Close the launch items in section 5: legal review, Trust-page practices, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.
 5. After launch: gather the first verified testimonials and case studies (they switch on automatically), add evidence records, and keep publishing Insights.

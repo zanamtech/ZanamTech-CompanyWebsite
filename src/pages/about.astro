@@ -4,11 +4,17 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
+import LinkedInIcon from '../components/ui/LinkedInIcon.astro';
 import { Image } from 'astro:assets';
 import { leadership } from '../data/leadership';
 import founderPhoto from '../assets/team/mubashir.jpg';
 
-const values = ['Verified outcomes', 'Documented, accountable delivery', 'Privacy by design'];
+// Facts only (Constitution III): no experience-length claims, no response targets.
+const atAGlance = [
+  { label: 'Clouds', value: 'AWS, Azure, Google Cloud' },
+  { label: 'Regions served', value: 'North America, UK & Europe, GCC' },
+  { label: 'Engagement', value: 'Assessment, Fixed-scope project, Managed retainer' },
+];
 
 const capabilities = [
   {
@@ -80,17 +86,17 @@ const principles = [
       </div>
     </div>
     <GlassCard class="self-start lg:col-span-5">
-      <p class="text-sm font-semibold text-accent">What we stand for</p>
-      <ul class="mt-5 space-y-4">
+      <h2 id="glance-title" class="text-sm font-semibold text-accent">At a glance</h2>
+      <dl class="mt-5 space-y-4" aria-labelledby="glance-title" data-at-a-glance>
         {
-          values.map((p) => (
-            <li class="flex items-center gap-3 text-lg font-semibold text-fg">
-              <CircleCheck aria-hidden="true" className="size-5 shrink-0 text-brand-cyan" />
-              {p}
-            </li>
+          atAGlance.map((row) => (
+            <div>
+              <dt class="text-xs font-semibold tracking-wide text-muted uppercase">{row.label}</dt>
+              <dd class="mt-1 text-lg font-semibold text-fg">{row.value}</dd>
+            </div>
           ))
         }
-      </ul>
+      </dl>
     </GlassCard>
   </section>
 
@@ -126,9 +132,7 @@ const principles = [
                   class="inline-flex size-11 shrink-0 items-center justify-center rounded-xl border border-border-strong text-muted transition-colors duration-200 hover:border-accent hover:text-accent"
                   data-founder-linkedin
                 >
-                  <svg aria-hidden="true" viewBox="0 0 24 24" class="size-5" fill="currentColor">
-                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z" />
-                  </svg>
+                  <LinkedInIcon />
                 </a>
               )
             }

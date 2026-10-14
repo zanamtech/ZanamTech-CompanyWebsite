@@ -1,6 +1,7 @@
 ---
 import { ChevronDown } from 'lucide-react';
 import Logo from './Logo.astro';
+import LinkedInIcon from '../ui/LinkedInIcon.astro';
 import { site, companyLinks, legalLinks, footerCopy } from '../../data/site';
 import { leadership } from '../../data/leadership';
 import { getServicesByPillar, serviceHref } from '../../lib/services';
@@ -39,20 +40,26 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
       <Logo height={24} />
       <p class="mt-4 max-w-sm text-sm text-muted md:hidden">{footerCopy.tagline}</p>
       <p class="mt-4 hidden max-w-md text-sm text-muted md:block lg:mt-0 lg:max-w-xl xl:mt-4 xl:max-w-none">{footerCopy.description}</p>
-      <p class="mt-3 text-sm lg:mt-0 xl:mt-auto xl:pt-4">
+      <!-- Contact email with the company LinkedIn icon beside it (same line, level with the Company row at xl). -->
+      <p class="mt-3 flex items-center gap-3 text-sm lg:mt-0 xl:mt-auto xl:pt-4">
         <a href={`mailto:${site.email}`} class="inline-flex min-h-11 items-center font-semibold text-link hover:underline lg:min-h-8">
           {site.email}
         </a>
-      </p>
-      {
-        leadership.companyLinkedin && (
-          <p class="text-sm">
-            <a href={leadership.companyLinkedin} rel="noopener" class={linkClass}>
-              ZanamTech on LinkedIn
+        {
+          leadership.companyLinkedin && (
+            <a
+              href={leadership.companyLinkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ZanamTech on LinkedIn"
+              class="inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-200 hover:text-accent lg:size-8"
+              data-footer-linkedin
+            >
+              <LinkedInIcon class="size-4.5" />
             </a>
-          </p>
-        )
-      }
+          )
+        }
+      </p>
     </div>
 
     <!-- Services and the Company row share one area that spans to the right edge. On phones the wrapper is `contents`,
