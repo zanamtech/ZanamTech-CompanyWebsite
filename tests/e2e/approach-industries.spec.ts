@@ -33,7 +33,7 @@ test.describe('US5 — Approach, Industries & About', () => {
 
   test('about page presents mission and philosophy with no years-of-experience claims', async ({ page }) => {
     await page.goto('/about');
-    await expect(page.getByRole('heading', { name: /Pragmatic Enterprise First/ })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Pragmatic, enterprise-first' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Our mission' })).toBeVisible();
     expect(await page.locator('body').innerText()).not.toMatch(/\b\d+\s*\+?\s*years?\b|years? of experience/i);
   });

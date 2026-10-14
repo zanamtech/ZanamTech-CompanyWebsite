@@ -27,6 +27,12 @@ faq:
     a: No. Uncertain or high-impact steps go to a person for approval, and every automated action is logged.
   - q: How do we start?
     a: With the AI Opportunity Sprint, which ranks your manual processes by value and specifies a first pilot. The pilot runs alongside your current process before any larger commitment.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: What access do you need, and how is it secured?
+    a: Least-privilege access to the systems in the workflow, granted through your own identity provider, logged, and removed at the end of the engagement. Real data stays in your environment wherever possible.
+  - q: Which clouds do you build on?
+    a: AWS, Azure and Google Cloud equally, using the AI services available in your chosen cloud so your data stays within your own account.
 scenarios:
   - kind: illustrative
     problem: A finance team keys supplier invoices from email into the accounting system by hand.

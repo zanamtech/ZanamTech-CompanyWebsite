@@ -115,7 +115,7 @@ src/
 │   │   ├── Hero, ServicesGrid, ServiceCard, Process, Industries, Pillars, ProofStrip, CtaBand  # copy/data only
 │   │   └── RoadmapCard.astro      # deleted
 │   ├── layout/Header.astro, Footer.astro   # 4-pillar mega-menu, conditional links, remote-first footer
-│   ├── ContactForm.astro, ContactModal.astro  # new optional dropdowns, copy
+│   ├── ContactForm.astro                 # new optional dropdowns, copy (ContactModal removed 2026-10-14)
 ├── pages/
 │   ├── index.astro, about.astro, approach.astro, industries.astro, contact.astro, privacy.astro  # updated
 │   ├── start-here.astro, trust.astro, terms.astro   # new

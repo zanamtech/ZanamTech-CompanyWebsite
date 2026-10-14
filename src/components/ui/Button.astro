@@ -5,11 +5,9 @@ interface Props extends HTMLAttributes<'a'> {
   href: string;
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'md' | 'lg';
-  /** Marks the link as a consultation CTA (opens the contact dialog once US3 is wired). */
-  contactCta?: boolean;
 }
 
-const { href, variant = 'primary', size = 'md', contactCta = false, class: className, ...rest } = Astro.props;
+const { href, variant = 'primary', size = 'md', class: className, ...rest } = Astro.props;
 
 const base =
   'group relative inline-flex min-h-11 items-center justify-center gap-2 overflow-hidden rounded-xl font-semibold no-underline transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-3';
@@ -27,7 +25,6 @@ const variants = {
 <a
   href={href}
   class:list={[base, sizes[size], variants[variant], className]}
-  data-contact-cta={contactCta ? '' : undefined}
   {...rest}
 >
   {

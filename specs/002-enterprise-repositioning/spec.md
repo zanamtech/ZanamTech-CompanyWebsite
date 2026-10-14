@@ -235,8 +235,8 @@ A buyer books a strategy consultation and gives the details ZanamTech needs to q
 
 **Why this priority**: the form is the conversion point, and the new fields cut wasted discovery calls.
 
-**Independent Test**: submit the form from the dialog and from the Contact page against a stubbed
-endpoint. Check the options, the optional fields, the payload and the next-step copy.
+**Independent Test**: submit the form from the Contact page against a stubbed endpoint (the dialog was
+removed on 2026-10-14; every CTA leads to /contact). Check the options, the optional fields, the payload and the next-step copy.
 
 **Acceptance Scenarios**:
 
@@ -248,8 +248,11 @@ endpoint. Check the options, the optional fields, the payload and the next-step 
 3. **Given** a valid submission, **When** it succeeds, **Then** the confirmation and the Contact page's
    next steps describe the process: "We reply within 1 business day", a consultation call, and
    "Written proposal within 2 business days". No engineer or team is mentioned.
-4. **Given** a desktop screen, **When** the consultation dialog opens, **Then** it still fits without a
-   vertical scrollbar.
+4. **Given** any consultation CTA (header, hero, CTA bands, service pages, articles, footer "Contact"),
+   **When** it is clicked, **Then** it opens /contact. Context CTAs pass `?service=<slug>` (e.g.
+   `agency-partnership`, or the service's slug on service pages), which preselects "Service needed";
+   unknown values are ignored and nothing persists between visits. *(Amended 2026-10-14: replaces the
+   dialog-fit scenario.)*
 
 ---
 
@@ -469,7 +472,9 @@ Remove it; they pass.
 - **FR-034**: Confirmation and next-step copy MUST use only the approved commitments: "We reply within
   1 business day" and "Written proposal within 2 business days". The consultation is described as "a
   strategy consultation" with no stated length, because its duration depends on the client.
-- **FR-035**: The desktop consultation dialog MUST continue to fit without a vertical scrollbar.
+- **FR-035** (amended 2026-10-14): There is one contact path. Every consultation CTA MUST link to
+  /contact (no dialog). Context CTAs MUST pass `?service=<slug>`; /contact reads it on load and
+  preselects the matching option, ignores unknown values and stores nothing between visits.
 
 **Insights and artefacts**
 
@@ -534,7 +539,7 @@ Remove it; they pass.
 - **SC-008**: The site keeps the existing performance budgets (Performance ≥ 95; Accessibility, Best
   Practices and SEO = 100; LCP < 2.5 s; CLS < 0.1) on Home and every new page.
 - **SC-009**: The consultation form keeps at most 6 required inputs, all new qualifying fields are
-  optional, and the desktop dialog shows no vertical scrollbar.
+  optional.
 - **SC-010**: No unapproved draft article or artefact is reachable or listed on the production site.
 
 ## Assumptions

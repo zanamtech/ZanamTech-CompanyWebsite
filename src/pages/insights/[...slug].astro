@@ -8,6 +8,8 @@ import CtaBand from '../../components/sections/CtaBand.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Illustration from '../../components/ui/Illustration.astro';
 import { isVisible } from '../../lib/content';
+import { leadership } from '../../data/leadership';
+import { site } from '../../data/site';
 
 type Article = CollectionEntry<'insights'>;
 
@@ -32,27 +34,58 @@ interface Props {
 
 const { article, articles, hasSamples } = Astro.props;
 const dateLabel = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-const Content = article ? (await render(article)).Content : undefined;
+const rendered = article ? await render(article) : undefined;
+const Content = rendered?.Content;
+// "On this page" table of contents from the article's H2s.
+const toc = rendered?.headings.filter((h) => h.depth === 2) ?? [];
+// Reading time at ~200 words a minute.
+const readMinutes = article ? Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 200)) : 0;
+const articleLd = article
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: article.data.title,
+      description: article.data.summary,
+      datePublished: article.data.date.toISOString(),
+      author: { '@type': 'Person', name: leadership.name, jobTitle: leadership.role, url: new URL('/about', Astro.site).href },
+      publisher: { '@type': 'Organization', name: site.name, url: Astro.site?.href },
+      mainEntityOfPage: new URL(`/insights/${article.id}`, Astro.site).href,
+    }
+  : undefined;
 ---
 
 {
   article && Content ? (
-    <BaseLayout title={article.data.title} description={article.data.summary}>
+    <BaseLayout title={article.data.title} description={article.data.summary} jsonLd={articleLd}>
       <PageHero
         eyebrow="Insights"
         title={article.data.title}
         lead={article.data.summary}
         breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights' }, { label: article.data.title }]}
       >
+        <p slot="meta" class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted" data-article-meta>
+          {article.data.draft && <Badge tone="accent">Draft</Badge>}
+          <span>
+            By{' '}
+            <a href="/about" class="font-semibold text-fg hover:text-accent">
+              {leadership.name}
+            </a>
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>{leadership.role}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={article.data.date.toISOString()}>{dateLabel(article.data.date)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{readMinutes} min read</span>
+        </p>
         <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
           <Illustration topic={article.id} variant="header" />
         </div>
       </PageHero>
-      <article class="container-page section-y">
-        <div class="mb-6 flex flex-wrap items-center gap-3 text-sm text-muted">
-          {article.data.draft && <Badge tone="accent">Draft</Badge>}
-          <time datetime={article.data.date.toISOString()}>{dateLabel(article.data.date)}</time>
-        </div>
+      {/* Desktop: a 720px reading column with a sticky "On this page" list on the right (no empty right half);
+          without H2s the column is centred on its own. */}
+      <div class:list={['container-page section-y', toc.length > 0 ? 'lg:grid lg:grid-cols-[minmax(0,45rem)_14rem] lg:justify-center lg:gap-16' : '']}>
+      <article class:list={[toc.length === 0 && 'mx-auto max-w-180']}>
         <ArticleBody>
           <Content />
         </ArticleBody>
@@ -71,6 +104,23 @@ const Content = article ? (await render(article)).Content : undefined;
           </aside>
         )}
       </article>
+      {toc.length > 0 && (
+        <nav aria-labelledby="toc-title" class="hidden lg:block" data-article-toc>
+          <div class="sticky top-28">
+            <p id="toc-title" class="text-xs font-semibold tracking-wide text-fg uppercase">On this page</p>
+            <ul class="mt-3 space-y-1 border-l border-border">
+              {toc.map((h) => (
+                <li>
+                  <a href={`#${h.slug}`} class="-ml-px block border-l border-transparent py-1.5 pl-4 text-sm text-muted hover:border-accent hover:text-accent">
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      )}
+      </div>
       <CtaBand />
     </BaseLayout>
   ) : (

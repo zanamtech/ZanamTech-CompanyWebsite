@@ -1,7 +1,8 @@
 /**
  * Staggered fade/rise for card groups marked `data-reveal-group`, using Framer Motion's DOM engine.
  * Optional per-group tuning (all data attributes on the group):
- * - `data-reveal-stagger`  seconds between items (default 0.06)
+ * - `data-reveal-stagger`  seconds between items (default 0.06). Capped at 0.06 and so that the whole group starts
+ *                          within 300ms: the grid is revealed as one group, never card by card while scrolling.
  * - `data-reveal-distance` rise in px (default 16); `data-reveal-x` horizontal offset in px (default 0)
  * - `data-reveal-scale`    starting scale (default 1)
  * - `data-reveal-duration` seconds per item (default 0.5)
@@ -27,7 +28,7 @@ async function setup() {
   for (const group of belowFold) {
     const items = Array.from(group.children) as HTMLElement[];
     const d = group.dataset;
-    const stagger = Number(d.revealStagger ?? 0.06);
+    const stagger = Math.min(Number(d.revealStagger ?? 0.06), 0.06, 0.24 / Math.max(1, items.length - 1));
     const y = Number(d.revealDistance ?? 16);
     const x = Number(d.revealX ?? 0);
     const scale = Number(d.revealScale ?? 1);

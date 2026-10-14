@@ -27,6 +27,12 @@ faq:
     a: Restore tests run on a schedule and the results are recorded, so recovery is proven rather than assumed.
   - q: Do we need a second region?
     a: Not always. The design follows the recovery objectives your business needs; some workloads only need robust backups and tested restores.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does a resilience programme take?
+    a: An assessment sets recovery objectives first. The build-out is staged in milestones measured in weeks and finishes with a documented restore test.
+  - q: Which clouds do you support?
+    a: AWS, Azure and Google Cloud equally, including cross-region designs within one cloud, using each provider's native backup and replication services.
 scenarios:
   - kind: real
     problem: A high-growth fintech platform required maximum resilience for its transaction databases.

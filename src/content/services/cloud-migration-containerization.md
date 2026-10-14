@@ -27,6 +27,12 @@ faq:
     a: No. Containers and Kubernetes are used where scaling and portability justify them. Many workloads run best on managed platform services such as AWS Elastic Beanstalk, Azure App Service or Google Cloud Run.
   - q: How do you protect live traffic during cutover?
     a: Every cutover is staged and validated, with a documented rollback plan agreed in advance.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does a migration take?
+    a: It depends on the number of workloads. An assessment sizes it, and the Statement of Work sets a staged plan with milestones measured in weeks, moving lower-risk workloads first.
+  - q: Which clouds can you migrate to?
+    a: AWS, Azure and Google Cloud, treated equally. We recommend a target based on your workloads, skills and existing agreements.
 scenarios:
   - kind: real
     problem: A high-traffic e-commerce platform experienced outages and dropped sessions during major promotional events.

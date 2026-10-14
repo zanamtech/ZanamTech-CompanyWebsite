@@ -27,6 +27,12 @@ faq:
     a: The assistant runs on managed AI services inside your own cloud tenant, under business terms that exclude training on your data.
   - q: How do you know the answers are right?
     a: Answers cite their sources, and an evaluation set is used to measure and track answer quality before and after launch.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does a first assistant take?
+    a: Most clients start with the AI Opportunity Sprint (1–2 weeks) or an AI Automation Pilot (3–4 weeks) on one set of documents. The full rollout timeline is set in the Statement of Work.
+  - q: What happens after launch?
+    a: You receive the source, prompts, evaluation set and a runbook. Ongoing tuning and monitoring can continue under a managed retainer, or your own team takes it over.
 scenarios:
   - kind: real
     problem: A high-volume retailer's support operation was overwhelmed during peak periods.

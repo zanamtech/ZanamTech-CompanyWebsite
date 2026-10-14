@@ -15,15 +15,20 @@ test.describe('US2 — Services', () => {
 
   test('home pillar grid lists every published service in canonical order', async ({ page }) => {
     await page.goto('/');
-    const names = await page.locator('#core-services [data-pillar] a[href^="/services/"]').allInnerTexts();
-    expect(names.map((n) => n.trim())).toEqual(publishedNames);
+    // Each service once, in canonical order (the Managed card's included items all link to the flagship).
+    const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    expect([...new Set(hrefs)]).toEqual(published.map((s) => `/services/${s.slug}`));
   });
 
   test('every service detail page renders capabilities, outcome, footnote and its scenarios', async ({ page }) => {
     await page.goto('/');
-    const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
-      els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
-    );
+    const hrefs = [
+      ...new Set(
+        await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
+          els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
+        ),
+      ),
+    ];
     expect(hrefs).toHaveLength(published.length);
 
     for (const [i, href] of hrefs.entries()) {
@@ -46,7 +51,7 @@ test.describe('US2 — Services', () => {
 
   test('any service is reachable from home in two clicks', async ({ page }) => {
     await page.goto('/');
-    await page.locator('#core-services [data-pillar] a[href^="/services/"]').nth(4).click();
+    await page.locator(`#core-services [data-pillar] a[href="/services/${published[4].slug}"]`).click();
     await expect(page).toHaveURL(new RegExp(`/services/${published[4].slug}/?$`));
   });
 

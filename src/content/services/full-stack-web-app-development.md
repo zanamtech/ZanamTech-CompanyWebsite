@@ -14,7 +14,7 @@ deliverables:
   - REST or GraphQL APIs with documentation
   - CI/CD pipeline and hosted environments
   - Handover documentation
-engagementTypes: [project]
+engagementTypes: [project, capacity]
 capabilities:
   - Full-stack development on modern, scalable web frameworks
   - Multi-tenant SaaS architecture with subscription billing
@@ -29,6 +29,12 @@ faq:
     a: Yes. Code, infrastructure definitions and documentation are delivered into your own repositories and cloud accounts.
   - q: Can you build a multi-tenant SaaS product?
     a: Yes. Tenant isolation, subscription billing, role-based access and admin tooling are designed in from the start.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does a build take?
+    a: We agree a first release in milestones measured in weeks, then iterate. The Statement of Work fixes scope, milestones and acceptance criteria for each stage.
+  - q: Where is the application hosted?
+    a: On AWS, Azure or Google Cloud in your own account, deployed through pipelines and infrastructure as code, so there is no lock-in.
 scenarios:
   - kind: real
     problem: A technology startup needed a production-ready web MVP for investor presentations, faster than a typical development cycle allows.

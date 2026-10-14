@@ -27,6 +27,12 @@ faq:
     a: No. Changes are based on measured utilisation, and availability and performance objectives stay intact.
   - q: Can cost control continue after the review?
     a: Yes. Monthly spend reviews, budgets and alerts are part of the Managed Cloud & DevOps retainer.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: What access do you need?
+    a: Read access to billing and cost management is enough for the analysis. Changes are applied only with your approval, through least-privilege access that is logged and removed at the end of the engagement.
+  - q: Which clouds do you cover?
+    a: AWS, Azure and Google Cloud equally, using each provider's own cost tools alongside your tagging and budgets.
 scenarios:
   - kind: real
     problem: A high-growth scale-up ran its compute fleet at under 20% average CPU utilisation.

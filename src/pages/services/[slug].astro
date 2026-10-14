@@ -36,9 +36,13 @@ const { name, icon, summary, capabilities, stack, outcome, scenarios, deliverabl
   service.data;
 const hasReal = scenarios.some((s) => s.kind === 'real');
 const { Content } = await render(service);
-const related = all.filter((s) => s.data.pillar === pillar && s.id !== service.id).slice(0, 3);
+// Always three related services: same pillar first, then cross-pillar picks in catalogue order.
+const related = [
+  ...all.filter((s) => s.data.pillar === pillar && s.id !== service.id),
+  ...all.filter((s) => s.data.pillar !== pillar),
+].slice(0, 3);
 const relatedOffer = offers.find((o) => o.id === service.data.relatedOffer);
-const engagementLabels = engagementModelCatalog.filter((m) => engagementTypes.includes(m.id)).map((m) => m.name);
+const engagementModels = engagementModelCatalog.filter((m) => engagementTypes.includes(m.id));
 const contactHref = `${cta.href}?service=${service.id}`;
 ---
 
@@ -50,7 +54,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: name }]}
   >
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
-      <Button href={contactHref} size="lg" contactCta data-service={service.id}>
+      <Button href={contactHref} size="lg" data-service={service.id}>
         {cta.primary}
         <ArrowRight aria-hidden="true" className="size-4.5" />
       </Button>
@@ -116,9 +120,15 @@ const contactHref = `${cta.href}?service=${service.id}`;
       <GlassCard>
         <h2 class="text-sm font-semibold text-fg">How you can engage</h2>
         <ul class="mt-4 flex flex-wrap gap-2">
-          {engagementLabels.map((label) => (
+          {engagementModels.map((model) => (
             <li>
-              <Badge>{label}</Badge>
+              <a
+                href="/approach#engagement-models"
+                data-engagement-chip={model.id}
+                class="inline-flex min-h-9 items-center rounded-full border border-border-strong px-3.5 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
+              >
+                {model.name}
+              </a>
             </li>
           ))}
         </ul>
@@ -263,7 +273,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
         <h2 id="related-title" class="text-2xl font-bold text-fg">Related services</h2>
         <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {related.map((s) => (
-            <ServiceCard service={s} />
+            <ServiceCard service={s} numbered={false} />
           ))}
         </ul>
       </section>
@@ -271,6 +281,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
   }
 
   <CtaBand
+    href={contactHref}
     title={`Discuss ${name}`}
     body="Begin with a technical audit of your current environment. Scope, deliverables, milestones and service levels are defined in a written proposal and Statement of Work."
   />

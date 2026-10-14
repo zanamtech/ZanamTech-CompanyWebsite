@@ -27,6 +27,12 @@ faq:
     a: Rules are introduced in monitoring mode first and tuned against real traffic before enforcement, so legitimate users are not disrupted.
   - q: Do you provide a security operations centre?
     a: No. We harden and configure your perimeter and hand over monitoring with clear runbooks. Ongoing review can continue under the managed retainer.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: What access do you need, and how is it secured?
+    a: Least-privilege, time-bound access through your own identity provider, with every action logged. Access is removed at the end of the engagement and confirmed in writing.
+  - q: What happens after hardening?
+    a: You receive the rule sets, configuration as code, a findings report and runbooks. Rules can be kept current under a managed retainer.
 scenarios:
   - kind: real
     problem: A healthcare portal faced persistent attacks and probing aimed at sensitive patient data.

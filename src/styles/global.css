@@ -257,6 +257,44 @@
     backdrop-filter: blur(14px) saturate(140%);
   }
 
+  /* Card sets of 5 (or any count that leaves a partial last row): three across on desktop, two on tablet, one on
+     phones, with the last row centred instead of leaving an empty left-aligned slot. Cards in a row share a height. */
+  .cards-centred {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .cards-centred > * {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .cards-centred > * {
+      flex-basis: calc((100% - 1.5rem) / 2);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .cards-centred > * {
+      flex-basis: calc((100% - 3rem) / 3);
+    }
+  }
+
+  /* Floating header bar: near-opaque so purple CTAs and badges scrolling underneath don't bleed through, with a
+     subtle blur kept for depth. */
+  .header-bar {
+    background-color: rgb(255 255 255 / 0.88);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .dark .header-bar {
+    background-color: rgb(11 17 32 / 0.88);
+  }
+
   .glass-bar {
     background-color: var(--glass);
     border-bottom: 1px solid var(--glass-border);
@@ -352,11 +390,6 @@
     min-height: 2.75rem;
   }
 
-  /* Denser fields inside the consultation dialog (min-height still keeps the 44px target). */
-  .contact-dialog .field-input {
-    @apply px-3 py-2 sm:py-2.5;
-  }
-
   /* Thin purple border with a soft glow (matches the hero pill accents). */
   .field-input {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -371,24 +404,6 @@
 
   .field-input[aria-invalid="true"] {
     border-color: var(--danger);
-  }
-
-  .contact-dialog::backdrop {
-    cursor: pointer;
-    background-color: rgb(2 6 23 / 0.55);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-  }
-
-  .contact-dialog[open] {
-    animation: dialog-in 200ms ease-out;
-  }
-
-  @keyframes dialog-in {
-    from {
-      opacity: 0;
-      transform: translateY(8px) scale(0.99);
-    }
   }
 
   /* FAQ accordion: height and chevron animate together on open and close. Where interpolate-size is supported the

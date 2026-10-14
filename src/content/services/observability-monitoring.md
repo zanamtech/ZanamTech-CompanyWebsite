@@ -27,6 +27,12 @@ faq:
     a: No. Alerts are tied to severity levels and tuned against real traffic, so the team sees what needs action rather than noise.
   - q: Can you use the monitoring tools we already have?
     a: Yes. We extend what you run today, such as CloudWatch, Azure Monitor, Google Cloud Monitoring or an existing Prometheus stack, before introducing anything new.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does it take to set up?
+    a: A first set of dashboards and alerts for your most critical services lands within a few weeks. The full scope and timeline are fixed in the Statement of Work.
+  - q: Who responds to alerts once it is live?
+    a: Your team, using the runbook written for each alert, or ZanamTech under a managed retainer, with coverage defined in your Statement of Work.
 scenarios:
   - kind: real
     problem: A B2B SaaS platform experienced unexpected crashes caused by undetected background memory leaks.

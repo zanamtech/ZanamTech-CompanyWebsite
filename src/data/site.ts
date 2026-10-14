@@ -16,8 +16,6 @@ export const footerCopy = {
     'Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernise cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in.',
 } as const;
 
-export const pillars = ['Enterprise-grade', 'High-availability', 'Zero-trust security'] as const;
-
 export const cta = {
   primary: 'Book a Strategy Consultation',
   href: '/contact',

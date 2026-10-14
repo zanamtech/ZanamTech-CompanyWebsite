@@ -20,8 +20,9 @@ export const leadership: LeadershipProfile = {
     'Runs production cloud estates end to end: app platforms, load balancing, managed databases, Dev/QA/UAT/Prod environments, CI/CD pipelines, backups and repository governance with written SOPs.',
     'Builds cloud-native web applications and practical AI automations on managed cloud services.',
   ],
-  linkedin: '',
+  linkedin: 'https://www.linkedin.com/in/mubashir-ahmed-088800174',
   companyLinkedin: '',
-  photo: '',
+  /** The photo is src/assets/team/mubashir.jpg, imported by /about so Astro resizes it (never the full original). */
+  photo: 'team/mubashir.jpg',
   certifications: [],
 };

@@ -11,15 +11,6 @@ interface ThemeStore {
   toggle(): void;
 }
 
-interface ContactStore {
-  /** Pre-selected service slug ('' when none). */
-  service: string;
-  /** Increments on every open so forms can react even when the service is unchanged. */
-  opened: number;
-  open(trigger: HTMLElement | null, params?: URLSearchParams): void;
-  close(): void;
-}
-
 interface ServiceOption {
   slug: string;
   name: string;
@@ -114,65 +105,6 @@ export default (Alpine: Alpine) => {
   };
   Alpine.store('theme', themeStore);
 
-  /* ------------------------------------------------------ contact dialog */
-  let lastTrigger: HTMLElement | null = null;
-  const dialog = () => document.getElementById('contact-dialog') as HTMLDialogElement | null;
-
-  const contactStore: ContactStore = {
-    service: '',
-    opened: 0,
-
-    open(trigger, params) {
-      const el = dialog();
-      if (!el) return;
-      lastTrigger = trigger;
-      this.service = params?.get('service') ?? '';
-      this.opened += 1;
-      window.dispatchEvent(new CustomEvent('contact-dialog-opened'));
-      document.documentElement.classList.add('overflow-hidden');
-      el.showModal();
-      el.querySelector<HTMLElement>('[data-autofocus]')?.focus();
-    },
-
-    close() {
-      dialog()?.close();
-    },
-  };
-  Alpine.store('contact', contactStore);
-
-  // Progressive enhancement: CTAs are plain links to /contact; with JS they open the dialog instead.
-  // Capture phase: runs before Astro's ClientRouter link handler, which skips clicks that are already prevented.
-  document.addEventListener(
-    'click',
-    (event) => {
-      const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[data-contact-cta]');
-      if (!link || !dialog()) return;
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      contactStore.open(link, new URL(link.href, location.href).searchParams);
-    },
-    { capture: true },
-  );
-
-  // The dialog persists across client-side navigation (transition:persist), so bind its listeners once.
-  const bindDialog = () => {
-    const el = dialog();
-    if (!el || el.dataset.bound) return;
-    el.dataset.bound = 'true';
-    el.addEventListener('close', () => {
-      document.documentElement.classList.remove('overflow-hidden');
-      window.dispatchEvent(new CustomEvent('contact-dialog-closed'));
-      lastTrigger?.focus();
-      lastTrigger = null;
-    });
-    // Close on backdrop click (clicks on the dialog element itself, outside its content box).
-    el.addEventListener('click', (event) => {
-      if (event.target === el) el.close();
-    });
-  };
-  document.addEventListener('DOMContentLoaded', bindDialog);
-  document.addEventListener('astro:page-load', bindDialog);
-
   /* ------------------------------------------------- client-side navigation */
   // The router replaces <html> attributes with the incoming page's (which never carry `.dark`),
   // and the inline no-flash script does not re-run. Carry the theme into the new document before the swap.
@@ -209,12 +141,24 @@ export default (Alpine: Alpine) => {
     lastPointerType: '',
 
     init() {
-      // The header persists across client-side navigation: close any open menu once the new page is in place.
-      document.addEventListener('astro:after-swap', () => {
+      // The header persists across client-side navigation: close every menu as soon as a navigation starts (before
+      // the page transition runs), and again after the swap as a safety net.
+      const closeAll = () => {
+        window.clearTimeout(this.closeTimer);
         this.open = false;
         this.services = false;
         this.mobileServices = false;
-      });
+      };
+      document.addEventListener('astro:before-preparation', closeAll);
+      document.addEventListener('astro:before-swap', closeAll);
+      document.addEventListener('astro:after-swap', closeAll);
+    },
+
+    /** A link chosen inside the mega-menu closes it immediately, before any navigation or transition. */
+    closeServicesOnLink(event: MouseEvent) {
+      if (!(event.target as Element | null)?.closest('a')) return;
+      window.clearTimeout(this.closeTimer);
+      this.services = false;
     },
 
     /** Hover intent: open immediately and cancel any pending close. */
@@ -361,10 +305,11 @@ export default (Alpine: Alpine) => {
   }));
 
   /* --------------------------------------------- process cards reveal */
-  // A single step counter drives the sequence: card 1 slides in from the right, connector segment 1 draws toward
-  // card 2, card 2 slides in and attaches, and so on (odd steps = cards, even steps = segments). Everything stays
-  // visible without JS, under reduced motion, and when the section is already on screen at load (no flash).
-  const PROCESS_STEP_AT = [100, 650, 1150, 1700, 2200, 2750, 3250];
+  // Group reveal: when the grid enters the viewport every card appears together, 60ms apart (odd steps = cards, even
+  // steps = the connector segments between them, 30ms after each card), so the whole set is under way within 300ms
+  // and no card is left faded or invisible while the visitor scrolls. Everything stays visible without JS, under
+  // reduced motion, and when the section is already on screen at load (no flash).
+  const PROCESS_STEP_MS = 30;
 
   Alpine.data('processReveal', (count: number) => ({
     step: count * 2 - 1,
@@ -381,7 +326,9 @@ export default (Alpine: Alpine) => {
       if (this.$el.getBoundingClientRect().top < window.innerHeight) return;
       this.step = 0;
       this.done = false;
-      this.observer = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && this.start(), { threshold: 0.2 });
+      // Observe the grid container; a grid taller than the screen (stacked on phones) asks only for what can fit.
+      const threshold = Math.min(0.2, (window.innerHeight * 0.5) / Math.max(1, this.$el.getBoundingClientRect().height));
+      this.observer = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && this.start(), { threshold });
       this.observer.observe(this.$el);
       // Safety net: if the observer misses the entry (scroll restoration on reload, a back/forward-cache restore, a
       // jump past the section, a tab hidden mid-load), start as soon as any part of the steps is on screen.
@@ -407,11 +354,8 @@ export default (Alpine: Alpine) => {
       this.started = true;
       this.stopWatching();
       const total = count * 2 - 1;
-      this.timers = Array.from({ length: total }, (_, i) =>
-        window.setTimeout(() => (this.step = i + 1), PROCESS_STEP_AT[i] ?? 100 + i * 525),
-      );
-      const last = PROCESS_STEP_AT[total - 1] ?? 100 + (total - 1) * 525;
-      this.timers.push(window.setTimeout(() => (this.done = true), last + 900));
+      this.timers = Array.from({ length: total }, (_, i) => window.setTimeout(() => (this.step = i + 1), i * PROCESS_STEP_MS));
+      this.timers.push(window.setTimeout(() => (this.done = true), (total - 1) * PROCESS_STEP_MS + 900));
     },
 
     /** Already scrolled past (fast scroll, jump, scroll restoration): show the finished state without animating. */
@@ -466,7 +410,7 @@ export default (Alpine: Alpine) => {
   /* ---------------------------------------------------------- lead form */
   type MenuField = 'service' | 'budget' | 'region' | 'companySize' | 'cloudPlatform';
 
-  Alpine.data('leadForm', (config: { services: ServiceOption[]; source: 'dialog' | 'page'; idPrefix: string }) => ({
+  Alpine.data('leadForm', (config: { services: ServiceOption[]; idPrefix: string }) => ({
     fields: emptyLead(),
     /** Custom dropdown (select-only combobox) state. */
     openMenu: '' as MenuField | '',
@@ -479,31 +423,18 @@ export default (Alpine: Alpine) => {
     attempted: false,
     announcement: '',
 
+    /** ?service=<slug> preselects "Service needed" on load; unknown slugs are ignored and nothing is stored. */
     init() {
-      if (config.source === 'page') {
-        this.preselect(new URL(location.href).searchParams.get('service') ?? '');
-      }
-    },
-
-    /** Called whenever the dialog opens. */
-    onOpen() {
-      if (this.status === 'success') this.reset();
-      this.preselect(Alpine.store('contact') ? (Alpine.store('contact') as ContactStore).service : '');
+      const fromUrl = () => this.preselect(new URL(location.href).searchParams.get('service') ?? '');
+      fromUrl();
+      // After a client-side navigation the component can initialise before the router updates the address bar, so
+      // read the URL again once the new page has loaded.
+      document.addEventListener('astro:page-load', fromUrl, { once: true });
     },
 
     preselect(slug: string) {
       const match = config.services.find((s) => s.slug === slug);
       if (match) this.fields.service = match.name;
-    },
-
-    reset() {
-      this.fields = emptyLead();
-      this.openMenu = '';
-      this.errors = {};
-      this.status = 'idle';
-      this.failure = '';
-      this.attempted = false;
-      this.announcement = '';
     },
 
     /* ---- custom dropdowns ---- */
@@ -516,14 +447,13 @@ export default (Alpine: Alpine) => {
       return document.getElementById(`${config.idPrefix}-${field}`);
     },
 
-    /** Open towards the side with more room inside the dialog (or viewport), capping height so nothing is clipped. */
+    /** Open towards the side with more room in the viewport, capping height so nothing is clipped. */
     openMenuFor(field: MenuField) {
       const el = this.trigger(field);
       if (el) {
         const r = el.getBoundingClientRect();
-        const box = el.closest('dialog')?.getBoundingClientRect();
-        const below = Math.min(box?.bottom ?? window.innerHeight, window.innerHeight) - r.bottom - 12;
-        const above = r.top - Math.max(box?.top ?? 0, 0) - 12;
+        const below = window.innerHeight - r.bottom - 12;
+        const above = r.top - 12;
         this.menuUp = below < 224 && above > below;
         this.menuStyle = { maxHeight: `${Math.max(120, Math.min(224, this.menuUp ? above : below))}px` };
       }
@@ -584,7 +514,7 @@ export default (Alpine: Alpine) => {
           break;
         case 'Escape':
           if (!open) return;
-          // Close only the menu, not the surrounding dialog.
+          // Close only the menu.
           event.preventDefault();
           event.stopPropagation();
           this.openMenu = '';

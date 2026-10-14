@@ -647,3 +647,31 @@ are dev-only.
   - Phase 5: 8 tasks.
   - By story: US1 12, US2 23, US3 6, US4 11, US5 5, US6 9, US7 5, US8 4. The rest are unlabelled
     governance, foundation, gate, commit and PHR tasks.
+
+## Post-release fix round: full-site video review (2026-10-14)
+
+Not counted in the 119 tasks above. Light test policy: affected specs + check, lint:content, check:csp.
+
+- [X] R01 [US5] Remove the consultation dialog (`ContactModal.astro`, store, click capture, CSS, `contactCta`
+  prop). Every CTA links to /contact; service pages and CTA bands pass `?service=<slug>`; /contact preselects
+  on load and after client-side navigation, ignores unknown values. Fix "Write to" spacing. Tests rewritten
+  (contact, navigation, offers-approach, security). FR-035 amended.
+- [X] R02 Header bar near-opaque (light rgba(255,255,255,0.88), dark equivalent) with an 8px blur; mega-menu
+  closes on link click and on `astro:before-preparation` / `before-swap`.
+- [X] R03 Group reveal: step cards appear together (30ms steps, 4 cards within 180ms); every
+  `data-reveal-group` stagger capped at 60ms and a 300ms group total.
+- [X] R04 No empty slots: 5-card sets 3 + 2 centred (`.cards-centred`); /services Managed as a full-width
+  feature card, Practical AI two-up, Cloud & DevOps last row centred; related services always 3, no numbers.
+- [X] R05 Entry offers: full cards only on /start-here; compact one-row strip on Home and /services.
+  Positioning chips removed from the footer; About "What we stand for" lists three values.
+- [X] R06 Home: marquee without "Claude Code", "Windows Server"; Managed pillar card lists four included items.
+- [X] R07 Service pages: 5 FAQs each; 2–3 engagement-model chips linking to /approach#engagement-models.
+- [X] R08 Insights: hero meta line (author, role, date, reading time), Article JSON-LD with author, 720px
+  reading column with a sticky "On this page" list.
+- [X] R09 About: founder photo (optimised from `src/assets/team/mubashir.jpg`), LinkedIn icon link, heading
+  "Pragmatic, enterprise-first", time-zone line in body text.
+- [X] R10 Start here: duration "3–4 weeks" for the AI Automation Pilot.
+- [X] R11 Trust/legal: no visible security.txt link (file kept); "Last updated" on /privacy and /terms;
+  breadcrumbs verified below the header on /trust and /terms.
+- [X] R12 CTA band to footer gap ~40% smaller. New spec `tests/e2e/review-fixes.spec.ts`.
+

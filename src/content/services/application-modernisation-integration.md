@@ -27,6 +27,12 @@ faq:
     a: Rarely. Modernisation is done incrementally, replacing or refactoring the parts that create the most risk or cost first.
   - q: Can you integrate with our ERP or CRM?
     a: Yes. Integrations use the platform's supported APIs, with error handling and monitoring so data flows reliably.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does modernisation take?
+    a: It is staged. An assessment maps the application first, then each stage is a fixed-scope milestone in the Statement of Work, measured in weeks, so improvements ship before the whole programme ends.
+  - q: What happens after delivery?
+    a: You receive the code, documentation and runbooks in your own repositories, plus a handover session. Support can continue under a managed retainer.
 scenarios:
   - kind: illustrative
     problem: A business runs a dated web application on a single self-managed server that only one person knows how to maintain.

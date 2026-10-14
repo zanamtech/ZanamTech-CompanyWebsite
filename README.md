@@ -12,7 +12,7 @@ full-stack engineering and private enterprise AI.
 | --- | --- |
 | Framework | Astro (static output), TypeScript strict |
 | Styling | Tailwind CSS v4 with semantic design tokens (`src/styles/global.css`), light default and dark toggle |
-| Interactivity | Alpine.js (CSP build): theme, navigation, services menu, contact dialog, lead form |
+| Interactivity | Alpine.js (CSP build): theme, navigation, services menu, lead form |
 | Motion | Framer Motion DOM engine (`framer-motion/dom`): metric counters and scroll reveal, lazy-loaded |
 | Icons | Lucide, rendered at build time as static SVG (via `@astrojs/react`; no React runtime is shipped) |
 | Font | Plus Jakarta Sans Variable, self-hosted |
@@ -107,8 +107,7 @@ Nginx configuration:
 ```text
 src/
   components/{layout,sections,ui}/   Header, footer, page sections, primitives
-  components/ContactForm.astro       Lead form (dialog and /contact)
-  components/ContactModal.astro      Native <dialog> contact modal
+  components/ContactForm.astro       Lead form on /contact (?service=<slug> preselects)
   content/services/                  Service content collection
   data/                              Typed site data
   layouts/BaseLayout.astro           SEO, no-flash theme script, JSON-LD

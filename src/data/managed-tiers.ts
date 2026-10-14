@@ -59,3 +59,7 @@ export const severityLevels: SeverityLevel[] = [
   { level: 'P3', definition: 'Minor issue with a workaround' },
   { level: 'P4', definition: 'Request or question' },
 ];
+
+/** What every Managed Cloud & DevOps retainer includes: the short list on the home pillar card and the /services
+ * flagship card. Scope wording only, never response times. */
+export const flagshipIncluded = ['Monitoring and alerting', 'Patching and backups', 'Cost and security reviews', 'Monthly service report'];

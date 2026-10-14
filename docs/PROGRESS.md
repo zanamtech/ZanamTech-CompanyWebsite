@@ -15,7 +15,8 @@
 | Performance (Lighthouse, local, production build) | ✅ 12 pages: Performance 97–99; Accessibility, Best Practices, SEO 100; LCP ≤ 2.2 s; CLS ≤ 0.001. Rechecked 14 Oct on 12 pages: 98–99 / 100 / 100 / 100, LCP ≤ 2.21 s, CLS 0.001 |
 | Owner decisions from the QA report (naming, Azure, samples, footer copy) | ✅ Applied (14 Oct, section 3c) |
 | Footer spacing, Company row dots, "remote-first" removed | ✅ Done (14 Oct, section 3d) |
-| Pushed to `origin/dev` | Everything up to and including section 3d |
+| Fix round from the full-site video review (contact path, header, reveal, grids, services, Insights, About, legal) | ✅ Done (14 Oct, section 3e) |
+| Pushed to `origin/dev` | Everything up to and including section 3e |
 
 ## 2. What was completed in spec 002
 
@@ -154,6 +155,21 @@
 - **"Remote-first" removed site-wide:** tab title is now "ZanamTech | Cloud, DevOps & AI Engineering"; the site description, meta, Open Graph/Twitter tags and JSON-LD (all from `site.ts`) and the About copy no longer use it. The content lint bans it, and constitution v2.0.4 lists it as prohibited wording.
 - **Checks:** `npm run check` 0 errors, `lint:content` pass, `npm run build` pass; zero "remote-first" matches in `src/`, `public/` and `dist/`.
 
+## 3e. Fix round from the full-site video review (14 Oct)
+- **One contact path:** the consultation dialog is gone (component, script, styles, tests). Every "Book a Strategy Consultation" button and the footer "Contact" link go to `/contact`. Context buttons pass `?service=<slug>` ("Discuss an agency partnership" → `agency-partnership`; service pages → the service slug), which preselects "Service needed" on load and after client-side navigation. Unknown values are ignored; nothing persists. "Write to contact@zanamtech.com" now has its space. Spec FR-035 amended.
+- **Header:** the floating bar is near-opaque (light `rgba(255,255,255,0.88)`, dark equivalent) with an 8px blur, so purple buttons and badges no longer smudge through it. The mega-menu closes on any link click and as soon as a navigation starts. The purple pill behind "How We Work / Insights / About" could not be reproduced after the opacity change; nav items have no hover background.
+- **Reveal:** "How we engage" and "Four phases" cards appear as one group (all four within 180ms, then a 700ms fade). Every other card grid's stagger is capped at 60ms with the whole group starting within 300ms.
+- **No empty slots:** 5-card sets ("Low-risk ways to start" on /start-here, "Engagement models") show 3 + 2 with the second row centred. On `/services`, Managed Cloud & DevOps is a full-width feature card with four included items; Practical AI is two-up; Cloud & DevOps centres its last card. Related services: always 3 cards (cross-pillar picks where needed), no catalogue numbers.
+- **Less repetition:** full entry-offer cards only on `/start-here`; Home and `/services` show a one-row strip (name + duration) with "See all entry offers". The positioning chips are hero-only (removed from the footer). About "What we stand for": Verified outcomes · Documented, accountable delivery · Privacy by design.
+- **Home:** marquee without "Claude Code", "Windows" → "Windows Server". The Managed pillar card lists monitoring and alerting, patching and backups, cost and security reviews, monthly service report, each linking to the flagship.
+- **Service pages:** 5 FAQs each (price via proposal and SOW, timeline, access and security, after delivery, clouds), all lint-clean. "How you can engage" shows 2–3 model chips linking to `/approach#engagement-models`. Engagement types added: Managed (assessment, retainer, agency), Portals and Full-stack (project, extended capacity).
+- **Insights:** hero meta line "By Mubashir Ahmed · Founder & Lead Architect · date · n min read" (author links to /about); separate date row removed; Article JSON-LD with author. Desktop reading column 720px with a sticky "On this page" list from the H2s.
+- **About:** founder photo (moved from `public/images/team/` to `src/assets/team/mubashir.jpg` so Astro serves a resized WebP instead of the 2.3 MB original), LinkedIn icon link, photo left / text right; "Pragmatic, enterprise-first"; time-zone line in body text.
+- **Start here:** "about 4 weeks" → "3–4 weeks".
+- **Trust/legal:** the visible security.txt link is removed (the file stays, linked nowhere). "Last updated: 12 October 2026" under the /privacy and /terms titles. Breadcrumbs on /trust and /terms measured below the header at 390–1440px (same component as /privacy).
+- **Spacing:** CTA band to footer gap ~40% smaller (44 / 58 / 68px).
+- **Checks:** 17 affected Playwright specs plus the new `review-fixes.spec.ts` (306 tests: 251 passed, 55 skipped by design, 0 failed); `npm run check` 0 errors; `lint:content`, `check:csp` pass. No cross-browser sweep this round.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -174,7 +190,8 @@
 - [ ] Lawyer review of `/privacy` and `/terms`.
 - [ ] Put the practices stated on `/trust` in place: MFA everywhere, a password manager, the incident-response runbook, and the sub-processor list.
 - [ ] Complete the internal drafts in `docs/internal/` (`incident-response-runbook.md`, `sub-processor-list.md`): fill the "to be set" fields and confirm regions.
-- [ ] Add LinkedIn URLs (personal and company) and a photo in `src/data/leadership.ts`. They stay hidden while empty.
+- [x] Founder photo and personal LinkedIn on /about (14 Oct).
+- [ ] Add the company LinkedIn URL in `src/data/leadership.ts` (`companyLinkedin`); the footer link stays hidden while empty.
 - [x] Review and approve the 3 sample artefacts in `src/content/resources/` (published 14 Oct).
 - [ ] Collect evidence records for the 8 results (`evidenceId` in `src/data/results.ts`) and be ready to describe each project on calls.
 
@@ -192,7 +209,7 @@
 
 ## 6. Next steps
 1. Done: the 13 Oct UI fixes and the 14 Oct QA pass are pushed to `origin/dev`. The owner decisions from `docs/internal/qa-2026-10-14.md` §6 are applied (section 3c); still to do: check the phone spacing on a real phone, and check the WebKit items in §5 on a real Mac or iPhone.
-2. Close the launch items in section 5: legal review, Trust-page practices, LinkedIn and photo, form key, domain and email.
+2. Close the launch items in section 5: legal review, Trust-page practices, company LinkedIn, form key, domain and email.
 3. Set up hosting: Docker build, nginx redirect check, TLS/HSTS, then deploy to a staging URL for a final pass.
 4. Create `main` (or the chosen release branch) and open the release PR from `dev`.
 5. After launch: gather the first verified testimonials and case studies (they switch on automatically), add evidence records, and keep publishing Insights.

@@ -23,13 +23,14 @@ async function mockEndpoint(page: Page, status: number, calls: unknown[] = []) {
   return calls;
 }
 
-async function openDialogFromHero(page: Page) {
+/** Every consultation CTA is a plain link to /contact (no dialog); the hero CTA takes the visitor there. */
+async function openContactFromHero(page: Page) {
   await page.goto('/');
-  const trigger = page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' });
-  await trigger.click();
-  const dialog = page.getByRole('dialog', { name: 'Book a Strategy Consultation' });
-  await expect(dialog).toBeVisible();
-  return { trigger, dialog };
+  await page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' }).click();
+  await expect(page).toHaveURL(/\/contact\/?$/);
+  const form = page.getByRole('main');
+  await expect(form.getByLabel('Full name')).toBeVisible();
+  return { form };
 }
 
 async function fillValid(scope: ReturnType<Page['getByRole']>) {
@@ -45,18 +46,25 @@ async function fillValid(scope: ReturnType<Page['getByRole']>) {
   await scope.getByLabel(/I agree to ZanamTech processing my details/).check();
 }
 
-test.describe('US3 — Contact dialog & lead submission', () => {
-  test('CTA opens the dialog with focus on the first field; Escape closes and restores focus', async ({ page }) => {
-    const { trigger, dialog } = await openDialogFromHero(page);
-    await expect(dialog.getByLabel('Full name')).toBeFocused();
-    await page.keyboard.press('Escape');
-    await expect(dialog).toBeHidden();
-    await expect(trigger).toBeFocused();
+test.describe('US3 — Contact page & lead submission', () => {
+  test('consultation CTAs are links to /contact and no dialog exists', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' })).toHaveAttribute('href', '/contact');
+    // Desktop bar and mobile drawer CTAs (one of them is hidden at any width).
+    const headerCtas = await page.locator('header a', { hasText: 'Book a Strategy Consultation' }).evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    expect(headerCtas).toEqual(['/contact', '/contact']);
+    await expect(page.locator('footer').getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
+    await expect(page.locator('dialog')).toHaveCount(0);
+  });
+
+  test('"Write to" email line has a space before the address', async ({ page }) => {
+    await page.goto('/contact');
+    await expect(page.getByRole('main')).toContainText('Write to contact@zanamtech.com');
   });
 
   test('shows inline errors for invalid input and focuses the first invalid field', async ({ page }) => {
     const calls = await mockEndpoint(page, 200);
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByText('Please enter your full name.')).toBeVisible();
     await expect(dialog.getByText('Please enter a valid email address.')).toBeVisible();
@@ -71,7 +79,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
 
   test('submits a valid request and shows confirmation', async ({ page }) => {
     const calls = await mockEndpoint(page, 200);
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await fillValid(dialog);
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
@@ -87,7 +95,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
 
   test('keeps entered data on failure and succeeds on retry', async ({ page }) => {
     await mockEndpoint(page, 500);
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await fillValid(dialog);
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('alert')).toContainText('could not be sent');
@@ -100,7 +108,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
 
   test('honeypot submissions are not sent', async ({ page }) => {
     const calls = await mockEndpoint(page, 200);
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await fillValid(dialog);
     await dialog.locator('input[name="botcheck"]').evaluate((el) => ((el as HTMLInputElement).value = 'spam'));
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
@@ -108,11 +116,21 @@ test.describe('US3 — Contact dialog & lead submission', () => {
     expect(calls).toHaveLength(0);
   });
 
-  test('service detail CTA pre-selects that service', async ({ page }) => {
+  test('service detail CTAs link to /contact?service=<slug> and preselect that service', async ({ page }) => {
     await page.goto('/services/cloud-cost-optimization');
-    await page.locator('section').first().getByRole('link', { name: 'Book a Strategy Consultation' }).click();
-    const dialog = page.getByRole('dialog');
-    await expect(dialog.getByRole('combobox', { name: 'Service needed' })).toHaveText('Cloud Cost Optimisation');
+    const heroCta = page.locator('section').first().getByRole('link', { name: 'Book a Strategy Consultation' });
+    await expect(heroCta).toHaveAttribute('href', '/contact?service=cloud-cost-optimization');
+    await expect(page.locator('#cta-band-title').locator('..').getByRole('link')).toHaveAttribute('href', '/contact?service=cloud-cost-optimization');
+    await heroCta.click();
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Cloud Cost Optimisation');
+  });
+
+  test('unknown ?service= values are ignored and nothing persists to the next visit', async ({ page }) => {
+    await page.goto('/contact?service=not-a-service');
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Select a service');
+    await page.goto('/contact?service=ai-assistants-company-data');
+    await page.goto('/contact');
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Select a service');
   });
 
   test('contact page form works standalone and honours ?service=', async ({ page }) => {
@@ -124,7 +142,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
 
   test('qualifying fields: keyboard selection, payload values and "Not specified" defaults', async ({ page }) => {
     const calls = await mockEndpoint(page, 200);
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await fillValid(dialog);
 
     // Keyboard only: open with ArrowDown, move, choose with Enter (APG select-only combobox).
@@ -149,20 +167,10 @@ test.describe('US3 — Contact dialog & lead submission', () => {
   });
 
   test('service options include every published service, Agency partnership and Other', async ({ page }) => {
-    const { dialog } = await openDialogFromHero(page);
+    const { form: dialog } = await openContactFromHero(page);
     await dialog.getByRole('combobox', { name: 'Service needed' }).click();
-    const options = await dialog.locator('#dialog-service-listbox [role="option"]').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.value));
+    const options = await dialog.locator('#page-service-listbox [role="option"]').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.value));
     expect(options).toEqual([...publishedNamesInPillarOrder, 'Agency partnership', 'Other / Not sure yet']);
-  });
-
-  test('the desktop dialog fits without a vertical scrollbar', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop only (FR-035)');
-    for (const size of [{ width: 1440, height: 900 }, { width: 1366, height: 768 }, { width: 1280, height: 720 }]) {
-      await page.setViewportSize(size);
-      const { dialog } = await openDialogFromHero(page);
-      const overflow = await dialog.evaluate((el) => el.scrollHeight - el.clientHeight);
-      expect(overflow, `${size.width}x${size.height}`).toBeLessThanOrEqual(0);
-    }
   });
 
   test('privacy page is published', async ({ page }) => {
@@ -172,11 +180,7 @@ test.describe('US3 — Contact dialog & lead submission', () => {
   });
 
   for (const theme of ['light', 'dark'] as const) {
-    test(`open dialog and contact page have no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
-      await gotoWithTheme(page, '/', theme);
-      await page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' }).click();
-      await expect(page.getByRole('dialog')).toBeVisible();
-      await expectNoA11yViolations(page);
+    test(`contact page has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
       await gotoWithTheme(page, '/contact', theme);
       await expectNoA11yViolations(page);
     });

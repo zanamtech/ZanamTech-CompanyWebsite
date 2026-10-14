@@ -13,7 +13,7 @@ deliverables:
   - Backup policies with scheduled restore tests
   - Branch restrictions, access reviews and written SOPs
   - Weekly status updates and a monthly service report
-engagementTypes: [retainer]
+engagementTypes: [assessment, retainer, agency]
 capabilities:
   - "Cloud operations: app platforms, VMs and containers, load balancing, managed databases, monitoring, patching and scaling on AWS, Azure or Google Cloud"
   - "Environment lifecycle: Dev, QA, UAT and Prod parity, release scheduling and rollbacks"
@@ -34,6 +34,8 @@ faq:
     a: Retainers run for a three-month minimum, then roll with one month's notice. Runbooks, diagrams, code and credentials live in your own accounts and repositories, and you receive a documented handover.
   - q: Do you replace our cloud provider's support plan?
     a: No. You keep your own provider support plan. We operate the platform on top of it and escalate to the provider when an issue sits in their infrastructure.
+  - q: How are retainer fees set?
+    a: There are no public prices. Each retainer is quoted in a written proposal for the tier and scope you need, and fixed in the Statement of Work.
 scenarios:
   - kind: real
     problem: A high-volume retail platform hit a severe infrastructure fault in the early hours of the morning.

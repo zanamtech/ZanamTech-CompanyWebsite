@@ -29,7 +29,7 @@ import { accessModel, aiToolPolicy, cadence, engagementModelCatalog } from '../d
   </div>
   <Process detailed withIntro={false} />
 
-  <section aria-labelledby="models-title" class="border-y border-border bg-surface/60">
+  <section id="engagement-models" aria-labelledby="models-title" class="scroll-mt-28 border-y border-border bg-surface/60">
     <div class="container-page section-y">
       <div class="max-w-2xl">
         <p class="eyebrow">Engagement models</p>
@@ -38,7 +38,7 @@ import { accessModel, aiToolPolicy, cadence, engagementModelCatalog } from '../d
           Commercial terms are defined transparently in each written proposal, under the model that fits your goals.
         </p>
       </div>
-      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+      <div class="cards-centred mt-12" data-reveal-group>
         {
           engagementModelCatalog.map((model) => (
             <GlassCard as="article" data-model={model.id} class="card-hover">

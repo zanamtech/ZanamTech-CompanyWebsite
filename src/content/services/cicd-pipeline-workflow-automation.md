@@ -27,6 +27,12 @@ faq:
     a: Yes. Pipelines are built on the platform you already use, whether that is GitHub, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build or Jenkins, unless there is a clear reason to change.
   - q: Do you also set up branch governance?
     a: Yes. Branch restrictions, merge checks and release SOPs are part of the delivery, and are also available on their own as the DevOps Governance Quick-Start.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: What access do you need, and how is it secured?
+    a: Admin access to the repository workspace and pipeline tool, granted through your own accounts with least privilege, logged, and removed at handover. Secrets stay in your own vault.
+  - q: Which clouds and tools do you support?
+    a: AWS, Azure and Google Cloud equally, with GitHub Actions, Azure DevOps, Bitbucket or GitLab pipelines.
 scenarios:
   - kind: real
     problem: An enterprise software team suffered frequent defects and downtime caused by manual production uploads.

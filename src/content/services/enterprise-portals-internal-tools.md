@@ -12,7 +12,7 @@ deliverables:
   - Role-based access and single sign-on integration
   - Connections to your existing systems and data
   - Admin guide and handover
-engagementTypes: [project]
+engagementTypes: [project, capacity]
 capabilities:
   - Customer, partner and supplier portals
   - Operations dashboards on live company data
@@ -27,6 +27,12 @@ faq:
     a: Yes. Single sign-on with Microsoft Entra ID or your existing identity provider is the default approach.
   - q: Where is the data stored?
     a: In your own cloud account and region, connected to your existing systems rather than copied into a third-party tool.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: How long does a portal take to build?
+    a: A first release is planned in milestones measured in weeks, starting with the workflows that save the most effort. The full scope and timeline are fixed in the Statement of Work.
+  - q: Do we own the portal and its code?
+    a: Yes. Code, infrastructure definitions and documentation live in your own repositories and cloud account, with a documented handover.
 scenarios:
   - kind: illustrative
     problem: A distribution company handles partner orders and status questions through email and shared spreadsheets.

@@ -27,6 +27,12 @@ faq:
     a: Yes. Existing resources are imported into Terraform or Bicep state step by step, so the platform moves under code without being rebuilt.
   - q: Terraform or Bicep?
     a: Terraform suits AWS, Google Cloud and multi-cloud teams; Bicep suits Azure-only estates. The recommendation follows your platform and team.
+  - q: How is the price set?
+    a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
+  - q: What access do you need, and how is it secured?
+    a: Least-privilege access to the target accounts or subscriptions through your own identity provider, plus repository access. State files and secrets stay in your own accounts.
+  - q: What happens after the landing zone is live?
+    a: You receive the modules, pipelines and documentation in your repositories, with a handover session. Changes can continue under a managed retainer.
 scenarios:
   - kind: illustrative
     problem: A SaaS company's Azure resources had been created by hand over time, and nobody could rebuild an environment with confidence.

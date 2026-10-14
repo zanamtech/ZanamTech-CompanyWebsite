@@ -6,22 +6,27 @@ import { cta } from '../../data/site';
 interface Props {
   title?: string;
   body?: string;
+  /** Contact link; context pages pass /contact?service=<slug> to preselect "Service needed". */
+  href?: string;
 }
 
 const {
   title = 'Start with a technical audit',
+  href = cta.href,
   body = 'Every engagement begins with a structured assessment of your architecture, security perimeter, delivery pipeline and cloud spend, followed by a custom proposal and Statement of Work.',
 } = Astro.props;
 ---
 
-<section aria-labelledby="cta-band-title" class="container-page section-y">
+<!-- The band closes every page: its bottom padding is trimmed so, with the footer's top margin, the gap to the footer is
+     ~40% smaller than a standard section break (44 / 58 / 68px instead of 72 / 96 / 112px). -->
+<section aria-labelledby="cta-band-title" class="container-page section-t pb-2 sm:pb-2.5 lg:pb-3">
   <div class="glass relative isolate overflow-hidden rounded-3xl px-6 py-14 text-center sm:px-12">
     <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
     <div class="hairline-gradient absolute inset-x-12 top-0" aria-hidden="true"></div>
     <h2 id="cta-band-title" class="mx-auto max-w-2xl text-3xl font-bold text-fg sm:text-4xl">{title}</h2>
     <p class="mx-auto mt-4 max-w-2xl text-lg text-muted">{body}</p>
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-      <Button href={cta.href} size="lg" contactCta>
+      <Button href={href} size="lg">
         {cta.primary}
         <ArrowRight aria-hidden="true" className="size-4.5" />
       </Button>

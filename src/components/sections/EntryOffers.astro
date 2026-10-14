@@ -7,12 +7,42 @@ interface Props {
   detailed?: boolean;
   /** Hide the section intro when the page hero already introduces the offers. */
   withIntro?: boolean;
+  /** One-row strip (offer names + durations) linking to /start-here; the full cards live only on /start-here. */
+  compact?: boolean;
 }
 
-const { detailed = false, withIntro = true } = Astro.props;
+const { detailed = false, withIntro = true, compact = false } = Astro.props;
 ---
 
 <!-- Entry offers (spec 002 FR-022): fixed scope, fee never shown. -->
+{
+  compact ? (
+    <section id="start-here" aria-labelledby="offers-title" class="container-page section-y">
+      <div class="glass rounded-2xl p-6 sm:p-7">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p class="eyebrow">Start here</p>
+            <h2 id="offers-title" class="mt-1 text-xl font-bold text-fg">Low-risk ways to start</h2>
+          </div>
+          <a href="/start-here" class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline">
+            See all entry offers
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </a>
+        </div>
+        <!-- One row of five on desktop: offer name with its duration underneath. -->
+        <ul class="mt-5 grid gap-x-6 gap-y-2 border-t border-border pt-4 sm:grid-cols-2 lg:grid-cols-5" data-offer-strip>
+          {offers.map((offer) => (
+            <li>
+              <a href={`/start-here#${offer.id}`} class="group flex min-h-11 flex-col justify-center py-1">
+                <span class="text-sm font-semibold text-fg group-hover:text-accent">{offer.name}</span>
+                <span class="mt-0.5 text-xs font-semibold text-accent">{offer.duration}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ) : (
 <section
   id="start-here"
   aria-labelledby={withIntro ? 'offers-title' : undefined}
@@ -42,7 +72,9 @@ const { detailed = false, withIntro = true } = Astro.props;
     )
   }
 
-  <ul class:list={['grid gap-6 md:grid-cols-2 lg:grid-cols-3', withIntro && 'mt-12']} data-reveal-group>
+  <ul class:list={['cards-centred', withIntro && 'mt-12']} data-reveal-group>
     {offers.map((offer) => <OfferCard offer={offer} detailed={detailed} headingLevel={withIntro ? 'h3' : 'h2'} />)}
   </ul>
 </section>
+  )
+}

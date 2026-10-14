@@ -2,6 +2,7 @@
 import { ArrowRight } from 'lucide-react';
 import Icon from '../ui/Icon.astro';
 import { getServicesByPillar, pillarHref, serviceHref } from '../../lib/services';
+import { flagshipIncluded } from '../../data/managed-tiers';
 
 const pillars = await getServicesByPillar();
 ---
@@ -41,15 +42,26 @@ const pillars = await getServicesByPillar();
             <a href={pillarHref(p.pillar)} class="hover:text-accent">{p.title}</a>
           </h3>
           <p class="mt-2 text-sm text-muted">{p.description}</p>
+          {/* A single-service pillar (Managed) lists what the retainer includes, each linking to the flagship page,
+              instead of one link repeating the pillar name. */}
           <ul class="mt-5 space-y-1 border-t border-border pt-4">
-            {p.services.map((s) => (
-              <li>
-                <a href={serviceHref(s)} class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent">
-                  <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
-                  {s.data.name}
-                </a>
-              </li>
-            ))}
+            {p.services.length === 1
+              ? flagshipIncluded.map((item) => (
+                  <li>
+                    <a href={serviceHref(p.services[0])} class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent">
+                      <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                      {item}
+                    </a>
+                  </li>
+                ))
+              : p.services.map((s) => (
+                  <li>
+                    <a href={serviceHref(s)} class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent">
+                      <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                      {s.data.name}
+                    </a>
+                  </li>
+                ))}
           </ul>
         </li>
       ))

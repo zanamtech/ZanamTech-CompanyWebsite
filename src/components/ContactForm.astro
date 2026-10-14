@@ -12,12 +12,11 @@ import {
 } from '../lib/lead';
 
 interface Props {
-  /** Unique prefix so the dialog and page instances never share element ids. */
+  /** Prefix for element ids. */
   idPrefix: string;
-  source: 'dialog' | 'page';
 }
 
-const { idPrefix, source } = Astro.props;
+const { idPrefix } = Astro.props;
 // Published services plus the agency partnership option (spec 002 FR-032); slugs drive ?service= preselection.
 const services = [
   ...(await getPublishedServices()).map((s) => ({ slug: s.id, name: s.data.name })),
@@ -26,9 +25,8 @@ const services = [
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
-const config = JSON.stringify({ services, source, idPrefix });
-// The wide dialog lays fields out three across on desktop; the narrower /contact card keeps two.
-const fieldGrid = source === 'dialog' ? 'md:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2';
+const config = JSON.stringify({ services, idPrefix });
+const fieldGrid = 'sm:grid-cols-2';
 
 const textFields = [
   { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
@@ -85,7 +83,7 @@ const menus = [
 ];
 ---
 
-<div x-data={`leadForm(${config})`} x-on:contact-dialog-opened.window={source === 'dialog' ? 'onOpen()' : undefined}>
+<div x-data={`leadForm(${config})`}>
   <p class="sr-only" role="status" aria-live="polite" x-text="announcement"></p>
 
   <form
@@ -118,7 +116,6 @@ const menus = [
               inputmode={field.type === 'tel' ? 'tel' : undefined}
               placeholder={field.hint ? '+1 555 010 0000' : undefined}
               class="field-input mt-1.5"
-              data-autofocus={i === 0 && source === 'dialog' ? '' : undefined}
               x-model={`fields.${field.name}`}
               x-bind:aria-invalid={`errors.${field.name} ? 'true' : 'false'`}
               aria-describedby={field.hint ? `${id(field.name)}-hint` : undefined}
@@ -243,7 +240,7 @@ const menus = [
       <textarea
         id={id('message')}
         name="message"
-        rows={source === 'dialog' ? 2 : 4}
+        rows="4"
         required
         minlength="20"
         maxlength="2000"
@@ -315,6 +312,5 @@ const menus = [
     <p class="mx-auto mt-3 max-w-md text-muted">
       Thank you. We reply within 1 business day to arrange your consultation.
     </p>
-    <slot name="success-actions" />
   </div>
 </div>

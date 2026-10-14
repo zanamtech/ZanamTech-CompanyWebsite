@@ -91,17 +91,13 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await expectSameRealm(page);
   });
 
-  test('contact dialog still works after navigating', async ({ page }) => {
+  test('consultation CTA reaches /contact after navigating', async ({ page }) => {
     await page.goto('/');
     await page.locator('footer').getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about\/?$/);
-    const cta = page.locator('main').getByRole('link', { name: 'Book a Strategy Consultation' }).first();
-    await cta.click();
-    const dialog = page.getByRole('dialog');
-    await expect(dialog).toBeVisible();
-    await page.keyboard.press('Escape');
-    await expect(dialog).toBeHidden();
-    await expect(cta).toBeFocused();
+    await page.locator('main').getByRole('link', { name: 'Book a Strategy Consultation' }).first().click();
+    await expect(page).toHaveURL(/\/contact\/?$/);
+    await expect(page.getByRole('main').getByLabel('Full name')).toBeVisible();
   });
 
   test('metric counters animate again after returning to the home page', async ({ page }) => {

@@ -40,7 +40,7 @@ const linkClass = (href: string) => [
   <!-- Floating glass bar over the first section (the wrapper is transparent and click-through).
        `relative` anchors the Services mega-menu directly beneath it. -->
   <div
-    class="pointer-events-auto relative mx-auto flex max-w-7xl items-center justify-between gap-6 rounded-2xl border border-border/40 bg-bg/30 px-4 py-2.5 shadow-sm backdrop-blur-md transition-[background-color,border-color,box-shadow] duration-300 sm:px-6"
+    class="pointer-events-auto relative mx-auto flex max-w-7xl items-center justify-between gap-6 header-bar rounded-2xl border border-border/40 px-4 py-2.5 shadow-sm transition-[background-color,border-color,box-shadow] duration-300 sm:px-6"
   >
     <!-- Trimmed, optimized brand logo (no transparent margin), so it aligns with the page content edge. -->
     <Logo eager height={24} />
@@ -84,6 +84,7 @@ const linkClass = (href: string) => [
                   aria-label="Services menu"
                   class="absolute top-full left-1/2 mt-2 w-[min(72rem,calc(100vw-3rem))] -translate-x-1/2 rounded-2xl border border-(--glass-border) bg-surface shadow-2xl ring-1 ring-black/5 before:absolute before:inset-x-0 before:-top-7 before:h-7 before:content-['']"
                   x-show="services"
+                  x-on:click="closeServicesOnLink($event)"
                   x-cloak
                   x-transition.opacity.duration.150ms
                 >
@@ -161,7 +162,7 @@ const linkClass = (href: string) => [
     <div class="flex items-center gap-2">
       <ThemeToggle />
       <div class="hidden lg:block">
-        <Button href={cta.href} contactCta class="whitespace-nowrap">{cta.primary}</Button>
+        <Button href={cta.href} class="whitespace-nowrap">{cta.primary}</Button>
       </div>
       <button
         type="button"
@@ -258,7 +259,7 @@ const linkClass = (href: string) => [
         )
       }
       <li class="pt-3 pb-2">
-        <Button href={cta.href} contactCta class="w-full">{cta.primary}</Button>
+        <Button href={cta.href} class="w-full">{cta.primary}</Button>
       </li>
     </ul>
   </nav>

@@ -38,7 +38,7 @@ test.describe('Security — CSP compliance', () => {
     expect(violations).toEqual([]);
   });
 
-  test('interactive features work under the CSP (theme, menu, dialog, form, counters, reveal)', async ({ page }, testInfo) => {
+  test('interactive features work under the CSP (theme, menu, contact form, counters, reveal)', async ({ page }, testInfo) => {
     const violations = await enforceCsp(page);
     await page.route('**/submit', (route) =>
       route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' }),
@@ -60,7 +60,8 @@ test.describe('Security — CSP compliance', () => {
     await expect(page.locator('#process [data-phase]').first()).toHaveCSS('opacity', '1', { timeout: 5_000 });
 
     await page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' }).click();
-    const dialog = page.getByRole('dialog');
+    await expect(page).toHaveURL(/\/contact\/?$/);
+    const dialog = page.getByRole('main');
     await dialog.getByLabel('Full name').fill('Alex Morgan');
     await dialog.getByLabel('Email address').fill('alex@example.com');
     await dialog.getByLabel('Company name').fill('Example Corp');

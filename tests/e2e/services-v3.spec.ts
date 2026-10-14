@@ -18,7 +18,44 @@ test.describe('US2 — Services v3', () => {
     const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
       els.map((e) => e.getAttribute('href')),
     );
-    expect(hrefs.sort()).toEqual(published.map((s) => `/services/${s.slug}`).sort());
+    expect([...new Set(hrefs)].sort()).toEqual(published.map((s) => `/services/${s.slug}`).sort());
+  });
+
+  test('the Managed pillar card lists what the retainer includes, each linking to the flagship', async ({ page }) => {
+    await page.goto('/');
+    const links = page.locator('#core-services [data-pillar="managed"] ul a');
+    await expect(links).toHaveText(['Monitoring and alerting', 'Patching and backups', 'Cost and security reviews', 'Monthly service report']);
+    for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) expect(href).toBe('/services/managed-cloud-devops');
+  });
+
+  test('/services has no empty slots: Managed is one full-width feature card, Practical AI fills a two-column row', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Desktop layout');
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/services');
+    const list = (await page.locator('#managed ul').first().boundingBox())!;
+    const flagship = (await page.locator('#managed [data-service-card]').boundingBox())!;
+    expect(Math.round(flagship.width)).toBe(Math.round(list.width));
+    await expect(page.locator('#managed [data-service-card]')).toHaveAttribute('data-layout', 'feature');
+    const ai = await page.locator('#ai [data-service-card]').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+    expect(ai).toHaveLength(2);
+    expect(new Set(ai).size, 'both AI cards on one row').toBe(1);
+  });
+
+  test('every service page: 4–5 FAQs, 3 related cards without numbers, engagement chips linking to How We Work', async ({ page }) => {
+    for (const service of published) {
+      await page.goto(`/services/${service.slug}`);
+      const faqs = await page.locator('#service-faq [data-faq]').count();
+      expect(faqs, `${service.slug} FAQ count`).toBeGreaterThanOrEqual(4);
+      expect(faqs, `${service.slug} FAQ count`).toBeLessThanOrEqual(5);
+      const related = page.locator('section[aria-labelledby="related-title"] [data-service-card]');
+      await expect(related, `${service.slug} related`).toHaveCount(3);
+      expect(await related.locator('.tabular-nums').count(), `${service.slug} related numbers`).toBe(0);
+      const chips = page.locator('[data-engagement-chip]');
+      const count = await chips.count();
+      expect(count, `${service.slug} engagement chips`).toBeGreaterThanOrEqual(2);
+      expect(count).toBeLessThanOrEqual(3);
+      for (const href of await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) expect(href).toBe('/approach#engagement-models');
+    }
   });
 
   test('flagship page shows modules, three tiers by scope and the P1–P4 definitions, with no time figures', async ({ page }) => {

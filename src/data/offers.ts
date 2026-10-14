@@ -54,7 +54,7 @@ export const offers: Offer[] = [
   {
     id: 'ai-automation-pilot',
     name: 'AI Automation Pilot',
-    duration: 'about 4 weeks',
+    duration: '3–4 weeks',
     summary: 'One workflow automated on real data, run alongside the current process before any larger commitment.',
     inputs: ['A named process owner', 'Representative real data', 'Access to the target systems'],
     deliverables: ['Working automation with human approval points', 'Audit log', 'Go/no-go report'],
