@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
 // Phones: 44px touch rows. Tablet/desktop service lists use an even gap between items instead (serviceList +
 // serviceLink), so a link that wraps to two lines keeps the same spacing as its neighbours.
 const linkClass = 'inline-flex min-h-11 items-center text-sm text-muted hover:text-accent lg:min-h-8';
-const serviceList = 'mt-2 space-y-2';
+const serviceList = 'mt-2 space-y-1';
 const serviceLink = 'block py-1 text-sm text-muted hover:text-accent';
 const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
 ---
@@ -129,17 +129,25 @@ const headingClass = 'text-xs font-semibold tracking-wide text-fg uppercase';
       </nav>
 
       <!-- Company: a two-column list on phones; from md a single row whose links are spread evenly across the full width
-           of the services area, after a clear gap behind the label. -->
+           of the services area, after a clear gap behind the label. The dots are flex items too, so justify-between
+           centres each one in the gap between two links. -->
       <nav aria-label="Company" class="md:mt-auto md:flex md:items-baseline md:gap-x-10 md:border-t md:border-border md:pt-4" data-footer-company>
         <h2 class={headingClass}>Company</h2>
         <ul class="mt-2 grid grid-cols-2 gap-x-6 md:mt-0 md:flex md:flex-1 md:flex-wrap md:items-baseline md:justify-between md:gap-x-6">
           {
-            company.map((link) => (
-              <li>
-                <a href={link.href} class={linkClass}>
-                  {link.label}
-                </a>
-              </li>
+            company.map((link, i) => (
+              <>
+                {i > 0 && (
+                  <li aria-hidden="true" class="hidden text-sm text-muted md:block">
+                    ·
+                  </li>
+                )}
+                <li>
+                  <a href={link.href} class={linkClass}>
+                    {link.label}
+                  </a>
+                </li>
+              </>
             ))
           }
         </ul>

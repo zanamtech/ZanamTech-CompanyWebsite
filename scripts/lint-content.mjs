@@ -56,6 +56,7 @@ const RULES = [
   { name: 'certification claim', re: /\bcertified\b/i },
   { name: 'legal suffix', re: /\b(?:Ltd|Inc|LLC)\b\.?/ },
   { name: 'offices claim', re: /\bour\s+offices?\b/i },
+  { name: 'remote-first wording', re: /\bremote[-\s]first\b/i },
 
   // AI hosting.
   { name: 'self-hosted LLM claim', re: /\b(?:local|on-?premise|self-hosted|private)\s+LLMs?\b/i },

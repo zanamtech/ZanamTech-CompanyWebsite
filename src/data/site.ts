@@ -1,15 +1,15 @@
 export const site = {
   name: 'ZanamTech',
   legalName: 'ZanamTech',
-  tagline: 'Remote-first Cloud, DevOps & AI engineering',
+  tagline: 'Cloud, DevOps & AI Engineering',
   description:
-    'ZanamTech is a remote-first Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',
+    'ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',
   email: 'contact@zanamtech.com',
   privacyEmail: 'privacy@zanamtech.com',
   securityEmail: 'security@zanamtech.com',
 } as const;
 
-/** Footer wording (owner decision: no "remote-first" in the footer at any width). */
+/** Footer wording (shorter than the site description). */
 export const footerCopy = {
   tagline: 'Cloud, DevOps & AI engineering',
   description:
