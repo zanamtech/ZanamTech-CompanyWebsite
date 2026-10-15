@@ -7,13 +7,17 @@ import GlassCard from '../components/ui/GlassCard.astro';
 import LinkedInIcon from '../components/ui/LinkedInIcon.astro';
 import { Image } from 'astro:assets';
 import { leadership } from '../data/leadership';
+import { regionsServed } from '../data/site';
+import { engagementModelCatalog } from '../data/engagement';
 import founderPhoto from '../assets/team/mubashir.jpg';
 
 // Facts only (Constitution III): no experience-length claims, no response targets.
+// Engagement labels come from the /approach catalogue so the two pages always match.
 const atAGlance = [
-  { label: 'Clouds', value: 'AWS, Azure, Google Cloud' },
-  { label: 'Regions served', value: 'North America, UK & Europe, GCC' },
-  { label: 'Engagement', value: 'Assessment, Fixed-scope project, Managed retainer' },
+  { label: 'Clouds', values: ['AWS', 'Azure', 'Google Cloud', 'Flexential', 'Liquid Web'] },
+  { label: 'Regions served', values: [...regionsServed] },
+  { label: 'Engagement', values: engagementModelCatalog.map((m) => m.name) },
+  { label: 'Clients', values: ['B2B SaaS companies', 'Software agencies', 'Mid-market firms', 'Enterprise teams'] },
 ];
 
 const capabilities = [
@@ -67,7 +71,7 @@ const principles = [
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
   />
 
-  <section aria-labelledby="mission-title" class="container-page section-y grid gap-12 lg:grid-cols-12">
+  <section aria-labelledby="mission-title" class="container-page section-b grid gap-12 pt-6 sm:pt-8 lg:grid-cols-12 lg:pt-10">
     <div class="lg:col-span-7">
       <p class="eyebrow">Mission</p>
       <h2 id="mission-title" class="mt-3 text-3xl font-bold text-fg">Our mission</h2>
@@ -90,7 +94,15 @@ const principles = [
           atAGlance.map((row) => (
             <div>
               <dt class="text-xs font-semibold tracking-wide text-muted uppercase">{row.label}</dt>
-              <dd class="mt-1 text-lg font-semibold text-fg">{row.value}</dd>
+              <dd class="mt-2">
+                <ul class="flex flex-wrap gap-2">
+                  {row.values.map((value) => (
+                    <li class="cursor-default select-none rounded-full border border-border/60 bg-surface-2/40 px-3.5 py-1.5 text-sm font-medium text-fg/80 backdrop-blur-sm transition-all duration-300 ease-in-out hover:scale-[1.02] hover:border-accent/60 hover:bg-surface-2/70 hover:text-fg hover:shadow-md hover:shadow-purple-500/10 motion-reduce:hover:scale-100">
+                      {value}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
             </div>
           ))
         }
@@ -101,9 +113,11 @@ const principles = [
   <section aria-labelledby="leadership-title" class="container-page section-b">
     <GlassCard class="relative p-8 sm:p-10">
       <div class="hairline-gradient absolute inset-x-10 top-0" aria-hidden="true"></div>
-      <p class="eyebrow">Leadership</p>
-      <!-- Photo left, text right from sm; the text column uses the remaining card width. -->
-      <div class="mt-5 grid gap-8 sm:grid-cols-[10rem_minmax(0,1fr)] lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10">
+      <!-- Phones: eyebrow, photo, name, role, LinkedIn, bio (DOM order). From md a 3-column grid: the eyebrow shares the
+           name's baseline row, the LinkedIn button sits top-right on that row, and the photo is centred against the
+           role + bio rows, so it stays centred whatever the bio length. -->
+      <div class="flex flex-col items-start md:grid md:grid-cols-[10rem_minmax(0,1fr)_auto] md:items-start md:gap-x-8 lg:grid-cols-[13rem_minmax(0,1fr)_auto] lg:gap-x-10" data-founder-card>
+        <p class="eyebrow md:col-start-1 md:row-start-1 md:self-baseline">Leadership</p>
         <Image
           src={founderPhoto}
           alt={`${leadership.name}, ${leadership.role}`}
@@ -111,38 +125,30 @@ const principles = [
           height={416}
           fit="cover"
           position="top"
-          class="aspect-square w-40 rounded-2xl object-cover object-top sm:w-full"
+          class="mt-5 aspect-square w-full max-w-40 rounded-2xl object-cover object-top md:col-start-1 md:row-span-2 md:row-start-2 md:mt-0 md:max-w-none md:self-center"
           loading="lazy"
           data-founder-photo
         />
-        <div>
-          {/* From md the LinkedIn button sits top-right, level with the name; on phones it drops under the role. */}
-          <div class="flex flex-col items-start gap-3 md:flex-row md:justify-between md:gap-6">
-          <div>
-            <h2 id="leadership-title" class="text-2xl font-bold text-fg">{leadership.name}</h2>
-            <p class="mt-1 font-semibold text-accent">{leadership.role}</p>
-          </div>
-          {
-            leadership.linkedin && (
-              <a
-                href={leadership.linkedin}
-                aria-label={`${leadership.name} on LinkedIn`}
-                class="inline-flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-border-strong px-3 text-sm font-semibold text-fg transition-colors duration-200 hover:border-accent hover:text-accent"
-                data-founder-linkedin
-              >
-                <LinkedInIcon class="size-4" />
-                LinkedIn
-              </a>
-            )
-          }
-          </div>
-          <div class="mt-4 space-y-3 text-muted">
-            {leadership.bio.map((line) => <p>{line}</p>)}
-            <p>
-              ZanamTech works with time-zone overlap across North America, the UK and Europe, and the GCC. As your scope
-              grows, delivery scales with vetted engineers working to the same standards and access controls.
-            </p>
-          </div>
+        <h2 id="leadership-title" class="mt-6 text-2xl font-bold text-fg md:col-start-2 md:row-start-1 md:mt-0 md:self-baseline">{leadership.name}</h2>
+        <p class="mt-1 font-semibold text-accent md:col-span-2 md:col-start-2 md:row-start-2">{leadership.role}</p>
+        {
+          leadership.linkedin && (
+            <a
+              href={leadership.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${leadership.name} on LinkedIn`}
+              class="mt-3 inline-flex min-h-9 shrink-0 items-center gap-2 rounded-lg border border-border-strong px-3 text-sm font-semibold text-fg transition-colors duration-200 hover:border-accent hover:text-accent md:col-start-3 md:row-start-1 md:mt-0 md:self-center"
+              data-founder-linkedin
+            >
+              <LinkedInIcon class="size-4" />
+              LinkedIn
+            </a>
+          )
+        }
+        <div class="mt-4 space-y-3 text-muted md:col-span-2 md:col-start-2 md:row-start-3">
+          {leadership.bio.map((line) => <p>{line}</p>)}
+          <p>As your scope grows, delivery scales with vetted engineers working to the same standards and access controls.</p>
         </div>
       </div>
     </GlassCard>

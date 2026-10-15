@@ -49,3 +49,13 @@ export const legalLinks: NavLink[] = [
   { label: 'Terms', href: '/terms' },
   { label: 'Trust', href: '/trust' },
 ];
+
+/** Regions served: one list for /about "At a glance" and the contact form's Region dropdown (plus "Other"). */
+export const regionsServed = [
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Europe',
+  'Gulf Cooperation Council (GCC)',
+  'Australia & New Zealand',
+] as const;

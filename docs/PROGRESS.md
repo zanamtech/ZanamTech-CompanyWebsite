@@ -195,6 +195,14 @@
 - **Test fix:** the "mouse click leaves no ring" test now waits for focus to reach `<main>` after the navigation before pressing Tab (it raced with the 3g focus move; 10/10 after the fix).
 - **Checks:** affected specs (review3, review-fixes, approach-industries, trust-legal, header-footer-ui, navigation): all pass; `npm run check` 0 errors.
 
+## 3i. About page round (15 Oct)
+- **LinkedIn same-tab bug, root cause:** `src/middleware.ts` (3g) was added while `npm run dev` was already running. Astro's dev server only discovers the middleware file at startup, so that session never applied it: the HTML had no `target`, and the link opened in the same tab. A fresh dev server and the production build were both fine. Reproduced by starting dev without the file and adding it mid-session: no `target`. Fix: `target="_blank" rel="noopener noreferrer"` is now hard-coded on the founder LinkedIn button and the footer company LinkedIn icon. The middleware stays as the site-wide safety net. **Restart `npm run dev` after adding or renaming `src/middleware.ts`.** Verified on a fresh dev server (attributes present, click opens a new tab) and in `dist/about/index.html`.
+- **Founder card:** the "LEADERSHIP" eyebrow now sits in the photo column, on the name's baseline row. The photo (same size and corners) is centred against the role + bio rows with a 3-column grid, and the LinkedIn button stays top-right on the name row. The time-zone sentence is removed. Phones (<768px) stack: eyebrow, photo (max 160px), name, role, LinkedIn, bio.
+- **At a glance:** values are chips in the "Technology stack" style. Clouds, Regions served, Engagement (from the `/approach` catalogue) and Clients.
+- **Regions, sitewide:** a single `regionsServed` list in `src/data/site.ts` (US, Canada, UK, Europe, Gulf Cooperation Council (GCC), Australia & New Zealand) feeds About and the contact form's Region dropdown (+ "Other"). Industries spells out "Gulf Cooperation Council (GCC)" in the meta description and hero lead; the segment name stays "GCC Enterprises & Scale-Ups". No "North America, the UK and Europe" wording remains in `src`.
+- **Spacing:** the About hero → "Our mission" gap is about 30% smaller (section top padding 24 / 32 / 40px, was 36 / 48 / 56px).
+- **Checks:** review4 (new), review3, review-fixes, trust-legal, contact, approach-industries, desktop + mobile: 117 passed, 11 skipped by design, 0 failed. `npm run check` 0 errors; `lint:content` passes.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |

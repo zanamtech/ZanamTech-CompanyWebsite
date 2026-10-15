@@ -96,24 +96,39 @@ test.describe('5-card sets centre the second row on desktop', () => {
 });
 
 test.describe('About', () => {
-  test('founder card: photo, LinkedIn icon link, time-zone line in body text; "At a glance" facts', async ({ page }) => {
+  test('founder card: photo, LinkedIn link in a new tab, no time-zone line; "At a glance" chips', async ({ page }) => {
     await page.goto('/about');
     const card = page.locator('section[aria-labelledby="leadership-title"]');
     await expect(card.locator('img[data-founder-photo]')).toBeVisible();
     const linkedin = card.locator('[data-founder-linkedin]');
     await expect(linkedin).toHaveAttribute('href', 'https://www.linkedin.com/in/mubashir-ahmed-088800174');
+    await expect(linkedin).toHaveAttribute('target', '_blank');
     await expect(linkedin).toHaveAttribute('rel', 'noopener noreferrer');
     await expect(linkedin).toHaveAttribute('aria-label', 'Mubashir Ahmed on LinkedIn');
-    const line = card.getByText(/time-zone overlap across North America/);
+    const line = card.getByText(/^As your scope grows, delivery scales with vetted engineers/);
     await expect(line).toHaveCSS('font-size', '16px');
+    await expect(card).not.toContainText('time-zone');
     await expect(page.getByText('What we stand for')).toHaveCount(0);
     const glance = page.locator('[data-at-a-glance]');
-    await expect(glance.locator('dt')).toHaveText(['Clouds', 'Regions served', 'Engagement']);
-    await expect(glance.locator('dd')).toHaveText([
-      'AWS, Azure, Google Cloud',
-      'North America, UK & Europe, GCC',
-      'Assessment, Fixed-scope project, Managed retainer',
+    await expect(glance.locator('dt')).toHaveText(['Clouds', 'Regions served', 'Engagement', 'Clients']);
+    const chips = (n: number) => glance.locator('dd').nth(n).locator('li');
+    await expect(chips(0)).toHaveText(['AWS', 'Azure', 'Google Cloud', 'Flexential', 'Liquid Web']);
+    await expect(chips(1)).toHaveText([
+      'United States',
+      'Canada',
+      'United Kingdom',
+      'Europe',
+      'Gulf Cooperation Council (GCC)',
+      'Australia & New Zealand',
     ]);
+    await expect(chips(2)).toHaveText([
+      'Assessment',
+      'Fixed-scope project',
+      'Managed retainer',
+      'Agency partnership',
+      'Extended engineering capacity',
+    ]);
+    await expect(chips(3)).toHaveText(['B2B SaaS companies', 'Software agencies', 'Mid-market firms', 'Enterprise teams']);
     await expect(page.getByRole('heading', { name: 'Pragmatic, enterprise-first' })).toBeVisible();
   });
 });

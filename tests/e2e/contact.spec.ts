@@ -153,7 +153,7 @@ test.describe('US3 — Contact page & lead submission', () => {
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
-    await expect(region).toHaveText('GCC');
+    await expect(region).toHaveText('United Kingdom');
 
     await dialog.getByRole('combobox', { name: 'Cloud platform (optional)' }).click();
     for (const option of ['AWS', 'Azure', 'Google Cloud', 'Multi-cloud', 'Other']) {
@@ -163,7 +163,7 @@ test.describe('US3 — Contact page & lead submission', () => {
 
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
-    expect(calls[0]).toMatchObject({ region: 'GCC', cloudPlatform: 'Multi-cloud', companySize: 'Not specified' });
+    expect(calls[0]).toMatchObject({ region: 'United Kingdom', cloudPlatform: 'Multi-cloud', companySize: 'Not specified' });
   });
 
   test('service options include every published service, Agency partnership and Other', async ({ page }) => {

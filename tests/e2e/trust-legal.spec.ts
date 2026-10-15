@@ -40,7 +40,8 @@ test.describe('US4 — Trust, legal and company', () => {
     const leadership = page.locator('section[aria-labelledby="leadership-title"]');
     await expect(leadership.getByRole('heading', { level: 2 })).toHaveText('Mubashir Ahmed');
     await expect(leadership).toContainText('Founder & Lead Architect');
-    await expect(leadership).toContainText('time-zone overlap');
+    await expect(leadership).toContainText('As your scope grows');
+    await expect(leadership).not.toContainText('time-zone');
     expect(await leadership.innerText()).not.toMatch(/\b\d+\s*\+?\s*years?\b|certified|Karachi|Pakistan/i);
   });
 
