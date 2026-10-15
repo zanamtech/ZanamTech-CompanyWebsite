@@ -20,9 +20,11 @@ const sections = [
   { id: 'your-rights', title: 'Your data rights' },
   { id: 'contact', title: 'Contact & data inquiries' },
 ];
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
 ---
 
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="Privacy Notice"
   description="How ZanamTech collects, processes, and safeguards information submitted through this platform."
 >
@@ -30,7 +32,7 @@ const sections = [
     eyebrow="Legal"
     title="Privacy Notice"
     lead="How ZanamTech collects, processes, and safeguards information submitted through this platform."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }]}
+    breadcrumbs={breadcrumbs}
   >
     <p slot="meta" class="mt-4 text-sm text-muted" data-last-updated>
       Last updated: <time datetime="2026-10-12">12 October 2026</time>

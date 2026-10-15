@@ -29,19 +29,18 @@ interface Props {
 
 const { study, studies } = Astro.props;
 const Content = study ? (await render(study)).Content : undefined;
+const breadcrumbs = study
+  ? [{ label: 'Home', href: '/' }, { label: 'Case Studies', href: '/case-studies' }, { label: study.data.title }]
+  : [{ label: 'Home', href: '/' }, { label: 'Case Studies' }];
 ---
 
 {study && Content ? (
-  <BaseLayout title={study.data.title} description={study.data.challenge}>
+  <BaseLayout title={study.data.title} description={study.data.challenge} breadcrumbs={breadcrumbs}>
     <PageHero
       eyebrow={study.data.industry}
       title={study.data.title}
       lead={study.data.challenge}
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Case Studies', href: '/case-studies' },
-        { label: study.data.title },
-      ]}
+      breadcrumbs={breadcrumbs}
     />
     <div class="container-page section-y grid gap-12 lg:grid-cols-12">
       <article class="lg:col-span-8">
@@ -67,6 +66,7 @@ const Content = study ? (await render(study)).Content : undefined;
   </BaseLayout>
 ) : (
   <BaseLayout
+    breadcrumbs={breadcrumbs}
     title="Case Studies"
     description="Case studies from ZanamTech engagements, published with each client's written permission."
   >
@@ -74,7 +74,7 @@ const Content = study ? (await render(study)).Content : undefined;
       eyebrow="Case Studies"
       title="Case studies"
       lead="Engagements published with each client's written permission."
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]}
+      breadcrumbs={breadcrumbs}
     />
     <div class="container-page section-y">
       <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>

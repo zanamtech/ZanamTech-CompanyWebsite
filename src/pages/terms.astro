@@ -14,14 +14,19 @@ const sections = [
   { id: 'governing-law', title: 'Governing law' },
   { id: 'contact', title: 'Contact' },
 ];
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Terms of Use' }];
 ---
 
-<BaseLayout title="Terms of Use" description="The terms that apply to your use of the ZanamTech website.">
+<BaseLayout
+  breadcrumbs={breadcrumbs}
+  title="Terms of Use"
+  description="The terms that apply to your use of the ZanamTech website."
+>
   <PageHero
     eyebrow="Legal"
     title="Terms of Use"
     lead="The terms that apply to your use of this website."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Terms of Use' }]}
+    breadcrumbs={breadcrumbs}
   >
     <p slot="meta" class="mt-4 text-sm text-muted" data-last-updated>
       Last updated: <time datetime="2026-10-12">12 October 2026</time>

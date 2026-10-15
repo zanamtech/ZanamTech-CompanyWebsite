@@ -4,8 +4,16 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { site } from '../data/site';
-import { leadership } from '../data/leadership';
 import { pagePath } from '../lib/url';
+import { ogImage } from '../lib/og';
+import {
+  breadcrumbs as breadcrumbList,
+  graph,
+  organization,
+  website,
+  type Crumb,
+  type SchemaNode,
+} from '../lib/schema';
 import { PUBLIC_ANALYTICS_DOMAIN, PUBLIC_ANALYTICS_SRC } from 'astro:env/server';
 // Preloading the Latin variable font lets text render in the final face, so long headings don't reflow (CLS).
 import fontLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
@@ -13,53 +21,37 @@ import fontLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta
 interface Props {
   title?: string;
   description?: string;
-  /** Path-relative or absolute Open Graph image URL. */
-  image?: string;
   noindex?: boolean;
-  /** Extra JSON-LD for the page (e.g. an Article), emitted after the Organization block. */
-  jsonLd?: Record<string, unknown>;
+  /** The page's visible breadcrumb trail, repeated as a BreadcrumbList in the JSON-LD graph. */
+  breadcrumbs?: Crumb[];
+  /** The page's own schema.org node (a Service or an Article), added to the JSON-LD graph. */
+  jsonLd?: SchemaNode;
+  /** Articles: `og:type=article` with published and modified times. */
+  article?: { published: Date; modified: Date };
 }
 
-const { title, description = site.description, image = '/apple-touch-icon.png', noindex = false, jsonLd } = Astro.props;
+const { title, description = site.metaDescription, noindex = false, breadcrumbs, jsonLd, article } = Astro.props;
 
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const base = new URL('/', Astro.site);
 const canonical = new URL(pagePath(Astro.url), Astro.site);
-const ogImage = new URL(image, Astro.site);
+const ogImageUrl = new URL(ogImage.path, Astro.site);
 
 // Cookieless, privacy-first analytics (Plausible-compatible); loads only when both values are configured.
 const analyticsDomain = PUBLIC_ANALYTICS_DOMAIN;
 const analyticsSrc = PUBLIC_ANALYTICS_SRC;
 
-const organization = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: site.name,
-  url: Astro.site?.href,
-  logo: new URL('/apple-touch-icon.png', Astro.site).href,
-  description: site.description,
-  email: site.email,
-  sameAs: [leadership.companyLinkedin].filter(Boolean),
-  knowsAbout: [
-    'Managed Cloud Operations',
-    'DevOps',
-    'AWS',
-    'Azure',
-    'Google Cloud',
-    'CI/CD',
-    'Infrastructure as Code',
-    'Cloud Migration',
-    'Web Application Firewall',
-    'Disaster Recovery',
-    'Observability',
-    'Cloud Cost Optimization',
-    'Web Application Development',
-    'AI Workflow Automation',
-  ],
-};
+// One JSON-LD graph per page (audit F-42): Organization, WebSite, the breadcrumbs, and the page's own node.
+const structuredData = graph([
+  organization(base),
+  website(base),
+  ...(breadcrumbs?.length ? [breadcrumbList(breadcrumbs, canonical, base)] : []),
+  ...(jsonLd ? [jsonLd] : []),
+]);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -68,13 +60,25 @@ const organization = {
     <meta name="description" content={description} />
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={String(ogImage.width)} />
+    <meta property="og:image:height" content={String(ogImage.height)} />
+    <meta property="og:image:alt" content={ogImage.alt} />
+    {article && (
+      <>
+        <meta property="article:published_time" content={article.published.toISOString()} />
+        <meta property="article:modified_time" content={article.modified.toISOString()} />
+      </>
+    )}
+    {/* summary_large_image needs the 1200×630 card (public/og/default.png); the square icon fallback stays summary. */}
+    <meta name="twitter:card" content={ogImage.large ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
@@ -90,8 +94,7 @@ const organization = {
         if (localStorage.getItem('zt-theme') === 'dark') document.documentElement.classList.add('dark');
       } catch (_) {}
     </script>
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(organization)} />
-    {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     {analyticsDomain && analyticsSrc && <script is:inline defer data-domain={analyticsDomain} src={analyticsSrc} />}
   </head>
   <body class="bg-bg text-fg">

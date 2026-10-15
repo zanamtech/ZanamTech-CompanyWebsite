@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: Layers
 summary: Terraform or Bicep foundations for AWS, Azure and Google Cloud, covering network, identity, policy and environments, so every resource is reviewable, repeatable and rebuilt from code.
+seoDescription: "Terraform or Bicep foundations for AWS, Azure and Google Cloud: network, identity, policy and environments, each resource reviewable and rebuilt from code."
 deliverables:
   - Landing zone design covering subscriptions or accounts, network, identity and policy
   - Terraform or Bicep modules in your repository

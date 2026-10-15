@@ -12,7 +12,7 @@
         "http://localhost/start-here.html",
         "http://localhost/trust.html",
         "http://localhost/insights.html",
-        "http://localhost/insights/cloud-cost-checklist.html"
+        "http://localhost/insights/azure-environment-strategy.html"
       ],
       "numberOfRuns": 1,
       "settings": {

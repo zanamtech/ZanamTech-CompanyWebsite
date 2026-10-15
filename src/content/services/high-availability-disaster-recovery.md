@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: DatabaseBackup
 summary: Protection for business-critical PostgreSQL, MySQL, SQL Server and MongoDB systems through cross-region replication, validated automated backups and tested failover runbooks.
+seoDescription: "Protection for business-critical PostgreSQL, MySQL, SQL Server and MongoDB systems through cross-region replication, validated backups and tested failover."
 deliverables:
   - Documented recovery objectives (RPO and RTO) agreed with you
   - Cross-region replication or standby design

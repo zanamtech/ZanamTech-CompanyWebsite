@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: Activity
 summary: Visibility into clusters, containers, memory, latency and database performance with CloudWatch, Azure Monitor, Google Cloud Monitoring, Prometheus and Grafana, and alerts routed before users are affected.
+seoDescription: "Monitor clusters, containers, latency and databases with CloudWatch, Azure Monitor, Google Cloud Monitoring, Prometheus and Grafana, and get alerts early."
 deliverables:
   - Monitoring and alerting baseline for your critical services
   - Dashboards for infrastructure, application and database health

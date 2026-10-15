@@ -63,17 +63,19 @@ const principles = [
     body: 'AI and data workflows are engineered to keep proprietary information inside your perimeter, never exposed to public third-party APIs.',
   },
 ];
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
 ---
 
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="About"
-  description="ZanamTech is a Cloud, DevOps & AI engineering firm: managed cloud operations, cloud and DevOps engineering, web and SaaS development, and practical AI automation."
+  description="ZanamTech is a Cloud, DevOps & AI engineering firm: managed cloud operations, cloud and DevOps engineering, web and SaaS development, and AI automation."
 >
   <PageHero
     eyebrow="About ZanamTech"
     title="Enterprise-grade engineering, delivered with boutique precision"
     lead="ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]}
+    breadcrumbs={breadcrumbs}
   />
 
   <section

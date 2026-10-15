@@ -8,17 +8,19 @@ import { getServicesByPillar } from '../../lib/services';
 import { flagshipIncluded } from '../../data/managed-tiers';
 
 const pillars = await getServicesByPillar();
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Services' }];
 ---
 
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="Services"
-  description="Managed Cloud & DevOps, cloud and DevOps engineering, web and SaaS development, and practical AI automation on AWS, Azure and Google Cloud, each scoped in a Statement of Work."
+  description="Managed Cloud & DevOps, Cloud & DevOps engineering, web & SaaS development and AI automation on AWS, Azure and Google Cloud, scoped in a Statement of Work."
 >
   <PageHero
     eyebrow="Services"
     title="Enterprise engineering services"
     lead="We run, secure and modernise AWS, Azure and Google Cloud platforms, build cloud-native web applications and automate manual work with practical AI. Every engagement is scoped in a Statement of Work."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+    breadcrumbs={breadcrumbs}
   />
 
   <div class="container-page section-y space-y-12 sm:space-y-16 lg:space-y-20">

@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import jsonld from 'jsonld';
 import { test, expect } from './fixtures';
 
 // One URL per page (audit F-01, F-43, F-44, F-66 a–c). Parses the production build in dist/: canonicals, the sitemap
@@ -133,5 +134,91 @@ test.describe('404 page', () => {
     expect(response?.status()).toBe(404);
     await expect(page).toHaveTitle(/Page not found/);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  });
+});
+
+// Audit F-09, F-20, F-42, F-66 (d): search-result lengths, share tags and structured data, read from the build.
+const decode = (s: string) =>
+  s
+    .replace(/&amp;/g, '&')
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+const jsonLdBlocks = (html: string) =>
+  [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+
+/** Expands JSON-LD offline: schema.org is served as a plain @vocab context instead of being fetched. */
+const SCHEMA = 'https://schema.org/';
+const documentLoader = async (url: string) => {
+  if (!url.startsWith('https://schema.org')) throw new Error(`Unexpected remote context ${url}`);
+  return { contextUrl: undefined, documentUrl: url, document: { '@context': { '@vocab': SCHEMA } } };
+};
+type Expanded = Record<string, unknown[]>;
+const ofType = (nodes: Expanded[], type: string) =>
+  nodes.filter((n) => (n['@type'] as string[] | undefined)?.includes(SCHEMA + type));
+const value = (node: Expanded, key: string) =>
+  (node[SCHEMA + key]?.[0] as { '@value'?: unknown; '@id'?: string }) ?? {};
+
+async function expandPage(file: string): Promise<Expanded[]> {
+  const blocks = jsonLdBlocks(read(file));
+  expect(blocks, `${file}: one JSON-LD block`).toHaveLength(1);
+  return (await jsonld.expand(JSON.parse(blocks[0]), { documentLoader })) as Expanded[];
+}
+
+test.describe('Metadata and structured data', () => {
+  test.beforeEach(({}, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Build output check; runs once');
+  });
+
+  test('every title is at most 60 characters and every description at most 155', () => {
+    for (const [path, html] of build().pages) {
+      const title = decode(attr(html, /<title>([^<]*)<\/title>/) ?? '');
+      const description = decode(attr(html, /<meta name="description" content="([^"]*)"/) ?? '');
+      expect(title.length, `${path} title "${title}"`).toBeLessThanOrEqual(60);
+      expect(description.length, `${path} description`).toBeLessThanOrEqual(155);
+      expect(description.length, `${path} description`).toBeGreaterThan(0);
+    }
+  });
+
+  test('every page has share-image size and alt, British English and one valid JSON-LD graph', () => {
+    for (const [path, html] of build().pages) {
+      expect(html, path).toContain('<html lang="en-GB"');
+      for (const tag of ['og:image', 'og:image:width', 'og:image:height', 'og:image:alt', 'og:locale']) {
+        expect(attr(html, new RegExp(`<meta property="${tag}" content="([^"]+)"`)), `${path} ${tag}`).toBeTruthy();
+      }
+      const blocks = jsonLdBlocks(html);
+      expect(blocks, `${path}: one JSON-LD block`).toHaveLength(1);
+      const data = JSON.parse(blocks[0]);
+      const ids = (data['@graph'] as { '@id'?: string }[]).map((n) => n['@id']).filter(Boolean);
+      expect(new Set(ids).size, `${path}: duplicate @id`).toBe(ids.length);
+    }
+  });
+
+  test('a service page expands to Organization, WebSite, BreadcrumbList and Service', async () => {
+    const nodes = await expandPage('services/managed-cloud-devops.html');
+    const [org] = ofType(nodes, 'Organization');
+    expect(ofType(nodes, 'WebSite')).toHaveLength(1);
+    const [crumbs] = ofType(nodes, 'BreadcrumbList');
+    expect(crumbs[SCHEMA + 'itemListElement']).toHaveLength(3);
+    const [service] = ofType(nodes, 'Service');
+    expect(value(service, 'name')['@value']).toBe('Managed Cloud & DevOps');
+    expect(value(service, 'provider')['@id']).toBe(org['@id']);
+    expect(value(service, 'url')['@id'] ?? value(service, 'url')['@value']).toMatch(
+      /\/services\/managed-cloud-devops$/,
+    );
+  });
+
+  test('an article is og:type article and its Article node has image, dates and publisher logo', async () => {
+    const html = read('insights/azure-environment-strategy.html');
+    expect(attr(html, /<meta property="og:type" content="([^"]+)"/)).toBe('article');
+    expect(attr(html, /<meta property="article:published_time" content="([^"]+)"/)).toMatch(/^2026-10-12T/);
+    const [articleNode] = ofType(await expandPage('insights/azure-environment-strategy.html'), 'Article');
+    expect(articleNode[SCHEMA + 'image']).toHaveLength(1);
+    expect(value(articleNode, 'datePublished')['@value']).toMatch(/^2026-10-12T/);
+    expect(value(articleNode, 'dateModified')['@value']).toBeTruthy();
+    const publisher = articleNode[SCHEMA + 'publisher'][0] as Expanded;
+    expect(value(publisher, 'logo')).toBeTruthy();
+    expect((publisher[SCHEMA + 'logo'][0] as Expanded)[SCHEMA + 'url']).toBeTruthy();
   });
 });

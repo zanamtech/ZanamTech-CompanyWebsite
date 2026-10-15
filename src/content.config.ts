@@ -27,6 +27,8 @@ const services = defineCollection({
     order: z.number().int().min(1),
     name: z.string().min(3),
     seoTitle: z.string().min(3).optional(),
+    /** Meta description when `summary` is too long for search results (≤ 155 characters, checked by lint:content). */
+    seoDescription: z.string().min(50).optional(),
     pillar: z.enum(pillarIds),
     flagship: z.boolean().default(false),
     /** Readiness gate: unpublished services are excluded from every menu, grid, page, form option and the sitemap. */
@@ -52,7 +54,13 @@ const insights = defineCollection({
   schema: z.object({
     title: z.string().min(3),
     summary: z.string().max(240),
+    /** Search-result title and description when `title` or `summary` is too long (lint:content checks the lengths). */
+    seoTitle: z.string().min(3).optional(),
+    seoDescription: z.string().min(50).optional(),
+    /** Publish date. An article dated after the build date is left out of the build (src/lib/publish.ts). */
     date: z.coerce.date(),
+    /** Last substantive update, for Article `dateModified`; defaults to `date`. */
+    updated: z.coerce.date().optional(),
     /** Drafts render only in `astro dev`; every build excludes them (spec 002 FR-036). */
     draft: z.boolean().default(true),
     sources: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
@@ -64,6 +72,8 @@ const resources = defineCollection({
   schema: z.object({
     title: z.string().min(3),
     summary: z.string().max(240),
+    seoTitle: z.string().min(3).optional(),
+    seoDescription: z.string().min(50).optional(),
     date: z.coerce.date(),
     draft: z.boolean().default(true),
     /** Proof artefacts are always labelled "Sample". */

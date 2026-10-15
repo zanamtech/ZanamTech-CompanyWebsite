@@ -8,7 +8,8 @@ import { externalLinks } from './plugins/markdown-external-links.mjs';
 import { readdirSync, readFileSync } from 'node:fs';
 
 // Sitemap <lastmod>: an Insights or Resources entry's frontmatter `date`, the build date for every other page.
-const buildDate = new Date();
+// BUILD_DATE (YYYY-MM-DD) overrides "now", as in src/lib/publish.ts.
+const buildDate = process.env.BUILD_DATE ? new Date(process.env.BUILD_DATE) : new Date();
 const contentDates = new Map();
 for (const dir of ['insights', 'resources']) {
   const folder = new URL(`./src/content/${dir}/`, import.meta.url);
@@ -33,6 +34,8 @@ export default defineConfig({
       PUBLIC_FORM_ACCESS_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
       PUBLIC_ANALYTICS_DOMAIN: envField.string({ context: 'server', access: 'public', optional: true }),
       PUBLIC_ANALYTICS_SRC: envField.string({ context: 'server', access: 'public', optional: true }),
+      // Build-time only: overrides "now" for scheduled Insights publishing (src/lib/publish.ts).
+      BUILD_DATE: envField.string({ context: 'server', access: 'public', optional: true }),
     },
   },
   // One URL per page, without a trailing slash (matches every internal link): dist/about.html is served at /about, and

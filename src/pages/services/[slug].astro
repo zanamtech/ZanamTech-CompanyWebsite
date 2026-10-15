@@ -22,6 +22,7 @@ import { cta } from '../../data/site';
 import { resultsFootnote } from '../../data/results';
 import { offers } from '../../data/offers';
 import { cadence, engagementModelCatalog } from '../../data/engagement';
+import { service as serviceNode } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const services = await getPublishedServices();
@@ -61,15 +62,21 @@ const related = [
 const relatedOffer = offers.find((o) => o.id === service.data.relatedOffer);
 const engagementModels = engagementModelCatalog.filter((m) => engagementTypes.includes(m.id));
 const contactHref = `${cta.href}?service=${service.id}`;
+const seoDescription = service.data.seoDescription ?? summary;
+const serviceLd = serviceNode(
+  { name, description: summary, category: servicePillars[pillar].title, path: `/services/${service.id}` },
+  new URL('/', Astro.site),
+);
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: name }];
 ---
 
-<BaseLayout title={service.data.seoTitle ?? name} description={summary}>
-  <PageHero
-    eyebrow={servicePillars[pillar].title}
-    title={name}
-    lead={summary}
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: name }]}
-  >
+<BaseLayout
+  breadcrumbs={breadcrumbs}
+  title={service.data.seoTitle ?? name}
+  description={seoDescription}
+  jsonLd={serviceLd}
+>
+  <PageHero eyebrow={servicePillars[pillar].title} title={name} lead={summary} breadcrumbs={breadcrumbs}>
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
       <Button href={contactHref} size="lg">
         {cta.primary}

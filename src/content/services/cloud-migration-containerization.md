@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: Container
 summary: Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+seoDescription: "Staged, validated migration from legacy hosting to AWS, Azure or Google Cloud, with workloads containerised where it pays off for scaling and self-healing."
 deliverables:
   - Migration plan with sequencing, risks and rollback points
   - Target landing zone and Infrastructure as Code

@@ -1,6 +1,8 @@
 ---
 title: "Dev, QA, UAT, Prod on Azure: an environment strategy that survives real releases"
 summary: How to structure Azure environments so code moves predictably from a developer's branch to production, with parity, isolation and controlled promotion at every step.
+seoTitle: "Azure Dev, QA, UAT and Prod environment strategy"
+seoDescription: "How to structure Azure environments so code moves predictably from a developer's branch to production, with parity, isolation and controlled promotion."
 date: 2026-10-12
 draft: false
 sources: []

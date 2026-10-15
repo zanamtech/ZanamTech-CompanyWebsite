@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: TrendingDown
 summary: Architectural reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
+seoDescription: "Architecture reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails."
 deliverables:
   - Spend analysis by service, environment and team
   - Right-sizing and clean-up changes applied

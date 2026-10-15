@@ -17,17 +17,19 @@ const sections = [
   { id: 'data-residency', title: 'Data residency' },
   { id: 'reporting-issues', title: 'Reporting a security issue' },
 ];
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Security & Trust' }];
 ---
 
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="Security & Trust"
-  description="How ZanamTech protects client environments and data: least-privilege access, AI-tool policy, contracts, sub-processors, data residency and security contact."
+  description="How ZanamTech protects client environments and data: least-privilege access, AI-tool policy, contracts, sub-processors, data residency, security contact."
 >
   <PageHero
     eyebrow="Trust"
     title="Security & Trust"
     lead="How we protect your environments and data, written for the security and procurement teams who review us."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Security & Trust' }]}
+    breadcrumbs={breadcrumbs}
   />
 
   <LongFormDoc sections={sections}>

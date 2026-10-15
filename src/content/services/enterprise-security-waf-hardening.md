@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: ShieldCheck
 summary: Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+seoDescription: "Layered, zero-trust protection for web apps, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF and AWS WAF."
 deliverables:
   - Attack-surface review with prioritised findings
   - WAF policies, rate limits and bot controls in place

@@ -6,6 +6,7 @@ flagship: true
 published: true
 icon: ServerCog
 summary: We run your AWS, Azure or Google Cloud platform end to end, covering operations, environments, pipelines, backups and repository governance, with documented runbooks, monthly reporting and no lock-in.
+seoDescription: "We run your AWS, Azure or Google Cloud platform end to end: operations, pipelines, backups and governance, with runbooks, monthly reporting and no lock-in."
 deliverables:
   - A documented runbook and architecture diagram set for your platform
   - Managed Dev, QA, UAT and Prod environments with release scheduling and rollbacks

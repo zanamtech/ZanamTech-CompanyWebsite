@@ -7,16 +7,17 @@ import ArticleBody from '../../components/content/ArticleBody.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Illustration from '../../components/ui/Illustration.astro';
-import { isVisible } from '../../lib/content';
+import { isPublished, isVisible } from '../../lib/content';
 import { leadership } from '../../data/leadership';
-import { site } from '../../data/site';
+import { ogImage } from '../../lib/og';
+import { article as articleNode } from '../../lib/schema';
 
 type Article = CollectionEntry<'insights'>;
 
-// /insights and /insights/<slug> exist only for visible articles: drafts render in `astro dev` only, so in a build
-// this route produces no pages until the owner sets `draft: false` (spec 002 FR-036, SC-010).
+// /insights and /insights/<slug> exist only for published articles: drafts render in `astro dev` only (spec 002
+// FR-036, SC-010), and an article dated after the build date is not built at all (src/lib/publish.ts).
 export async function getStaticPaths() {
-  const articles = (await getCollection('insights', isVisible)).sort(
+  const articles = (await getCollection('insights', isPublished)).sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
   if (articles.length === 0) return [];
@@ -44,37 +45,34 @@ const toc = rendered?.headings.filter((h) => h.depth === 2) ?? [];
 const readMinutes = article
   ? Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 200))
   : 0;
-const articleLd = article
-  ? {
-      '@context': 'https://schema.org',
-      '@type': 'Article',
-      headline: article.data.title,
-      description: article.data.summary,
-      datePublished: article.data.date.toISOString(),
-      author: {
-        '@type': 'Person',
-        name: leadership.name,
-        jobTitle: leadership.role,
-        url: new URL('/about', Astro.site).href,
-      },
-      publisher: { '@type': 'Organization', name: site.name, url: Astro.site?.href },
-      mainEntityOfPage: new URL(`/insights/${article.id}`, Astro.site).href,
-    }
-  : undefined;
+const articleDates = article && { published: article.data.date, modified: article.data.updated ?? article.data.date };
+const articleLd =
+  article && articleDates
+    ? articleNode(
+        {
+          headline: article.data.title,
+          description: article.data.summary,
+          ...articleDates,
+          path: `/insights/${article.id}`,
+          image: ogImage,
+        },
+        new URL('/', Astro.site),
+      )
+    : undefined;
+const breadcrumbs = article
+  ? [{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights' }, { label: article.data.title }]
+  : [{ label: 'Home', href: '/' }, { label: 'Insights' }];
 ---
 
 {article && Content ? (
-  <BaseLayout title={article.data.title} description={article.data.summary} jsonLd={articleLd}>
-    <PageHero
-      eyebrow="Insights"
-      title={article.data.title}
-      lead={article.data.summary}
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Insights', href: '/insights' },
-        { label: article.data.title },
-      ]}
-    >
+  <BaseLayout
+    title={article.data.seoTitle ?? article.data.title}
+    description={article.data.seoDescription ?? article.data.summary}
+    breadcrumbs={breadcrumbs}
+    jsonLd={articleLd}
+    article={articleDates}
+  >
+    <PageHero eyebrow="Insights" title={article.data.title} lead={article.data.summary} breadcrumbs={breadcrumbs}>
       <p slot="meta" class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted" data-article-meta>
         {article.data.draft && <Badge tone="accent">Draft</Badge>}
         <span>
@@ -155,6 +153,7 @@ const articleLd = article
   </BaseLayout>
 ) : (
   <BaseLayout
+    breadcrumbs={breadcrumbs}
     title="Insights"
     description="Practical writing on cloud operations, DevOps governance, cost control and AI automation."
   >
@@ -162,7 +161,7 @@ const articleLd = article
       eyebrow="Insights"
       title="Insights"
       lead="Practical writing on cloud operations, DevOps governance, cost control and AI automation."
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights' }]}
+      breadcrumbs={breadcrumbs}
     />
     <div class="container-page section-y">
       <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>

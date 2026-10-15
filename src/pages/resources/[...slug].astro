@@ -32,16 +32,18 @@ interface Props {
 const { artefact, artefacts } = Astro.props;
 const Content = artefact ? (await render(artefact)).Content : undefined;
 const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
+const breadcrumbs = artefact
+  ? [{ label: 'Home', href: '/' }, { label: 'Samples', href: '/resources' }, { label: title }]
+  : [{ label: 'Home', href: '/' }, { label: 'Samples' }];
 ---
 
 {artefact && Content ? (
-  <BaseLayout title={`Sample: ${title}`} description={artefact.data.summary}>
-    <PageHero
-      eyebrow="Sample"
-      title={title}
-      lead={artefact.data.summary}
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples', href: '/resources' }, { label: title }]}
-    >
+  <BaseLayout
+    title={artefact.data.seoTitle ?? `Sample: ${title}`}
+    description={artefact.data.seoDescription ?? artefact.data.summary}
+    breadcrumbs={breadcrumbs}
+  >
+    <PageHero eyebrow="Sample" title={title} lead={artefact.data.summary} breadcrumbs={breadcrumbs}>
       <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
         <Illustration topic={artefact.id} variant="header" />
       </div>
@@ -59,6 +61,7 @@ const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
   </BaseLayout>
 ) : (
   <BaseLayout
+    breadcrumbs={breadcrumbs}
     title="Samples"
     description="Samples of the architecture, procedures and reporting ZanamTech engagements produce, written for illustration."
   >
@@ -66,7 +69,7 @@ const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
       eyebrow="Samples"
       title="See the standard before you sign"
       lead="Samples of the architecture, procedures and reporting every engagement produces. Written for illustration, not taken from any client."
-      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples' }]}
+      breadcrumbs={breadcrumbs}
     />
     <div class="container-page section-y">
       <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>

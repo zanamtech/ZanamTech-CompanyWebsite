@@ -16,9 +16,11 @@ const nextSteps = [
   },
   { title: 'Delivery', body: 'Staged delivery with weekly status reports, followed by optional managed operations.' },
 ];
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Contact' }];
 ---
 
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="Contact"
   description="Book a strategy consultation with ZanamTech. We reply within 1 business day. Written proposal within 2 business days of the consultation."
 >
@@ -26,7 +28,7 @@ const nextSteps = [
     eyebrow="Contact"
     title="Book a Strategy Consultation"
     lead="Tell us about your environment and objectives. Every engagement starts with a technical conversation, not a sales script."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+    breadcrumbs={breadcrumbs}
   />
 
   <div class="container-page grid gap-10 section-y lg:grid-cols-12 lg:gap-14">

@@ -366,7 +366,10 @@ Implementation runs in three rounds. These decisions override the recommendation
 | F-14 (native select instead of the custom combobox) | **Declined.** Keep the current behaviour. |
 | F-51 (merge the footer phone and desktop lists) | **Declined.** Keep the current behaviour. |
 | F-57 (drop the FAQ animation fallback) | **Declined.** Keep the current behaviour. |
-| F-02 (pause mechanism for the marquee and hero stepper) | **Declined as a visible change.** The marquee and the stepper keep their current look, speed and looping. Round 3 adds only invisible keyboard behaviour: both pause while focus is inside them. |
+| F-02 (pause mechanism for the marquee and hero stepper) | **Declined in full** (updated before round 3). No change at all to the marquee or the hero stepper, not even a keyboard/focus pause. The owner has declined full WCAG 2.2.2 (Pause, Stop, Hide) compliance for these two elements. |
 | F-17 (spam protection) | **No Turnstile now.** The owner restricts the Web3Forms key to the production domain at launch. |
 | F-50 (SVG logo) | **Only if an SVG logo is supplied.** |
 | F-20 (OG image and article metadata) | **Do the code part.** The 1200×630 OG image asset comes later, in the images round. |
+| Contact-form code on every page (round 2, F-15) | **Accepted as is.** The lead-form code stays in the shared Alpine bundle (2.8 KB gzip on every page), because a ClientRouter navigation into `/contact` starts Alpine before a page-scoped script could register it. |
+| "How we engage" timer (round 2, F-05) | **Accepted as is.** The 4 s safety timer starts when the cards scroll into view, not at page load. |
+| F-64 (tests grouped by review round) | **Partly deferred.** Round 3 only removes duplicate test cases. The full regroup by feature is deferred. |

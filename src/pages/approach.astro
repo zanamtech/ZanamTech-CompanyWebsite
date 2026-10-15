@@ -8,18 +8,20 @@ import AgencyPartners from '../components/sections/AgencyPartners.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
 import { accessModel, aiToolPolicy, cadence, engagementModelCatalog } from '../data/engagement';
+const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'How We Work' }];
 ---
 
 <!-- How We Work (spec 002 FR-023). The address stays /approach; the process a client receives, never team structure. -->
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="How We Work"
-  description="How ZanamTech works: technical assessment, written proposal and Statement of Work, staged implementation and continuous managed operations, with five engagement models."
+  description="How ZanamTech works: technical assessment, written proposal and Statement of Work, staged implementation, managed operations and five engagement models."
 >
   <PageHero
     eyebrow="How We Work"
     title="Consultative engagement, engineered for accountability"
     lead="We do not publish fixed packages or commodity rates. Every partnership starts with an architectural assessment that establishes scope, service levels and deliverables in a written Statement of Work."
-    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'How We Work' }]}
+    breadcrumbs={breadcrumbs}
   />
 
   <div class="container-page section-t">

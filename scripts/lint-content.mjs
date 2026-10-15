@@ -2,7 +2,8 @@
 // Content lint gate (Constitution v2.0.3, Principles III and VII).
 // Pass 1 scans site source line by line for prohibited claims, pricing, competitor names, team-structure claims,
 // time figures and unearned status. Pass 2 checks that proof data (clients, testimonials, case studies) carries its
-// verification fields and that third-party statistics in Insights cite a source.
+// verification fields and that third-party statistics in Insights cite a source. Pass 3 checks search-result lengths:
+// every page title ≤ 60 characters (with the " | ZanamTech" suffix) and every meta description ≤ 155.
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -162,8 +163,75 @@ for await (const file of walk(join(ROOT, 'src', 'content', 'insights'))) {
   });
 }
 
+// ---- Pass 3: title and meta description lengths (audit F-09) --------------------------------------------------
+const TITLE_MAX = 60;
+const DESCRIPTION_MAX = 155;
+const siteSource = await read('src/data/site.ts');
+const siteField = (key) => {
+  const value = siteSource.match(new RegExp(`^\\s*${key}:\\s*'([^']*)'`, 'm'))?.[1];
+  if (value === undefined) throw new Error(`lint-content: site.${key} not found in src/data/site.ts`);
+  return value;
+};
+const SUFFIX = ` | ${siteField('name')}`;
+
+function checkLengths(where, title, description) {
+  if (title !== undefined && title.length > TITLE_MAX)
+    violations.push(`${where}  title is ${title.length} characters (max ${TITLE_MAX}): "${title}"`);
+  if (description !== undefined && description.length > DESCRIPTION_MAX)
+    violations.push(`${where}  meta description is ${description.length} characters (max ${DESCRIPTION_MAX})`);
+}
+
+// Home: BaseLayout's defaults ("<name> | <tagline>" and site.metaDescription).
+checkLengths('src/data/site.ts', `${siteField('name')} | ${siteField('tagline')}`, siteField('metaDescription'));
+
+// Static pages: literal title="…" and description="…" on <BaseLayout>. Entry pages are checked from their content.
+for await (const file of walk(join(ROOT, 'src', 'pages'))) {
+  if (!file.endsWith('.astro')) continue;
+  for (const [, attrs] of (await readFile(file, 'utf8')).matchAll(/<BaseLayout\b([^>]*)>/g)) {
+    const title = attrs.match(/\stitle="([^"]*)"/)?.[1];
+    checkLengths(
+      relative(ROOT, file),
+      title === undefined ? undefined : title + SUFFIX,
+      attrs.match(/\sdescription="([^"]*)"/)?.[1],
+    );
+  }
+}
+
+// Content entries, with the same fallbacks the pages use (seoTitle / seoDescription first).
+const frontField = (front, key) => {
+  const raw = front.match(new RegExp(`^${key}:[ \t]*(.+)$`, 'm'))?.[1]?.trim();
+  if (raw === undefined) return undefined;
+  if (raw.startsWith('"')) return JSON.parse(raw);
+  return raw.startsWith("'") ? raw.slice(1, -1).replaceAll("''", "'") : raw;
+};
+const ENTRY_META = {
+  services: (f) => [
+    frontField(f, 'seoTitle') ?? frontField(f, 'name'),
+    frontField(f, 'seoDescription') ?? frontField(f, 'summary'),
+  ],
+  insights: (f) => [
+    frontField(f, 'seoTitle') ?? frontField(f, 'title'),
+    frontField(f, 'seoDescription') ?? frontField(f, 'summary'),
+  ],
+  resources: (f) => [
+    frontField(f, 'seoTitle') ?? `Sample: ${frontField(f, 'title')?.replace(/^Sample:\s*/, '')}`,
+    frontField(f, 'seoDescription') ?? frontField(f, 'summary'),
+  ],
+  'case-studies': (f) => [frontField(f, 'title'), frontField(f, 'challenge')],
+};
+for (const [dir, meta] of Object.entries(ENTRY_META)) {
+  for await (const file of walk(join(ROOT, 'src', 'content', dir))) {
+    if (!file.endsWith('.md')) continue;
+    const front = (await readFile(file, 'utf8')).split(/^---\s*$/m)[1] ?? '';
+    const [title, description] = meta(front);
+    checkLengths(relative(ROOT, file), title + SUFFIX, description);
+  }
+}
+
 if (violations.length) {
   console.error(`Content lint failed (${violations.length}):\n  ${violations.join('\n  ')}`);
   process.exit(1);
 }
-console.log('Content lint passed: no prohibited claims, pricing, competitor names, time figures or unverified proof.');
+console.log(
+  'Content lint passed: no prohibited claims, pricing, competitor names, time figures or unverified proof; titles and descriptions within length.',
+);

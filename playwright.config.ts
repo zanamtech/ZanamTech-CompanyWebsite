@@ -1,5 +1,6 @@
 import { createServer } from 'node:net';
 import { defineConfig, devices } from '@playwright/test';
+import { E2E_BUILD_DATE } from './tests/e2e/build-date';
 
 /** Ask the OS for an unused port. */
 function freePort(): Promise<number> {
@@ -36,6 +37,8 @@ export default defineConfig({
   ],
   webServer: {
     command: `npm run build && npm run preview -- --port ${PORT}`,
+    // Every scheduled Insights article is built (tests/e2e/build-date.ts).
+    env: { BUILD_DATE: E2E_BUILD_DATE },
     url: `http://localhost:${PORT}`,
     // Never reuse a server that happens to be listening: if the port is taken, the run fails instead.
     reuseExistingServer: false,

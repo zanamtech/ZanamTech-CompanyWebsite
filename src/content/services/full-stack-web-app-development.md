@@ -7,6 +7,7 @@ flagship: false
 published: true
 icon: CodeXml
 summary: Cloud-native web applications and multi-tenant SaaS platforms, from MVP to scale, with authentication, billing, admin dashboards and APIs delivered through automated pipelines.
+seoDescription: "Cloud-native web apps and multi-tenant SaaS platforms, from MVP to scale, with authentication, billing, admin dashboards and APIs on automated pipelines."
 deliverables:
   - Product architecture and delivery plan
   - Production web application or SaaS platform in your repository

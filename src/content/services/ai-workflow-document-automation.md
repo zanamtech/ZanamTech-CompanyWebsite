@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: Bot
 summary: Automate a recurring manual process end to end, such as a regular report or document intake, with extraction, routing, human approval points and a full audit log.
+seoDescription: "Automate a recurring manual process end to end, such as a report or document intake, with extraction, routing, human approval points and a full audit log."
 deliverables:
   - Process map with the automation boundary agreed
   - Working automation on your real data

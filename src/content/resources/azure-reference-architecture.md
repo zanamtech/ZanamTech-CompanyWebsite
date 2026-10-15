@@ -1,6 +1,8 @@
 ---
 title: "Sample: Azure Dev/QA/UAT/Prod reference architecture"
 summary: A sample reference architecture for a web application on Azure with four isolated environments, Infrastructure as Code, Key Vault per environment and slot-based releases.
+seoTitle: "Sample: Azure Dev-to-Prod reference architecture"
+seoDescription: "A sample reference architecture for an Azure web application with four isolated environments, Infrastructure as Code, Key Vault per environment and slots."
 date: 2026-10-12
 draft: false
 sample: true

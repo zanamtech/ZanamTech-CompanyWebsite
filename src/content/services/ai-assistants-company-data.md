@@ -6,6 +6,7 @@ flagship: false
 published: true
 icon: BrainCircuit
 summary: AI assistants that answer from your own documents and systems, with citations, permissions and evaluation, running on managed AI services inside your own cloud tenant.
+seoDescription: "AI assistants that answer from your own documents and systems, with citations, permissions and evaluation, on managed AI services inside your cloud tenant."
 deliverables:
   - Knowledge-source inventory and access model
   - Retrieval pipeline over your approved documents and systems
