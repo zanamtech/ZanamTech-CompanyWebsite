@@ -355,6 +355,7 @@ export default (Alpine: Alpine) => {
     timers: [] as number[],
     observer: null as IntersectionObserver | null,
     watchdog: null as (() => void) | null,
+    safetyTimer: 0,
 
     init() {
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -383,6 +384,8 @@ export default (Alpine: Alpine) => {
       window.addEventListener('scroll', check, { passive: true });
       window.addEventListener('pageshow', check);
       document.addEventListener('visibilitychange', check);
+      // Last resort, as in reveal.ts: whatever has not started by now is shown as finished.
+      this.safetyTimer = window.setTimeout(() => !this.started && this.finish(), 4000);
     },
 
     start() {
@@ -404,6 +407,7 @@ export default (Alpine: Alpine) => {
     },
 
     stopWatching() {
+      window.clearTimeout(this.safetyTimer);
       this.observer?.disconnect();
       if (this.watchdog) {
         window.removeEventListener('scroll', this.watchdog);

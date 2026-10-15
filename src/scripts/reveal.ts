@@ -1,99 +1,140 @@
 /**
- * Staggered fade/rise for card groups marked `data-reveal-group`, using Framer Motion's DOM engine.
- * Optional per-group tuning (all data attributes on the group):
- * - `data-reveal-stagger`  seconds between items (default 0.06). Capped at 0.06 and so that the whole group starts
- *                          within 300ms: the grid is revealed as one group, never card by card while scrolling.
- * - `data-reveal-distance` rise in px (default 16); `data-reveal-x` horizontal offset in px (default 0)
- * - `data-reveal-scale`    starting scale (default 1)
- * - `data-reveal-duration` seconds per item (default 0.5)
+ * Group fade/rise for card grids marked `data-reveal-group` (each direct child is one item). CSS transitions driven by
+ * a `data-reveal` attribute; no animation library, nothing inline.
+ * Optional per-group tuning: `data-reveal-distance` (rise in px, default 16), `data-reveal-x` (horizontal offset in px,
+ * default 0), `data-reveal-scale` (starting scale, default 1).
  *
- * Safety rules:
- * - Nothing is hidden until Framer Motion has loaded, so content never disappears if the chunk fails.
- * - Only groups entirely below the fold are prepared, so there is no flash for visible content and no layout shift
- *   (opacity/transform only).
- * - Skipped entirely under prefers-reduced-motion.
- * - Works with client-side navigation: re-runs on `astro:page-load`, and never binds a group twice.
- * - Never leaves content hidden: groups taller than the viewport use a smaller threshold, a scroll/pageshow/
- *   visibility watchdog starts any group that is on screen.
+ * Fail-safe rules (a card must never be left blank):
+ * - Visible by default: only this script hides anything, by setting data-reveal="hidden" on items of groups that are
+ *   entirely below the fold at init. Groups in or above the viewport are never touched.
+ * - The end state is an attribute, not an animation: data-reveal="shown" is opacity 1 whatever happens to the transition.
+ *   Once the transition is over the attribute is removed, so a revealed card carries no opacity/transform at all.
+ *   (A glass card left on its own compositor layer with backdrop-filter can stay unpainted in Chromium until a repaint.)
+ * - Once revealed, an element is never hidden again (WeakSet), whatever re-runs.
+ * - A safety timeout reveals everything still hidden.
+ * - Re-initialised on each `astro:page-load`: the previous observer and timer are torn down first; the scroll/pageshow/
+ *   visibility watchdog listeners are bound once for the whole session.
+ * - The theme toggle never touches reveal state. prefers-reduced-motion: nothing is hidden.
  */
-async function setup() {
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]:not([data-motion-bound])'));
-  if (!groups.length || reduceMotion || !('IntersectionObserver' in window)) return;
-  groups.forEach((g) => (g.dataset.motionBound = ''));
+const SAFETY_MS = 4000;
+const STAGGER_S = 0.06;
+const DONE_MS = 900;
 
-  const { animate, inView } = await import('framer-motion/dom');
-  const belowFold = groups.filter((g) => g.isConnected && g.getBoundingClientRect().top > window.innerHeight);
+const revealed = new WeakSet<Element>();
+let pending: HTMLElement[] = [];
+let observer: IntersectionObserver | null = null;
+let safetyTimer = 0;
 
-  for (const group of belowFold) {
-    const items = Array.from(group.children) as HTMLElement[];
-    const d = group.dataset;
-    const stagger = Math.min(Number(d.revealStagger ?? 0.06), 0.06, 0.24 / Math.max(1, items.length - 1));
-    const y = Number(d.revealDistance ?? 16);
-    const x = Number(d.revealX ?? 0);
-    const scale = Number(d.revealScale ?? 1);
-    const duration = Number(d.revealDuration ?? 0.5);
-    items.forEach((el) => {
-      el.style.opacity = '0';
-      el.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-    });
+function itemsOf(group: HTMLElement): HTMLElement[] {
+  return Array.from(group.children) as HTMLElement[];
+}
 
-    let started = false;
-    const reveal = () => {
-      if (started) return;
-      started = true;
-      cancel();
-      stopWatching();
-      items.forEach((el, i) => {
-        animate(
-          el,
-          { opacity: 1, transform: 'translate3d(0px, 0px, 0) scale(1)' },
-          { duration, delay: i * stagger, ease: [0.16, 1, 0.3, 1] },
-        );
-      });
-    };
-
-    // Already scrolled past (fast scroll, jump, scroll restoration): show the group as it would end, without animating.
-    const showNow = () => {
-      if (started) return;
-      started = true;
-      cancel();
-      stopWatching();
-      items.forEach((el) => {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-      });
-    };
-
-    // A group taller than the viewport can never show 15% of itself, so ask for what can actually fit on screen.
-    const amount = Math.min(0.15, (window.innerHeight * 0.5) / Math.max(1, group.getBoundingClientRect().height));
-    const cancel = inView(group, reveal, { amount });
-
-    // Safety net, as in processReveal: start whenever the group is on screen even if the observer missed it (scroll
-    // restoration, back/forward cache, a jump past the group, a tab hidden during load).
-    let queued = false;
-    const check = () => {
-      if (queued || started) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        const r = group.getBoundingClientRect();
-        if (r.bottom <= 0) showNow();
-        else if (r.top < window.innerHeight) reveal();
-      });
-    };
-    const stopWatching = () => {
-      window.removeEventListener('scroll', check);
-      window.removeEventListener('pageshow', check);
-      document.removeEventListener('visibilitychange', check);
-    };
-    window.addEventListener('scroll', check, { passive: true });
-    window.addEventListener('pageshow', check);
-    document.addEventListener('visibilitychange', check);
+/** Clear every reveal style from the group's items. */
+function clean(group: HTMLElement) {
+  for (const el of itemsOf(group)) {
+    el.removeAttribute('data-reveal');
+    el.style.removeProperty('--reveal-delay');
+    el.style.removeProperty('--reveal-from');
   }
 }
 
-void setup();
-document.addEventListener('astro:page-load', () => void setup());
+function reveal(group: HTMLElement, animate = true) {
+  if (revealed.has(group)) return;
+  revealed.add(group);
+  observer?.unobserve(group);
+  pending = pending.filter((g) => g !== group);
+  if (!animate) {
+    clean(group);
+    return;
+  }
+  const items = itemsOf(group);
+  // Whole group under way within 240ms, never card by card.
+  const stagger = Math.min(STAGGER_S, 0.24 / Math.max(1, items.length - 1));
+  items.forEach((el, i) => {
+    el.style.setProperty('--reveal-delay', `${i * stagger}s`);
+    el.setAttribute('data-reveal', 'shown');
+  });
+  window.setTimeout(() => clean(group), DONE_MS + items.length * stagger * 1000);
+}
+
+function check() {
+  for (const group of [...pending]) {
+    if (!group.isConnected) continue;
+    const r = group.getBoundingClientRect();
+    if (r.bottom <= 0) reveal(group, false);
+    else if (r.top < window.innerHeight) reveal(group);
+  }
+}
+
+let queued = false;
+function scheduleCheck() {
+  if (queued || !pending.length) return;
+  queued = true;
+  requestAnimationFrame(() => {
+    queued = false;
+    check();
+  });
+}
+
+function teardown() {
+  observer?.disconnect();
+  observer = null;
+  window.clearTimeout(safetyTimer);
+  pending = [];
+}
+
+function revealAll() {
+  for (const group of [...pending]) reveal(group, false);
+}
+
+function init() {
+  teardown();
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    groups.forEach((g) => {
+      revealed.add(g);
+      clean(g);
+    });
+    return;
+  }
+
+  for (const group of groups) {
+    if (revealed.has(group)) continue;
+    const alreadyHidden = itemsOf(group).some((el) => el.dataset.reveal === 'hidden');
+    // In or above the viewport: never hidden.
+    if (!alreadyHidden && group.getBoundingClientRect().top < window.innerHeight) {
+      revealed.add(group);
+      continue;
+    }
+    const d = group.dataset;
+    const from = `translate3d(${Number(d.revealX ?? 0)}px, ${Number(d.revealDistance ?? 16)}px, 0) scale(${Number(d.revealScale ?? 1)})`;
+    for (const el of itemsOf(group)) {
+      el.style.setProperty('--reveal-from', from);
+      el.setAttribute('data-reveal', 'hidden');
+    }
+    pending.push(group);
+  }
+  if (!pending.length) return;
+
+  observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && reveal(e.target as HTMLElement)),
+    { rootMargin: '0px 0px -10% 0px' },
+  );
+  pending.forEach((g) => observer!.observe(g));
+  safetyTimer = window.setTimeout(revealAll, SAFETY_MS);
+  scheduleCheck();
+}
+
+// Bound once for the whole session (the module runs once; the ClientRouter only swaps the page body).
+window.addEventListener('scroll', scheduleCheck, { passive: true });
+window.addEventListener('pageshow', scheduleCheck);
+document.addEventListener('visibilitychange', scheduleCheck);
+// Before a client-side swap, drop the old page's observer and timer.
+document.addEventListener('astro:before-swap', teardown);
+// Fires on the first load and after every client-side navigation. init() is idempotent, so running it now as well
+// covers a page-load event dispatched before this module ran.
+document.addEventListener('astro:page-load', init);
+init();
 
 export {};

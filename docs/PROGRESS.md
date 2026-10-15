@@ -203,6 +203,13 @@
 - **Spacing:** the About hero → "Our mission" gap is about 30% smaller (section top padding 24 / 32 / 40px, was 36 / 48 / 56px).
 - **Checks:** review4 (new), review3, review-fixes, trust-legal, contact, approach-industries, desktop + mobile: 117 passed, 11 skipped by design, 0 failed. `npm run check` 0 errors; `lint:content` passes.
 
+## 3j. Reveal fail-safe, eyebrow alignment, header opacity (15 Oct)
+- **Blank card, root cause:** `reveal.ts` hid below-fold items with inline `opacity: 0` + `transform` and relied on a Framer Motion WAAPI animation to clear them. The final value is only written when that animation's finish event fires, nothing checked afterwards, and the animation ran on the glass card itself (`backdrop-filter`). Every revealed card was then left on its own compositor layer for good (inline `transform`). That is the Chromium paint bug already found on "How we engage" (3e): a backdrop-filtered card left unpainted until a repaint. Not reproducible headless (software compositing). The blank-render mechanism matches the earlier case, but it is an inference, not a reproduction.
+- **Fix:** `reveal.ts` rewritten without Framer Motion. CSS transitions driven by a `data-reveal` attribute: visible by default; only the script hides, and only groups fully below the fold at init. `shown` is opacity 1 regardless of the transition, and the attribute is removed when done, so cards keep no opacity/transform. A revealed group is never hidden again (WeakSet). 4s safety timeout reveals anything still hidden. Observer/timer torn down on `astro:before-swap` and rebuilt on `astro:page-load`; watchdog listeners bound once. No theme coupling; reduced motion hides nothing (script + CSS). The `.card-hover` transitions are merged into the reveal transition so neither overrides the other. `processReveal` ("How we engage") gained the same 4s safety timeout.
+- **Founder card:** "LEADERSHIP" and "Mubashir Ahmed" are top-aligned, with cap tops measured level (0px difference at 1440 and 1024; was 7px). Grid items `self-start` plus a 3px eyebrow nudge.
+- **Header:** bar and scrolled backdrop at 96% opacity (was 88%), same 8px blur, light and dark.
+- **Checks:** new `reveal-sitewide.spec.ts` (10 main pages: fast scroll, theme toggle, ClientRouter away and back; every reveal item at opacity 1, no `data-reveal` left; plus reduced motion), reveal, review3/4, review-fixes, header-footer-ui, theme-motion, home-v3: 129 passed, 25 skipped by design. Reveal specs 3x repeat: 108/108. `npm run check` 0 errors; `lint:content` passes.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |

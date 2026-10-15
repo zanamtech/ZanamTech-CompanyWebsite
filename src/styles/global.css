@@ -278,6 +278,30 @@
     }
   }
 
+  /* Group reveal (src/scripts/reveal.ts). Only the script sets data-reveal, so without JS everything is visible. The
+     hover transitions of .card-hover are repeated here so the two never override each other. The attribute is removed
+     once the reveal is over, leaving the card with no opacity or transform of its own. */
+  [data-reveal] {
+    transition:
+      opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
+      translate 0.3s ease-out,
+      box-shadow 0.3s ease-out,
+      border-color 0.3s ease-out;
+  }
+
+  [data-reveal='hidden'] {
+    opacity: 0;
+    transform: var(--reveal-from, translate3d(0, 16px, 0));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal='hidden'] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
   .glass {
     background-color: var(--glass);
     border: 1px solid var(--glass-border);
@@ -316,14 +340,14 @@
      subtle blur kept for depth. */
   .header-bar,
   .header-backdrop {
-    background-color: rgb(255 255 255 / 0.88);
+    background-color: rgb(255 255 255 / 0.96);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
 
   .dark .header-bar,
   .dark .header-backdrop {
-    background-color: rgb(11 17 32 / 0.88);
+    background-color: rgb(11 17 32 / 0.96);
   }
 
   .glass-bar {
