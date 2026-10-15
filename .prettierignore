@@ -1,0 +1,17 @@
+# Build output and generated files
+dist/
+.astro/
+node_modules/
+package-lock.json
+test-results/
+playwright-report/
+.lighthouseci/
+
+# Docs, specs and agent tooling are not formatted by this project's code style
+docs/
+specs/
+history/
+.specify/
+.agents/
+.claude/
+*.md
