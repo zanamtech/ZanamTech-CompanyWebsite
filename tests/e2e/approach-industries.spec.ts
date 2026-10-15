@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
 
 import { engagementModelCatalog, engagementPhases } from '../../src/data/engagement';
 import { segments } from '../../src/data/segments';
@@ -44,6 +44,7 @@ test.describe('US5 — Approach, Industries & About', () => {
     for (const path of ['/approach', '/industries', '/about']) {
       test(`${path} has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
         await gotoWithTheme(page, path, theme);
+        await revealAll(page);
         await expectNoA11yViolations(page);
       });
     }

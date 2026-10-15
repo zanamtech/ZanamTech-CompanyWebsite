@@ -1,5 +1,5 @@
 import type { Page, Route } from '@playwright/test';
-import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
 import { published } from './catalog';
 
 // Menu order follows the pillar order used by getPublishedServices() (managed, cloud-devops, web-saas, ai).
@@ -214,6 +214,7 @@ test.describe('US3 — Contact page & lead submission', () => {
   for (const theme of ['light', 'dark'] as const) {
     test(`contact page has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
       await gotoWithTheme(page, '/contact', theme);
+      await revealAll(page);
       await expectNoA11yViolations(page);
     });
   }

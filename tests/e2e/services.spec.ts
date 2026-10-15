@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
 
 import { bySlug, published, publishedNames, RESULTS_FOOTNOTE } from './catalog';
 
@@ -146,6 +146,7 @@ test.describe('US2 — Services', () => {
     for (const path of ['/services', '/services/enterprise-security-waf-hardening']) {
       test(`${path} has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
         await gotoWithTheme(page, path, theme);
+        await revealAll(page);
         await expectNoA11yViolations(page);
       });
     }

@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
 
 const HEADLINE = "Managed Cloud, DevOps & AI Engineering for Businesses That Can't Afford Downtime.";
 
@@ -50,6 +50,7 @@ test.describe('US1 — Home hero & brand', () => {
   for (const theme of ['light', 'dark'] as const) {
     test(`has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
       await gotoWithTheme(page, '/', theme);
+      await revealAll(page);
       await expectNoA11yViolations(page);
     });
   }

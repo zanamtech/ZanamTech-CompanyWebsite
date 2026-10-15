@@ -1,5 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
-import { test, expect, expectNoA11yViolations, gotoWithTheme } from './fixtures';
+import { test, expect, expectNoA11yViolations, gotoWithTheme, revealAll } from './fixtures';
 import { published } from './catalog';
 
 type Box = { x: number; y: number; width: number; height: number };
@@ -86,6 +86,7 @@ for (const device of [
     test('has no WCAG 2.1 AA violations with the drawer open (light and dark)', async ({ page }) => {
       for (const theme of ['light', 'dark'] as const) {
         await gotoWithTheme(page, '/', theme);
+        await revealAll(page);
         await headerParts(page).hamburger.click();
         await expect(page.locator('#mobile-nav')).toBeVisible();
         await expectNoA11yViolations(page);

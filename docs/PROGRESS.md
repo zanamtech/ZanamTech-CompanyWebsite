@@ -1,7 +1,7 @@
 # ZanamTech Website: Progress Report
 
 **Branch:** `dev` · **Spec:** `specs/002-enterprise-repositioning/` · **Source of truth:** `docs/03_Master_Plan_v3.md`
-**Constitution:** v2.0.4 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-14
+**Constitution:** v2.0.4 (`.specify/memory/constitution.md`) · **Updated:** 2026-10-15
 
 ## 1. Status at a glance
 
@@ -19,7 +19,8 @@
 | Follow-up: About "At a glance", company LinkedIn | ✅ Done (14 Oct, section 3f) |
 | Fix round from video review #3 (external links, transitions, header, offer cards, About, article TOC) | ✅ Done (14 Oct, section 3g) |
 | Tweaks: no active underline, LinkedIn button top-right | ✅ Done (14 Oct, section 3h) |
-| Pushed to `origin/dev` | Everything up to and including section 3h |
+| Code audit, round 1 of 3 (dead code, dependencies, tooling, one URL per page, external links) | ✅ Done (15 Oct, section 3l) |
+| Pushed to `origin/dev` | Everything up to and including section 3l |
 
 ## 2. What was completed in spec 002
 
@@ -214,6 +215,26 @@
 - The 4s safety timeout no longer starts on page load: a separate IntersectionObserver (any visible pixel), plus the scroll watchdog, starts it per group when the group first enters the viewport. When it fires, the group is shown and stripped of reveal styles whatever its state. Lower sections still fade in when reached. Other fail-safe rules unchanged; timers are cleared on `astro:before-swap`.
 - **Checks:** new test (an /about group waits past 5s unscrolled, still hidden, then fades in on scroll and ends clean); `reveal-sitewide` + `reveal`: 38 passed, 76/76 on 2x repeat. `npm run check` 0 errors.
 
+## 3l. Code audit, round 1 of 3 (15 Oct)
+Implements part of `docs/audit/CODE_AUDIT.md`. The owner's decisions are in §6 of that file: F-07 deferred; F-14, F-51 and F-57 declined; F-02 becomes focus-pause only (round 3); F-17 means a domain-restricted key, no Turnstile; F-50 only if an SVG logo is supplied; F-20 code part only.
+- **Dead code and assets** (F-08, F-22–F-31, F-59, F-60): 1.6 MB of unused PNGs, unused CSS classes, data fields, attributes, a prop and two exports are removed. `@types/alpinejs` moves to devDependencies, `__pycache__` is untracked, and the README is current.
+- **Dependencies** (F-16 production part, F-61–F-63): `npm audit --omit=dev` reports 0 (it was 2 high). astro 7.3.8 and Playwright 1.64.1 are installed. The packages that round 2 removes and TypeScript 7 are not updated. The package is marked `private`, `.nvmrc` is 22, and the Docker bases are pinned to a minor version and digest (`node:22.23-alpine`, `nginx:1.30-alpine-slim`). The scripts resolve the repo root with `fileURLToPath`.
+- **Tooling** (part of F-19): dev-only ESLint (typescript-eslint, eslint-plugin-astro) and Prettier (Astro and Tailwind plugins), with the `lint`, `format` and `format:check` scripts. The formatter ran in its own commit with no logic change. CI comes in round 3.
+- **One URL per page** (F-01, F-43, F-44, F-66 a–c):
+  - Astro: `trailingSlash: 'never'` and `build.format: 'file'`, so `dist/about.html` is served at `/about`.
+  - Canonicals, `og:url`, the sitemap and the header's active link all use `pagePath()` (`src/lib/url.ts`). During a file-format build, `Astro.url` is `/about.html`.
+  - nginx: `/about/` returns a 301 to `/about` and keeps the query string. The path comes from the raw `$request_uri`, which blocks CR/LF injection and `//host` open redirects. `try_files $uri $uri.html $uri/index.html =404`.
+  - The 404 page has no canonical. The sitemap has `lastmod`: the entry date for Insights and Resources, the build date elsewhere.
+  - New `seo.spec.ts`. The Lighthouse CI URLs point at the new files.
+  - Docker is not installed on this machine, so the runtime check ran on the official nginx 1.30.6 Windows build with the same config (only the paths changed). Results: `/about` 200; `/about/` 301 to `/about`; `/contact/?service=agency-partnership` 301 with `?service=` kept; `/services` 200; `/services/managed-cloud-devops` 200; an unknown URL returns 404 with the site 404 page. **Repeat these curls in the Docker image before launch.**
+- **External links** (F-06, F-18): `src/middleware.ts` is deleted. Markdown links to other origins get `target="_blank" rel="noopener noreferrer"` from a local hast plugin for Sätteri, Astro 7's default Markdown processor (it fills the role of a rehype plugin): `plugins/markdown-external-links.mjs`. Component links set the attributes explicitly. The source-reading test is removed.
+- **Test fix:** every a11y spec now scrolls each reveal group in (`revealAll()` in `tests/e2e/fixtures.ts`) before running axe. Since 3k, axe could catch cards still hidden or mid-fade. This was a pre-existing failure, and the site is unchanged.
+- **Checks:** after every batch: `npm run check` 0 errors, `lint`, `lint:content`, `build`, `check:csp` and the affected specs. Design freeze: a computed-style and layout snapshot of every rendered element on 18 pages at 1440 and 390 px, in light and dark (72 views), matched the pre-round baseline exactly after every batch. Full Playwright suite at the end: 346 passed, 76 skipped by design, 0 failed (4 workers, 2.5 min). It took four runs to get there:
+  - **Run 1:** the machine was overloaded (19.5 min); 8 page-setup timeouts, all of which pass on a rerun.
+  - **Run 2:** 14 axe contrast failures in `home`, `approach-industries` and `responsive-header`. This is the same pre-existing reveal timing issue, so `revealAll()` now runs before axe in every a11y spec (`contact` and `services` too). 3× repeat: 357/357.
+  - **Run 3:** 4 mobile failures (`security`, `services-v3`). They pass in isolation and in run 4, so they look timing-related; watch them in CI (round 3 replaces the fixed sleeps, F-21).
+  - **Run 4:** clean.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -241,7 +262,7 @@
 **Infrastructure and operations**
 - [ ] Domain and mailbox: zanamtech.com with the contact@, security@, privacy@ and partners@ aliases, and SPF/DKIM/DMARC.
 - [ ] Form endpoint: set `PUBLIC_FORM_ACCESS_KEY` (and `PUBLIC_FORM_ENDPOINT` if not the default) for the production build.
-- [ ] Hosting and deploy: build the Docker image (check it is under 25 MB; open item T060 from spec 001) and run `nginx -t` to validate the 301 redirects.
+- [ ] Hosting and deploy: build the Docker image (check it is under 25 MB; open item T060 from spec 001), run `nginx -t`, and curl the retired-service and trailing-slash 301s in the image (section 3l).
 - [ ] TLS 1.3 at the edge, and a decision on HSTS preload.
 - [ ] Optional cookieless analytics: set `PUBLIC_ANALYTICS_DOMAIN` and `PUBLIC_ANALYTICS_SRC`.
 
