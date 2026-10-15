@@ -345,7 +345,7 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
 ## 3o. SEO copy approval and Insights articles (15 Oct)
 - **SEO copy (commit b5bca31):**
   - `docs/audit/SEO_COPY_CHANGES.md` is marked owner-approved.
-  - Three owner edits are applied: the home description (`site.metaDescription`), the CI/CD service `seoDescription`, and the `/insights` description (now 149 characters).
+  - Three owner edits are applied: the home description (`site.metaDescription`), the CI/CD service `seoDescription`, and the `/insights` description (140 characters; it ends "from ZanamTech", revised the same day from "from the ZanamTech team").
 - **Article dates (commit ee37797):**
   - Azure environment strategy 12 Oct, Bitbucket branch governance 14 Oct, cloud cost checklist 15 Oct 2026. All three are live, and `/insights` lists them newest first.
   - `isPublished()` stays for future-dated articles. The 26 Oct / 9 Nov rebuild note is removed.
