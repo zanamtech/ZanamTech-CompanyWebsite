@@ -1,5 +1,5 @@
 ---
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from '@lucide/astro';
 ---
 
 <!-- Toggle-button pattern: constant name, state conveyed by aria-pressed. Hidden until Alpine runs (no-JS users cannot switch). -->
@@ -16,9 +16,9 @@ import { Moon, Sun } from 'lucide-react';
   data-theme-toggle
 >
   <span class="inline-flex" x-show="!$store.theme.isDark">
-    <Moon aria-hidden="true" className="size-5" />
+    <Moon aria-hidden="true" class="size-5" />
   </span>
   <span class="inline-flex" x-show="$store.theme.isDark">
-    <Sun aria-hidden="true" className="size-5" />
+    <Sun aria-hidden="true" class="size-5" />
   </span>
 </button>

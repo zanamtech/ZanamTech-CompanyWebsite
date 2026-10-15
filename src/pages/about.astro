@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck, Compass, Target, Users } from 'lucide-react';
+import { ArrowRight, CircleCheck, Compass, Target, Users } from '@lucide/astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
@@ -186,7 +186,7 @@ const principles = [
         {principles.map(({ Icon, title, body }) => (
           <GlassCard as="li" class="card-hover">
             <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-              <Icon aria-hidden="true" className="size-6" />
+              <Icon aria-hidden="true" class="size-6" />
             </span>
             <h3 class="mt-5 text-lg font-semibold text-fg">{title}</h3>
             <p class="mt-2 text-muted">{body}</p>
@@ -214,7 +214,7 @@ const principles = [
           <ul class="mt-5 space-y-3">
             {group.items.map((item) => (
               <li class="flex gap-3 text-fg">
-                <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+                <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
                 {item}
               </li>
             ))}
@@ -228,7 +228,7 @@ const principles = [
       data-view-all-services
     >
       View all services
-      <ArrowRight aria-hidden="true" className="size-4" />
+      <ArrowRight aria-hidden="true" class="size-4" />
     </a>
   </section>
 

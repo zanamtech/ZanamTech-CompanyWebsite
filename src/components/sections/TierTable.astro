@@ -1,5 +1,5 @@
 ---
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck } from '@lucide/astro';
 import Badge from '../ui/Badge.astro';
 import GlassCard from '../ui/GlassCard.astro';
 import { tiers } from '../../data/managed-tiers';
@@ -17,7 +17,7 @@ import { tiers } from '../../data/managed-tiers';
       <ul class="mt-5 space-y-2 border-t border-border pt-5">
         {t.includes.map((item) => (
           <li class="flex gap-2 text-sm text-fg">
-            <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
             {item}
           </li>
         ))}

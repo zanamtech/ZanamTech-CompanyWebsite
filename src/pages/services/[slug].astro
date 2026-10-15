@@ -1,6 +1,6 @@
 ---
 import { render } from 'astro:content';
-import { ArrowRight, CircleCheck, Info } from 'lucide-react';
+import { ArrowRight, CircleCheck, Info } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
 import ServiceCard from '../../components/sections/ServiceCard.astro';
@@ -68,7 +68,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
       <Button href={contactHref} size="lg">
         {cta.primary}
-        <ArrowRight aria-hidden="true" className="size-4.5" />
+        <ArrowRight aria-hidden="true" class="size-4.5" />
       </Button>
     </div>
   </PageHero>
@@ -96,7 +96,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
         <ul class="mt-6 space-y-4">
           {capabilities.map((item) => (
             <li class="flex gap-3">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+              <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
               <span class="text-fg">{item}</span>
             </li>
           ))}
@@ -110,7 +110,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
         <ul class="mt-6 grid gap-4 sm:grid-cols-2">
           {deliverables.map((item) => (
             <li class="flex gap-3">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+              <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
               <span class="text-fg">{item}</span>
             </li>
           ))}
@@ -125,7 +125,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
         <p class="mt-2 text-xl font-semibold text-fg">{outcome}</p>
         {hasReal && (
           <p class="mt-4 flex gap-2 text-sm text-muted">
-            <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+            <Info aria-hidden="true" class="mt-0.5 size-4 shrink-0" />
             {resultsFootnote}
           </p>
         )}
@@ -172,7 +172,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
             class="mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
           >
             See entry offers
-            <ArrowRight aria-hidden="true" className="size-4" />
+            <ArrowRight aria-hidden="true" class="size-4" />
           </a>
         </GlassCard>
       )}
@@ -215,7 +215,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
             <ul class="mt-4 space-y-2">
               {cadence.map((c) => (
                 <li class="flex gap-2 text-sm text-fg">
-                  <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+                  <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
                   {c}
                 </li>
               ))}

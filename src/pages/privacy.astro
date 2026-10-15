@@ -1,5 +1,5 @@
 ---
-import { Ban, Lock, Mail, ShieldCheck } from 'lucide-react';
+import { Ban, Lock, Mail, ShieldCheck } from '@lucide/astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
 import LongFormDoc from '../components/sections/LongFormDoc.astro';
@@ -74,7 +74,7 @@ const sections = [
 
       <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-danger/10 text-danger">
-          <Ban aria-hidden="true" className="size-5" />
+          <Ban aria-hidden="true" class="size-5" />
         </span>
         <div>
           <p class="mt-0! font-semibold text-fg">Explicitly excluded</p>
@@ -115,7 +115,7 @@ const sections = [
 
       <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
         <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
-          <ShieldCheck aria-hidden="true" className="size-5" />
+          <ShieldCheck aria-hidden="true" class="size-5" />
         </span>
         <div>
           <p class="mt-0! font-semibold text-fg">Our commitment</p>
@@ -207,7 +207,7 @@ const sections = [
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div class="flex gap-4">
             <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-              <Mail aria-hidden="true" className="size-6" />
+              <Mail aria-hidden="true" class="size-6" />
             </span>
             <div>
               <p class="mt-0! font-semibold text-fg">Privacy contact</p>
@@ -220,7 +220,7 @@ const sections = [
             href={`mailto:${privacyEmail}`}
             class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface/60 px-5 text-sm font-semibold text-fg transition-colors hover:border-accent hover:text-accent"
           >
-            <Lock aria-hidden="true" className="size-4" />
+            <Lock aria-hidden="true" class="size-4" />
             {privacyEmail}
           </a>
         </div>

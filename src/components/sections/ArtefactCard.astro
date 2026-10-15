@@ -1,5 +1,5 @@
 ---
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@lucide/astro';
 import Badge from '../ui/Badge.astro';
 import Illustration from '../ui/Illustration.astro';
 import type { CollectionEntry } from 'astro:content';
@@ -31,6 +31,6 @@ const { title, summary, draft } = artefact.data;
   <p class="mt-2 text-sm text-muted">{summary}</p>
   <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
     View sample
-    <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+    <ArrowRight aria-hidden="true" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
   </p>
 </li>

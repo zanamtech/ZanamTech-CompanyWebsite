@@ -1,5 +1,5 @@
 ---
-// Maps content-level icon names to Lucide components. Rendered server-side as static SVG (no client JS).
+// Maps content-level icon names to Lucide components (@lucide/astro). Rendered at build time as static SVG, no client JS.
 import {
   Activity,
   Globe,
@@ -20,7 +20,7 @@ import {
   ShieldCheck,
   TrendingDown,
   Workflow,
-} from 'lucide-react';
+} from '@lucide/astro';
 import type { IconName } from '../../data/ids';
 
 // Typed against the shared list, so a name missing here (or an extra one) fails `astro check`.
@@ -56,4 +56,4 @@ const { name, class: className, strokeWidth = 2 } = Astro.props;
 const Component = icons[name];
 ---
 
-<Component aria-hidden="true" className={className} strokeWidth={strokeWidth} />
+<Component aria-hidden="true" class={className} stroke-width={strokeWidth} />

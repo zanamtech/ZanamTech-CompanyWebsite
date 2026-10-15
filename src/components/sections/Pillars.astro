@@ -1,5 +1,5 @@
 ---
-import { Building2, Activity, ShieldCheck } from 'lucide-react';
+import { Building2, Activity, ShieldCheck } from '@lucide/astro';
 import GlassCard from '../ui/GlassCard.astro';
 
 interface Props {
@@ -52,7 +52,7 @@ const pillars = [
         class="cursor-default select-none transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/60 hover:shadow-xl hover:shadow-purple-500/10 motion-reduce:hover:translate-y-0"
       >
         <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-          <Icon aria-hidden="true" className="size-6" strokeWidth={2} />
+          <Icon aria-hidden="true" class="size-6" stroke-width={2} />
         </span>
         <h3 class="mt-5 text-lg font-semibold text-fg">{title}</h3>
         <p class="mt-2 text-muted">{body}</p>

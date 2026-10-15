@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck } from 'lucide-react';
+import { ArrowRight, CircleCheck } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import Badge from '../ui/Badge.astro';
 import GlassCard from '../ui/GlassCard.astro';
@@ -25,7 +25,7 @@ const modules = capabilities.map((c) => c.split(':')[0]);
       <ul class="mt-8 grid gap-3 sm:grid-cols-2" data-reveal-group data-reveal-distance="12">
         {modules.map((m) => (
           <li class="flex gap-2.5 text-fg">
-            <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+            <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
             <span>{m}</span>
           </li>
         ))}
@@ -33,7 +33,7 @@ const modules = capabilities.map((c) => c.split(':')[0]);
       <div class="mt-10">
         <Button href={serviceHref(flagship)} variant="secondary">
           Explore {name}
-          <ArrowRight aria-hidden="true" className="size-4" />
+          <ArrowRight aria-hidden="true" class="size-4" />
         </Button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 ---
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck } from '@lucide/astro';
 import Badge from '../ui/Badge.astro';
 import type { Offer } from '../../data/offers';
 
@@ -32,7 +32,7 @@ const Heading = headingLevel;
         <ul class="mt-2 space-y-1.5">
           {offer.inputs.map((i) => (
             <li class="flex gap-2 text-sm text-muted">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+              <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
               {i}
             </li>
           ))}
@@ -43,7 +43,7 @@ const Heading = headingLevel;
         <ul class="mt-2 space-y-1.5">
           {offer.deliverables.map((d) => (
             <li class="flex gap-2 text-sm text-muted">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+              <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
               {d}
             </li>
           ))}

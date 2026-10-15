@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck } from 'lucide-react';
+import { ArrowRight, CircleCheck } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import GlassCard from '../ui/GlassCard.astro';
 import { AGENCY_PARTNERSHIP_SLUG } from '../../lib/lead';
@@ -29,14 +29,14 @@ const points = [
         <div class="mt-8">
           <Button href={`/contact?service=${AGENCY_PARTNERSHIP_SLUG}`}>
             Discuss an agency partnership
-            <ArrowRight aria-hidden="true" className="size-4" />
+            <ArrowRight aria-hidden="true" class="size-4" />
           </Button>
         </div>
       </div>
       <ul class="space-y-3 lg:col-span-6">
         {points.map((p) => (
           <li class="flex gap-2.5 text-fg">
-            <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+            <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
             {p}
           </li>
         ))}

@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck } from 'lucide-react';
+import { ArrowRight, CircleCheck } from '@lucide/astro';
 import { engagementPhases } from '../../data/engagement';
 
 interface Props {
@@ -35,7 +35,7 @@ const { detailed = false, withIntro = true } = Astro.props;
         class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
       >
         How We Work
-        <ArrowRight aria-hidden="true" className="size-4" />
+        <ArrowRight aria-hidden="true" class="size-4" />
       </a>
     </div>
   )}
@@ -67,7 +67,7 @@ const { detailed = false, withIntro = true } = Astro.props;
               <ul class="mt-5 space-y-2 border-t border-border pt-5">
                 {phase.details.map((d) => (
                   <li class="flex gap-2 text-sm text-fg">
-                    <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+                    <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
                     {d}
                   </li>
                 ))}

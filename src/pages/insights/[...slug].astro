@@ -1,6 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
 import ArticleBody from '../../components/sections/ArticleBody.astro';
@@ -185,7 +185,7 @@ const articleLd = article
               Read the article
               <ArrowRight
                 aria-hidden="true"
-                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
               />
             </p>
           </li>

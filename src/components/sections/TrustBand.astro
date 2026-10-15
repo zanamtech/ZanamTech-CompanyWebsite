@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck } from 'lucide-react';
+import { ArrowRight, CircleCheck } from '@lucide/astro';
 import Pillars from './Pillars.astro';
 import Badge from '../ui/Badge.astro';
 import { accessModel } from '../../data/engagement';
@@ -19,7 +19,7 @@ import { commitments } from '../../data/commitments';
       <ul class="mt-4 space-y-2">
         {accessModel.map((item) => (
           <li class="flex gap-2.5 text-sm text-muted">
-            <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
             {item}
           </li>
         ))}
@@ -36,7 +36,7 @@ import { commitments } from '../../data/commitments';
       </ul>
       <a href="/trust" class="mt-6 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link hover:underline">
         Security &amp; trust
-        <ArrowRight aria-hidden="true" className="size-4" />
+        <ArrowRight aria-hidden="true" class="size-4" />
       </a>
     </div>
   </div>

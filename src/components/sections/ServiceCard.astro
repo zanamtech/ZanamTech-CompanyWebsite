@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, CircleCheck } from 'lucide-react';
+import { ArrowRight, CircleCheck } from '@lucide/astro';
 import Icon from '../ui/Icon.astro';
 import { serviceHref, type Service } from '../../lib/services';
 
@@ -56,17 +56,14 @@ const { name, icon, summary, outcome, order } = service.data;
       <ul class="mt-4 grid gap-3 sm:grid-cols-2">
         {included.map((item) => (
           <li class="flex gap-2 text-sm text-fg">
-            <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
             {item}
           </li>
         ))}
       </ul>
       <p class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
         Explore service
-        <ArrowRight
-          aria-hidden="true"
-          className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-        />
+        <ArrowRight aria-hidden="true" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
       </p>
     </div>
   )}
@@ -78,10 +75,7 @@ const { name, icon, summary, outcome, order } = service.data;
       </p>
       <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
         Explore service
-        <ArrowRight
-          aria-hidden="true"
-          className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-        />
+        <ArrowRight aria-hidden="true" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
       </p>
     </div>
   )}

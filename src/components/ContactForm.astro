@@ -1,5 +1,5 @@
 ---
-import { Check, ChevronDown, CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
+import { Check, ChevronDown, CircleCheck, CircleAlert, LoaderCircle } from '@lucide/astro';
 import { getPublishedServices } from '../lib/services';
 import { FORM_ACCESS_KEY, FORM_ENDPOINT } from '../lib/form-config';
 import {
@@ -204,7 +204,7 @@ const config = JSON.stringify({
                 class="inline-flex shrink-0 text-muted transition-transform duration-200"
                 x-bind:class={`openMenu === '${menu.field}' && 'rotate-180'`}
               >
-                <ChevronDown aria-hidden="true" className="size-4" />
+                <ChevronDown aria-hidden="true" class="size-4" />
               </span>
             </button>
             <ul
@@ -231,7 +231,7 @@ const config = JSON.stringify({
                   class="group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-fg transition-colors hover:bg-purple-500/10 hover:text-purple-600 aria-selected:font-semibold data-[active=true]:bg-purple-500/10 data-[active=true]:text-purple-600 dark:hover:bg-purple-500/20 dark:hover:text-purple-300 dark:data-[active=true]:bg-purple-500/20 dark:data-[active=true]:text-purple-300"
                 >
                   <span>{o}</span>
-                  <Check aria-hidden="true" className="size-4 shrink-0 opacity-0 group-aria-selected:opacity-100" />
+                  <Check aria-hidden="true" class="size-4 shrink-0 opacity-0 group-aria-selected:opacity-100" />
                 </li>
               ))}
             </ul>
@@ -295,7 +295,7 @@ const config = JSON.stringify({
       x-show="status === 'error'"
       x-cloak
     >
-      <CircleAlert aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-danger" />
+      <CircleAlert aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-danger" />
       <p x-text="failure"></p>
     </div>
 
@@ -336,7 +336,7 @@ const config = JSON.stringify({
         x-bind:disabled="status === 'submitting'"
       >
         <span x-show="status === 'submitting'" x-cloak class="inline-flex motion-safe:animate-spin">
-          <LoaderCircle aria-hidden="true" className="size-4.5" />
+          <LoaderCircle aria-hidden="true" class="size-4.5" />
         </span>
         Send
       </button>
@@ -345,7 +345,7 @@ const config = JSON.stringify({
 
   <div x-show="status === 'success'" x-cloak class="py-6 text-center">
     <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-cyan/12 text-brand-cyan">
-      <CircleCheck aria-hidden="true" className="size-7" />
+      <CircleCheck aria-hidden="true" class="size-7" />
     </span>
     <h3 data-success-heading tabindex="-1" class="mt-5 text-2xl font-bold text-fg focus:outline-none">
       Request received

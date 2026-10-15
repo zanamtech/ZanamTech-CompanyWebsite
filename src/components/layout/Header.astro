@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from '@lucide/astro';
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Button from '../ui/Button.astro';
@@ -86,7 +86,7 @@ const linkClass = (href: string) => [
               >
                 {link.label}
                 <span class="inline-flex transition-transform duration-200" x-bind:class="services && 'rotate-180'">
-                  <ChevronDown aria-hidden="true" className="size-4" />
+                  <ChevronDown aria-hidden="true" class="size-4" />
                 </span>
               </a>
 
@@ -118,14 +118,14 @@ const linkClass = (href: string) => [
                       class="mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
                     >
                       View all services
-                      <ArrowRight aria-hidden="true" className="size-4" />
+                      <ArrowRight aria-hidden="true" class="size-4" />
                     </a>
                     <a
                       href="/start-here"
                       class="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
                     >
                       Start here
-                      <ArrowRight aria-hidden="true" className="size-4" />
+                      <ArrowRight aria-hidden="true" class="size-4" />
                     </a>
                   </div>
 
@@ -208,10 +208,10 @@ const linkClass = (href: string) => [
           Open menu
         </span>
         <span x-show="!open" class="inline-flex">
-          <Menu aria-hidden="true" className="size-6" />
+          <Menu aria-hidden="true" class="size-6" />
         </span>
         <span x-show="open" x-cloak class="inline-flex">
-          <X aria-hidden="true" className="size-6" />
+          <X aria-hidden="true" class="size-6" />
         </span>
       </button>
     </div>
@@ -246,7 +246,7 @@ const linkClass = (href: string) => [
                 class="inline-flex text-muted transition-transform duration-200"
                 x-bind:class="mobileServices && 'rotate-180'"
               >
-                <ChevronDown aria-hidden="true" className="size-5" />
+                <ChevronDown aria-hidden="true" class="size-5" />
               </span>
             </button>
             <div
@@ -262,7 +262,7 @@ const linkClass = (href: string) => [
                 class="flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-link"
               >
                 View all services
-                <ArrowRight aria-hidden="true" className="size-4" />
+                <ArrowRight aria-hidden="true" class="size-4" />
               </a>
               <a
                 href="/start-here"
@@ -270,14 +270,14 @@ const linkClass = (href: string) => [
                 class="flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm font-semibold text-link"
               >
                 Start here
-                <ArrowRight aria-hidden="true" className="size-4" />
+                <ArrowRight aria-hidden="true" class="size-4" />
               </a>
               {groups.map((g) => (
                 <details class="group" data-mobile-pillar={g.pillar}>
                   <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-lg px-2 text-sm font-semibold text-fg hover:text-accent [&::-webkit-details-marker]:hidden">
                     {g.title}
                     <span class="inline-flex text-muted transition-transform duration-200 group-open:rotate-180">
-                      <ChevronDown aria-hidden="true" className="size-4" />
+                      <ChevronDown aria-hidden="true" class="size-4" />
                     </span>
                   </summary>
                   <ul class="pb-1 pl-2">

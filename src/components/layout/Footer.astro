@@ -1,5 +1,5 @@
 ---
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from '@lucide/astro';
 import Logo from './Logo.astro';
 import LinkedInIcon from '../ui/LinkedInIcon.astro';
 import { site, companyLinks, legalLinks, footerCopy } from '../../data/site';
@@ -134,7 +134,7 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
             <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold text-fg hover:text-accent [&::-webkit-details-marker]:hidden">
               {g.title}
               <span class="inline-flex text-muted transition-transform duration-200 group-open:rotate-180">
-                <ChevronDown aria-hidden="true" className="size-4" />
+                <ChevronDown aria-hidden="true" class="size-4" />
               </span>
             </summary>
             <ul class="pb-2">

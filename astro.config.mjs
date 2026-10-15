@@ -1,7 +1,6 @@
 // @ts-check
 import { defineConfig, envField } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
 import alpinejs from '@astrojs/alpinejs';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
@@ -47,7 +46,6 @@ export default defineConfig({
   // Sätteri is Astro's default Markdown processor; configured here only to add the external-links plugin.
   markdown: { processor: satteri({ hastPlugins: [externalLinks(site)] }) },
   integrations: [
-    react(),
     alpinejs({ entrypoint: '/src/scripts/alpine' }),
     sitemap({
       serialize(item) {

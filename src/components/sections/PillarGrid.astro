@@ -1,5 +1,5 @@
 ---
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@lucide/astro';
 import Icon from '../ui/Icon.astro';
 import { getServicesByPillar, pillarHref, serviceHref } from '../../lib/services';
 import { flagshipIncluded } from '../../data/managed-tiers';
@@ -25,7 +25,7 @@ const pillars = await getServicesByPillar();
       class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
     >
       View all services
-      <ArrowRight aria-hidden="true" className="size-4" />
+      <ArrowRight aria-hidden="true" class="size-4" />
     </a>
   </div>
 
@@ -59,7 +59,7 @@ const pillars = await getServicesByPillar();
                     href={serviceHref(p.services[0])}
                     class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent"
                   >
-                    <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                    <ArrowRight aria-hidden="true" class="size-3.5 shrink-0 text-muted" />
                     {item}
                   </a>
                 </li>
@@ -70,7 +70,7 @@ const pillars = await getServicesByPillar();
                     href={serviceHref(s)}
                     class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent"
                   >
-                    <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                    <ArrowRight aria-hidden="true" class="size-3.5 shrink-0 text-muted" />
                     {s.data.name}
                   </a>
                 </li>
