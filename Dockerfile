@@ -1,7 +1,8 @@
 # syntax=docker/dockerfile:1
 
 # ---- Build stage ----------------------------------------------------------------------------
-FROM node:22-alpine AS build
+# Pinned to a minor version and digest (multi-arch index) for reproducible builds. Bump both together.
+FROM node:22.23-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402 AS build
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -22,8 +23,8 @@ ENV PUBLIC_SITE_URL=$PUBLIC_SITE_URL \
 RUN npm run lint:content && npm run build && npm run check:csp
 
 # ---- Runtime stage --------------------------------------------------------------------------
-# alpine-slim keeps the runtime image small (target < 25 MB).
-FROM nginx:stable-alpine-slim AS runtime
+# alpine-slim keeps the runtime image small (target < 25 MB). Pinned to the stable minor and digest, like the build stage.
+FROM nginx:1.30-alpine-slim@sha256:3028fc1419f99b95c1c69f844bbaf49dc1b881750c51b497fc721ac4f02a14e6 AS runtime
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/security-headers.conf /etc/nginx/security-headers.conf

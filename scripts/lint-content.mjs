@@ -5,8 +5,9 @@
 // verification fields and that third-party statistics in Insights cite a source.
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const SCAN_DIRS = ['src', 'public'];
 const EXTENSIONS = new Set(['.astro', '.md', '.mdx', '.ts', '.tsx', '.js', '.json', '.txt', '.html']);
 

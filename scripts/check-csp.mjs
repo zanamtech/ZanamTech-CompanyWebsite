@@ -5,8 +5,9 @@
 import { createHash } from 'node:crypto';
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const conf = await readFile(join(ROOT, 'nginx/security-headers.conf'), 'utf8');
 const csp = conf.match(/Content-Security-Policy "([^"]+)"/)?.[1];
 if (!csp) {
