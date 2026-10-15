@@ -21,7 +21,9 @@
 | Tweaks: no active underline, LinkedIn button top-right | ✅ Done (14 Oct, section 3h) |
 | Code audit, round 1 of 3 (dead code, dependencies, tooling, one URL per page, external links) | ✅ Done (15 Oct, section 3l) |
 | Code audit, round 2 of 3 (CSS, types, scripts, icons without React, shared components) | ✅ Done (15 Oct, section 3m) |
-| Pushed to `origin/dev` | Everything up to and including section 3m |
+| Code audit, round 3 of 3 (SEO metadata, scheduled articles, accessibility, nginx, tests, CI) | ✅ Done (15 Oct, section 3n) |
+| Pushed to `origin/dev` | Everything up to and including section 3n |
+| CI (GitHub Actions) | ✅ Green on `dev` (run 38771356967): checks, Playwright, Lighthouse CI, Docker smoke |
 
 ## 2. What was completed in spec 002
 
@@ -285,6 +287,58 @@ Implements batches 6–10 of `docs/audit/CODE_AUDIT.md` (owner decisions in §6 
   - The pre-round build scores the same 81 with the same tool. It is not caused by this round. The fix belongs upstream in Alpine, which already skips `styleMedia` and `sharedStorage` for this reason.
 - **Correction:** the batch 8 3× run had 30 failures, all one stale assertion in `reveal.spec.ts` that read Alpine's removed `data-shown`. I misread the output then. The test now checks that `data-reveal` is removed (commit 023f765).
 
+## 3n. Code audit, round 3 of 3 (15 Oct)
+Implements the rest of `docs/audit/CODE_AUDIT.md`. Owner decisions are in §6 of that file, which now also records:
+- F-02 declined in full: no change to the marquee or the stepper, and WCAG 2.2.2 is not met for them.
+- The two round-2 follow-ups are accepted.
+- The F-64 regroup is deferred.
+
+Every finding now has a status: 59 done, 3 deferred, 5 declined.
+
+- **SEO metadata** (batch 11: F-09, F-20 code, F-42, F-48, F-66 d; commit 6a91193):
+  - **Lengths:** titles ≤ 60 and descriptions ≤ 155 through `seoTitle`/`seoDescription` front matter and `site.metaDescription`. The visible copy is unchanged. `lint:content` enforces the lengths.
+  - **Owner review:** every old → new pair is in `docs/audit/SEO_COPY_CHANGES.md` (3 titles, 20 descriptions).
+  - **Share tags:** `og:image` gets its size, type and alt, plus `og:locale`. The share image is `public/og/default.png`; the touch icon is the fallback until that file exists.
+  - **Twitter card:** `summary_large_image` switches on automatically with the 1200×630 file. Until then it stays `summary`, because X needs at least 300×157 for the large card.
+  - **Articles:** `og:type=article` with published and modified times.
+  - **JSON-LD:** one `@graph` per page (Organization, WebSite, BreadcrumbList, Service, Article with image, `dateModified` and `publisher.logo`). `lang="en-GB"`.
+  - **Tests:** `seo.spec.ts` expands a service page and an article with the `jsonld` parser (dev dependency).
+- **Staggered articles** (batch 11):
+  - **Dates:** Azure environment strategy 12 Oct, Bitbucket branch governance 26 Oct, cloud cost checklist 9 Nov 2026.
+  - **Exclusion:** `isPublished()` (`src/lib/content.ts`, built on `src/lib/publish.ts`) keeps an article dated after the build date out of the build entirely: no route, no listing, no nav gating, no sitemap entry, no JSON-LD.
+  - **Today's build** has one article. `/insights` and the header and footer links work with a single card (shown at the left of the grid).
+  - **`BUILD_DATE`** overrides "now". The E2E build pins it (`tests/e2e/build-date.ts`), so every scheduled article is tested.
+  - **Rebuild dates:** the site must be rebuilt and deployed on 26 Oct and 9 Nov (section 5).
+- **Accessibility** (batch 12: F-45, F-46, F-47; commit a67e59d): the browser `theme-color` follows the site theme, the mobile nav is labelled "Primary", and card text is selectable. The marquee is untouched.
+- **nginx** (batch 13: F-52, F-53, F-58; commit 2fbc5cf):
+  - **Redirects:** `/<page>.html` and `/index.html` 301 to the clean URL and keep the query string, with the same hardening as the slash rule.
+  - **404:** `/404` returns status 404.
+  - **gzip:** now covers `text/javascript`.
+  - **Headers:** `img-src` has no `data:` (and `check:csp` guards it); `interest-cohort` is gone.
+  - **`scrollCue` kept:** under the ClientRouter a plain anchor jumps instantly (measured: 2 scroll positions against 28–53) and adds `#flagship` to the URL.
+  - **Alpine:** 3.17.4 is the latest release, so Best Practices 81 is documented as an upstream issue (audit, end of §6).
+- **Tests and CI** (batch 14: F-16 dev, F-19, F-21, F-64 duplicates, F-65, F-66 e; commits 787606b, f7eb70d):
+  - **Removed duplicates:** 13 test cases, listed in the commit message.
+  - **No fixed sleeps:** frame waits, end-state polls and `page.clock` replace them.
+  - **Tags:** `@desktop`/`@mobile` replace 44 project skips; skipped tests per run went from 76 to 2.
+  - **`@lhci/cli`:** runs via `npx` and is no longer a dependency. `npm audit` went from 17 to 0.
+  - **Workflow:** `.github/workflows/ci.yml` runs on push/PR to `dev` and `main`: gates, Playwright (desktop + mobile, cached), Lighthouse CI, and a Docker smoke job (`scripts/docker-smoke.sh`), plus a daily scheduled build.
+- **Round-1 mobile failures, root cause:**
+  - `security` and `services-v3` looped over 8–13 pages inside one test with one 30 s budget. With 16× CPU throttling, 5 of 26 failed. They are now one test per page.
+  - The CSP test also waited for `networkidle` and checked a ClientRouter navigation with the 5 s assertion timeout. It now waits for `alpine:initialized` and uses `waitForURL`.
+  - Result: 102/102 under 16× throttling.
+- **Checks:**
+  - **Gates:** `check`, `lint`, `format:check`, `lint:content`, `build` and `check:csp` passed after every batch.
+  - **nginx 1.30.6 (Windows build):** every round-1 URL, the `.html` and `/404` rules, the 301s and the headers. CI repeats this in the real Docker image.
+  - **Design freeze:** compared on the pages each batch touched, then on all 32 pages × 1440/390 × light/dark. The only differences are the intended ones: `/insights` card order and article dates (new dates), and `user-select` (F-47).
+  - **Full suite:** 412 passed, 2 skipped (content-conditional), 0 failed.
+  - **Lighthouse 13, home, mobile** (`astro preview`): 99 / 100 / 81 / 100, LCP 1.7–1.9 s, CLS 0.001.
+  - **CI:**
+    - Run 1: Lighthouse CI failed. Its log needs a GitHub login and no reports were uploaded (`.lighthouseci` is a hidden folder), so the cause is unknown.
+    - Fix: the reports now upload, and failed assertions appear as annotations.
+    - Run 2 (38771356967): all jobs green with unchanged assertions. If Lighthouse CI fails again, read the annotations; `numberOfRuns: 3` is the likely fix for runner noise.
+- **Correction:** the first design-freeze snapshots of this round served every page as "not found" (a relative path in the scratch server), so their "0 differences" meant nothing. I redid the baseline and every comparison from the saved builds; the results above are from the corrected runs.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -312,13 +366,17 @@ Implements batches 6–10 of `docs/audit/CODE_AUDIT.md` (owner decisions in §6 
 **Infrastructure and operations**
 - [ ] Domain and mailbox: zanamtech.com with the contact@, security@, privacy@ and partners@ aliases, and SPF/DKIM/DMARC.
 - [ ] Form endpoint: set `PUBLIC_FORM_ACCESS_KEY` (and `PUBLIC_FORM_ENDPOINT` if not the default) for the production build.
-- [ ] Hosting and deploy: build the Docker image (check it is under 25 MB; open item T060 from spec 001), run `nginx -t`, and curl the retired-service and trailing-slash 301s in the image (section 3l).
+- [ ] Hosting and deploy: check the Docker image is under 25 MB (open item T060; the CI smoke job prints the size). `nginx -t` and the 301 and header curls now run in the real image on every CI run (section 3n).
 - [ ] TLS 1.3 at the edge, and a decision on HSTS preload.
 - [ ] Optional cookieless analytics: set `PUBLIC_ANALYTICS_DOMAIN` and `PUBLIC_ANALYTICS_SRC`.
 
 **Engineering follow-ups**
-- [ ] Run Lighthouse in Linux CI (`npm run lhci` cannot start Chrome on Windows; it is currently run locally with Playwright's Chromium). Open item T061 from spec 001.
-- [ ] Push the latest `dev` commits, and decide the release branch (the remote has no `main` branch yet, so no PR can be opened).
+- [ ] **Rebuild and deploy on 26 Oct 2026 and 9 Nov 2026** so the Bitbucket and cloud-cost articles go live (a build on or after each date includes the article automatically). Once deployment is automated, the daily scheduled CI build does this.
+- [ ] Automate deployment from the scheduled CI build (`scheduled-build` job in `.github/workflows/ci.yml`).
+- [ ] Owner review of the shortened titles and descriptions: `docs/audit/SEO_COPY_CHANGES.md`.
+- [ ] Add the 1200×630 share image at `public/og/default.png` (Twitter/X then switches to the large card automatically).
+- [x] Lighthouse in Linux CI (T061): runs in GitHub Actions since 15 Oct.
+- [ ] Decide the release branch (the remote has no `main` branch yet; CI already covers `main` once it exists).
 - [ ] Post-launch: analytics goal events for consultation bookings and form submissions (needs a CSP review).
 
 ## 6. Next steps
