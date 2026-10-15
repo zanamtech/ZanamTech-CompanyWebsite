@@ -7,8 +7,9 @@ import MenuServiceLink from './MenuServiceLink.astro';
 import { navLinks as allNavLinks, cta } from '../../data/site';
 import { getServicesByPillar, serviceHref } from '../../lib/services';
 import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
+import { pagePath } from '../../lib/url';
 
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const currentPath = pagePath(Astro.url);
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 
 // Insights and Case Studies appear only when they have published / verified content (spec 002 FR-020, FR-030).

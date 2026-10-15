@@ -4,15 +4,15 @@
       "staticDistDir": "./dist",
       "url": [
         "http://localhost/index.html",
-        "http://localhost/services/index.html",
-        "http://localhost/services/enterprise-security-waf-hardening/index.html",
-        "http://localhost/contact/index.html",
-        "http://localhost/about/index.html",
-        "http://localhost/services/managed-cloud-devops/index.html",
-        "http://localhost/start-here/index.html",
-        "http://localhost/trust/index.html",
-        "http://localhost/insights/index.html",
-        "http://localhost/insights/cloud-cost-checklist/index.html"
+        "http://localhost/services.html",
+        "http://localhost/services/enterprise-security-waf-hardening.html",
+        "http://localhost/contact.html",
+        "http://localhost/about.html",
+        "http://localhost/services/managed-cloud-devops.html",
+        "http://localhost/start-here.html",
+        "http://localhost/trust.html",
+        "http://localhost/insights.html",
+        "http://localhost/insights/cloud-cost-checklist.html"
       ],
       "numberOfRuns": 1,
       "settings": {

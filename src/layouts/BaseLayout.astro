@@ -5,6 +5,7 @@ import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import { site } from '../data/site';
 import { leadership } from '../data/leadership';
+import { pagePath } from '../lib/url';
 // Preloading the Latin variable font lets text render in the final face, so long headings don't reflow (CLS).
 import fontLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 
@@ -21,7 +22,7 @@ interface Props {
 const { title, description = site.description, image = '/apple-touch-icon.png', noindex = false, jsonLd } = Astro.props;
 
 const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = new URL(pagePath(Astro.url), Astro.site);
 const ogImage = new URL(image, Astro.site);
 
 // Cookieless, privacy-first analytics (Plausible-compatible); loads only when both values are configured.
@@ -64,8 +65,7 @@ const organization = {
     <link rel="preload" href={fontLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex" />}
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
