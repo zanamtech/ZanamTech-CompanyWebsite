@@ -72,7 +72,10 @@ test.describe('Page transitions and focus', () => {
         return t;
       }) as typeof document.startViewTransition;
     });
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'How We Work' }).click();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'How We Work' })
+      .click();
     await expect(page).toHaveURL(/\/approach\/?$/);
     await expect
       .poll(() => page.evaluate(() => (window as unknown as { __vt: unknown[] }).__vt.length))
@@ -94,7 +97,9 @@ test.describe('Page transitions and focus', () => {
   }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
     await page.goto('/');
-    const about = page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'About' });
+    const about = page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'About' });
     await about.click();
     await expect(page).toHaveURL(/\/about\/?$/);
     await expect(page.locator('main#main')).toBeFocused();
@@ -141,7 +146,10 @@ test.describe('Header', () => {
     await page.goto('/services/cloud-cost-optimization');
     await page.evaluate(() => window.scrollTo(0, 900));
     await page.evaluate(() => ((window as unknown as { __marker: boolean }).__marker = true));
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Services', exact: true })
+      .hover();
     const menu = page.locator('#services-menu');
     await expect(menu).toBeVisible();
     await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();

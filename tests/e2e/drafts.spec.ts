@@ -41,7 +41,9 @@ test.describe('US6 — Drafts and published content', () => {
     test.skip(!insights.some((a) => !a.draft), 'No published articles');
     await page.goto('/');
     await expect(
-      page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Insights', exact: true }),
+      page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'Insights', exact: true }),
     ).toBeVisible();
     await expect(page.locator('footer').getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
   });

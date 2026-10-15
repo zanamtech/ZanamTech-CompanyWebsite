@@ -1,4 +1,4 @@
-import type { ThemeStore } from './theme';
+import { syncThemeColor, type ThemeStore } from './theme';
 
 /** ClientRouter glue: carry theme and input modality into the new document, move focus, re-sync the active nav. */
 export function registerRouter(themeStore: ThemeStore) {
@@ -9,6 +9,7 @@ export function registerRouter(themeStore: ThemeStore) {
   document.addEventListener('astro:before-swap', (event) => {
     const { newDocument } = event as Event & { newDocument: Document };
     newDocument.documentElement.classList.toggle('dark', themeStore.current === 'dark');
+    syncThemeColor(newDocument, themeStore.current);
     const modality = document.documentElement.dataset.modality;
     if (modality) newDocument.documentElement.dataset.modality = modality;
   });

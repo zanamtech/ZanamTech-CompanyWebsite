@@ -13,6 +13,19 @@ export interface ThemeStore {
   toggle(): void;
 }
 
+/** Browser-chrome colours, the same values as the theme-color metas in src/layouts/BaseLayout.astro. */
+const THEME_COLOR: Record<Theme, string> = { light: '#F8FAFC', dark: '#0B1120' };
+
+/**
+ * Make the mobile browser bar follow the site theme, not the OS scheme: both theme-color metas (one per
+ * prefers-color-scheme media query) get the chosen theme's colour.
+ */
+export function syncThemeColor(doc: Document, theme: Theme) {
+  for (const meta of doc.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')) {
+    meta.content = THEME_COLOR[theme];
+  }
+}
+
 function readStoredTheme(): Theme {
   try {
     return localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light';
@@ -40,6 +53,7 @@ export function registerTheme(Alpine: Alpine): ThemeStore {
 
       const apply = () => {
         root.classList.toggle('dark', theme === 'dark');
+        syncThemeColor(document, theme);
         this.current = theme;
       };
 
@@ -74,6 +88,7 @@ export function registerTheme(Alpine: Alpine): ThemeStore {
       this.set(this.current === 'dark' ? 'light' : 'dark');
     },
   };
+  syncThemeColor(document, themeStore.current);
   Alpine.store('theme', themeStore);
   return themeStore;
 }

@@ -61,7 +61,7 @@ test.describe('Security — CSP compliance', () => {
 
     if (testInfo.project.name === 'desktop') {
       await page
-        .locator('header nav[aria-label="Primary"]')
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
         .getByRole('link', { name: 'Services', exact: true })
         .hover();
       await expect(page.locator('#services-menu')).toBeVisible();

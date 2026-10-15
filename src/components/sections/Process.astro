@@ -47,7 +47,7 @@ const { detailed = false, withIntro = true } = Astro.props;
           {/* The fade runs on the glass card itself, never on an ancestor: an ancestor below opacity 1 becomes the card's
               backdrop root, and browsers can leave the backdrop-filtered card unpainted until something (a hover)
               forces a repaint. The attribute is removed after the sequence, which drops every reveal style. */}
-          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6 group-data-[reveal=hidden]/phase:opacity-0 group-data-[reveal=shown]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[reveal=shown]/phase:delay-[var(--reveal-delay),0s,0s,0s] group-data-[reveal=shown]/phase:duration-700 group-data-[reveal=shown]/phase:ease-out">
+          <div class="glass card-hover relative flex w-full cursor-default flex-col rounded-2xl p-6 group-data-[reveal=hidden]/phase:opacity-0 group-data-[reveal=shown]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[reveal=shown]/phase:delay-[var(--reveal-delay),0s,0s,0s] group-data-[reveal=shown]/phase:duration-700 group-data-[reveal=shown]/phase:ease-out">
             <span class="flex size-12 items-center justify-center rounded-xl bg-cta text-sm font-bold text-cta-fg shadow-sm">
               {pad2(phase.order)}
             </span>

@@ -19,7 +19,10 @@ test.describe('Header and mega-menu', () => {
   test('the mega-menu closes as soon as a link inside it is chosen', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
     await page.goto('/');
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Services', exact: true })
+      .hover();
     const menu = page.locator('#services-menu');
     await expect(menu).toBeVisible();
     await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
@@ -76,7 +79,9 @@ test.describe('Home', () => {
     await expect(link).toHaveAttribute('target', '_blank');
     await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
     await expect(link).toHaveAttribute('aria-label', 'ZanamTech on LinkedIn');
-    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((t) => JSON.parse(t));
+    const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).flatMap(
+      (t) => JSON.parse(t)['@graph'],
+    );
     expect(ld.find((j) => j['@type'] === 'Organization')?.sameAs).toEqual([
       'https://www.linkedin.com/company/zanamtech/',
     ]);
@@ -166,7 +171,7 @@ test.describe('Insights article', () => {
     );
     await expect(meta.getByRole('link', { name: 'Mubashir Ahmed' })).toHaveAttribute('href', '/about');
     const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
-    const article = ld.map((t) => JSON.parse(t)).find((j) => j['@type'] === 'Article');
+    const article = ld.flatMap((t) => JSON.parse(t)['@graph']).find((j) => j['@type'] === 'Article');
     expect(article?.author?.name).toBe('Mubashir Ahmed');
     if (testInfo.project.name === 'desktop') {
       await expect(page.locator('[data-article-toc]')).toBeVisible();

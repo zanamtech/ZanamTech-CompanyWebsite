@@ -32,7 +32,7 @@ test.describe('Services mega-menu (desktop)', () => {
       await page.setViewportSize({ width, height });
       await page.goto('/');
       await page
-        .locator('header nav[aria-label="Primary"]')
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
         .getByRole('link', { name: 'Services', exact: true })
         .hover();
       const menu = page.locator('#services-menu');
@@ -69,7 +69,7 @@ test.describe('Services mega-menu (desktop)', () => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop header');
     await page.setViewportSize({ width: 1024, height: 768 });
     await page.goto('/');
-    const nav = page.locator('header nav[aria-label="Primary"]');
+    const nav = page.locator('header nav[aria-label="Primary"]:not(#mobile-nav)');
     await expect(nav.getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Managed Services' })).toHaveCount(0);
     const cta = (await page

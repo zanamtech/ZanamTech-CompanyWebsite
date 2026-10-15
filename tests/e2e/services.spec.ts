@@ -72,7 +72,9 @@ test.describe('US2 — Services', () => {
     });
 
     const servicesLink = (page: import('@playwright/test').Page) =>
-      page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true });
+      page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'Services', exact: true });
 
     test('opens on hover, lists every published service, and closes when the pointer leaves', async ({ page }) => {
       await page.goto('/');

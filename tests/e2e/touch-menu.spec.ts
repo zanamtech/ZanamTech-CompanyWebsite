@@ -26,7 +26,9 @@ async function expectNoNavigation(page: Page, path = '/') {
 }
 
 const servicesTrigger = (page: Page) =>
-  page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true });
+  page
+    .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+    .getByRole('link', { name: 'Services', exact: true });
 
 test.beforeEach(({}, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'Device-specific suite runs once, in the desktop project');

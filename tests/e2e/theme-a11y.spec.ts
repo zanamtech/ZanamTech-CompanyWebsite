@@ -52,6 +52,34 @@ test.describe('US7 — Theme toggle & accessible browsing', () => {
     await expect(page.locator('html')).not.toHaveClass(/\bdark\b/);
   });
 
+  test('the browser theme-color follows the site theme, also after a client-side navigation (F-45)', async ({
+    page,
+  }) => {
+    const themeColors = () =>
+      page.locator('meta[name="theme-color"]').evaluateAll((metas) => metas.map((m) => m.getAttribute('content')));
+    await page.goto('/');
+    expect(await themeColors()).toEqual(['#F8FAFC', '#F8FAFC']);
+    await page.getByRole('button', { name: 'Dark theme' }).click();
+    await expect.poll(themeColors).toEqual(['#0B1120', '#0B1120']);
+    await page.locator('footer').getByRole('link', { name: 'About', exact: true }).click();
+    await expect(page).toHaveURL(/\/about$/);
+    await expect.poll(themeColors).toEqual(['#0B1120', '#0B1120']);
+  });
+
+  test('both header navs are labelled by purpose and card text is selectable (F-46, F-47)', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('header nav[aria-label="Mobile"]')).toHaveCount(0);
+    await expect(page.locator('header nav[aria-label="Primary"]')).toHaveCount(2);
+    for (const selector of ['#metrics li[data-metric]', '#process li .glass']) {
+      expect(
+        await page
+          .locator(selector)
+          .first()
+          .evaluate((el) => getComputedStyle(el).userSelect),
+      ).not.toBe('none');
+    }
+  });
+
   test('falls back to light when the stored value is invalid', async ({ page }) => {
     await page.addInitScript(() => localStorage.setItem('zt-theme', 'purple'));
     await page.goto('/');

@@ -16,14 +16,20 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await markRealm(page);
     await page.locator('header').evaluate((el) => (el.dataset.probe = 'persisted'));
 
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'How We Work' }).click();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'How We Work' })
+      .click();
     await expect(page).toHaveURL(/\/approach\/?$/);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Consultative engagement');
     await expectSameRealm(page);
     await expect(page.locator('header')).toHaveAttribute('data-probe', 'persisted');
     await expect(page.locator('header')).toHaveCount(1);
 
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Insights' }).click();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Insights' })
+      .click();
     await expect(page).toHaveURL(/\/insights\/?$/);
     await expectSameRealm(page);
   });
@@ -31,7 +37,7 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
   test('active navigation state follows the current page', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Primary nav links are desktop-only');
     await page.goto('/');
-    const nav = page.locator('header nav[aria-label="Primary"]');
+    const nav = page.locator('header nav[aria-label="Primary"]:not(#mobile-nav)');
     await nav.getByRole('link', { name: 'About' }).click();
     await expect(page).toHaveURL(/\/about\/?$/);
     await expect(nav.getByRole('link', { name: 'About' })).toHaveAttribute('aria-current', 'page');
@@ -72,7 +78,10 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
   test('desktop services menu closes after choosing a service', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
     await page.goto('/');
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Services', exact: true })
+      .hover();
     const menu = page.locator('#services-menu');
     await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
     await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);

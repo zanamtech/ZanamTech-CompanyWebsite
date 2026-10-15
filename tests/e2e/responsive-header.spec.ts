@@ -26,7 +26,7 @@ function expectNoOverlaps(boxes: Record<string, Box>) {
 
 const headerParts = (page: Page) => ({
   logo: page.locator('header a[aria-label="ZanamTech home"]'),
-  nav: page.locator('header nav[aria-label="Primary"]'),
+  nav: page.locator('header nav[aria-label="Primary"]:not(#mobile-nav)'),
   toggle: page.locator('header [data-theme-toggle]'),
   cta: page.locator('header').getByRole('link', { name: 'Book a Strategy Consultation' }).first(),
   hamburger: page.locator('header button[aria-controls="mobile-nav"]'),
@@ -116,7 +116,10 @@ test.describe('Desktop header at the lg breakpoint — iPad Pro 12.9 (1024px)', 
 
   test('mega-menu card fits inside the viewport', async ({ page }) => {
     await page.goto('/');
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Services', exact: true })
+      .hover();
     const menu = (await page.locator('#services-menu').boundingBox())!;
     expect(menu.x).toBeGreaterThanOrEqual(0);
     expect(menu.x + menu.width).toBeLessThanOrEqual(1024);
@@ -128,7 +131,10 @@ test.describe('Desktop mega-menu card (1440px)', () => {
 
   test('is a contained, centred floating card below the header', async ({ page }) => {
     await page.goto('/');
-    await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+    await page
+      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+      .getByRole('link', { name: 'Services', exact: true })
+      .hover();
     const menu = page.locator('#services-menu');
     await expect(menu).toBeVisible();
     const box = (await menu.boundingBox())!;
