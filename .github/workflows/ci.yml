@@ -91,12 +91,19 @@ jobs:
       - run: npm run build
       # CI-only tool, not a devDependency (audit F-16): uses the runner's Chrome and lighthouserc.json.
       - run: npm run lhci
+      # Failed assertions as annotations, readable on the run page without downloading logs.
+      - name: Report failed assertions
+        if: failure()
+        run: |
+          test -f .lighthouseci/assertion-results.json || { echo "::error title=LHCI::no assertion results (collect failed)"; exit 0; }
+          node -e "for (const a of require('./.lighthouseci/assertion-results.json')) if (a.level === 'error') console.log('::error title=LHCI ' + a.auditId + '::' + a.url + ' ' + a.name + ' ' + a.operator + ' ' + a.expected + ', actual ' + a.actual)"
       - name: Upload Lighthouse reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-reports
           path: .lighthouseci/
+          include-hidden-files: true
           retention-days: 7
 
   docker-smoke:
