@@ -5,7 +5,6 @@ import { serviceHref, type Service } from '../../lib/services';
 
 interface Props {
   service: Service;
-  headingLevel?: 'h3';
   /** Show the catalogue number (off for related-service cards). */
   numbered?: boolean;
   /** 'feature': a full-width horizontal card with an "included" list (a pillar with a single service). */
@@ -64,16 +63,20 @@ const { name, icon, summary, outcome, order } = service.data;
     )
   }
 
-  <div class:list={['mt-auto pt-6', feature && 'hidden']}>
-    <p class="rounded-lg border border-border bg-surface-2/70 px-3 py-2 text-sm text-fg">
-      <span class="font-semibold text-accent">Outcome:</span>{' '}
-      {outcome}
-    </p>
-    <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
-      Explore service
-      <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-    </p>
-  </div>
+  {
+    !feature && (
+      <div class="mt-auto pt-6">
+        <p class="rounded-lg border border-border bg-surface-2/70 px-3 py-2 text-sm text-fg">
+          <span class="font-semibold text-accent">Outcome:</span>{' '}
+          {outcome}
+        </p>
+        <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
+          Explore service
+          <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </p>
+      </div>
+    )
+  }
 </li>
 
 <style>

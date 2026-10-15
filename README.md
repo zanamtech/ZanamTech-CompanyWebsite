@@ -1,9 +1,10 @@
 # ZanamTech Enterprise Website
 
-The corporate website for ZanamTech: enterprise cloud architecture, zero-trust security, DevSecOps automation,
-full-stack engineering and private enterprise AI.
+The corporate website for ZanamTech, a Cloud, DevOps & AI engineering firm: Managed Cloud & DevOps (the flagship),
+Practical AI, Cloud & DevOps engineering, and Web & SaaS engineering.
 
-- **Spec, plan and tasks:** `specs/001-enterprise-website-baseline/`
+- **Current spec, plan and tasks:** `specs/002-enterprise-repositioning/` (source of truth: `docs/03_Master_Plan_v3.md`).
+  The original baseline is `specs/001-enterprise-website-baseline/`.
 - **Project principles:** `.specify/memory/constitution.md`
 
 ## Stack
@@ -13,7 +14,7 @@ full-stack engineering and private enterprise AI.
 | Framework | Astro (static output), TypeScript strict |
 | Styling | Tailwind CSS v4 with semantic design tokens (`src/styles/global.css`), light default and dark toggle |
 | Interactivity | Alpine.js (CSP build): theme, navigation, services menu, lead form |
-| Motion | Framer Motion DOM engine (`framer-motion/dom`): metric counters and scroll reveal, lazy-loaded |
+| Motion | CSS transitions driven by `data-reveal` attributes (`src/scripts/reveal.ts`); Framer Motion DOM engine (`framer-motion/dom`) only for the results count-up, lazy-loaded on Home |
 | Icons | Lucide, rendered at build time as static SVG (via `@astrojs/react`; no React runtime is shipped) |
 | Font | Plus Jakarta Sans Variable, self-hosted |
 | Hosting | Docker multi-stage build, served by `nginx:stable-alpine-slim` as a non-root user |

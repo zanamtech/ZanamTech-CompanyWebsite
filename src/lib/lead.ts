@@ -27,7 +27,7 @@ export type SubmitResult =
   | { ok: true; spam?: boolean }
   | { ok: false; reason: 'rejected' | 'server' | 'network' | 'timeout' };
 
-export const TIMEOUT_MS = 10_000;
+const TIMEOUT_MS = 10_000;
 
 /** Fallback choice in the required service dropdown. */
 export const OTHER_SERVICE = 'Other / Not sure yet';

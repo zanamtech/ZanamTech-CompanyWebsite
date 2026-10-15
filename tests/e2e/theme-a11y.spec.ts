@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations } from './fixtures';
+import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
 
 const ROUTES = [
   '/',
@@ -71,6 +71,7 @@ test.describe('US7 — Theme toggle & accessible browsing', () => {
       test.setTimeout(90_000);
       for (const route of ROUTES) {
         await gotoWithTheme(page, route, theme);
+        await revealAll(page);
         await test.step(route, async () => expectNoA11yViolations(page));
       }
     });

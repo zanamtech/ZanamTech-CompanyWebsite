@@ -1,6 +1,5 @@
 export const site = {
   name: 'ZanamTech',
-  legalName: 'ZanamTech',
   tagline: 'Cloud, DevOps & AI Engineering',
   description:
     'ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',

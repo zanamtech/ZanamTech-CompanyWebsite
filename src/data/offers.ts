@@ -11,7 +11,6 @@ export interface Offer {
   inputs: string[];
   deliverables: string[];
   nextStep: string;
-  creditsToFollowOn: boolean;
 }
 
 export const offers: Offer[] = [
@@ -25,7 +24,6 @@ export const offers: Offer[] = [
     inputs: ['Read-only access to the cloud account', 'Read access to repositories and pipelines', 'A named technical owner'],
     deliverables: ['Scorecard across reliability, security, cost and delivery', 'Findings with evidence', 'Prioritised backlog with cost and risk'],
     nextStep: 'A fixed-scope project or a managed retainer.',
-    creditsToFollowOn: false,
   },
   {
     id: 'cost-review',
@@ -37,7 +35,6 @@ export const offers: Offer[] = [
     inputs: ['Billing and cost-management read access', 'Current architecture overview'],
     deliverables: ['Spend analysis by service and environment', 'Quick wins applied', '90-day savings roadmap'],
     nextStep: 'Ongoing cost governance inside the managed retainer.',
-    creditsToFollowOn: false,
   },
   {
     id: 'governance-quick-start',
@@ -49,7 +46,6 @@ export const offers: Offer[] = [
     inputs: ['Admin access to the repository workspace', 'Current release process walkthrough'],
     deliverables: ['Branch restrictions and merge policies', 'Pipeline approval gates', 'Written SOPs', 'Access review'],
     nextStep: 'A managed retainer that keeps governance current.',
-    creditsToFollowOn: false,
   },
   {
     id: 'ai-opportunity-sprint',
@@ -61,7 +57,6 @@ export const offers: Offer[] = [
     inputs: ['Process owners for a short interview each', 'Sample documents or reports'],
     deliverables: ['Processes ranked by hours saved × volume', 'Data and risk assessment', 'Pilot specification'],
     nextStep: 'The AI Automation Pilot. The sprint fee is credited towards it.',
-    creditsToFollowOn: true,
   },
   {
     id: 'ai-automation-pilot',
@@ -73,6 +68,5 @@ export const offers: Offer[] = [
     inputs: ['A named process owner', 'Representative real data', 'Access to the target systems'],
     deliverables: ['Working automation with human approval points', 'Audit log', 'Go/no-go report'],
     nextStep: 'A full AI build or managed AI operations.',
-    creditsToFollowOn: false,
   },
 ];

@@ -9,7 +9,10 @@ export const isVisible = (entry: { data: { draft?: boolean } }) => !entry.data.d
 /** Verified-only proof (ADR-003, Constitution III): drop anything that is not verified. */
 export const verifiedOnly = <T extends { verified: boolean }>(list: readonly T[]): T[] => list.filter((item) => item.verified);
 
-/** Case-study source files. Checked first so an empty collection is never queried (avoids a warning per page). */
+/**
+ * Case-study source files. Checked first so an empty collection is never queried (avoids a warning per page; the
+ * glob loader still warns once at build).
+ */
 const caseStudyFiles = Object.keys(import.meta.glob('../content/case-studies/*.md'));
 
 /** Verified case studies only (ADR-003); empty until the first permissioned case study exists. */

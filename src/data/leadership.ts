@@ -1,6 +1,7 @@
 /**
  * Leadership profile for /about (spec 002 FR-025). Capability bio only: no years, no badges until earned, no city.
- * Empty strings hide the related element; certifications render only once earned.
+ * Empty strings hide the related element. The photo is src/assets/team/mubashir.jpg, imported by /about so Astro
+ * resizes it (never the full original).
  */
 export interface LeadershipProfile {
   name: string;
@@ -8,8 +9,6 @@ export interface LeadershipProfile {
   bio: string[];
   linkedin: string;
   companyLinkedin: string;
-  photo: string;
-  certifications: { name: string; verifyUrl: string }[];
 }
 
 export const leadership: LeadershipProfile = {
@@ -22,7 +21,4 @@ export const leadership: LeadershipProfile = {
   ],
   linkedin: 'https://www.linkedin.com/in/mubashir-ahmed-088800174',
   companyLinkedin: 'https://www.linkedin.com/company/zanamtech/',
-  /** The photo is src/assets/team/mubashir.jpg, imported by /about so Astro resizes it (never the full original). */
-  photo: 'team/mubashir.jpg',
-  certifications: [],
 };

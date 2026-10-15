@@ -26,7 +26,6 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.
 const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
 const config = JSON.stringify({ services, idPrefix });
-const fieldGrid = 'sm:grid-cols-2';
 
 const textFields = [
   { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
@@ -99,9 +98,9 @@ const menus = [
     <input type="hidden" name="access_key" value={accessKey} />
     <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
 
-    <div class:list={['grid grid-cols-1 gap-3 sm:gap-3.5', fieldGrid]}>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5">
       {
-        textFields.map((field, i) => (
+        textFields.map((field) => (
           <div>
             <label for={id(field.name)} class="block text-sm font-semibold text-fg">
               {field.label}

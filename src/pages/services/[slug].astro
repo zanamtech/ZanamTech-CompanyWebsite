@@ -54,7 +54,7 @@ const contactHref = `${cta.href}?service=${service.id}`;
     breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services' }, { label: name }]}
   >
     <div class="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
-      <Button href={contactHref} size="lg" data-service={service.id}>
+      <Button href={contactHref} size="lg">
         {cta.primary}
         <ArrowRight aria-hidden="true" className="size-4.5" />
       </Button>

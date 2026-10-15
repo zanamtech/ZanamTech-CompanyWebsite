@@ -32,3 +32,6 @@ playwright-report/
 
 # internal-only business documents (never committed)
 docs/internal/
+
+# compiled Python (skill helper scripts)
+__pycache__/

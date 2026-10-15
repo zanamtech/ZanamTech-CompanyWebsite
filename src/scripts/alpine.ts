@@ -1,7 +1,9 @@
 import type { Alpine } from 'alpinejs';
 import { FIELD_ORDER, OTHER_SERVICE, submitLead, validateLead, type LeadErrors, type LeadInput } from '../lib/lead';
 
-export const THEME_KEY = 'zt-theme';
+// The same key is hard-coded in the inline no-flash script (src/layouts/BaseLayout.astro, which cannot import) and in
+// tests/e2e/fixtures.ts. Change all three together.
+const THEME_KEY = 'zt-theme';
 type Theme = 'light' | 'dark';
 
 interface ThemeStore {
