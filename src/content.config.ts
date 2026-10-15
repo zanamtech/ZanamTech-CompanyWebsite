@@ -1,4 +1,4 @@
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { engagementTypeIds, iconNames, offerIds, pillarIds } from './data/ids';
@@ -63,6 +63,8 @@ const insights = defineCollection({
     updated: z.coerce.date().optional(),
     /** Drafts render only in `astro dev`; every build excludes them (spec 002 FR-036). */
     draft: z.boolean().default(true),
+    /** The service shown in the "Related service" card at the end of the article. */
+    relatedService: reference('services').optional(),
     sources: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
   }),
 });

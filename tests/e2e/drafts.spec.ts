@@ -86,9 +86,8 @@ test.describe('US6 — Drafts and published content', () => {
   test('published articles cite third-party statistics with a source link', async ({ page }) => {
     await page.goto('/insights/cloud-cost-checklist');
     await expect(page.getByRole('heading', { name: 'Sources', exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: /29% of their IaaS and PaaS spend is wasted/ })).toHaveAttribute(
-      'href',
-      /^https:\/\//,
-    );
+    await expect(
+      page.getByRole('link', { name: /wasted cloud spend on IaaS and PaaS increased to 29%/ }),
+    ).toHaveAttribute('href', /^https:\/\//);
   });
 });

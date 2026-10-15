@@ -1,5 +1,6 @@
 ---
 import ContentCard from '../../components/cards/ContentCard.astro';
+import ServiceCard from '../../components/cards/ServiceCard.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
@@ -11,6 +12,7 @@ import { isPublished, isVisible } from '../../lib/content';
 import { leadership } from '../../data/leadership';
 import { ogImage } from '../../lib/og';
 import { article as articleNode } from '../../lib/schema';
+import { getPublishedServices, type Service } from '../../lib/services';
 
 type Article = CollectionEntry<'insights'>;
 
@@ -23,9 +25,13 @@ export async function getStaticPaths() {
   if (articles.length === 0) return [];
   // The Samples link appears only when at least one sample is visible, so it never points at a missing page.
   const hasSamples = (await getCollection('resources', isVisible)).length > 0;
+  const services = await getPublishedServices();
   return [
-    { params: { slug: undefined }, props: { article: undefined, articles, hasSamples } },
-    ...articles.map((article) => ({ params: { slug: article.id }, props: { article, articles, hasSamples } })),
+    { params: { slug: undefined }, props: { article: undefined, articles, hasSamples, services } },
+    ...articles.map((article) => ({
+      params: { slug: article.id },
+      props: { article, articles, hasSamples, services },
+    })),
   ];
 }
 
@@ -33,9 +39,10 @@ interface Props {
   article?: Article;
   articles: Article[];
   hasSamples: boolean;
+  services: Service[];
 }
 
-const { article, articles, hasSamples } = Astro.props;
+const { article, articles, hasSamples, services } = Astro.props;
 const dateLabel = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const rendered = article ? await render(article) : undefined;
 const Content = rendered?.Content;
@@ -45,6 +52,11 @@ const toc = rendered?.headings.filter((h) => h.depth === 2) ?? [];
 const readMinutes = article
   ? Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 200))
   : 0;
+// End of article: the related service (only if published) and the other articles, newest first.
+const relatedService = article?.data.relatedService
+  ? services.find((s) => s.id === article.data.relatedService!.id)
+  : undefined;
+const relatedArticles = article ? articles.filter((a) => a.id !== article.id) : [];
 const articleDates = article && { published: article.data.date, modified: article.data.updated ?? article.data.date };
 const articleLd =
   article && articleDates
@@ -59,8 +71,20 @@ const articleLd =
         new URL('/', Astro.site),
       )
     : undefined;
+// The last crumb uses the short SEO title, or the title cut at a word with an ellipsis.
+const shortTitle = (title: string, max = 48) =>
+  title.length <= max
+    ? title
+    : `${title
+        .slice(0, max)
+        .replace(/\s+\S*$/, '')
+        .replace(/[\s,:;.-]+$/, '')}…`;
 const breadcrumbs = article
-  ? [{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights' }, { label: article.data.title }]
+  ? [
+      { label: 'Home', href: '/' },
+      { label: 'Insights', href: '/insights' },
+      { label: article.data.seoTitle ?? shortTitle(article.data.title) },
+    ]
   : [{ label: 'Home', href: '/' }, { label: 'Insights' }];
 ---
 
@@ -149,6 +173,40 @@ const breadcrumbs = article
         </nav>
       )}
     </div>
+    {relatedService && (
+      <section aria-labelledby="related-service-title" class="container-page section-y">
+        <h2 id="related-service-title" class="text-2xl font-bold text-fg">
+          Related service
+        </h2>
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ServiceCard service={relatedService} numbered={false} />
+        </ul>
+      </section>
+    )}
+    {relatedArticles.length > 0 && (
+      <section aria-labelledby="related-articles-title" class="container-page section-y">
+        <h2 id="related-articles-title" class="text-2xl font-bold text-fg">
+          Related articles
+        </h2>
+        <ul class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+          {relatedArticles.map((a) => (
+            <ContentCard
+              data-related-article=""
+              topic={a.id}
+              href={`/insights/${a.id}`}
+              title={a.data.title}
+              summary={a.data.summary}
+              action="Read the article"
+            >
+              <div slot="meta" class="flex flex-wrap items-center gap-2 text-sm text-muted">
+                {a.data.draft && <Badge tone="accent">Draft</Badge>}
+                <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
+              </div>
+            </ContentCard>
+          ))}
+        </ul>
+      </section>
+    )}
     <CtaBand />
   </BaseLayout>
 ) : (
