@@ -5,7 +5,7 @@ export const site = {
     'ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down, with documented runbooks, transparent reporting and no lock-in.',
   /** Home page meta description (≤ 155 characters, checked by lint:content); `description` stays in the JSON-LD. */
   metaDescription:
-    'ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise cloud platforms and automate manual work. Documented runbooks, no lock-in.',
+    'ZanamTech runs, secures and modernises AWS, Azure and Google Cloud platforms and automates manual work with practical AI. Documented runbooks, no lock-in.',
   email: 'contact@zanamtech.com',
   privacyEmail: 'privacy@zanamtech.com',
   securityEmail: 'security@zanamtech.com',

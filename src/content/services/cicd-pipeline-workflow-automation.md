@@ -6,7 +6,7 @@ flagship: false
 published: true
 icon: Workflow
 summary: Automated build, test, security-scanning and deployment pipelines on GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build or Jenkins, so releases become routine.
-seoDescription: "Automated build, test, security-scanning and deployment pipelines on GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Cloud Build or Jenkins."
+seoDescription: "Automated build, test, security-scan and deploy pipelines on GitHub Actions, Azure DevOps, Bitbucket, AWS CodePipeline, Google Cloud Build or Jenkins."
 deliverables:
   - Pipeline architecture and environment promotion strategy
   - Automated build, test and security-scanning stages
