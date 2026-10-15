@@ -11,8 +11,9 @@
  *   Once the transition is over the attribute is removed, so a revealed card carries no opacity/transform at all.
  *   (A glass card left on its own compositor layer with backdrop-filter can stay unpainted in Chromium until a repaint.)
  * - Once revealed, an element is never hidden again (WeakSet), whatever re-runs.
- * - A safety timeout reveals everything still hidden.
- * - Re-initialised on each `astro:page-load`: the previous observer and timer are torn down first; the scroll/pageshow/
+ * - Per-group safety timeout: from the moment any part of a group enters the viewport, it has 4s to finish; then it is
+ *   shown and stripped of reveal styles whatever state it is in. Lower sections still fade in when reached.
+ * - Re-initialised on each `astro:page-load`: the previous observers and timers are torn down first; the scroll/pageshow/
  *   visibility watchdog listeners are bound once for the whole session.
  * - The theme toggle never touches reveal state. prefers-reduced-motion: nothing is hidden.
  */
@@ -23,7 +24,9 @@ const DONE_MS = 900;
 const revealed = new WeakSet<Element>();
 let pending: HTMLElement[] = [];
 let observer: IntersectionObserver | null = null;
-let safetyTimer = 0;
+/** Watches for the first visible pixel of each pending group to start its safety timer. */
+let safetyObserver: IntersectionObserver | null = null;
+const safetyTimers = new Map<HTMLElement, number>();
 
 function itemsOf(group: HTMLElement): HTMLElement[] {
   return Array.from(group.children) as HTMLElement[];
@@ -62,7 +65,10 @@ function check() {
     if (!group.isConnected) continue;
     const r = group.getBoundingClientRect();
     if (r.bottom <= 0) reveal(group, false);
-    else if (r.top < window.innerHeight) reveal(group);
+    else if (r.top < window.innerHeight) {
+      armSafety(group);
+      reveal(group);
+    }
   }
 }
 
@@ -76,15 +82,28 @@ function scheduleCheck() {
   });
 }
 
+/** Start the group's safety timer once (on entering the viewport). When it fires the group ends visible and clean. */
+function armSafety(group: HTMLElement) {
+  if (safetyTimers.has(group)) return;
+  safetyObserver?.unobserve(group);
+  safetyTimers.set(
+    group,
+    window.setTimeout(() => {
+      safetyTimers.delete(group);
+      if (!revealed.has(group)) reveal(group, false);
+      else clean(group);
+    }, SAFETY_MS),
+  );
+}
+
 function teardown() {
   observer?.disconnect();
   observer = null;
-  window.clearTimeout(safetyTimer);
+  safetyObserver?.disconnect();
+  safetyObserver = null;
+  safetyTimers.forEach((t) => window.clearTimeout(t));
+  safetyTimers.clear();
   pending = [];
-}
-
-function revealAll() {
-  for (const group of [...pending]) reveal(group, false);
 }
 
 function init() {
@@ -121,8 +140,13 @@ function init() {
     (entries) => entries.forEach((e) => e.isIntersecting && reveal(e.target as HTMLElement)),
     { rootMargin: '0px 0px -10% 0px' },
   );
-  pending.forEach((g) => observer!.observe(g));
-  safetyTimer = window.setTimeout(revealAll, SAFETY_MS);
+  safetyObserver = new IntersectionObserver((entries) =>
+    entries.forEach((e) => e.isIntersecting && armSafety(e.target as HTMLElement)),
+  );
+  pending.forEach((g) => {
+    observer!.observe(g);
+    safetyObserver!.observe(g);
+  });
   scheduleCheck();
 }
 

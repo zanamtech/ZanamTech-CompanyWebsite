@@ -78,6 +78,18 @@ test.describe('Reveal never leaves content hidden', () => {
     });
   }
 
+  test('the safety timeout starts per group on entering the viewport: lower sections still fade in', async ({ page }) => {
+    await page.goto('/about');
+    const group = page.locator('section[aria-labelledby="capabilities-title"] [data-reveal-group]');
+    // Well past the 4s timeout, never scrolled to: still waiting to fade in.
+    await page.waitForTimeout(5_000);
+    await expect(group.locator('> [data-reveal="hidden"]')).toHaveCount(2);
+    await group.scrollIntoViewIfNeeded();
+    await expect(group.locator('> [data-reveal="shown"]').first()).toBeAttached();
+    await expect.poll(() => invisibleItems(page), { timeout: 6_000 }).toEqual([]);
+    await expect.poll(() => group.locator('> [data-reveal]').count()).toBe(0);
+  });
+
   test('reduced motion: nothing is ever hidden', async ({ browser }) => {
     const context = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await context.newPage();
