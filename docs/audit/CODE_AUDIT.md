@@ -352,3 +352,21 @@ Each batch is independent. Each ends with `npm run check`, `npm run lint:content
 - Batches 4, 5 and 8 touch most templates. Run the existing design-freeze computed-style comparison (the method from Phase 5) on each, not only Playwright.
 - Batch 3 changes every URL's canonical form at once. Ship it before launch, so search engines never index the slash form.
 - F-07 and F-14 remove the most code, but each trades away a small visual behaviour in some browsers. Treat them as product decisions, not clean-ups.
+
+---
+
+## 6. Owner decisions (15 Oct 2026)
+
+Implementation runs in three rounds. These decisions override the recommendations above where they differ.
+
+| Finding | Decision |
+| --- | --- |
+| Everything not listed below | **Approved** as recommended. |
+| F-07 (native view transitions instead of the ClientRouter) | **Deferred** until after launch. |
+| F-14 (native select instead of the custom combobox) | **Declined.** Keep the current behaviour. |
+| F-51 (merge the footer phone and desktop lists) | **Declined.** Keep the current behaviour. |
+| F-57 (drop the FAQ animation fallback) | **Declined.** Keep the current behaviour. |
+| F-02 (pause mechanism for the marquee and hero stepper) | **Declined as a visible change.** The marquee and the stepper keep their current look, speed and looping. Round 3 adds only invisible keyboard behaviour: both pause while focus is inside them. |
+| F-17 (spam protection) | **No Turnstile now.** The owner restricts the Web3Forms key to the production domain at launch. |
+| F-50 (SVG logo) | **Only if an SVG logo is supplied.** |
+| F-20 (OG image and article metadata) | **Do the code part.** The 1200×630 OG image asset comes later, in the images round. |
