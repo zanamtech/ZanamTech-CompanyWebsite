@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { test, expect } from './fixtures';
+import { test, expect, frames } from './fixtures';
 
 // Regression (About review, 2026-10-15): a Philosophy card on /about rendered blank. On every main page, after a fast
 // scroll, a theme toggle and a client-side navigation away and back, every reveal item must end fully visible.
@@ -40,7 +40,7 @@ async function fastScroll(page: Page) {
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y < height; y += 600) {
     await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
-    await page.waitForTimeout(16);
+    await frames(page);
   }
   await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
 }
@@ -82,11 +82,15 @@ test.describe('Reveal never leaves content hidden', () => {
   test('the safety timeout starts per group on entering the viewport: lower sections still fade in', async ({
     page,
   }) => {
+    // Fake timers: jump well past the 4s safety timeout without waiting for it.
+    await page.clock.install();
     await page.goto('/about');
     const group = page.locator('section[aria-labelledby="capabilities-title"] [data-reveal-group]');
-    // Well past the 4s timeout, never scrolled to: still waiting to fade in.
-    await page.waitForTimeout(5_000);
     await expect(group.locator('> [data-reveal="hidden"]')).toHaveCount(2);
+    await page.clock.runFor(5_000);
+    // Never scrolled to: still waiting to fade in.
+    await expect(group.locator('> [data-reveal="hidden"]')).toHaveCount(2);
+    await page.clock.resume();
     await group.scrollIntoViewIfNeeded();
     await expect(group.locator('> [data-reveal="shown"]').first()).toBeAttached();
     await expect.poll(() => invisibleItems(page), { timeout: 6_000 }).toEqual([]);

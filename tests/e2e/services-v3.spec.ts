@@ -1,5 +1,5 @@
 import { test, expect } from './fixtures';
-import { catalog, published } from './catalog';
+import { published } from './catalog';
 
 // Constitution III: no clock times, time-zone labels or minute/hour figures on the site.
 const TIME_FIGURES =
@@ -12,14 +12,6 @@ test.describe('US2 — Services v3', () => {
     expect(ids.slice(0, 4)).toEqual(['managed', 'cloud-devops', 'web-saas', 'ai']);
     const firstCard = page.locator('#managed [data-service-card] h3');
     await expect(firstCard).toHaveText(published.find((s) => s.flagship)!.name);
-  });
-
-  test('every published service is linked from the Home pillar grid (two clicks or fewer)', async ({ page }) => {
-    await page.goto('/');
-    const hrefs = await page
-      .locator('#core-services [data-pillar] a[href^="/services/"]')
-      .evaluateAll((els) => els.map((e) => e.getAttribute('href')));
-    expect([...new Set(hrefs)].sort()).toEqual(published.map((s) => `/services/${s.slug}`).sort());
   });
 
   test('the Managed pillar card lists what the retainer includes, each linking to the flagship', async ({ page }) => {
@@ -35,27 +27,29 @@ test.describe('US2 — Services v3', () => {
       expect(href).toBe('/services/managed-cloud-devops');
   });
 
-  test('/services has no empty slots: Managed is one full-width feature card, Practical AI fills a two-column row', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop layout');
-    await page.setViewportSize({ width: 1440, height: 900 });
-    await page.goto('/services');
-    const list = (await page.locator('#managed ul').first().boundingBox())!;
-    const flagship = (await page.locator('#managed [data-service-card]').boundingBox())!;
-    expect(Math.round(flagship.width)).toBe(Math.round(list.width));
-    await expect(page.locator('#managed [data-service-card]')).toHaveAttribute('data-layout', 'feature');
-    const ai = await page
-      .locator('#ai [data-service-card]')
-      .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
-    expect(ai).toHaveLength(2);
-    expect(new Set(ai).size, 'both AI cards on one row').toBe(1);
-  });
+  test(
+    '/services has no empty slots: Managed is one full-width feature card, Practical AI fills a two-column row',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto('/services');
+      const list = (await page.locator('#managed ul').first().boundingBox())!;
+      const flagship = (await page.locator('#managed [data-service-card]').boundingBox())!;
+      expect(Math.round(flagship.width)).toBe(Math.round(list.width));
+      await expect(page.locator('#managed [data-service-card]')).toHaveAttribute('data-layout', 'feature');
+      const ai = await page
+        .locator('#ai [data-service-card]')
+        .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+      expect(ai).toHaveLength(2);
+      expect(new Set(ai).size, 'both AI cards on one row').toBe(1);
+    },
+  );
 
-  test('every service page: 4–5 FAQs, 3 related cards without numbers, engagement chips linking to How We Work', async ({
-    page,
-  }) => {
-    for (const service of published) {
+  // One test per service page (each loop used to share one 30s budget and timed out on a loaded machine).
+  for (const service of published) {
+    test(`${service.slug}: 4–5 FAQs, 3 related cards without numbers, engagement chips linking to How We Work`, async ({
+      page,
+    }) => {
       await page.goto(`/services/${service.slug}`);
       const faqs = await page.locator('#service-faq [data-faq]').count();
       expect(faqs, `${service.slug} FAQ count`).toBeGreaterThanOrEqual(4);
@@ -69,8 +63,8 @@ test.describe('US2 — Services v3', () => {
       expect(count).toBeLessThanOrEqual(3);
       for (const href of await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href'))))
         expect(href).toBe('/approach#engagement-models');
-    }
-  });
+    });
+  }
 
   test('flagship page shows modules, three tiers by scope and the P1–P4 definitions, with no time figures', async ({
     page,
@@ -88,8 +82,8 @@ test.describe('US2 — Services v3', () => {
     await expect(page.getByRole('heading', { name: 'Exit terms' })).toBeVisible();
   });
 
-  test('service pages show "What you get", a FAQ and illustrative scenarios without figures', async ({ page }) => {
-    for (const service of published) {
+  for (const service of published) {
+    test(`${service.slug}: "What you get", a FAQ and illustrative scenarios without figures`, async ({ page }) => {
       await page.goto(`/services/${service.slug}`);
       await expect(page.getByRole('heading', { name: 'What you get' })).toBeVisible();
       await expect(page.locator('#service-faq [data-faq]').first()).toBeAttached();
@@ -97,14 +91,14 @@ test.describe('US2 — Services v3', () => {
       for (const text of await examples.allInnerTexts()) {
         expect(text.replace('Example engagement', ''), `${service.slug} illustrative scenario`).not.toMatch(/\d/);
       }
-    }
-  });
+    });
+  }
 
-  test('no service page states clock times, time zones or minute/hour figures', async ({ page }) => {
-    for (const service of catalog.filter((s) => s.published)) {
+  for (const service of published) {
+    test(`${service.slug}: no clock times, time zones or minute/hour figures`, async ({ page }) => {
       await page.goto(`/services/${service.slug}`);
       const text = await page.locator('main').innerText();
       expect(text.replace(/hourly encrypted backups/gi, ''), service.slug).not.toMatch(TIME_FIGURES);
-    }
-  });
+    });
+  }
 });

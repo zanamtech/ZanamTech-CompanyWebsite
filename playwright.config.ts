@@ -32,8 +32,13 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   projects: [
-    { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
-    { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    // Device-specific tests are tagged @desktop or @mobile and run only in that project (untagged tests run in both).
+    {
+      name: 'desktop',
+      grepInvert: /@mobile/,
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } },
+    },
+    { name: 'mobile', grepInvert: /@desktop/, use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
     command: `npm run build && npm run preview -- --port ${PORT}`,

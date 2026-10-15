@@ -47,8 +47,7 @@ test.describe('External links', () => {
 });
 
 test.describe('Page transitions and focus', () => {
-  test('old page fades out fully before the new one fades in (no overlap)', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'One engine is enough for CSS timing');
+  test('old page fades out fully before the new one fades in (no overlap)', { tag: '@desktop' }, async ({ page }) => {
     await page.goto('/about');
     // Record the animations of the page's view transition once it is ready.
     await page.evaluate(() => {
@@ -92,20 +91,21 @@ test.describe('Page transitions and focus', () => {
     expect(next!.duration).toBe(180);
   });
 
-  test('after a client-side navigation focus is on <main>, with no ring on the clicked link', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
-    await page.goto('/');
-    const about = page
-      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
-      .getByRole('link', { name: 'About' });
-    await about.click();
-    await expect(page).toHaveURL(/\/about\/?$/);
-    await expect(page.locator('main#main')).toBeFocused();
-    await expect(page.locator('html')).toHaveAttribute('data-modality', 'pointer');
-    await expect(about).toHaveCSS('outline-style', 'none');
-  });
+  test(
+    'after a client-side navigation focus is on <main>, with no ring on the clicked link',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.goto('/');
+      const about = page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'About' });
+      await about.click();
+      await expect(page).toHaveURL(/\/about\/?$/);
+      await expect(page.locator('main#main')).toBeFocused();
+      await expect(page.locator('html')).toHaveAttribute('data-modality', 'pointer');
+      await expect(about).toHaveCSS('outline-style', 'none');
+    },
+  );
 });
 
 test.describe('Header', () => {
@@ -127,8 +127,7 @@ test.describe('Header', () => {
     expect(box.width).toBeGreaterThanOrEqual(page.viewportSize()!.width - 20);
   });
 
-  test('active page: accent colour only, no underline or indicator', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
+  test('active page: accent colour only, no underline or indicator', { tag: '@desktop' }, async ({ page }) => {
     await page.goto('/approach');
     const links = page.locator('[data-nav-link="desktop"]');
     for (const deco of await links.evaluateAll((els) => els.map((e) => getComputedStyle(e).textDecorationLine)))
@@ -139,24 +138,25 @@ test.describe('Header', () => {
     expect(accent).toEqual(['How We Work']);
   });
 
-  test('a mega-menu link to the current page closes the menu and scrolls to the top without navigating', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
-    await page.goto('/services/cloud-cost-optimization');
-    await page.evaluate(() => window.scrollTo(0, 900));
-    await page.evaluate(() => ((window as unknown as { __marker: boolean }).__marker = true));
-    await page
-      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
-      .getByRole('link', { name: 'Services', exact: true })
-      .hover();
-    const menu = page.locator('#services-menu');
-    await expect(menu).toBeVisible();
-    await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
-    await expect(menu).toBeHidden();
-    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
-    expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(true);
-  });
+  test(
+    'a mega-menu link to the current page closes the menu and scrolls to the top without navigating',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.goto('/services/cloud-cost-optimization');
+      await page.evaluate(() => window.scrollTo(0, 900));
+      await page.evaluate(() => ((window as unknown as { __marker: boolean }).__marker = true));
+      await page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'Services', exact: true })
+        .hover();
+      const menu = page.locator('#services-menu');
+      await expect(menu).toBeVisible();
+      await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
+      await expect(menu).toBeHidden();
+      await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+      expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(true);
+    },
+  );
 });
 
 test.describe('Home: "Low-risk ways to start" cards', () => {
@@ -177,43 +177,49 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
     [1440, [5]],
     [1024, [3, 2]],
   ] as const) {
-    test(`layout at ${width}px: rows of ${rows.join(' + ')}, second row centred`, async ({ page }, testInfo) => {
-      test.skip(testInfo.project.name !== 'desktop', 'Desktop widths');
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto('/');
-      const boxes = await page
-        .locator('[data-offer-card]')
-        .evaluateAll((els) =>
-          els
-            .map((e) => e.getBoundingClientRect())
-            .map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })),
-        );
-      const tops = [...new Set(boxes.map((b) => b.top))];
-      expect(tops.map((t) => boxes.filter((b) => b.top === t).length)).toEqual([...rows]);
-      if (tops.length === 2) {
-        const centre = (t: number) => {
-          const row = boxes.filter((b) => b.top === t);
-          return (row[0].left + row.at(-1)!.right) / 2;
-        };
-        expect(Math.abs(centre(tops[0]) - centre(tops[1]))).toBeLessThanOrEqual(1);
-      }
-    });
+    test(
+      `layout at ${width}px: rows of ${rows.join(' + ')}, second row centred`,
+      { tag: '@desktop' },
+      async ({ page }) => {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto('/');
+        const boxes = await page
+          .locator('[data-offer-card]')
+          .evaluateAll((els) =>
+            els
+              .map((e) => e.getBoundingClientRect())
+              .map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })),
+          );
+        const tops = [...new Set(boxes.map((b) => b.top))];
+        expect(tops.map((t) => boxes.filter((b) => b.top === t).length)).toEqual([...rows]);
+        if (tops.length === 2) {
+          const centre = (t: number) => {
+            const row = boxes.filter((b) => b.top === t);
+            return (row[0].left + row.at(-1)!.right) / 2;
+          };
+          expect(Math.abs(centre(tops[0]) - centre(tops[1]))).toBeLessThanOrEqual(1);
+        }
+      },
+    );
   }
 
-  test('phones: a horizontal scroll-snap row with part of the next card visible', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'mobile', 'Phone layout');
-    await page.goto('/');
-    const strip = page.locator('[data-offer-strip]');
-    await expect(strip).toHaveCSS('scroll-snap-type', /x mandatory/);
-    const { scrollWidth, clientWidth } = await strip.evaluate((el) => ({
-      scrollWidth: el.scrollWidth,
-      clientWidth: el.clientWidth,
-    }));
-    expect(scrollWidth).toBeGreaterThan(clientWidth);
-    const second = (await page.locator('[data-offer-card]').nth(1).boundingBox())!;
-    expect(second.x).toBeLessThan(page.viewportSize()!.width);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-  });
+  test(
+    'phones: a horizontal scroll-snap row with part of the next card visible',
+    { tag: '@mobile' },
+    async ({ page }) => {
+      await page.goto('/');
+      const strip = page.locator('[data-offer-strip]');
+      await expect(strip).toHaveCSS('scroll-snap-type', /x mandatory/);
+      const { scrollWidth, clientWidth } = await strip.evaluate((el) => ({
+        scrollWidth: el.scrollWidth,
+        clientWidth: el.clientWidth,
+      }));
+      expect(scrollWidth).toBeGreaterThan(clientWidth);
+      const second = (await page.locator('[data-offer-card]').nth(1).boundingBox())!;
+      expect(second.x).toBeLessThan(page.viewportSize()!.width);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    },
+  );
 });
 
 test.describe('About', () => {
@@ -245,17 +251,20 @@ test.describe('About', () => {
 });
 
 test.describe('Article "On this page"', () => {
-  test('14px muted links; the section being read is highlighted with aria-current', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'The list shows from 1024px');
-    await page.goto('/insights/azure-environment-strategy');
-    const links = page.locator('[data-article-toc] a');
-    await expect(links.first()).toHaveCSS('font-size', '14px');
-    await expect(links.first()).toHaveAttribute('aria-current', 'location');
-    const third = await links.nth(2).getAttribute('href');
-    await page
-      .locator(third!)
-      .evaluate((h) => window.scrollTo(0, h.getBoundingClientRect().top + window.scrollY - 120));
-    await expect(links.nth(2)).toHaveAttribute('aria-current', 'location');
-    await expect(page.locator('[data-article-toc] a[aria-current]')).toHaveCount(1);
-  });
+  test(
+    '14px muted links; the section being read is highlighted with aria-current',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.goto('/insights/azure-environment-strategy');
+      const links = page.locator('[data-article-toc] a');
+      await expect(links.first()).toHaveCSS('font-size', '14px');
+      await expect(links.first()).toHaveAttribute('aria-current', 'location');
+      const third = await links.nth(2).getAttribute('href');
+      await page
+        .locator(third!)
+        .evaluate((h) => window.scrollTo(0, h.getBoundingClientRect().top + window.scrollY - 120));
+      await expect(links.nth(2)).toHaveAttribute('aria-current', 'location');
+      await expect(page.locator('[data-article-toc] a[aria-current]')).toHaveCount(1);
+    },
+  );
 });

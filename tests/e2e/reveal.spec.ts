@@ -1,5 +1,5 @@
 import type { Page } from '@playwright/test';
-import { test, expect } from './fixtures';
+import { test, expect, frames } from './fixtures';
 
 // Regression (QA 2026-10-14): "How we engage" step cards could stay blank after load until hovered. Every card must
 // end fully visible without any pointer interaction, however the visitor reaches the section.
@@ -31,6 +31,11 @@ async function expectAllStepsVisible(page: Page) {
     .toEqual([1, 1, 1, 1]);
 }
 
+/** The card sequence has begun: no card is still waiting (hidden); some may be mid-fade. */
+async function sequenceStarted(page: Page) {
+  await expect.poll(async () => (await stepCards(page)).some((c) => c.state === 'hidden')).toBe(false);
+}
+
 test.describe('How we engage: step cards always end visible', () => {
   test.use({ hasTouch: false });
 
@@ -43,20 +48,20 @@ test.describe('How we engage: step cards always end visible', () => {
     },
     'fast scroll past it, then back up': async (page) => {
       await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
-      await page.waitForTimeout(150);
+      await frames(page, 9);
       await page.evaluate(() =>
         document.querySelector('#process')!.scrollIntoView({ behavior: 'instant', block: 'center' }),
       );
     },
     'reload mid-page': async (page) => {
       await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant' }));
-      await page.waitForTimeout(400);
+      await sequenceStarted(page);
       await page.reload();
       await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant' }));
     },
     'back from another page': async (page) => {
       await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant' }));
-      await page.waitForTimeout(400);
+      await sequenceStarted(page);
       await page.goto('/about');
       await page.goBack();
       await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant' }));
@@ -67,7 +72,8 @@ test.describe('How we engage: step cards always end visible', () => {
     test(`${name} (three loads)`, async ({ page }) => {
       for (let run = 0; run < 3; run++) {
         await page.goto('/');
-        await page.waitForTimeout(100 + run * 150);
+        // Arrive at a different point of the page's start-up on each load.
+        await frames(page, 6 + run * 9);
         await arrive(page);
         await expectAllStepsVisible(page);
         // After the sequence the cards carry no reveal styles at all (reveal.ts removes data-reveal).
@@ -93,7 +99,7 @@ test('every reveal group on the home page ends fully visible', async ({ page }) 
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y < height; y += 300) {
     await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
-    await page.waitForTimeout(40);
+    await frames(page, 2);
   }
   await expect
     .poll(

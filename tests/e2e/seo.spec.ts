@@ -38,11 +38,7 @@ function load() {
 }
 const build = () => (cache ??= load());
 
-test.describe('One URL per page', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Build output check; runs once');
-  });
-
+test.describe('One URL per page', { tag: '@desktop' }, () => {
   test('every page is built as a file (no directory-format output)', () => {
     const { pages } = build();
     expect(pages.length).toBeGreaterThan(20);
@@ -100,11 +96,7 @@ test.describe('One URL per page', () => {
   });
 });
 
-test.describe('robots.txt and the sitemap index', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Build output check; runs once');
-  });
-
+test.describe('robots.txt and the sitemap index', { tag: '@desktop' }, () => {
   test('robots.txt allows crawling and points at the sitemap index', () => {
     const { SITE } = build();
     const robots = read('robots.txt');
@@ -122,8 +114,7 @@ test.describe('robots.txt and the sitemap index', () => {
 });
 
 test.describe('404 page', () => {
-  test('is noindexed and has no canonical', ({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Build output check; runs once');
+  test('is noindexed and has no canonical', { tag: '@desktop' }, ({}) => {
     const html = read('404.html');
     expect(html).toContain('<meta name="robots" content="noindex">');
     expect(canonicalOf(html)).toBeNull();
@@ -166,11 +157,7 @@ async function expandPage(file: string): Promise<Expanded[]> {
   return (await jsonld.expand(JSON.parse(blocks[0]), { documentLoader })) as Expanded[];
 }
 
-test.describe('Metadata and structured data', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Build output check; runs once');
-  });
-
+test.describe('Metadata and structured data', { tag: '@desktop' }, () => {
   test('every title is at most 60 characters and every description at most 155', () => {
     for (const [path, html] of build().pages) {
       const title = decode(attr(html, /<title>([^<]*)<\/title>/) ?? '');

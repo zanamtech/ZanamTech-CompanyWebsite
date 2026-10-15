@@ -18,6 +18,12 @@ async function enforceCsp(page: Page) {
     if (/Content Security Policy|Refused to/i.test(msg.text())) violations.push(msg.text());
   });
   page.on('pageerror', (err) => violations.push(`pageerror: ${err.message}`));
+  // Ready signal: Alpine has started, so every module script on the page has run under the CSP.
+  await page.addInitScript(() =>
+    document.addEventListener('alpine:initialized', () => {
+      (window as unknown as { __alpineReady: boolean }).__alpineReady = true;
+    }),
+  );
   await page.route('**/*', async (route) => {
     if (route.request().resourceType() !== 'document') return route.fallback();
     const response = await route.fetch();
@@ -38,14 +44,16 @@ const ROUTES = [
 ];
 
 test.describe('Security — CSP compliance', () => {
-  test('all pages load under the production CSP with no violations', async ({ page }) => {
-    const violations = await enforceCsp(page);
-    for (const route of ROUTES) {
+  // One test per page: a single test looping over every page shared one 30s budget and timed out on a loaded machine.
+  for (const route of ROUTES) {
+    test(`${route} loads under the production CSP with no violations`, async ({ page }) => {
+      const violations = await enforceCsp(page);
       await page.goto(route);
-      await page.waitForLoadState('networkidle');
-    }
-    expect(violations).toEqual([]);
-  });
+      // Not 'networkidle' (it needs 500ms of network silence and timed out on a slow machine).
+      await page.waitForFunction(() => (window as unknown as { __alpineReady?: boolean }).__alpineReady === true);
+      expect(violations).toEqual([]);
+    });
+  }
 
   test('interactive features work under the CSP (theme, menu, contact form, counters, reveal)', async ({
     page,
@@ -75,8 +83,10 @@ test.describe('Security — CSP compliance', () => {
     await page.locator('#process').scrollIntoViewIfNeeded();
     await expect(page.locator('#process [data-phase]').first()).toHaveCSS('opacity', '1', { timeout: 5_000 });
 
+    // A client-side navigation (fetch, fade, swap): wait for it like a navigation, not with the 5s assertion timeout,
+    // which a slow machine can exceed.
     await page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' }).click();
-    await expect(page).toHaveURL(/\/contact\/?$/);
+    await page.waitForURL(/\/contact$/);
     const dialog = page.getByRole('main');
     await dialog.getByLabel('Full name').fill('Alex Morgan');
     await dialog.getByLabel('Email address').fill('alex@example.com');

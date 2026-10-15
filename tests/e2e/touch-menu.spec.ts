@@ -16,7 +16,12 @@ async function instrument(page: Page) {
 }
 
 async function expectNoNavigation(page: Page, path = '/') {
-  await page.waitForTimeout(400); // allow any (unwanted) navigation to start
+  // A negative check needs a window: fail fast if a navigation starts within 400ms, otherwise go on.
+  const navigated = await page.waitForEvent('framenavigated', { timeout: 400 }).then(
+    () => true,
+    () => false,
+  );
+  expect(navigated, 'a navigation started').toBe(false);
   expect(new URL(page.url()).pathname).toBe(path);
   const state = await page.evaluate(() => {
     const w = window as unknown as { __realm?: string; __navStarts?: number };
@@ -30,16 +35,12 @@ const servicesTrigger = (page: Page) =>
     .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
     .getByRole('link', { name: 'Services', exact: true });
 
-test.beforeEach(({}, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Device-specific suite runs once, in the desktop project');
-});
-
 for (const device of [
   { name: 'iPad Mini (landscape)', width: 1024, height: 768 },
   { name: 'iPad Pro 12.9 (portrait)', width: 1024, height: 1366 },
   { name: 'iPad Pro 11 (landscape)', width: 1194, height: 834 },
 ]) {
-  test.describe(`Touch tablet — ${device.name}`, () => {
+  test.describe(`Touch tablet — ${device.name}`, { tag: '@desktop' }, () => {
     test.use({ viewport: { width: device.width, height: device.height }, hasTouch: true, isMobile: true });
 
     test('first tap opens the menu without navigating; second tap closes it', async ({ page }) => {
@@ -90,7 +91,7 @@ for (const device of [
   });
 }
 
-test.describe('Hybrid touchscreen laptop (fine pointer + touch, 1440px)', () => {
+test.describe('Hybrid touchscreen laptop (fine pointer + touch, 1440px)', { tag: '@desktop' }, () => {
   test.use({ viewport: { width: 1440, height: 900 }, hasTouch: true });
 
   test('a touch tap toggles the menu even though the device can hover', async ({ page }) => {
@@ -108,7 +109,7 @@ test.describe('Hybrid touchscreen laptop (fine pointer + touch, 1440px)', () => 
   });
 });
 
-test.describe('Desktop mouse (1440px)', () => {
+test.describe('Desktop mouse (1440px)', { tag: '@desktop' }, () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test('hover opens the menu and a click navigates directly to /services', async ({ page }) => {

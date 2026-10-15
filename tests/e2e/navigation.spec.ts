@@ -10,32 +10,34 @@ async function expectSameRealm(page: Page) {
 }
 
 test.describe('Client-side navigation (Astro ClientRouter)', () => {
-  test('header links navigate without a full reload and the header element persists', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Primary nav links are desktop-only');
-    await page.goto('/');
-    await markRealm(page);
-    await page.locator('header').evaluate((el) => (el.dataset.probe = 'persisted'));
+  test(
+    'header links navigate without a full reload and the header element persists',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.goto('/');
+      await markRealm(page);
+      await page.locator('header').evaluate((el) => (el.dataset.probe = 'persisted'));
 
-    await page
-      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
-      .getByRole('link', { name: 'How We Work' })
-      .click();
-    await expect(page).toHaveURL(/\/approach\/?$/);
-    await expect(page.getByRole('heading', { level: 1 })).toContainText('Consultative engagement');
-    await expectSameRealm(page);
-    await expect(page.locator('header')).toHaveAttribute('data-probe', 'persisted');
-    await expect(page.locator('header')).toHaveCount(1);
+      await page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'How We Work' })
+        .click();
+      await expect(page).toHaveURL(/\/approach\/?$/);
+      await expect(page.getByRole('heading', { level: 1 })).toContainText('Consultative engagement');
+      await expectSameRealm(page);
+      await expect(page.locator('header')).toHaveAttribute('data-probe', 'persisted');
+      await expect(page.locator('header')).toHaveCount(1);
 
-    await page
-      .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
-      .getByRole('link', { name: 'Insights' })
-      .click();
-    await expect(page).toHaveURL(/\/insights\/?$/);
-    await expectSameRealm(page);
-  });
+      await page
+        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+        .getByRole('link', { name: 'Insights' })
+        .click();
+      await expect(page).toHaveURL(/\/insights\/?$/);
+      await expectSameRealm(page);
+    },
+  );
 
-  test('active navigation state follows the current page', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Primary nav links are desktop-only');
+  test('active navigation state follows the current page', { tag: '@desktop' }, async ({ page }) => {
     await page.goto('/');
     const nav = page.locator('header nav[aria-label="Primary"]:not(#mobile-nav)');
     await nav.getByRole('link', { name: 'About' }).click();
@@ -75,8 +77,7 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await expect(toggle).toHaveAttribute('aria-pressed', 'false');
   });
 
-  test('desktop services menu closes after choosing a service', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
+  test('desktop services menu closes after choosing a service', { tag: '@desktop' }, async ({ page }) => {
     await page.goto('/');
     await page
       .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
@@ -88,8 +89,7 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await expect(menu).toBeHidden();
   });
 
-  test('mobile menu closes after navigating', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'mobile', 'Mobile menu only');
+  test('mobile menu closes after navigating', { tag: '@mobile' }, async ({ page }) => {
     await page.goto('/');
     await markRealm(page);
     await page.getByRole('button', { name: 'Open menu' }).click();
@@ -118,14 +118,17 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
     await expect(metrics.locator('[data-metric="uptime"] [data-counter]')).toHaveText('99.9%', { timeout: 5_000 });
   });
 
-  test('page width is stable between short and long pages (scrollbar gutter reserved)', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Scrollbar width applies to desktop');
-    await page.goto('/');
-    expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollbarGutter)).toBe('stable');
-    const homeLogo = await page.locator('header a[aria-label="ZanamTech home"]').boundingBox();
-    await page.locator('footer').getByRole('link', { name: 'Privacy' }).click();
-    await expect(page).toHaveURL(/\/privacy\/?$/);
-    const privacyLogo = await page.locator('header a[aria-label="ZanamTech home"]').boundingBox();
-    expect(privacyLogo?.x).toBe(homeLogo?.x);
-  });
+  test(
+    'page width is stable between short and long pages (scrollbar gutter reserved)',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      await page.goto('/');
+      expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollbarGutter)).toBe('stable');
+      const homeLogo = await page.locator('header a[aria-label="ZanamTech home"]').boundingBox();
+      await page.locator('footer').getByRole('link', { name: 'Privacy' }).click();
+      await expect(page).toHaveURL(/\/privacy\/?$/);
+      const privacyLogo = await page.locator('header a[aria-label="ZanamTech home"]').boundingBox();
+      expect(privacyLogo?.x).toBe(homeLogo?.x);
+    },
+  );
 });

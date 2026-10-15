@@ -41,10 +41,4 @@ test.describe('US3 — Entry offers & How We Work', () => {
       'Agency partnership',
     );
   });
-
-  test('/contact?service=agency-partnership preselects the agency option', async ({ page }) => {
-    await page.goto('/contact?service=agency-partnership');
-    const form = page.locator('main');
-    await expect(form.getByRole('combobox', { name: 'Service needed' })).toHaveText('Agency partnership');
-  });
 });

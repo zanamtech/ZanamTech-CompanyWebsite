@@ -93,7 +93,8 @@ test.describe('US1 — Home v3', () => {
       `height animation on open: ${opening.join(',')}ms`,
     ).toBe(true);
     await expect.poll(async () => Math.round((await item.boundingBox())!.height)).toBeGreaterThan(closed);
-    await page.waitForTimeout(400);
+    // Measure once the open animation has finished.
+    await expect.poll(() => item.evaluate((el) => el.getAnimations({ subtree: true }).length)).toBe(0);
     const open = Math.round((await item.boundingBox())!.height);
     await expect(item.locator('[data-faq-chevron]')).toHaveCSS('rotate', '180deg');
 
@@ -146,8 +147,7 @@ test.describe('US1 — Home v3', () => {
   });
 
   // SC-006 (revised at owner review): within two scrolls on phones; the hero stays unchanged.
-  test('results are reached within two scrolls on a phone (SC-006)', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'mobile', 'Phone viewport only');
+  test('results are reached within two scrolls on a phone (SC-006)', { tag: '@mobile' }, async ({ page }) => {
     await page.goto('/');
     const viewport = page.viewportSize()!;
     const firstCard = (await page.locator('#metrics [data-metric]').first().boundingBox())!;

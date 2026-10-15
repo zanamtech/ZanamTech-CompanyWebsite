@@ -48,13 +48,19 @@ If you change the form endpoint or enable analytics, add the new origins to the 
 | Command | Checks |
 | --- | --- |
 | `npm run check` | `astro check`: types and templates |
-| `npm run lint:content` | Constitution III/VII content rules in `src/` and `public/`: years, pricing, competitors, team-structure, guarantee and time-figure wording, unearned status, self-hosted LLM claims, two-cloud phrasing, and verified-proof fields |
+| `npm run lint`, `npm run format:check` | ESLint and Prettier |
+| `npm run lint:content` | Constitution III/VII content rules in `src/` and `public/`: years, pricing, competitors, team-structure, guarantee and time-figure wording, unearned status, self-hosted LLM claims, two-cloud phrasing, and verified-proof fields, and title (≤ 60) and meta description (≤ 155) lengths |
 | `npm run build` | Production build to `dist/` |
-| `npm run check:csp` | Inline-script hashes and required origins match the CSP; no inline styles or data: fonts |
+| `npm run check:csp` | Inline-script hashes and required origins match the CSP; no inline styles, data: fonts or data: images |
 | `npm run test:e2e` | Playwright end-to-end tests with axe WCAG 2.1 AA scans in light and dark themes, plus CSP enforcement (desktop and mobile) |
-| `npm run lhci` | Lighthouse CI budgets: performance ≥ 95; accessibility, best practices and SEO = 100; LCP < 2.5 s; CLS < 0.1 |
+| `npm run lhci` | Lighthouse CI via `npx` (not a dependency; needs a local Chrome): performance ≥ 95; accessibility and SEO = 100; LCP < 2.5 s; CLS < 0.1. Best practices is a warning while Alpine's CSP build triggers a deprecation notice (upstream) |
+| `scripts/docker-smoke.sh [url]` | Against a running production image: redirects, status codes and security headers |
 
 On first run, install the test browser with `npx playwright install chromium`.
+
+Device-specific tests are tagged `@desktop` or `@mobile` and run only in that Playwright project. The E2E build pins `BUILD_DATE` (`tests/e2e/build-date.ts`), so scheduled Insights articles are tested before their publish date.
+
+**CI** (`.github/workflows/ci.yml`) runs on every push and pull request to `dev` and `main`: the gates above, Playwright (desktop and mobile), Lighthouse CI and a Docker smoke test of the real image. A daily scheduled build picks up Insights articles whose date has arrived; deploying that build is still manual.
 
 The tests always build and serve a fresh production preview on a free port, never a running dev server. Set `PLAYWRIGHT_PORT` to pin the port (for example `PLAYWRIGHT_PORT=4330 npm run test:e2e`); the run fails if that port is already in use.
 

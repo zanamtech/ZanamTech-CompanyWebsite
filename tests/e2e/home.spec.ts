@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
+import { test, expect } from './fixtures';
 
 const HEADLINE = "Managed Cloud, DevOps & AI Engineering for Businesses That Can't Afford Downtime.";
 
@@ -31,27 +31,9 @@ test.describe('US1 — Home hero & brand', () => {
     expect(text).not.toMatch(/10\s?Pearls|Sherdil|LoomaDev|RevolveAI|OctaveBytes/i);
   });
 
-  test('defaults to the light theme on first visit', async ({ page }) => {
-    await page.goto('/');
-    await expect(page.locator('html')).not.toHaveClass(/\bdark\b/);
-  });
-
-  test('applies a stored dark theme before first paint', async ({ page }) => {
-    await gotoWithTheme(page, '/', 'dark');
-    await expect(page.locator('html')).toHaveClass(/\bdark\b/);
-  });
-
   test('skip link is the first focusable element', async ({ page }) => {
     await page.goto('/');
     await page.keyboard.press('Tab');
     await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
   });
-
-  for (const theme of ['light', 'dark'] as const) {
-    test(`has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
-      await gotoWithTheme(page, '/', theme);
-      await revealAll(page);
-      await expectNoA11yViolations(page);
-    });
-  }
 });

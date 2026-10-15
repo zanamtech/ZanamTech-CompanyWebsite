@@ -33,16 +33,12 @@ const headerParts = (page: Page) => ({
 });
 
 // Run once (desktop project) at explicit tablet/desktop widths; the mobile project already covers phones.
-test.beforeEach(({}, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop', 'Viewport-specific suite runs in the desktop project');
-});
-
 for (const device of [
   { name: 'iPad Mini', width: 768, height: 1024 },
   { name: 'iPad Pro 11', width: 834, height: 1194 },
   { name: 'Surface / small laptop', width: 1023, height: 768 },
 ]) {
-  test.describe(`Tablet header — ${device.name} (${device.width}px)`, () => {
+  test.describe(`Tablet header — ${device.name} (${device.width}px)`, { tag: '@desktop' }, () => {
     test.use({ viewport: { width: device.width, height: device.height } });
 
     test('uses the drawer: desktop nav and header CTA hidden, hamburger visible, nothing overlaps', async ({
@@ -95,7 +91,7 @@ for (const device of [
   });
 }
 
-test.describe('Desktop header at the lg breakpoint — iPad Pro 12.9 (1024px)', () => {
+test.describe('Desktop header at the lg breakpoint — iPad Pro 12.9 (1024px)', { tag: '@desktop' }, () => {
   test.use({ viewport: { width: 1024, height: 1366 } });
 
   test('shows desktop nav and CTA without overlap or wrapping; hamburger hidden', async ({ page }) => {
@@ -126,7 +122,7 @@ test.describe('Desktop header at the lg breakpoint — iPad Pro 12.9 (1024px)', 
   });
 });
 
-test.describe('Desktop mega-menu card (1440px)', () => {
+test.describe('Desktop mega-menu card (1440px)', { tag: '@desktop' }, () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
   test('is a contained, centred floating card below the header', async ({ page }) => {

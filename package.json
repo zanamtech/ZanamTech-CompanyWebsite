@@ -17,7 +17,7 @@
     "format:check": "prettier --check .",
     "lint:content": "node scripts/lint-content.mjs",
     "test:e2e": "playwright test",
-    "lhci": "lhci autorun",
+    "lhci": "npx --yes @lhci/cli@0.15.1 autorun",
     "check:csp": "node scripts/check-csp.mjs"
   },
   "dependencies": {
@@ -38,7 +38,6 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@axe-core/playwright": "^4.13.0",
-    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.64.1",
     "@types/alpinejs": "^3.17.0",
     "@types/jsonld": "^1.5.15",

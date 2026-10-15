@@ -16,8 +16,7 @@ test.describe('Header and mega-menu', () => {
     expect(await alpha()).toBeGreaterThanOrEqual(0.85);
   });
 
-  test('the mega-menu closes as soon as a link inside it is chosen', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
+  test('the mega-menu closes as soon as a link inside it is chosen', { tag: '@desktop' }, async ({ page }) => {
     await page.goto('/');
     await page
       .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
@@ -37,11 +36,16 @@ test.describe('Reveal: grids appear as one group', () => {
   test('all four "How we engage" cards are visible within a second of the grid entering', async ({ page }) => {
     await page.goto('/');
     await page.locator('#process ol').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1_200);
-    const opacities = await page
-      .locator('#process [data-phase] > .glass')
-      .evaluateAll((els) => els.map((el) => Number(getComputedStyle(el).opacity)));
-    expect(opacities).toEqual([1, 1, 1, 1]);
+    // End state within the window: all four fully visible no later than 1.2s after the grid enters.
+    await expect
+      .poll(
+        () =>
+          page
+            .locator('#process [data-phase] > .glass')
+            .evaluateAll((els) => els.map((el) => Number(getComputedStyle(el).opacity))),
+        { timeout: 1_200, intervals: [50] },
+      )
+      .toEqual([1, 1, 1, 1]);
   });
 });
 
@@ -93,8 +97,7 @@ test.describe('5-card sets centre the second row on desktop', () => {
     ['/start-here', '[data-offer]'],
     ['/approach', '[data-model]'],
   ] as const) {
-    test(`${path}: 3 + 2 with the second row centred`, async ({ page }, testInfo) => {
-      test.skip(testInfo.project.name !== 'desktop', 'Desktop layout');
+    test(`${path}: 3 + 2 with the second row centred`, { tag: '@desktop' }, async ({ page }) => {
       await page.goto(path);
       const boxes = await page
         .locator(item)

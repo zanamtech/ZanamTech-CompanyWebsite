@@ -34,19 +34,20 @@ test.describe('US6 — Drafts and published content', () => {
     }
   });
 
-  test('the Insights link is in the desktop nav and the footer when articles are published', async ({
-    page,
-  }, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Desktop nav (1440px)');
-    test.skip(!insights.some((a) => !a.draft), 'No published articles');
-    await page.goto('/');
-    await expect(
-      page
-        .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
-        .getByRole('link', { name: 'Insights', exact: true }),
-    ).toBeVisible();
-    await expect(page.locator('footer').getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
-  });
+  test(
+    'the Insights link is in the desktop nav and the footer when articles are published',
+    { tag: '@desktop' },
+    async ({ page }) => {
+      test.skip(!insights.some((a) => !a.draft), 'No published articles');
+      await page.goto('/');
+      await expect(
+        page
+          .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
+          .getByRole('link', { name: 'Insights', exact: true }),
+      ).toBeVisible();
+      await expect(page.locator('footer').getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
+    },
+  );
 
   test('the artefact band is absent while every sample is a draft', async ({ page }) => {
     test.skip(

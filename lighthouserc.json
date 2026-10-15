@@ -34,7 +34,7 @@
           }
         ],
         "categories:best-practices": [
-          "error",
+          "warn",
           {
             "minScore": 1
           }

@@ -22,11 +22,7 @@ const REDIRECTS = [
   { from: 'agentic-ai-llmops', to: '/services#ai', page: 'services.html', anchor: 'id="ai"' },
 ];
 
-test.describe('Retired service URLs (nginx 301)', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Configuration check; runs once');
-  });
-
+test.describe('Retired service URLs (nginx 301)', { tag: '@desktop' }, () => {
   for (const r of REDIRECTS) {
     test(`/services/${r.from} → ${r.to}`, () => {
       const block = CONF.match(new RegExp(`location ~ \\^/services/${r.from}/\\?\\$ \\{([^}]*)\\}`));
@@ -44,11 +40,7 @@ test.describe('Retired service URLs (nginx 301)', () => {
 });
 
 // One URL per page (audit F-01). The 301s themselves were checked against a running nginx; this guards the config.
-test.describe('Trailing-slash URLs (nginx 301)', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Configuration check; runs once');
-  });
-
+test.describe('Trailing-slash URLs (nginx 301)', { tag: '@desktop' }, () => {
   test('the slash form 301s to the slash-less form, keeping the query string', () => {
     const start = CONF.indexOf(SLASH_RULE);
     expect(start, 'missing trailing-slash location').toBeGreaterThan(-1);
@@ -70,11 +62,7 @@ test.describe('Trailing-slash URLs (nginx 301)', () => {
 });
 
 // .html URLs and /404 (round 3). Checked against a running nginx; this guards the config.
-test.describe('.html URLs and the 404 page (nginx)', () => {
-  test.beforeEach(({}, testInfo) => {
-    test.skip(testInfo.project.name !== 'desktop', 'Configuration check; runs once');
-  });
-
+test.describe('.html URLs and the 404 page (nginx)', { tag: '@desktop' }, () => {
   test('/<page>.html 301s to /<page> and /index.html to /, keeping the query string', () => {
     const start = CONF.indexOf(String.raw`location ~ \.html$ {`);
     expect(start, 'missing .html location').toBeGreaterThan(-1);

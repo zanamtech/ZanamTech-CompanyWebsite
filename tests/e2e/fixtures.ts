@@ -13,6 +13,18 @@ export async function gotoWithTheme(page: Page, path: string, theme: Theme) {
   await page.goto(path);
 }
 
+/** Wait for the browser to render `count` frames (scroll and IntersectionObserver work happens between frames). */
+export async function frames(page: Page, count = 1) {
+  await page.evaluate(
+    (n) =>
+      new Promise<void>((resolve) => {
+        const tick = (left: number) => (left <= 0 ? resolve() : requestAnimationFrame(() => tick(left - 1)));
+        tick(n);
+      }),
+    count,
+  );
+}
+
 /**
  * Scroll through the page and wait until every reveal group has finished. Groups below the fold stay hidden until they
  * enter the viewport; axe scrolls elements into view while checking contrast and would otherwise measure them mid-fade.
@@ -21,7 +33,7 @@ export async function revealAll(page: Page) {
   const height = await page.evaluate(() => document.documentElement.scrollHeight);
   for (let y = 0; y < height; y += 600) {
     await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
-    await page.waitForTimeout(16);
+    await frames(page);
   }
   await expect
     .poll(() =>

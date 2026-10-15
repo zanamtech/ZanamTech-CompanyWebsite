@@ -66,11 +66,7 @@ test.describe('US2 — Services', () => {
     await expect(page).toHaveURL(new RegExp(`/services/${published[4].slug}/?$`));
   });
 
-  test.describe('desktop services menu', () => {
-    test.beforeEach(({}, testInfo) => {
-      test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
-    });
-
+  test.describe('desktop services menu', { tag: '@desktop' }, () => {
     const servicesLink = (page: import('@playwright/test').Page) =>
       page
         .locator('header nav[aria-label="Primary"]:not(#mobile-nav)')
@@ -145,7 +141,8 @@ test.describe('US2 — Services', () => {
   });
 
   for (const theme of ['light', 'dark'] as const) {
-    for (const path of ['/services', '/services/enterprise-security-waf-hardening']) {
+    // /services is covered by the all-routes check in theme-a11y.spec.ts.
+    for (const path of ['/services/enterprise-security-waf-hardening']) {
       test(`${path} has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
         await gotoWithTheme(page, path, theme);
         await revealAll(page);

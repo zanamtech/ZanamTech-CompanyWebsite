@@ -29,11 +29,20 @@ test.describe('US1 — Selected results from past engagements', () => {
     const metrics = page.locator('#metrics');
     await metrics.scrollIntoViewIfNeeded();
     const counter = metrics.locator('[data-metric="uptime"] [data-counter]');
-    // Sample repeatedly: the value must never be anything but the final figure.
-    for (let i = 0; i < 5; i++) {
-      await expect(counter).toHaveText('99.9%');
-      await page.waitForTimeout(100);
-    }
+    // Sample every frame for half a second: the value must never be anything but the final figure.
+    const seen = await counter.evaluate(
+      (el) =>
+        new Promise<string[]>((resolve) => {
+          const values: string[] = [];
+          const sample = () => {
+            values.push(el.textContent ?? '');
+            if (values.length < 30) requestAnimationFrame(sample);
+            else resolve([...new Set(values)]);
+          };
+          sample();
+        }),
+    );
+    expect(seen).toEqual(['99.9%']);
   });
 
   test('screen readers get the full metric statement', async ({ page }) => {

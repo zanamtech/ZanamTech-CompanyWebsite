@@ -1,4 +1,4 @@
-import { test, expect, gotoWithTheme, expectNoA11yViolations, revealAll } from './fixtures';
+import { test, expect } from './fixtures';
 
 import { engagementModelCatalog, engagementPhases } from '../../src/data/engagement';
 import { segments } from '../../src/data/segments';
@@ -39,14 +39,4 @@ test.describe('US5 — Approach, Industries & About', () => {
     await expect(page.getByRole('heading', { name: 'Our mission' })).toBeVisible();
     expect(await page.locator('body').innerText()).not.toMatch(/\b\d+\s*\+?\s*years?\b|years? of experience/i);
   });
-
-  for (const theme of ['light', 'dark'] as const) {
-    for (const path of ['/approach', '/industries', '/about']) {
-      test(`${path} has no WCAG 2.1 AA violations (${theme})`, async ({ page }) => {
-        await gotoWithTheme(page, path, theme);
-        await revealAll(page);
-        await expectNoA11yViolations(page);
-      });
-    }
-  }
 });
