@@ -2,7 +2,7 @@
 title: "Bitbucket branch governance: the restrictions and SOPs every team should have"
 summary: A practical baseline for Bitbucket branch permissions, merge checks and written SOPs that keeps main deployable without slowing developers down.
 seoTitle: "Bitbucket branch governance: restrictions & SOPs"
-date: 2026-10-26
+date: 2026-10-14
 draft: false
 sources: []
 ---

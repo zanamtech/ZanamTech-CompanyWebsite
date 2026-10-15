@@ -2,7 +2,7 @@
 title: "A 15-point cloud cost checklist"
 summary: Fifteen checks for AWS, Azure and Google Cloud estates that find wasted spend quickly, from idle resources and oversized compute to missing budgets and untagged assets.
 seoDescription: "Fifteen checks for AWS, Azure and Google Cloud estates that find wasted spend quickly: idle resources, oversized compute, missing budgets, untagged assets."
-date: 2026-11-09
+date: 2026-10-15
 draft: false
 sources:
   - label: "IT Brief: Flexera 2026 State of the Cloud report"

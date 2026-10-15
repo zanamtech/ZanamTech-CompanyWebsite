@@ -304,11 +304,10 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
   - **JSON-LD:** one `@graph` per page (Organization, WebSite, BreadcrumbList, Service, Article with image, `dateModified` and `publisher.logo`). `lang="en-GB"`.
   - **Tests:** `seo.spec.ts` expands a service page and an article with the `jsonld` parser (dev dependency).
 - **Staggered articles** (batch 11):
-  - **Dates:** Azure environment strategy 12 Oct, Bitbucket branch governance 26 Oct, cloud cost checklist 9 Nov 2026.
+  - **Dates:** Azure environment strategy 12 Oct, Bitbucket branch governance 26 Oct, cloud cost checklist 9 Nov 2026. Changed by the owner the same day to 12, 14 and 15 Oct, so all three are live (section 3o).
   - **Exclusion:** `isPublished()` (`src/lib/content.ts`, built on `src/lib/publish.ts`) keeps an article dated after the build date out of the build entirely: no route, no listing, no nav gating, no sitemap entry, no JSON-LD.
   - **Today's build** has one article. `/insights` and the header and footer links work with a single card (shown at the left of the grid).
   - **`BUILD_DATE`** overrides "now". The E2E build pins it (`tests/e2e/build-date.ts`), so every scheduled article is tested.
-  - **Rebuild dates:** the site must be rebuilt and deployed on 26 Oct and 9 Nov (section 5).
 - **Accessibility** (batch 12: F-45, F-46, F-47; commit a67e59d): the browser `theme-color` follows the site theme, the mobile nav is labelled "Primary", and card text is selectable. The marquee is untouched.
 - **nginx** (batch 13: F-52, F-53, F-58; commit 2fbc5cf):
   - **Redirects:** `/<page>.html` and `/index.html` 301 to the clean URL and keep the query string, with the same hardening as the slash rule.
@@ -374,7 +373,6 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
 - [ ] Optional cookieless analytics: set `PUBLIC_ANALYTICS_DOMAIN` and `PUBLIC_ANALYTICS_SRC`.
 
 **Engineering follow-ups**
-- [ ] **Rebuild and deploy on 26 Oct 2026 and 9 Nov 2026** so the Bitbucket and cloud-cost articles go live (a build on or after each date includes the article automatically). Once deployment is automated, the daily scheduled CI build does this.
 - [ ] Automate deployment from the scheduled CI build (`scheduled-build` job in `.github/workflows/ci.yml`).
 - [ ] Owner review of the shortened titles and descriptions: `docs/audit/SEO_COPY_CHANGES.md`.
 - [ ] Add the 1200×630 share image at `public/og/default.png` (Twitter/X then switches to the large card automatically).
