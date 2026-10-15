@@ -24,10 +24,7 @@ const { title, summary, draft } = artefact.data;
     {draft && <Badge>Draft</Badge>}
   </div>
   <Heading class="mt-4 text-lg font-semibold text-fg">
-    <a
-      href={`/resources/${artefact.id}`}
-      class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
-    >
+    <a href={`/resources/${artefact.id}`} class="card-link">
       {title.replace(/^Sample:\s*/, '')}
     </a>
   </Heading>
@@ -37,10 +34,3 @@ const { title, summary, draft } = artefact.data;
     <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
   </p>
 </li>
-
-<style>
-  li:has(a:focus-visible) {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
-  }
-</style>

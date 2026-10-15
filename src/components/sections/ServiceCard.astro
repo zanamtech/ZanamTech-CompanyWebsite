@@ -42,7 +42,7 @@ const { name, icon, summary, outcome, order } = service.data;
     </div>
 
     <h3 class="mt-5 text-lg font-semibold text-fg">
-      <a href={serviceHref(service)} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
+      <a href={serviceHref(service)} class="card-link">
         {name}
       </a>
     </h3>
@@ -86,11 +86,3 @@ const { name, icon, summary, outcome, order } = service.data;
     </div>
   )}
 </li>
-
-<style>
-  /* Stretched-link focus ring drawn on the card, since the link itself is visually the title. */
-  li:has(a:focus-visible) {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
-  }
-</style>

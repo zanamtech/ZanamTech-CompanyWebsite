@@ -23,7 +23,7 @@ const pillars = await getServicesByPillar();
 
   <div class="container-page section-y space-y-12 sm:space-y-16 lg:space-y-20">
     {pillars.map((p) => (
-      <section id={p.pillar} aria-labelledby={`pillar-${p.pillar}`} class="scroll-mt-28">
+      <section id={p.pillar} aria-labelledby={`pillar-${p.pillar}`}>
         <div class="max-w-2xl">
           <h2 id={`pillar-${p.pillar}`} class="text-2xl font-bold text-fg sm:text-3xl">
             {p.title}

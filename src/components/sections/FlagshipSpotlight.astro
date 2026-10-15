@@ -13,12 +13,8 @@ const modules = capabilities.map((c) => c.split(':')[0]);
 ---
 
 <!-- Flagship spotlight (spec 002 US1). Composed from GlassCard, Badge and Button with the standard reveal. -->
-<!-- Scroll margins match the results band: the eyebrow clears the floating header when the hero scroll cue lands here. -->
-<section
-  id="flagship"
-  aria-labelledby="flagship-title"
-  class="container-page section-y scroll-mt-15.5 sm:scroll-mt-13.5 lg:scroll-mt-11.5"
->
+<!-- anchor-section: the eyebrow lands 24px below the floating header when the hero scroll cue scrolls here. -->
+<section id="flagship" aria-labelledby="flagship-title" class="container-page section-y anchor-section">
   <div class="grid gap-10 lg:grid-cols-12 lg:items-start">
     <div class="lg:col-span-6">
       <p class="eyebrow">Flagship service</p>

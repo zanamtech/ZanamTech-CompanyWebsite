@@ -176,10 +176,7 @@ const articleLd = article
               <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
             </div>
             <h2 class="mt-4 text-lg font-semibold text-fg">
-              <a
-                href={`/insights/${a.id}`}
-                class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
-              >
+              <a href={`/insights/${a.id}`} class="card-link">
                 {a.data.title}
               </a>
             </h2>
@@ -211,10 +208,3 @@ const articleLd = article
 <script>
   import '../../scripts/article-toc';
 </script>
-
-<style>
-  li:has(a:focus-visible) {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
-  }
-</style>

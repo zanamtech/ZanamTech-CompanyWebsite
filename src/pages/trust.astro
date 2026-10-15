@@ -17,7 +17,6 @@ const sections = [
   { id: 'data-residency', title: 'Data residency' },
   { id: 'reporting-issues', title: 'Reporting a security issue' },
 ];
-const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).padStart(2, '0');
 ---
 
 <BaseLayout
@@ -33,9 +32,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
 
   <LongFormDoc sections={sections}>
     <section id="security-practices" aria-labelledby="practices-title">
-      <h2 id="practices-title">
-        <span class="text-accent tabular-nums">{num('security-practices')}.</span> Security practices
-      </h2>
+      <h2 id="practices-title">Security practices</h2>
       <ul>
         <li>
           <strong>MFA everywhere:</strong> every account we use, ours and yours, is protected with multi-factor
@@ -61,9 +58,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="access-model" aria-labelledby="access-title">
-      <h2 id="access-title">
-        <span class="text-accent tabular-nums">{num('access-model')}.</span> How we access your environment
-      </h2>
+      <h2 id="access-title">How we access your environment</h2>
       <ul>
         {accessModel.map((item) => (
           <li>{item}</li>
@@ -76,9 +71,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="ai-tool-policy" aria-labelledby="ai-title">
-      <h2 id="ai-title">
-        <span class="text-accent tabular-nums">{num('ai-tool-policy')}.</span> AI-tool policy
-      </h2>
+      <h2 id="ai-title">AI-tool policy</h2>
       <p>This policy applies to every engagement and is repeated in every Statement of Work.</p>
       <ul>
         {aiToolPolicy.map((item) => (
@@ -88,9 +81,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="contracts" aria-labelledby="contracts-title">
-      <h2 id="contracts-title">
-        <span class="text-accent tabular-nums">{num('contracts')}.</span> Contracts &amp; data protection
-      </h2>
+      <h2 id="contracts-title">Contracts &amp; data protection</h2>
       <ul>
         <li>
           <strong>NDA:</strong> a mutual NDA is available before discovery.
@@ -107,9 +98,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="sub-processors" aria-labelledby="subprocessors-title">
-      <h2 id="subprocessors-title">
-        <span class="text-accent tabular-nums">{num('sub-processors')}.</span> Sub-processors
-      </h2>
+      <h2 id="subprocessors-title">Sub-processors</h2>
       <p>
         Client data stays in your own cloud accounts and tools wherever possible. The services we use to run our own
         business, such as email, the website form provider and document storage, are listed in a sub-processor list
@@ -118,9 +107,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="data-residency" aria-labelledby="residency-title">
-      <h2 id="residency-title">
-        <span class="text-accent tabular-nums">{num('data-residency')}.</span> Data residency
-      </h2>
+      <h2 id="residency-title">Data residency</h2>
       <p>
         Environments are built in the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia
         regions, so data stays where your obligations require it.
@@ -128,9 +115,7 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="reporting-issues" aria-labelledby="reporting-title">
-      <h2 id="reporting-title">
-        <span class="text-accent tabular-nums">{num('reporting-issues')}.</span> Reporting a security issue
-      </h2>
+      <h2 id="reporting-title">Reporting a security issue</h2>
       <p>
         If you believe you have found a security issue affecting ZanamTech or this website, please email{' '}
         <a href={`mailto:${site.securityEmail}`} class="font-semibold text-link underline underline-offset-2">

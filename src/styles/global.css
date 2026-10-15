@@ -126,9 +126,31 @@
    Base
    ------------------------------------------------------------------ */
 @layer base {
+  /* --header-h: the floating header bar's bottom edge (its top padding plus the bar), used for anchor offsets.
+     --section-pad: the section rhythm used by .section-y / -t / -b (36 / 48 / 56px). */
+  :root {
+    --header-h: 4.625rem;
+    --section-pad: 2.25rem;
+  }
+
+  @media (min-width: 40rem) {
+    :root {
+      --header-h: 4.875rem;
+      --section-pad: 3rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    :root {
+      --section-pad: 3.5rem;
+    }
+  }
+
   html {
     /* Reserve the scrollbar gutter so page width doesn't shift between short/long pages or when scroll is locked. */
     scrollbar-gutter: stable;
+    /* Every in-page anchor lands with its first line 24px below the floating header (see .anchor-section). */
+    scroll-padding-top: calc(var(--header-h) + 1.5rem);
     background-color: var(--bg);
     color: var(--fg);
     -webkit-text-size-adjust: 100%;
@@ -264,15 +286,44 @@
   /* Section rhythm: one vertical padding scale for every section (36 / 48 / 56px), so adjacent sections sit
      72 / 96 / 112px apart on phone / tablet / desktop. section-t and section-b are the one-sided variants. */
   .section-y {
-    @apply py-9 sm:py-12 lg:py-14;
+    padding-block: var(--section-pad);
   }
 
   .section-t {
-    @apply pt-9 sm:pt-12 lg:pt-14;
+    padding-top: var(--section-pad);
   }
 
   .section-b {
-    @apply pb-9 sm:pb-12 lg:pb-14;
+    padding-bottom: var(--section-pad);
+  }
+
+  /* An anchored section whose first line sits below the section padding (its own or its inner container's): the
+     anchor lands on that line, not on the section's edge. */
+  .anchor-section {
+    scroll-margin-top: calc(-1 * var(--section-pad));
+  }
+
+  /* Stretched-link card: the title link (.card-link) covers the whole card, its nearest positioned ancestor. The focus
+     ring is drawn on the card's li instead of the link, since the link itself is visually just the title. */
+  .card-link {
+    @apply after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none;
+  }
+
+  li:has(.card-link:focus-visible):not(:has(li .card-link:focus-visible)) {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  /* Long-form documents (LongFormDoc.astro): each section heading is numbered "01." in the accent colour. */
+  .privacy-doc {
+    counter-reset: doc-section;
+  }
+
+  .privacy-doc > section > h2::before {
+    counter-increment: doc-section;
+    content: counter(doc-section, decimal-leading-zero) '. ';
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
   }
 
   /* Shared card hover (home + subpages): lift, purple border and ambient glow. */
