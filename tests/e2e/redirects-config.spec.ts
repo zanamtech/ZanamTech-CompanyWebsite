@@ -68,3 +68,27 @@ test.describe('Trailing-slash URLs (nginx 301)', () => {
     expect(existsSync(join(DIST, 'services', 'managed-cloud-devops.html'))).toBe(true);
   });
 });
+
+// .html URLs and /404 (round 3). Checked against a running nginx; this guards the config.
+test.describe('.html URLs and the 404 page (nginx)', () => {
+  test.beforeEach(({}, testInfo) => {
+    test.skip(testInfo.project.name !== 'desktop', 'Configuration check; runs once');
+  });
+
+  test('/<page>.html 301s to /<page> and /index.html to /, keeping the query string', () => {
+    const start = CONF.indexOf(String.raw`location ~ \.html$ {`);
+    expect(start, 'missing .html location').toBeGreaterThan(-1);
+    const block = CONF.slice(start, CONF.indexOf('\n        }', start));
+    expect(block).toContain('include /etc/nginx/security-headers.conf;');
+    expect(block).toContain('return 301 /$is_args$args;');
+    // Raw $request_uri, and no "//" or "/\" at the start (no open redirect), as in the trailing-slash rule.
+    expect(block).toContain('$request_uri ~ "^(/[^/\\x5c?]');
+    expect(block).toContain('return 301 $1$is_args$args;');
+    expect(start).toBeLessThan(CONF.indexOf('location / {'));
+  });
+
+  test('/404 answers with status 404 and the 404 page', () => {
+    expect(CONF).toMatch(/location = \/404 \{\s*return 404;\s*\}/);
+    expect(CONF).toContain('error_page 404 /404.html;');
+  });
+});

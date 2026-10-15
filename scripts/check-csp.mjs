@@ -38,6 +38,18 @@ for await (const file of htmlFiles(join(ROOT, 'dist'))) {
   if (/<style[\s>]/.test(html)) errors.push(`${file}: inline <style> conflicts with style-src 'self'`);
 }
 
+// img-src has no data: (audit F-53), so no page or stylesheet may use a data: image.
+if (!directive('img-src').includes('data:')) {
+  for await (const file of htmlFiles(join(ROOT, 'dist'))) {
+    if (/\ssrc="data:/.test(await readFile(file, 'utf8'))) errors.push(`${file}: data: image violates img-src`);
+  }
+  for (const entry of await readdir(join(ROOT, 'dist/_astro'))) {
+    if (!entry.endsWith('.css')) continue;
+    const css = await readFile(join(ROOT, 'dist/_astro', entry), 'utf8');
+    if (/url\(\s*["']?data:image/.test(css)) errors.push(`dist/_astro/${entry}: data: image violates img-src`);
+  }
+}
+
 // Inlined data: fonts would be blocked by font-src 'self'.
 if (!directive('font-src').includes('data:')) {
   for (const entry of await readdir(join(ROOT, 'dist/_astro'))) {
