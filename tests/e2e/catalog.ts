@@ -50,5 +50,4 @@ export const bySlug = (slug: string) => {
   return s;
 };
 
-export const RESULTS_FOOTNOTE =
-  'Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.';
+export { resultsFootnote as RESULTS_FOOTNOTE } from '../../src/data/results';

@@ -1,3 +1,5 @@
+import type { EngagementTypeId } from './ids';
+
 /** Engagement process (docs/02_Services_Catalog.md). Process wording only: no team structure or time figures. */
 export interface EngagementPhase {
   order: number;
@@ -53,7 +55,7 @@ export const engagementPhases: EngagementPhase[] = [
  * v3 engagement models (docs/02_Services_Catalog.md).
  */
 export interface EngagementModelEntry {
-  id: 'assessment' | 'project' | 'retainer' | 'agency' | 'capacity';
+  id: EngagementTypeId;
   name: string;
   description: string;
   fits: string;

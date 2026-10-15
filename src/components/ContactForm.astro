@@ -1,12 +1,14 @@
 ---
 import { Check, ChevronDown, CircleCheck, CircleAlert, LoaderCircle } from 'lucide-react';
 import { getPublishedServices } from '../lib/services';
+import { FORM_ACCESS_KEY, FORM_ENDPOINT } from '../lib/form-config';
 import {
   AGENCY_PARTNERSHIP,
   AGENCY_PARTNERSHIP_SLUG,
   BUDGET_OPTIONS,
   CLOUD_PLATFORM_OPTIONS,
   COMPANY_SIZE_OPTIONS,
+  FORM_SUBJECT,
   OTHER_SERVICE,
   REGION_OPTIONS,
 } from '../lib/lead';
@@ -22,8 +24,6 @@ const services = [
   ...(await getPublishedServices()).map((s) => ({ slug: s.id, name: s.data.name })),
   { slug: AGENCY_PARTNERSHIP_SLUG, name: AGENCY_PARTNERSHIP },
 ];
-const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
-const accessKey = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 const id = (field: string) => `${idPrefix}-${field}`;
 const config = JSON.stringify({ services, idPrefix });
 
@@ -103,7 +103,7 @@ const menus = [
 
   <form
     method="POST"
-    action={endpoint}
+    action={FORM_ENDPOINT}
     x-show="status !== 'success'"
     x-bind:novalidate="true"
     x-on:submit.prevent="submit()"
@@ -111,8 +111,8 @@ const menus = [
     x-on:change="revalidate()"
     class="space-y-3"
   >
-    <input type="hidden" name="access_key" value={accessKey} />
-    <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
+    <input type="hidden" name="access_key" value={FORM_ACCESS_KEY} />
+    <input type="hidden" name="subject" value={FORM_SUBJECT} />
 
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5">
       {textFields.map((field) => (

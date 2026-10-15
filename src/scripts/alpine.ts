@@ -1,5 +1,6 @@
 import type { Alpine } from 'alpinejs';
 import { FIELD_ORDER, OTHER_SERVICE, submitLead, validateLead, type LeadErrors, type LeadInput } from '../lib/lead';
+import { FORM_ACCESS_KEY, FORM_ENDPOINT } from '../lib/form-config';
 
 // The same key is hard-coded in the inline no-flash script (src/layouts/BaseLayout.astro, which cannot import) and in
 // tests/e2e/fixtures.ts. Change all three together.
@@ -19,9 +20,6 @@ interface ServiceOption {
 }
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
-
-const FORM_ENDPOINT = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit';
-const FORM_ACCESS_KEY = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 
 const FAILURE_MESSAGES = {
   rejected:

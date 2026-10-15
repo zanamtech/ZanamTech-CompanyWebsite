@@ -28,6 +28,9 @@ export type SubmitResult =
 
 const TIMEOUT_MS = 10_000;
 
+/** Email subject of every lead, sent by the script and by the no-JS form post. */
+export const FORM_SUBJECT = 'New consultation request — ZanamTech website';
+
 /** Fallback choice in the required service dropdown. */
 export const OTHER_SERVICE = 'Other / Not sure yet';
 
@@ -121,7 +124,7 @@ export async function submitLead(input: LeadInput, options: SubmitOptions): Prom
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
         access_key: accessKey,
-        subject: 'New consultation request — ZanamTech website',
+        subject: FORM_SUBJECT,
         from_name: 'ZanamTech Website',
         name: input.name.trim(),
         email: input.email.trim(),

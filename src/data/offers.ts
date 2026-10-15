@@ -1,9 +1,11 @@
+import type { IconName, OfferId } from './ids';
+
 /** Entry offers ("Start here"): fixed scope and fee; the fee is never shown (docs/02_Services_Catalog.md). */
 export interface Offer {
-  id: 'health-check' | 'cost-review' | 'governance-quick-start' | 'ai-opportunity-sprint' | 'ai-automation-pilot';
+  id: OfferId;
   name: string;
   /** Icon name from src/components/ui/Icon.astro (compact cards on Home and /services). */
-  icon: string;
+  icon: IconName;
   duration: string;
   /** One-line written output shown on the compact cards. No prices, no response times. */
   output: string;

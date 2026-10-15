@@ -48,7 +48,10 @@ if (!directive('font-src').includes('data:')) {
 }
 
 const origin = (url) => new URL(url).origin;
-const formOrigin = origin(process.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3forms.com/submit');
+// The form endpoint as built (src/lib/form-config.ts), read from the contact form's action.
+const formAction = (await readFile(join(ROOT, 'dist/contact.html'), 'utf8')).match(/<form[^>]*\saction="([^"]+)"/)?.[1];
+if (!formAction) errors.push('dist/contact.html: no form action found');
+const formOrigin = origin(formAction ?? 'about:blank');
 if (!directive('connect-src').includes(formOrigin)) errors.push(`connect-src is missing form origin ${formOrigin}`);
 if (!directive('form-action').includes(formOrigin)) errors.push(`form-action is missing form origin ${formOrigin}`);
 

@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import alpinejs from '@astrojs/alpinejs';
@@ -25,6 +25,17 @@ const site = process.env.PUBLIC_SITE_URL || 'https://www.zanamtech.com';
 export default defineConfig({
   site,
   output: 'static',
+  // Typed PUBLIC_* variables (.env.example). All optional: Docker passes unset build args as empty strings, so the
+  // fallbacks live where the values are used (src/lib/form-config.ts) and PUBLIC_SITE_URL is read above.
+  env: {
+    schema: {
+      PUBLIC_SITE_URL: envField.string({ context: 'server', access: 'public', optional: true }),
+      PUBLIC_FORM_ENDPOINT: envField.string({ context: 'client', access: 'public', optional: true }),
+      PUBLIC_FORM_ACCESS_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
+      PUBLIC_ANALYTICS_DOMAIN: envField.string({ context: 'server', access: 'public', optional: true }),
+      PUBLIC_ANALYTICS_SRC: envField.string({ context: 'server', access: 'public', optional: true }),
+    },
+  },
   // One URL per page, without a trailing slash (matches every internal link): dist/about.html is served at /about, and
   // canonicals, the sitemap and Astro.url use that form. nginx 301s the slash form (nginx/nginx.conf).
   trailingSlash: 'never',

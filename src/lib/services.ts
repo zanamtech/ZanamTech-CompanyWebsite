@@ -1,10 +1,11 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import type { IconName } from '../data/ids';
 
 export type Service = CollectionEntry<'services'>;
 export type Pillar = Service['data']['pillar'];
 
 /** v3 pillars, in display order (docs/02_Services_Catalog.md, ADR-004). */
-export const servicePillars: Record<Pillar, { title: string; description: string; order: number; icon: string }> = {
+export const servicePillars: Record<Pillar, { title: string; description: string; order: number; icon: IconName }> = {
   managed: {
     title: 'Managed Cloud & DevOps',
     description:
@@ -44,7 +45,7 @@ export async function getPublishedServices(): Promise<Service[]> {
 
 /** Published services grouped by pillar, in pillar order. */
 export async function getServicesByPillar(): Promise<
-  { pillar: Pillar; title: string; description: string; icon: string; order: number; services: Service[] }[]
+  { pillar: Pillar; title: string; description: string; icon: IconName; order: number; services: Service[] }[]
 > {
   const services = await getPublishedServices();
   return (Object.keys(servicePillars) as Pillar[])

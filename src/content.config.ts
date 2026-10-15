@@ -1,6 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { engagementTypeIds, iconNames, offerIds, pillarIds } from './data/ids';
 
 /**
  * Service front matter v2. Mirrors specs/002-enterprise-repositioning/contracts/service-content.schema.json.
@@ -20,15 +21,6 @@ const scenario = z
     message: 'Illustrative scenarios must not contain numbers (Constitution III).',
   });
 
-export const pillarIds = ['managed', 'cloud-devops', 'web-saas', 'ai'] as const;
-export const offerIds = [
-  'health-check',
-  'cost-review',
-  'governance-quick-start',
-  'ai-opportunity-sprint',
-  'ai-automation-pilot',
-] as const;
-
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: z.object({
@@ -39,10 +31,10 @@ const services = defineCollection({
     flagship: z.boolean().default(false),
     /** Readiness gate: unpublished services are excluded from every menu, grid, page, form option and the sitemap. */
     published: z.boolean().default(true),
-    icon: z.string(),
+    icon: z.enum(iconNames),
     summary: z.string().max(220),
     deliverables: z.array(z.string()).min(3).max(8),
-    engagementTypes: z.array(z.enum(['assessment', 'project', 'retainer', 'agency', 'capacity'])).min(1),
+    engagementTypes: z.array(z.enum(engagementTypeIds)).min(1),
     capabilities: z.array(z.string()).min(3).max(7),
     stack: z.array(z.string()).min(1),
     outcome: z.string(),
