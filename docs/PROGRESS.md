@@ -23,7 +23,7 @@
 | Code audit, round 2 of 3 (CSS, types, scripts, icons without React, shared components) | ✅ Done (15 Oct, section 3m) |
 | Code audit, round 3 of 3 (SEO metadata, scheduled articles, accessibility, nginx, tests, CI) | ✅ Done (15 Oct, section 3n) |
 | Pushed to `origin/dev` | Everything up to and including section 3n |
-| CI (GitHub Actions) | ✅ Green on `dev` (run 38771356967): checks, Playwright, Lighthouse CI, Docker smoke |
+| CI (GitHub Actions) | ✅ Green on `dev` (run 38773058706): checks, Playwright, Lighthouse CI, Docker smoke |
 
 ## 2. What was completed in spec 002
 
@@ -336,7 +336,10 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
   - **CI:**
     - Run 1: Lighthouse CI failed. Its log needs a GitHub login and no reports were uploaded (`.lighthouseci` is a hidden folder), so the cause is unknown.
     - Fix: the reports now upload, and failed assertions appear as annotations.
-    - Run 2 (38771356967): all jobs green with unchanged assertions. If Lighthouse CI fails again, read the annotations; `numberOfRuns: 3` is the likely fix for runner noise.
+    - Run 2 (38771356967): all jobs green with unchanged assertions.
+    - Run 3 (38772377243): Lighthouse CI failed again; the new annotations showed one cold run of `/` at performance 0.43, LCP 4.2 s (99 locally).
+    - Fix (second and last attempt): `numberOfRuns: 3`, so LHCI asserts on the best of three runs (its default).
+    - Run 4 (38773058706): all jobs green (checks 33 s, Docker smoke 25 s, Playwright 4 min, Lighthouse CI 6.7 min).
 - **Correction:** the first design-freeze snapshots of this round served every page as "not found" (a relative path in the scratch server), so their "0 differences" meant nothing. I redid the baseline and every comparison from the saved builds; the results above are from the corrected runs.
 
 ## 4. Owner decisions (binding)

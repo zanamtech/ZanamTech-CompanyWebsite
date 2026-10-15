@@ -39,7 +39,7 @@ tests:
  - root cause of mobile flakes: 16x CPU throttling reproduced 5/26 failures; after fix 102/102
  - full Playwright suite: 412 passed, 2 skipped (content-conditional), 0 failed
  - Lighthouse 13 home mobile (astro preview): 99/100/81/100, LCP 1.7-1.9 s, CLS 0.001
- - GitHub Actions: run 38770749138 Lighthouse CI failed (log not public); run 38771356967 all jobs green
+ - GitHub Actions: run 1 (38770749138) LHCI failed, log not public; run 2 green; run 3 LHCI failed (cold run of /, perf 0.43); numberOfRuns 3; run 4 (38773058706) all green
 ---
 
 ## Prompt
@@ -125,12 +125,12 @@ FINISH:
 - Batch 12 (a67e59d): theme-color follows the site theme, mobile nav labelled Primary, select-none removed from cards and chips (not the marquee).
 - Batch 13 (2fbc5cf): .html and /index.html 301s, /404 returns 404, gzip text/javascript, img-src without data: (gated by check:csp), no interest-cohort; scrollCue kept (plain anchor jumps under the ClientRouter and adds a hash); Alpine 3.17.4 is latest, Best Practices 81 documented upstream.
 - Batch 14 (787606b, f7eb70d): CI workflow (gates, Playwright, LHCI via npx, Docker smoke, daily scheduled build), @lhci/cli removed (audit 17 -> 0), 13 duplicate test cases removed, no fixed sleeps, @desktop/@mobile tags (skips 76 -> 2), flaky mobile root causes fixed (one 30s budget across 8-13 pages; networkidle; 5s assertion on a client-side navigation).
-- CI: run 1 Lighthouse failed (log needs login, reports not uploaded because hidden folder); fixed upload and annotations; run 2 all green.
+- CI: run 1 Lighthouse failed (log needs login, reports not uploaded because hidden folder); fixed upload and annotations; run 2 green; run 3 Lighthouse failed on one noisy cold run of / (0.43); numberOfRuns 3 (second and last fix attempt); run 4 (38773058706) all green.
 
 ## Outcome
 
 - ✅ Impact: all three audit rounds complete; every finding has a status (59 done, 3 deferred, 5 declined); CI runs every gate including the real Docker image.
-- 🧪 Tests: per-batch gates; full suite 412 passed / 2 skipped / 0 failed; full design freeze with only intended differences; Lighthouse home mobile 99/100/81/100; CI green on run 38771356967.
+- 🧪 Tests: per-batch gates; full suite 412 passed / 2 skipped / 0 failed; full design freeze with only intended differences; Lighthouse home mobile 99/100/81/100; CI green on run 38773058706.
 - 📁 Files: see list above.
 - 🔁 Next prompts: owner review of docs/audit/SEO_COPY_CHANGES.md; rebuild/deploy on 26 Oct and 9 Nov; automate deployment from the scheduled build; add public/og/default.png.
 - 🧠 Reflection: always verify that a measurement tool measures the real thing. The first freeze snapshots compared "not found" pages and reported 0 differences.
