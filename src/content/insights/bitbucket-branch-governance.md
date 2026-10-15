@@ -153,6 +153,6 @@ governance with written SOPs is part of what we run day to day in
 
 ## Where to start
 
-Turn on "no direct pushes" on `main` and add the passing-build and approval merge checks first. Those settings prevent
-most incidents, even as warnings. Add code owners, deployment environments and access reviews next, decide whether
+Turn on "no direct pushes" on `main` and add the passing-build and approval merge checks first. They close the
+most direct routes to an untested change, even as warnings. Add code owners, deployment environments and access reviews next, decide whether
 your process needs Premium's enforcement, then write the SOPs that describe how your team works today.

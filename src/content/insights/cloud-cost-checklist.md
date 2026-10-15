@@ -63,7 +63,7 @@ sources:
 
 Cloud waste is common, and it is growing again. Flexera's 2026 State of the Cloud research reports that, after five
 years of decline, [wasted cloud spend on IaaS and PaaS increased to 29%](https://www.flexera.com/blog/finops/the-new-era-of-cloud-what-2026-data-tells-us-about-spend-scale-and-strategy/).
-The causes are rarely exotic. Most waste comes from resources nobody owns, capacity sized for a peak that never comes,
+The usual suspects are not exotic: resources nobody owns, capacity sized for a peak that never comes,
 and environments that run when nobody is using them.
 
 The fifteen checks below find that waste on AWS, Azure and Google Cloud alike. Work through them in order: visibility

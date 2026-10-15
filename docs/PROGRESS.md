@@ -22,7 +22,8 @@
 | Code audit, round 1 of 3 (dead code, dependencies, tooling, one URL per page, external links) | ✅ Done (15 Oct, section 3l) |
 | Code audit, round 2 of 3 (CSS, types, scripts, icons without React, shared components) | ✅ Done (15 Oct, section 3m) |
 | Code audit, round 3 of 3 (SEO metadata, scheduled articles, accessibility, nginx, tests, CI) | ✅ Done (15 Oct, section 3n) |
-| Pushed to `origin/dev` | Everything up to and including section 3n |
+| SEO copy approved; all three Insights articles published, expanded and fact-checked | ✅ Done (15 Oct, section 3o) |
+| Pushed to `origin/dev` | Everything up to and including section 3o |
 | CI (GitHub Actions) | ✅ Green on `dev` (run 38773058706): checks, Playwright, Lighthouse CI, Docker smoke |
 
 ## 2. What was completed in spec 002
@@ -341,6 +342,30 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
     - Run 4 (38773058706): all jobs green (checks 33 s, Docker smoke 25 s, Playwright 4 min, Lighthouse CI 6.7 min).
 - **Correction:** the first design-freeze snapshots of this round served every page as "not found" (a relative path in the scratch server), so their "0 differences" meant nothing. I redid the baseline and every comparison from the saved builds; the results above are from the corrected runs.
 
+## 3o. SEO copy approval and Insights articles (15 Oct)
+- **SEO copy (commit b5bca31):**
+  - `docs/audit/SEO_COPY_CHANGES.md` is marked owner-approved.
+  - Three owner edits are applied: the home description (`site.metaDescription`), the CI/CD service `seoDescription`, and the `/insights` description (now 149 characters).
+- **Article dates (commit ee37797):**
+  - Azure environment strategy 12 Oct, Bitbucket branch governance 14 Oct, cloud cost checklist 15 Oct 2026. All three are live, and `/insights` lists them newest first.
+  - `isPublished()` stays for future-dated articles. The 26 Oct / 9 Nov rebuild note is removed.
+- **Article content (commit 5e34f8f and the docs commit):**
+  - **Length:** Azure 1,360 words (7 min read), Bitbucket 1,173 (6 min), cost checklist 1,069 (5 min). Each has practical steps, examples and a "Common mistakes" section.
+  - **Key takeaways:** a box after each intro, written as `<aside class="key-takeaways">` in the Markdown and styled with the existing article callout (blockquote) classes.
+  - **Multi-cloud:** the Azure article ends with "On AWS or Google Cloud?", a table of equivalents. The other two name AWS, Azure and Google Cloud equally.
+  - **Links and related content:**
+    - 2–3 inline service links per article.
+    - A "Related service" card (the existing `ServiceCard`, chosen by the new `relatedService` field).
+    - "Related articles" with the other two (the existing `ContentCard`), above the CTA band.
+  - **Breadcrumb:** the last crumb uses `seoTitle`, or the title cut at a word with an ellipsis.
+  - **Fact checks:**
+    - Flexera's 29% is reworded to the primary source and cited from flexera.com.
+    - The Bitbucket Standard vs Premium controls are taken from Atlassian's docs.
+    - Every external fact is in the article's Sources list, and every link was checked (200).
+  - **Dates:** JSON-LD `dateModified` is 15 Oct 2026, from a new optional `updated` field.
+  - **CSP:** a fenced code block was replaced with a list, because the syntax highlighter's inline styles violate the CSP (`check:csp` caught it).
+- **Checks:** `check` 0 errors, `lint`, `format:check`, `lint:content`, `build` and `check:csp` all pass. Specs `seo`, `drafts`, `review-fixes`, `review3`, `publish` and `theme-a11y`: all pass after one assertion update (the Flexera link text, `drafts.spec.ts`).
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -374,7 +399,7 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
 
 **Engineering follow-ups**
 - [ ] Automate deployment from the scheduled CI build (`scheduled-build` job in `.github/workflows/ci.yml`).
-- [ ] Owner review of the shortened titles and descriptions: `docs/audit/SEO_COPY_CHANGES.md`.
+- [x] Owner review of the shortened titles and descriptions: `docs/audit/SEO_COPY_CHANGES.md` (approved 15 Oct, section 3o).
 - [ ] Add the 1200×630 share image at `public/og/default.png` (Twitter/X then switches to the large card automatically).
 - [x] Lighthouse in Linux CI (T061): runs in GitHub Actions since 15 Oct.
 - [ ] Decide the release branch (the remote has no `main` branch yet; CI already covers `main` once it exists).
