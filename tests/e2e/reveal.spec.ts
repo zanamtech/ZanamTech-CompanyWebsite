@@ -12,7 +12,7 @@ async function stepCards(page: Page) {
       for (let n: Element | null = li.firstElementChild; n && n !== document.body; n = n.parentElement) {
         opacity *= Number(getComputedStyle(n).opacity);
       }
-      return { opacity: Math.round(opacity * 100) / 100, state: (li as HTMLElement).dataset.shown ?? 'static' };
+      return { opacity: Math.round(opacity * 100) / 100, state: (li as HTMLElement).dataset.reveal ?? 'clean' };
     }),
   );
 }
@@ -70,10 +70,10 @@ test.describe('How we engage: step cards always end visible', () => {
         await page.waitForTimeout(100 + run * 150);
         await arrive(page);
         await expectAllStepsVisible(page);
-        // After the sequence the cards carry no reveal styles at all.
+        // After the sequence the cards carry no reveal styles at all (reveal.ts removes data-reveal).
         await expect
           .poll(async () => (await stepCards(page)).map((c) => c.state))
-          .toEqual(['done', 'done', 'done', 'done']);
+          .toEqual(['clean', 'clean', 'clean', 'clean']);
       }
     });
   }
