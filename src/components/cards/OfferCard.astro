@@ -1,5 +1,5 @@
 ---
-import { CircleCheck } from '@lucide/astro';
+import CheckList from '../ui/CheckList.astro';
 import Badge from '../ui/Badge.astro';
 import type { Offer } from '../../data/offers';
 
@@ -29,25 +29,11 @@ const Heading = headingLevel;
     <div class="mt-5 grid gap-5 border-t border-border pt-5">
       <div>
         <p class="text-sm font-semibold text-fg">What we need from you</p>
-        <ul class="mt-2 space-y-1.5">
-          {offer.inputs.map((i) => (
-            <li class="flex gap-2 text-sm text-muted">
-              <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-              {i}
-            </li>
-          ))}
-        </ul>
+        <CheckList items={offer.inputs} class="mt-2 space-y-1.5" itemClass="flex gap-2 text-sm text-muted" />
       </div>
       <div>
         <p class="text-sm font-semibold text-fg">What you get</p>
-        <ul class="mt-2 space-y-1.5">
-          {offer.deliverables.map((d) => (
-            <li class="flex gap-2 text-sm text-muted">
-              <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-              {d}
-            </li>
-          ))}
-        </ul>
+        <CheckList items={offer.deliverables} class="mt-2 space-y-1.5" itemClass="flex gap-2 text-sm text-muted" />
       </div>
     </div>
   )}

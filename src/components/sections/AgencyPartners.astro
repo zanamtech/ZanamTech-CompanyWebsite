@@ -1,5 +1,7 @@
 ---
-import { ArrowRight, CircleCheck } from '@lucide/astro';
+import CheckList from '../ui/CheckList.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import { ArrowRight } from '@lucide/astro';
 import Button from '../ui/Button.astro';
 import GlassCard from '../ui/GlassCard.astro';
 import { AGENCY_PARTNERSHIP_SLUG } from '../../lib/lead';
@@ -17,30 +19,23 @@ const points = [
   <GlassCard class="relative overflow-hidden p-8! sm:p-10!">
     <div class="hairline-gradient absolute inset-x-10 top-0" aria-hidden="true"></div>
     <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
-      <div class="lg:col-span-6">
-        <p class="eyebrow">For software agencies</p>
-        <h2 id="agencies-title" class="mt-3 text-3xl font-bold text-fg">
-          Your DevOps partner, behind your brand
-        </h2>
-        <p class="mt-4 text-muted">
-          You win the application work; we run the cloud and delivery platform behind it. Every project gets reliable
-          environments, pipelines and operations, without you hiring a platform team.
-        </p>
+      <SectionHeader
+        eyebrow="For software agencies"
+        title="Your DevOps partner, behind your brand"
+        titleId="agencies-title"
+        lead="You win the application work; we run the cloud and delivery platform behind it. Every project gets reliable environments, pipelines and operations, without you hiring a platform team."
+        leadSize="base"
+        size="md"
+        class="lg:col-span-6"
+      >
         <div class="mt-8">
           <Button href={`/contact?service=${AGENCY_PARTNERSHIP_SLUG}`}>
             Discuss an agency partnership
             <ArrowRight aria-hidden="true" class="size-4" />
           </Button>
         </div>
-      </div>
-      <ul class="space-y-3 lg:col-span-6">
-        {points.map((p) => (
-          <li class="flex gap-2.5 text-fg">
-            <CircleCheck aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-brand-cyan" />
-            {p}
-          </li>
-        ))}
-      </ul>
+      </SectionHeader>
+      <CheckList items={points} class="space-y-3 lg:col-span-6" itemClass="flex gap-2.5 text-fg" icon="md" />
     </div>
   </GlassCard>
 </section>

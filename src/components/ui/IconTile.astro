@@ -1,0 +1,28 @@
+---
+/** Rounded square behind an icon (cards, pillars, notices). The icon goes in the slot. */
+interface Props {
+  /** 12 (48px, default) or 10 (40px). */
+  size?: 10 | 12;
+  tone?: 'cyan' | 'accent' | 'danger';
+  /** Extra classes, e.g. shrink-0 in a flex row. */
+  class?: string;
+}
+
+const { size = 12, tone = 'cyan', class: className } = Astro.props;
+const tones = {
+  cyan: 'bg-brand-cyan/12 text-brand-cyan',
+  accent: 'bg-accent/10 text-accent',
+  danger: 'bg-danger/10 text-danger',
+};
+---
+
+<span
+  class:list={[
+    'flex items-center justify-center rounded-xl',
+    size === 10 ? 'size-10' : 'size-12',
+    className,
+    tones[tone],
+  ]}
+>
+  <slot />
+</span>

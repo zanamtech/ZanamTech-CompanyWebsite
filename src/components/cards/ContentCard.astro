@@ -1,0 +1,42 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import Illustration from '../ui/Illustration.astro';
+
+/**
+ * Card for a written piece (a sample on /resources and Home, an article on /insights): illustration, a meta row
+ * (slot "meta", with its own wrapper), stretched title link, summary and a call to action. Other attributes (the
+ * data-artefact / data-insight hooks) go on the <li>.
+ */
+interface Props {
+  /** Illustration motif (the entry id). */
+  topic: string;
+  href: string;
+  title: string;
+  summary: string;
+  /** Call-to-action text, e.g. "View sample". */
+  action: string;
+  /** h3 under a section heading; h2 directly under the page H1. */
+  headingLevel?: 2 | 3;
+  [attr: `data-${string}`]: string;
+}
+
+const { topic, href, title, summary, action, headingLevel = 3, ...rest } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<li {...rest} class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
+  <div class="mb-5 overflow-hidden rounded-xl border border-border">
+    <Illustration topic={topic} />
+  </div>
+  <slot name="meta" />
+  <Heading class="mt-4 text-lg font-semibold text-fg">
+    <a href={href} class="card-link">
+      {title}
+    </a>
+  </Heading>
+  <p class="mt-2 text-sm text-muted">{summary}</p>
+  <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
+    {action}
+    <ArrowRight aria-hidden="true" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+  </p>
+</li>

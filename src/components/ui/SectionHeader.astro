@@ -1,0 +1,62 @@
+---
+import ArrowLink from './ArrowLink.astro';
+
+/**
+ * Section intro: eyebrow, H2 and lead, optionally beside a "View all …" link (side by side from md). Every variant in
+ * use is a prop, so each section keeps its exact type scale and spacing. Extra content after the lead goes in the slot.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** id of the H2, for the section's aria-labelledby. */
+  titleId?: string;
+  lead?: string;
+  /** 'lg': 3xl, 4xl from sm (home sections). 'md': 3xl (sub-pages). 'sm': 2xl (a section inside a section). */
+  size?: 'lg' | 'md' | 'sm';
+  /** Lead at text-lg (default) or body size. */
+  leadSize?: 'lg' | 'base';
+  /** "View all …" link beside the header from md. */
+  link?: { href: string; label: string };
+  /** Gap between the header and its link while stacked: 6 (default) or 4 (the compact offers strip). */
+  linkGap?: 4 | 6;
+  /** Classes for the header block, replacing the default max-w-2xl. */
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  titleId,
+  lead,
+  size = 'lg',
+  leadSize = 'lg',
+  link,
+  linkGap = 6,
+  class: className = 'max-w-2xl',
+} = Astro.props;
+
+const titleClass = [
+  'font-bold text-fg',
+  eyebrow && 'mt-3',
+  size === 'sm' ? 'text-2xl' : 'text-3xl',
+  size === 'lg' && 'sm:text-4xl',
+];
+const Row = link ? 'div' : Fragment;
+const rowProps = link
+  ? {
+      class: ['flex flex-col md:flex-row md:items-end md:justify-between', linkGap === 4 ? 'gap-4' : 'gap-6'].join(' '),
+    }
+  : {};
+---
+
+<Row {...rowProps}>
+  <div class={className}>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2 id={titleId} class:list={titleClass}>
+      {title}
+    </h2>
+    {lead && <p class:list={['mt-4', leadSize === 'lg' && 'text-lg', 'text-muted']}>{lead}</p>}
+    <slot />
+  </div>
+  {link && <ArrowLink href={link.href} class="shrink-0" label={link.label} />}
+</Row>

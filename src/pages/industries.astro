@@ -1,5 +1,7 @@
 ---
-import { CircleAlert, CircleCheck } from '@lucide/astro';
+import IconTile from '../components/ui/IconTile.astro';
+import CheckList from '../components/ui/CheckList.astro';
+import { CircleAlert } from '@lucide/astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
@@ -30,9 +32,9 @@ const serviceById = new Map(services.map((s) => [s.id, s]));
         class="glass panel-hover grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-12"
       >
         <div class="lg:col-span-5">
-          <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+          <IconTile>
             <Icon name={s.icon} class="size-6" />
-          </span>
+          </IconTile>
           <h2 id={`segment-${s.id}`} class="mt-5 text-2xl font-bold text-fg">
             {s.name}
           </h2>
@@ -55,14 +57,7 @@ const serviceById = new Map(services.map((s) => [s.id, s]));
           </div>
           <div>
             <h3 class="text-sm font-semibold tracking-wide text-accent uppercase">How we help</h3>
-            <ul class="mt-4 space-y-3">
-              {s.value.map((v) => (
-                <li class="flex gap-2 text-fg">
-                  <CircleCheck aria-hidden="true" class="mt-1 size-4 shrink-0 text-brand-cyan" />
-                  {v}
-                </li>
-              ))}
-            </ul>
+            <CheckList items={s.value} class="mt-4 space-y-3" itemClass="flex gap-2 text-fg" iconOffset={1} />
           </div>
           <div class="sm:col-span-2">
             <h3 class="text-sm font-semibold text-fg">Relevant services</h3>

@@ -1,0 +1,29 @@
+---
+import Badge from '../ui/Badge.astro';
+import ContentCard from './ContentCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  artefact: CollectionEntry<'resources'>;
+  /** h3 under a section heading (home band); h2 directly under the page H1 (/resources). */
+  headingLevel?: 2 | 3;
+}
+
+const { artefact, headingLevel = 3 } = Astro.props;
+const { title, summary, draft } = artefact.data;
+---
+
+<ContentCard
+  data-artefact=""
+  topic={artefact.id}
+  href={`/resources/${artefact.id}`}
+  title={title.replace(/^Sample:\s*/, '')}
+  summary={summary}
+  action="View sample"
+  headingLevel={headingLevel}
+>
+  <div slot="meta" class="flex flex-wrap gap-2">
+    <Badge tone="accent">Sample</Badge>
+    {draft && <Badge>Draft</Badge>}
+  </div>
+</ContentCard>

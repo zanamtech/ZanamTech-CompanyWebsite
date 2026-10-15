@@ -1,4 +1,5 @@
 ---
+import { pad2 } from '../../lib/format';
 import GlassCard from '../ui/GlassCard.astro';
 
 interface Props {
@@ -23,9 +24,7 @@ const { sections } = Astro.props;
                 href={`#${s.id}`}
                 class="group flex min-h-11 items-center gap-3 text-sm font-medium text-fg transition-colors hover:text-accent"
               >
-                <span class="w-6 text-muted tabular-nums transition-colors group-hover:text-accent">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
+                <span class="w-6 text-muted tabular-nums transition-colors group-hover:text-accent">{pad2(i + 1)}</span>
                 {s.title}
               </a>
             </li>

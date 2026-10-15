@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { CircleCheck } from '@lucide/astro';
+
+/**
+ * List with a check icon per item. The list's layout (`class`) and each item's spacing and type (`itemClass`) are
+ * props, so every existing variant keeps its exact styles. Other attributes (data-reveal-group …) go on the <ul>.
+ */
+type Props = HTMLAttributes<'ul'> & {
+  items: readonly string[];
+  /** Classes of each <li>, e.g. 'flex gap-2 text-sm text-fg'. */
+  itemClass: string;
+  /** Check icon: 'sm' 16px (default) or 'md' 20px. */
+  icon?: 'sm' | 'md';
+  /** Nudges the icon onto the first line's centre: 0.5 (default) or 1 (spacing units). */
+  iconOffset?: 0.5 | 1;
+  /** Wrap each item's text in a <span>; a string is that span's class. */
+  wrap?: boolean | string;
+};
+
+const { items, itemClass, icon = 'sm', iconOffset = 0.5, wrap = false, class: className, ...rest } = Astro.props;
+const iconClass = [
+  iconOffset === 1 ? 'mt-1' : 'mt-0.5',
+  icon === 'md' ? 'size-5' : 'size-4',
+  'shrink-0 text-brand-cyan',
+];
+---
+
+<ul class={className} {...rest}>
+  {items.map((item) => (
+    <li class={itemClass}>
+      <CircleCheck aria-hidden="true" class={iconClass.join(' ')} />
+      {wrap ? <span class={typeof wrap === 'string' ? wrap : undefined}>{item}</span> : item}
+    </li>
+  ))}
+</ul>

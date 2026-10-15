@@ -1,13 +1,10 @@
 ---
-import { ArrowRight, Activity, Building2, ShieldCheck, CircleCheck, ChevronDown } from '@lucide/astro';
+import { pad2 } from '../../lib/format';
+import { ArrowRight, CircleCheck, ChevronDown } from '@lucide/astro';
+import Icon from '../ui/Icon.astro';
 import Button from '../ui/Button.astro';
 import { cta } from '../../data/site';
-
-const pillars = [
-  { label: 'Enterprise-grade', Icon: Building2 },
-  { label: 'High-availability', Icon: Activity },
-  { label: 'Zero-trust security', Icon: ShieldCheck },
-];
+import { brandPillars } from '../../data/pillars';
 
 const blueprint = [
   { title: 'Technical audit & discovery', detail: 'Architecture, security perimeter, pipelines and spend' },
@@ -36,9 +33,9 @@ const blueprint = [
       </p>
 
       <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Positioning pillars">
-        {pillars.map(({ label, Icon }) => (
+        {brandPillars.map(({ label, icon }) => (
           <li class="glass inline-flex cursor-default select-none items-center gap-2 rounded-full border border-border/60 px-4 py-2 text-sm font-semibold text-fg transition-all duration-300 hover:scale-[1.02] hover:border-accent/60 hover:shadow-md hover:shadow-purple-500/10 motion-reduce:hover:scale-100">
-            <Icon aria-hidden="true" class="size-4 text-brand-cyan" stroke-width={2.25} />
+            <Icon name={icon} class="size-4 text-brand-cyan" strokeWidth={2.25} />
             <span>{label}</span>
           </li>
         ))}
@@ -77,7 +74,7 @@ const blueprint = [
                   class="absolute inset-0 bg-linear-to-br from-brand-purple to-cta opacity-0 transition-opacity duration-700 ease-in-out group-data-[step=active]:opacity-100"
                   aria-hidden="true"
                 />
-                <span class="relative">{String(i + 1).padStart(2, '0')}</span>
+                <span class="relative">{pad2(i + 1)}</span>
               </span>
               <div>
                 <p class="flex items-center gap-2 font-semibold">

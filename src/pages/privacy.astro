@@ -1,8 +1,9 @@
 ---
+import IconTile from '../components/ui/IconTile.astro';
 import { Ban, Lock, Mail, ShieldCheck } from '@lucide/astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
-import LongFormDoc from '../components/sections/LongFormDoc.astro';
+import LongFormDoc from '../components/content/LongFormDoc.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
 import { site } from '../data/site';
 
@@ -73,9 +74,9 @@ const sections = [
       </p>
 
       <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
-        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-danger/10 text-danger">
+        <IconTile size={10} tone="danger" class="shrink-0">
           <Ban aria-hidden="true" class="size-5" />
-        </span>
+        </IconTile>
         <div>
           <p class="mt-0! font-semibold text-fg">Explicitly excluded</p>
           <p class="mt-1.5! text-sm">
@@ -114,9 +115,9 @@ const sections = [
       </ul>
 
       <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
-        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+        <IconTile size={10} tone="accent" class="shrink-0">
           <ShieldCheck aria-hidden="true" class="size-5" />
-        </span>
+        </IconTile>
         <div>
           <p class="mt-0! font-semibold text-fg">Our commitment</p>
           <p class="mt-1.5! text-sm">
@@ -206,9 +207,9 @@ const sections = [
         <div class="hairline-gradient absolute inset-x-8 top-0" aria-hidden="true"></div>
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div class="flex gap-4">
-            <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+            <IconTile class="shrink-0">
               <Mail aria-hidden="true" class="size-6" />
-            </span>
+            </IconTile>
             <div>
               <p class="mt-0! font-semibold text-fg">Privacy contact</p>
               <p class="mt-1! text-sm">

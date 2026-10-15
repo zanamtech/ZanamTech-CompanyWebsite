@@ -1,6 +1,9 @@
 ---
+import IconTile from '../ui/IconTile.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
 import { ArrowRight } from '@lucide/astro';
-import OfferCard from './OfferCard.astro';
+import OfferCard from '../cards/OfferCard.astro';
 import Badge from '../ui/Badge.astro';
 import Icon from '../ui/Icon.astro';
 import { offers } from '../../data/offers';
@@ -19,22 +22,14 @@ const { detailed = false, withIntro = true, compact = false } = Astro.props;
 <!-- Entry offers (spec 002 FR-022): fixed scope, fee never shown. -->
 {compact ? (
   <section id="start-here" aria-labelledby="offers-title" class="container-page section-y">
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-      <div class="max-w-2xl">
-        <p class="eyebrow">Start here</p>
-        <h2 id="offers-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-          Low-risk ways to start
-        </h2>
-        <p class="mt-4 text-lg text-muted">Fixed scope, a clear written output, no long-term commitment.</p>
-      </div>
-      <a
-        href="/start-here"
-        class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
-      >
-        See all entry offers
-        <ArrowRight aria-hidden="true" class="size-4" />
-      </a>
-    </div>
+    <SectionHeader
+      eyebrow="Start here"
+      title="Low-risk ways to start"
+      titleId="offers-title"
+      lead="Fixed scope, a clear written output, no long-term commitment."
+      link={{ href: '/start-here', label: 'See all entry offers' }}
+      linkGap={4}
+    />
     {/* ≥1280px: five in one row. 768–1279px: 3 + 2 centred. Phones: a horizontal scroll-snap row that shows part of
           the next card. Each whole card links to its offer on /start-here. */}
     <ul
@@ -48,9 +43,9 @@ const { detailed = false, withIntro = true, compact = false } = Astro.props;
             class="glass card-hover group flex h-full flex-col rounded-2xl p-5"
             data-offer-card={offer.id}
           >
-            <span class="flex size-10 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+            <IconTile size={10}>
               <Icon name={offer.icon} class="size-5" />
-            </span>
+            </IconTile>
             <span class="mt-4 text-base font-semibold text-fg group-hover:text-accent">{offer.name}</span>
             <Badge tone="accent" class="mt-2 self-start">
               {offer.duration}
@@ -80,25 +75,13 @@ const { detailed = false, withIntro = true, compact = false } = Astro.props;
   >
     {withIntro && (
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div class="max-w-2xl">
-          <p class="eyebrow">Start here</p>
-          <h2 id="offers-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-            Low-risk ways to start
-          </h2>
-          <p class="mt-4 text-lg text-muted">
-            Fixed-scope engagements with a clear output, so you can judge the fit before committing to a larger project
-            or retainer.
-          </p>
-        </div>
-        {!detailed && (
-          <a
-            href="/start-here"
-            class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
-          >
-            See every entry offer
-            <ArrowRight aria-hidden="true" class="size-4" />
-          </a>
-        )}
+        <SectionHeader
+          eyebrow="Start here"
+          title="Low-risk ways to start"
+          titleId="offers-title"
+          lead="Fixed-scope engagements with a clear output, so you can judge the fit before committing to a larger project or retainer."
+        />
+        {!detailed && <ArrowLink href="/start-here" class="shrink-0" label="See every entry offer" />}
       </div>
     )}
 

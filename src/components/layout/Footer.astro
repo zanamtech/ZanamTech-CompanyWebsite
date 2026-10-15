@@ -2,28 +2,14 @@
 import { ChevronDown } from '@lucide/astro';
 import Logo from './Logo.astro';
 import LinkedInIcon from '../ui/LinkedInIcon.astro';
-import { site, companyLinks, legalLinks, footerCopy } from '../../data/site';
+import { site, footerCopy } from '../../data/site';
 import { leadership } from '../../data/leadership';
-import { getServicesByPillar, serviceHref } from '../../lib/services';
-import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
+import { serviceHref } from '../../lib/services';
+import { getNavModel } from '../../lib/navigation';
 
-const groups = await getServicesByPillar();
-const pillar = Object.fromEntries(groups.map((g) => [g.pillar, g])) as Record<
-  (typeof groups)[number]['pillar'],
-  (typeof groups)[number]
->;
-// Same grouping as the mega-menu: Managed + Practical AI together, Cloud & DevOps split into two sub-columns.
-const cloudSplit = Math.ceil(pillar['cloud-devops'].services.length / 2);
-const cloudColumns = [
-  pillar['cloud-devops'].services.slice(0, cloudSplit),
-  pillar['cloud-devops'].services.slice(cloudSplit),
-];
-
-const showInsights = await hasPublishedInsights();
-const showCaseStudies = await hasVerifiedCaseStudies();
-const company = companyLinks.filter(
-  (l) => (l.href !== '/insights' || showInsights) && (l.href !== '/case-studies' || showCaseStudies),
-);
+// Same grouping and gating as the header (src/lib/navigation.ts): Managed + Practical AI together, Cloud & DevOps
+// split into two sub-columns.
+const { company, legal, pillars: groups, pillar, cloudColumns } = await getNavModel(Astro.url);
 
 const year = new Date().getFullYear();
 // Phones: 44px touch rows. Tablet/desktop service lists use an even gap between items instead (serviceList +
@@ -186,7 +172,7 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
       <p>&copy; {year} ZanamTech · Cloud, DevOps &amp; AI engineering</p>
       <nav aria-label="Legal">
         <ul class="flex gap-4">
-          {legalLinks.map((link) => (
+          {legal.map((link) => (
             <li>
               <a href={link.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
                 {link.label}

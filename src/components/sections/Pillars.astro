@@ -1,6 +1,9 @@
 ---
-import { Building2, Activity, ShieldCheck } from '@lucide/astro';
+import IconTile from '../ui/IconTile.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
 import GlassCard from '../ui/GlassCard.astro';
+import { brandPillars } from '../../data/pillars';
 
 interface Props {
   id?: string;
@@ -15,46 +18,22 @@ const {
   title = 'Pragmatic engineering for systems that cannot fail',
   lead = 'We favour verified engineering outcomes over technology hype: resilient infrastructure, hardened perimeters and privacy-compliant AI, delivered as one accountable partner.',
 } = Astro.props;
-
-const pillars = [
-  {
-    Icon: Building2,
-    title: 'Enterprise-grade',
-    body: 'Architecture, delivery and governance built to the standards of regulated, high-scale organisations, with documented runbooks, transparent reporting and no lock-in.',
-  },
-  {
-    Icon: Activity,
-    title: 'High-availability',
-    body: 'Multi-zone orchestration, cross-region replication and automated failover engineered to keep critical workloads online.',
-  },
-  {
-    Icon: ShieldCheck,
-    title: 'Zero-trust security',
-    body: 'Every request verified. WAF hardening, rate limiting, geo-fencing and encrypted transport across all public endpoints.',
-  },
-];
 ---
 
 <!-- The three brand-pillar cards. Reused as-is by TrustBand (Constitution IV: reuse, never redraw). -->
 <section id={id} aria-labelledby={`${id}-title`} class="container-page section-y">
-  <div class="max-w-2xl">
-    <p class="eyebrow">{eyebrow}</p>
-    <h2 id={`${id}-title`} class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-      {title}
-    </h2>
-    <p class="mt-4 text-lg text-muted">{lead}</p>
-  </div>
+  <SectionHeader eyebrow={eyebrow} title={title} titleId={`${id}-title`} lead={lead} />
 
   <ul class="mt-12 grid gap-6 md:grid-cols-3" data-reveal-group data-reveal-distance="24">
-    {pillars.map(({ Icon, title, body }) => (
+    {brandPillars.map(({ label, icon, body }) => (
       <GlassCard
         as="li"
         class="cursor-default select-none transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/60 hover:shadow-xl hover:shadow-purple-500/10 motion-reduce:hover:translate-y-0"
       >
-        <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-          <Icon aria-hidden="true" class="size-6" stroke-width={2} />
-        </span>
-        <h3 class="mt-5 text-lg font-semibold text-fg">{title}</h3>
+        <IconTile>
+          <Icon name={icon} class="size-6" />
+        </IconTile>
+        <h3 class="mt-5 text-lg font-semibold text-fg">{label}</h3>
         <p class="mt-2 text-muted">{body}</p>
       </GlassCard>
     ))}

@@ -1,5 +1,7 @@
 ---
-import { ArrowRight, CircleCheck } from '@lucide/astro';
+import CheckList from '../ui/CheckList.astro';
+import { pad2 } from '../../lib/format';
+import SectionHeader from '../ui/SectionHeader.astro';
 import { engagementPhases } from '../../data/engagement';
 
 interface Props {
@@ -19,25 +21,13 @@ const { detailed = false, withIntro = true } = Astro.props;
   class:list={['container-page overflow-x-clip', withIntro ? 'section-y' : 'section-b pt-8']}
 >
   {withIntro && (
-    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-      <div class="max-w-2xl">
-        <p class="eyebrow">How we engage</p>
-        <h2 id="process-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-          A consultative process built for enterprise accountability
-        </h2>
-        <p class="mt-4 text-lg text-muted">
-          No fixed packages or commodity rates. Every engagement begins with an architectural assessment and is governed
-          by a Statement of Work.
-        </p>
-      </div>
-      <a
-        href="/approach"
-        class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
-      >
-        How We Work
-        <ArrowRight aria-hidden="true" class="size-4" />
-      </a>
-    </div>
+    <SectionHeader
+      eyebrow="How we engage"
+      title="A consultative process built for enterprise accountability"
+      titleId="process-title"
+      lead="No fixed packages or commodity rates. Every engagement begins with an architectural assessment and is governed by a Statement of Work."
+      link={{ href: '/approach', label: 'How We Work' }}
+    />
   )}
 
   {/* One reveal group (src/scripts/reveal.ts): the four cards start 60ms apart, each connector 30ms after its card. The
@@ -59,19 +49,16 @@ const { detailed = false, withIntro = true } = Astro.props;
               forces a repaint. The attribute is removed after the sequence, which drops every reveal style. */}
           <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6 group-data-[reveal=hidden]/phase:opacity-0 group-data-[reveal=shown]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[reveal=shown]/phase:delay-[var(--reveal-delay),0s,0s,0s] group-data-[reveal=shown]/phase:duration-700 group-data-[reveal=shown]/phase:ease-out">
             <span class="flex size-12 items-center justify-center rounded-xl bg-cta text-sm font-bold text-cta-fg shadow-sm">
-              {String(phase.order).padStart(2, '0')}
+              {pad2(phase.order)}
             </span>
             <h3 class="mt-5 text-lg font-semibold text-fg">{phase.name}</h3>
             <p class="mt-2 text-sm text-muted">{phase.summary}</p>
             {detailed && (
-              <ul class="mt-5 space-y-2 border-t border-border pt-5">
-                {phase.details.map((d) => (
-                  <li class="flex gap-2 text-sm text-fg">
-                    <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-                    {d}
-                  </li>
-                ))}
-              </ul>
+              <CheckList
+                items={phase.details}
+                class="mt-5 space-y-2 border-t border-border pt-5"
+                itemClass="flex gap-2 text-sm text-fg"
+              />
             )}
           </div>
           {/* Connector: lives in the gap after this card (desktop row only), running from its right border to the next

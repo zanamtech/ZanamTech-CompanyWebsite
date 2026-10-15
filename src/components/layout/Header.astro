@@ -1,36 +1,17 @@
 ---
+import ArrowLink from '../ui/ArrowLink.astro';
 import { ArrowRight, ChevronDown, Menu, X } from '@lucide/astro';
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Button from '../ui/Button.astro';
 import MenuServiceLink from './MenuServiceLink.astro';
-import { navLinks as allNavLinks, cta } from '../../data/site';
-import { getServicesByPillar, serviceHref } from '../../lib/services';
-import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
-import { pagePath } from '../../lib/url';
+import { cta } from '../../data/site';
+import { serviceHref } from '../../lib/services';
+import { getNavModel } from '../../lib/navigation';
 
-const currentPath = pagePath(Astro.url);
-const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
-
-// Insights and Case Studies appear only when they have published / verified content (spec 002 FR-020, FR-030).
-const showInsights = await hasPublishedInsights();
-const showCaseStudies = await hasVerifiedCaseStudies();
-const navLinks = [
-  ...allNavLinks.filter((l) => l.href !== '/insights' || showInsights),
-  ...(showCaseStudies ? [{ label: 'Case Studies', href: '/case-studies' }] : []),
-];
-
-const groups = await getServicesByPillar();
-const pillar = Object.fromEntries(groups.map((g) => [g.pillar, g])) as Record<
-  (typeof groups)[number]['pillar'],
-  (typeof groups)[number]
->;
+// Links gated by published content (spec 002 FR-020, FR-030) and the service grouping shared with the footer.
 // Mega-menu balance: Cloud & DevOps Engineering is split across two sub-columns under one heading.
-const cloudSplit = Math.ceil(pillar['cloud-devops'].services.length / 2);
-const cloudColumns = [
-  pillar['cloud-devops'].services.slice(0, cloudSplit),
-  pillar['cloud-devops'].services.slice(cloudSplit),
-];
+const { primary: navLinks, pillars: groups, pillar, cloudColumns, isActive } = await getNavModel(Astro.url);
 const groupHeading = 'px-2 text-xs font-semibold tracking-wide text-muted uppercase';
 const linkClass = (href: string) => [
   'inline-flex min-h-11 items-center rounded-lg px-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 hover:text-accent xl:px-3.5',
@@ -113,20 +94,8 @@ const linkClass = (href: string) => [
                     <p class="mt-2 hidden text-base font-semibold text-fg xl:block">
                       Enterprise engineering, end to end
                     </p>
-                    <a
-                      href="/services"
-                      class="mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
-                    >
-                      View all services
-                      <ArrowRight aria-hidden="true" class="size-4" />
-                    </a>
-                    <a
-                      href="/start-here"
-                      class="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-link hover:underline"
-                    >
-                      Start here
-                      <ArrowRight aria-hidden="true" class="size-4" />
-                    </a>
+                    <ArrowLink href="/services" class="mt-2 text-sm" label="View all services" />
+                    <ArrowLink href="/start-here" class="text-sm" label="Start here" />
                   </div>
 
                   <div class="space-y-3">

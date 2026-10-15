@@ -1,6 +1,7 @@
 ---
+import SectionHeader from '../ui/SectionHeader.astro';
 import { getCollection } from 'astro:content';
-import ArtefactCard from './ArtefactCard.astro';
+import ArtefactCard from '../cards/ArtefactCard.astro';
 import { isVisible } from '../../lib/content';
 
 // Proof by artefact (spec 002 §E). Only visible entries render; drafts appear in `astro dev` only, so this band is
@@ -12,16 +13,12 @@ const artefacts = (await getCollection('resources', isVisible)).sort((a, b) =>
 
 {artefacts.length > 0 && (
   <section id="artefacts" aria-labelledby="artefacts-title" class="container-page section-y">
-    <div class="max-w-2xl">
-      <p class="eyebrow">How we document work</p>
-      <h2 id="artefacts-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-        See the standard before you sign
-      </h2>
-      <p class="mt-4 text-lg text-muted">
-        Samples of the architecture, procedures and reporting every engagement produces. Written for illustration, not
-        taken from any client.
-      </p>
-    </div>
+    <SectionHeader
+      eyebrow="How we document work"
+      title="See the standard before you sign"
+      titleId="artefacts-title"
+      lead="Samples of the architecture, procedures and reporting every engagement produces. Written for illustration, not taken from any client."
+    />
     <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
       {artefacts.map((artefact) => (
         <ArtefactCard artefact={artefact} />

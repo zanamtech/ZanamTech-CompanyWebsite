@@ -1,5 +1,8 @@
 ---
-import { ArrowRight, CircleCheck } from '@lucide/astro';
+import IconTile from '../ui/IconTile.astro';
+import CheckList from '../ui/CheckList.astro';
+import { pad2 } from '../../lib/format';
+import { ArrowRight } from '@lucide/astro';
 import Icon from '../ui/Icon.astro';
 import { serviceHref, type Service } from '../../lib/services';
 
@@ -28,15 +31,15 @@ const { name, icon, summary, outcome, order } = service.data;
 >
   <div class:list={[feature && 'flex flex-col']}>
     <div class="flex items-start justify-between gap-4">
-      <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+      <IconTile>
         <Icon name={icon} class="size-6" />
-      </span>
+      </IconTile>
       {numbered && (
         <span
           class="text-sm font-semibold text-muted tabular-nums transition-colors duration-300 group-hover:text-accent"
           aria-hidden="true"
         >
-          {String(order).padStart(2, '0')}
+          {pad2(order)}
         </span>
       )}
     </div>
@@ -53,14 +56,7 @@ const { name, icon, summary, outcome, order } = service.data;
   {feature && included.length > 0 && (
     <div class="lg:border-l lg:border-border lg:pl-10">
       <p class="text-sm font-semibold text-fg">Included in every retainer</p>
-      <ul class="mt-4 grid gap-3 sm:grid-cols-2">
-        {included.map((item) => (
-          <li class="flex gap-2 text-sm text-fg">
-            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <CheckList items={included} class="mt-4 grid gap-3 sm:grid-cols-2" itemClass="flex gap-2 text-sm text-fg" />
       <p class="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-link" aria-hidden="true">
         Explore service
         <ArrowRight aria-hidden="true" class="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />

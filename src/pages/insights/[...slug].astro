@@ -1,9 +1,9 @@
 ---
+import ContentCard from '../../components/cards/ContentCard.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { ArrowRight } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
-import ArticleBody from '../../components/sections/ArticleBody.astro';
+import ArticleBody from '../../components/content/ArticleBody.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Illustration from '../../components/ui/Illustration.astro';
@@ -167,28 +167,20 @@ const articleLd = article
     <div class="container-page section-y">
       <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
         {articles.map((a) => (
-          <li data-insight class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
-            <div class="mb-5 overflow-hidden rounded-xl border border-border">
-              <Illustration topic={a.id} />
-            </div>
-            <div class="flex flex-wrap items-center gap-2 text-sm text-muted">
+          <ContentCard
+            data-insight=""
+            topic={a.id}
+            href={`/insights/${a.id}`}
+            title={a.data.title}
+            summary={a.data.summary}
+            action="Read the article"
+            headingLevel={2}
+          >
+            <div slot="meta" class="flex flex-wrap items-center gap-2 text-sm text-muted">
               {a.data.draft && <Badge tone="accent">Draft</Badge>}
               <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
             </div>
-            <h2 class="mt-4 text-lg font-semibold text-fg">
-              <a href={`/insights/${a.id}`} class="card-link">
-                {a.data.title}
-              </a>
-            </h2>
-            <p class="mt-2 text-sm text-muted">{a.data.summary}</p>
-            <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
-              Read the article
-              <ArrowRight
-                aria-hidden="true"
-                class="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-              />
-            </p>
-          </li>
+          </ContentCard>
         ))}
       </ul>
       {hasSamples && (

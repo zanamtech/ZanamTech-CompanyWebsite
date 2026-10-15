@@ -1,0 +1,18 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { ArrowRight } from '@lucide/astro';
+
+/** Text link with a trailing arrow ("View all services →"). `class` adds layout or size (shrink-0, mt-6, text-sm). */
+type Props = HTMLAttributes<'a'> & { label: string };
+
+const { href, label, class: className, ...rest } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['inline-flex min-h-11 items-center gap-1.5 font-semibold text-link hover:underline', className]}
+  {...rest}
+>
+  {label}
+  <ArrowRight aria-hidden="true" class="size-4" />
+</a>

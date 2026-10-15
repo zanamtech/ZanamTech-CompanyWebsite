@@ -1,5 +1,6 @@
 ---
-import { ArrowRight, CircleCheck } from '@lucide/astro';
+import CheckList from '../ui/CheckList.astro';
+import ArrowLink from '../ui/ArrowLink.astro';
 import Pillars from './Pillars.astro';
 import Badge from '../ui/Badge.astro';
 import { accessModel } from '../../data/engagement';
@@ -16,14 +17,7 @@ import { commitments } from '../../data/commitments';
   <div class="mt-10 grid gap-8 lg:grid-cols-2">
     <div>
       <h3 class="text-sm font-semibold text-fg">How we access your environment</h3>
-      <ul class="mt-4 space-y-2">
-        {accessModel.map((item) => (
-          <li class="flex gap-2.5 text-sm text-muted">
-            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <CheckList items={accessModel} class="mt-4 space-y-2" itemClass="flex gap-2.5 text-sm text-muted" />
     </div>
     <div>
       <h3 class="text-sm font-semibold text-fg">What we commit to</h3>
@@ -34,10 +28,7 @@ import { commitments } from '../../data/commitments';
           </li>
         ))}
       </ul>
-      <a href="/trust" class="mt-6 inline-flex min-h-11 items-center gap-1.5 font-semibold text-link hover:underline">
-        Security &amp; trust
-        <ArrowRight aria-hidden="true" class="size-4" />
-      </a>
+      <ArrowLink href="/trust" class="mt-6" label="Security & trust" />
     </div>
   </div>
 </Pillars>

@@ -1,8 +1,9 @@
 ---
+import { pad2 } from '../lib/format';
 import { Mail } from '@lucide/astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/sections/PageHero.astro';
-import ContactForm from '../components/ContactForm.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
 import { site } from '../data/site';
 
@@ -51,7 +52,7 @@ const nextSteps = [
           {nextSteps.map((step, i) => (
             <li class="flex gap-4">
               <span class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-surface-2 text-sm font-bold text-fg">
-                {String(i + 1).padStart(2, '0')}
+                {pad2(i + 1)}
               </span>
               <div>
                 <p class="font-semibold text-fg">{step.title}</p>

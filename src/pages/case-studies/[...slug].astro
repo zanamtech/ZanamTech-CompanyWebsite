@@ -1,10 +1,10 @@
 ---
+import CheckList from '../../components/ui/CheckList.astro';
 import { render, type CollectionEntry } from 'astro:content';
-import { CircleCheck } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
-import ArticleBody from '../../components/sections/ArticleBody.astro';
-import CaseStudyCard from '../../components/sections/CaseStudyCard.astro';
+import ArticleBody from '../../components/content/ArticleBody.astro';
+import CaseStudyCard from '../../components/cards/CaseStudyCard.astro';
 import CtaBand from '../../components/sections/CtaBand.astro';
 import GlassCard from '../../components/ui/GlassCard.astro';
 import { getVerifiedCaseStudies } from '../../lib/content';
@@ -59,14 +59,7 @@ const Content = study ? (await render(study)).Content : undefined;
           <p class="mt-2 text-sm text-muted">{study.data.approach}</p>
           <p class="mt-4 text-sm font-semibold text-fg">Timeline</p>
           <p class="mt-2 text-sm text-muted">{study.data.timeline}</p>
-          <ul class="mt-4 space-y-1.5">
-            {study.data.stack.map((t) => (
-              <li class="flex gap-2 text-sm text-fg">
-                <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-                {t}
-              </li>
-            ))}
-          </ul>
+          <CheckList items={study.data.stack} class="mt-4 space-y-1.5" itemClass="flex gap-2 text-sm text-fg" />
         </GlassCard>
       </aside>
     </div>

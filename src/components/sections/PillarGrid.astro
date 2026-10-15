@@ -1,4 +1,7 @@
 ---
+import IconTile from '../ui/IconTile.astro';
+import { pad2 } from '../../lib/format';
+import SectionHeader from '../ui/SectionHeader.astro';
 import { ArrowRight } from '@lucide/astro';
 import Icon from '../ui/Icon.astro';
 import { getServicesByPillar, pillarHref, serviceHref } from '../../lib/services';
@@ -9,38 +12,26 @@ const pillars = await getServicesByPillar();
 
 <!-- Service pillars (spec 002 FR-008). Reuses the ServiceCard surface, icon tile and card-hover lift. -->
 <section id="core-services" aria-labelledby="services-title" class="container-page section-y anchor-section">
-  <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-    <div class="max-w-2xl">
-      <p class="eyebrow">Services</p>
-      <h2 id="services-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-        Cloud, DevOps, web and AI engineering, scoped to your platform
-      </h2>
-      <p class="mt-4 text-lg text-muted">
-        From managed operations and migrations to SaaS builds and practical AI automation, every engagement runs on a
-        written Statement of Work.
-      </p>
-    </div>
-    <a
-      href="/services"
-      class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
-    >
-      View all services
-      <ArrowRight aria-hidden="true" class="size-4" />
-    </a>
-  </div>
+  <SectionHeader
+    eyebrow="Services"
+    title="Cloud, DevOps, web and AI engineering, scoped to your platform"
+    titleId="services-title"
+    lead="From managed operations and migrations to SaaS builds and practical AI automation, every engagement runs on a written Statement of Work."
+    link={{ href: '/services', label: 'View all services' }}
+  />
 
   <ul class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-reveal-group>
     {pillars.map((p) => (
       <li data-pillar={p.pillar} class="glass card-hover group flex flex-col rounded-2xl p-6 sm:p-7">
         <div class="flex items-start justify-between gap-4">
-          <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+          <IconTile>
             <Icon name={p.icon} class="size-6" />
-          </span>
+          </IconTile>
           <span
             class="text-sm font-semibold text-muted tabular-nums transition-colors duration-300 group-hover:text-accent"
             aria-hidden="true"
           >
-            {String(p.order).padStart(2, '0')}
+            {pad2(p.order)}
           </span>
         </div>
         <h3 class="mt-5 text-lg font-semibold text-fg">

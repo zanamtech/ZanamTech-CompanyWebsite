@@ -1,5 +1,5 @@
 ---
-import { CircleCheck } from '@lucide/astro';
+import CheckList from '../ui/CheckList.astro';
 import Badge from '../ui/Badge.astro';
 import GlassCard from '../ui/GlassCard.astro';
 import { tiers } from '../../data/managed-tiers';
@@ -14,14 +14,11 @@ import { tiers } from '../../data/managed-tiers';
         {t.featured && <Badge tone="accent">Recommended</Badge>}
       </div>
       <p class="mt-1 text-sm font-medium text-accent">{t.coverage}</p>
-      <ul class="mt-5 space-y-2 border-t border-border pt-5">
-        {t.includes.map((item) => (
-          <li class="flex gap-2 text-sm text-fg">
-            <CircleCheck aria-hidden="true" class="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <CheckList
+        items={t.includes}
+        class="mt-5 space-y-2 border-t border-border pt-5"
+        itemClass="flex gap-2 text-sm text-fg"
+      />
     </GlassCard>
   ))}
 </ul>
