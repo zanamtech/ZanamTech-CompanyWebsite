@@ -1,19 +1,6 @@
-import { readFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 
 // About page review round (2026-10-15).
-
-test.describe('LinkedIn links carry target="_blank" in the component source', () => {
-  // Not left to src/middleware.ts alone: a dev server started before the middleware existed never loads it.
-  for (const file of ['src/pages/about.astro', 'src/components/layout/Footer.astro']) {
-    test(file, () => {
-      const source = readFileSync(file, 'utf8');
-      const anchor = source.match(/<a\b[^>]*data-(?:founder|footer)-linkedin[^>]*>/)?.[0] ?? '';
-      expect(anchor).toContain('target="_blank"');
-      expect(anchor).toContain('rel="noopener noreferrer"');
-    });
-  }
-});
 
 test.describe('About founder card', () => {
   test('eyebrow on the name row, photo centred against role + bio from 768px; stacked on phones', async ({

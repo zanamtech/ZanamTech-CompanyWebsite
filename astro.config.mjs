@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import alpinejs from '@astrojs/alpinejs';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
+import { externalLinks } from './plugins/markdown-external-links.mjs';
 import { readdirSync, readFileSync } from 'node:fs';
 
 // Sitemap <lastmod>: an Insights or Resources entry's frontmatter `date`, the build date for every other page.
@@ -17,9 +19,11 @@ for (const dir of ['insights', 'resources']) {
   }
 }
 
+const site = process.env.PUBLIC_SITE_URL || 'https://www.zanamtech.com';
+
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://www.zanamtech.com',
+  site,
   output: 'static',
   // One URL per page, without a trailing slash (matches every internal link): dist/about.html is served at /about, and
   // canonicals, the sitemap and Astro.url use that form. nginx 301s the slash form (nginx/nginx.conf).
@@ -29,6 +33,8 @@ export default defineConfig({
     // Emit all CSS as files so the CSP can use style-src 'self' without 'unsafe-inline'.
     inlineStylesheets: 'never',
   },
+  // Sätteri is Astro's default Markdown processor; configured here only to add the external-links plugin.
+  markdown: { processor: satteri({ hastPlugins: [externalLinks(site)] }) },
   integrations: [
     react(),
     alpinejs({ entrypoint: '/src/scripts/alpine' }),

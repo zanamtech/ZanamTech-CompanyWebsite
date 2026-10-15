@@ -114,7 +114,12 @@ const articleLd = article
             <ul class="mt-3 space-y-2">
               {article.data.sources.map((s) => (
                 <li>
-                  <a href={s.url} rel="noopener" class="text-sm font-semibold text-link underline underline-offset-2">
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm font-semibold text-link underline underline-offset-2"
+                  >
                     {s.label}
                   </a>
                 </li>
