@@ -16,7 +16,9 @@ test.describe('LinkedIn links carry target="_blank" in the component source', ()
 });
 
 test.describe('About founder card', () => {
-  test('eyebrow on the name row, photo centred against role + bio from 768px; stacked on phones', async ({ page }, testInfo) => {
+  test('eyebrow on the name row, photo centred against role + bio from 768px; stacked on phones', async ({
+    page,
+  }, testInfo) => {
     await page.goto('/about');
     const card = page.locator('[data-founder-card]');
     const eyebrow = (await card.getByText('Leadership', { exact: true }).boundingBox())!;

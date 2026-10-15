@@ -18,7 +18,9 @@ test.describe('US3 — Entry offers & How We Work', () => {
     expect(await page.locator('main').innerText()).not.toMatch(PRICE);
   });
 
-  test('How We Work shows the engagement models, cadence, access model, AI-tool policy and agency section', async ({ page }) => {
+  test('How We Work shows the engagement models, cadence, access model, AI-tool policy and agency section', async ({
+    page,
+  }) => {
     await page.goto('/approach');
     await expect(page.locator('[data-model]')).toHaveCount(engagementModelCatalog.length);
     for (const heading of ['Cadence and reporting', 'Access model', 'AI-tool policy']) {
@@ -27,13 +29,17 @@ test.describe('US3 — Entry offers & How We Work', () => {
     await expect(page.locator('#agencies')).toBeVisible();
   });
 
-  test('the agency CTA links to /contact?service=agency-partnership with "Agency partnership" selected', async ({ page }) => {
+  test('the agency CTA links to /contact?service=agency-partnership with "Agency partnership" selected', async ({
+    page,
+  }) => {
     await page.goto('/approach');
     const link = page.locator('#agencies').getByRole('link', { name: 'Discuss an agency partnership' });
     await expect(link).toHaveAttribute('href', '/contact?service=agency-partnership');
     await link.click();
     await expect(page).toHaveURL(/\/contact\?service=agency-partnership$/);
-    await expect(page.locator('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Agency partnership');
+    await expect(page.locator('main').getByRole('combobox', { name: 'Service needed' })).toHaveText(
+      'Agency partnership',
+    );
   });
 
   test('/contact?service=agency-partnership preselects the agency option', async ({ page }) => {

@@ -26,7 +26,16 @@ async function enforceCsp(page: Page) {
   return violations;
 }
 
-const ROUTES = ['/', '/services', '/services/observability-monitoring', '/approach', '/industries', '/about', '/contact', '/privacy'];
+const ROUTES = [
+  '/',
+  '/services',
+  '/services/observability-monitoring',
+  '/approach',
+  '/industries',
+  '/about',
+  '/contact',
+  '/privacy',
+];
 
 test.describe('Security — CSP compliance', () => {
   test('all pages load under the production CSP with no violations', async ({ page }) => {
@@ -38,7 +47,9 @@ test.describe('Security — CSP compliance', () => {
     expect(violations).toEqual([]);
   });
 
-  test('interactive features work under the CSP (theme, menu, contact form, counters, reveal)', async ({ page }, testInfo) => {
+  test('interactive features work under the CSP (theme, menu, contact form, counters, reveal)', async ({
+    page,
+  }, testInfo) => {
     const violations = await enforceCsp(page);
     await page.route('**/submit', (route) =>
       route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' }),
@@ -49,13 +60,18 @@ test.describe('Security — CSP compliance', () => {
     await expect(page.locator('html')).toHaveClass(/\bdark\b/);
 
     if (testInfo.project.name === 'desktop') {
-      await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+      await page
+        .locator('header nav[aria-label="Primary"]')
+        .getByRole('link', { name: 'Services', exact: true })
+        .hover();
       await expect(page.locator('#services-menu')).toBeVisible();
       await page.keyboard.press('Escape');
     }
 
     await page.locator('#metrics [data-metric="uptime"] [data-counter]').scrollIntoViewIfNeeded();
-    await expect(page.locator('#metrics [data-metric="uptime"] [data-counter]')).toHaveText('99.9%', { timeout: 5_000 });
+    await expect(page.locator('#metrics [data-metric="uptime"] [data-counter]')).toHaveText('99.9%', {
+      timeout: 5_000,
+    });
     await page.locator('#process').scrollIntoViewIfNeeded();
     await expect(page.locator('#process [data-phase]').first()).toHaveCSS('opacity', '1', { timeout: 5_000 });
 
@@ -67,7 +83,9 @@ test.describe('Security — CSP compliance', () => {
     await dialog.getByLabel('Company name').fill('Example Corp');
     await dialog.getByRole('combobox', { name: 'Service needed' }).click();
     await dialog.getByRole('option', { name: 'Other / Not sure yet' }).click();
-    await dialog.getByLabel('Project overview & requirements').fill('Requesting an assessment of our Kubernetes platform.');
+    await dialog
+      .getByLabel('Project overview & requirements')
+      .fill('Requesting an assessment of our Kubernetes platform.');
     await dialog.getByLabel(/I agree to ZanamTech processing my details/).check();
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();

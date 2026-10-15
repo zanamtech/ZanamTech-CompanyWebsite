@@ -21,7 +21,13 @@ const scenario = z
   });
 
 export const pillarIds = ['managed', 'cloud-devops', 'web-saas', 'ai'] as const;
-export const offerIds = ['health-check', 'cost-review', 'governance-quick-start', 'ai-opportunity-sprint', 'ai-automation-pilot'] as const;
+export const offerIds = [
+  'health-check',
+  'cost-review',
+  'governance-quick-start',
+  'ai-opportunity-sprint',
+  'ai-automation-pilot',
+] as const;
 
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
@@ -41,7 +47,10 @@ const services = defineCollection({
     stack: z.array(z.string()).min(1),
     outcome: z.string(),
     relatedOffer: z.enum(offerIds).optional(),
-    faq: z.array(z.object({ q: z.string(), a: z.string() })).max(6).optional(),
+    faq: z
+      .array(z.object({ q: z.string(), a: z.string() }))
+      .max(6)
+      .optional(),
     scenarios: z.array(scenario).min(1).max(2),
   }),
 });

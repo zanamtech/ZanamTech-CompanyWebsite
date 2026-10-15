@@ -52,166 +52,200 @@ const faint = 'stroke-border-strong';
   <rect x="0" y={frameY} width="320" height={frameH} class="fill-surface-2" stroke="none"></rect>
   <rect x="0" y={frameY} width="320" height={frameH} fill={`url(#${dotsId})`} stroke="none" opacity="0.6"></rect>
 
-  {
-    motif === 'pipeline' && (
-      <g>
-        {/* Control plane feeding four environments: Dev → QA → UAT → Prod. */}
-        <circle cx="160" cy="30" r="9" class="fill-brand-purple/20 stroke-brand-purple"></circle>
-        {[50, 126, 194, 270].map((x) => (
-          <path d={`M160 39 C160 50 ${x} 46 ${x} 60`} class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
-        ))}
-        {[22, 98, 174, 250].map((x, i) => (
-          <g>
-            <rect x={x} y="60" width="56" height="44" rx="8" class={i === 3 ? 'fill-brand-cyan/15 stroke-brand-cyan' : box}></rect>
-            <path d={`M${x + 12} 76h26M${x + 12} 88h18`} class={i === 3 ? 'stroke-brand-cyan' : bar} stroke-width="3"></path>
-          </g>
-        ))}
-        {[78, 154, 230].map((x) => (
-          <path d={`M${x + 4} 82h12m-4 -4l4 4l-4 4`} class="stroke-muted"></path>
-        ))}
-        <path d="M22 124h284" class={faint} stroke-width="1.5"></path>
-        <circle cx="278" cy="124" r="4" class="fill-brand-cyan" stroke="none"></circle>
-      </g>
-    )
-  }
+  {motif === 'pipeline' && (
+    <g>
+      {/* Control plane feeding four environments: Dev → QA → UAT → Prod. */}
+      <circle cx="160" cy="30" r="9" class="fill-brand-purple/20 stroke-brand-purple"></circle>
+      {[50, 126, 194, 270].map((x) => (
+        <path d={`M160 39 C160 50 ${x} 46 ${x} 60`} class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
+      ))}
+      {[22, 98, 174, 250].map((x, i) => (
+        <g>
+          <rect
+            x={x}
+            y="60"
+            width="56"
+            height="44"
+            rx="8"
+            class={i === 3 ? 'fill-brand-cyan/15 stroke-brand-cyan' : box}
+          ></rect>
+          <path
+            d={`M${x + 12} 76h26M${x + 12} 88h18`}
+            class={i === 3 ? 'stroke-brand-cyan' : bar}
+            stroke-width="3"
+          ></path>
+        </g>
+      ))}
+      {[78, 154, 230].map((x) => (
+        <path d={`M${x + 4} 82h12m-4 -4l4 4l-4 4`} class="stroke-muted"></path>
+      ))}
+      <path d="M22 124h284" class={faint} stroke-width="1.5"></path>
+      <circle cx="278" cy="124" r="4" class="fill-brand-cyan" stroke="none"></circle>
+    </g>
+  )}
 
-  {
-    motif === 'branch' && (
-      <g>
-        {/* Main line with a feature branch merged back through a protected gate. */}
-        <path d="M24 110h272" class="stroke-muted"></path>
-        <path d="M112 110 C130 110 132 56 152 56 H198 C218 56 214 110 232 110" class="stroke-brand-cyan"></path>
-        {[48, 112, 280].map((x) => (
-          <circle cx={x} cy="110" r="6" class="fill-surface stroke-muted"></circle>
-        ))}
-        {[152, 198].map((x) => (
-          <circle cx={x} cy="56" r="6" class="fill-brand-cyan stroke-brand-cyan"></circle>
-        ))}
-        <rect x="220" y="98" width="24" height="24" rx="7" class="fill-brand-purple stroke-brand-purple"></rect>
-        <path d="M227 111v-3a5 5 0 0 1 10 0v3M226 111h12v6h-12z" class="stroke-surface" stroke-width="1.75"></path>
-        <path d="M152 30h46" class={bar} stroke-width="3"></path>
-        <path d="M40 136h56M136 136h40" class={faint} stroke-width="3"></path>
-      </g>
-    )
-  }
+  {motif === 'branch' && (
+    <g>
+      {/* Main line with a feature branch merged back through a protected gate. */}
+      <path d="M24 110h272" class="stroke-muted"></path>
+      <path d="M112 110 C130 110 132 56 152 56 H198 C218 56 214 110 232 110" class="stroke-brand-cyan"></path>
+      {[48, 112, 280].map((x) => (
+        <circle cx={x} cy="110" r="6" class="fill-surface stroke-muted"></circle>
+      ))}
+      {[152, 198].map((x) => (
+        <circle cx={x} cy="56" r="6" class="fill-brand-cyan stroke-brand-cyan"></circle>
+      ))}
+      <rect x="220" y="98" width="24" height="24" rx="7" class="fill-brand-purple stroke-brand-purple"></rect>
+      <path d="M227 111v-3a5 5 0 0 1 10 0v3M226 111h12v6h-12z" class="stroke-surface" stroke-width="1.75"></path>
+      <path d="M152 30h46" class={bar} stroke-width="3"></path>
+      <path d="M40 136h56M136 136h40" class={faint} stroke-width="3"></path>
+    </g>
+  )}
 
-  {
-    motif === 'report' && (
-      <g>
-        {/* Report sheet: title bar, status dots, bar chart with a trend line. */}
-        <rect x="70" y="16" width="180" height="128" rx="10" class={box}></rect>
-        <path d="M86 36h70" class="stroke-muted" stroke-width="4"></path>
-        <path d="M86 48h46" class={faint} stroke-width="3"></path>
-        <circle cx="210" cy="38" r="4" class="fill-muted" stroke="none"></circle>
-        <circle cx="222" cy="38" r="4" class="fill-brand-purple" stroke="none"></circle>
-        <circle cx="234" cy="38" r="4" class="fill-brand-cyan" stroke="none"></circle>
-        {[
-          [88, 30],
-          [108, 40],
-          [128, 34],
-          [148, 50],
-          [168, 58],
-        ].map(([x, h], i) => (
-          <rect x={x} y={128 - h} width="12" height={h} rx="3" class={i === 4 ? 'fill-brand-cyan' : 'fill-brand-cyan/30'} stroke="none"></rect>
-        ))}
-        <path d="M94 92 L114 84 L134 88 L154 74 L174 64" class="stroke-brand-purple"></path>
-        <circle cx="174" cy="64" r="3.5" class="fill-brand-purple" stroke="none"></circle>
-        <path d="M196 76h38M196 90h30M196 104h38M196 118h24" class={faint} stroke-width="3"></path>
-        <path d="M84 128h100" class={faint} stroke-width="1.5"></path>
-      </g>
-    )
-  }
+  {motif === 'report' && (
+    <g>
+      {/* Report sheet: title bar, status dots, bar chart with a trend line. */}
+      <rect x="70" y="16" width="180" height="128" rx="10" class={box}></rect>
+      <path d="M86 36h70" class="stroke-muted" stroke-width="4"></path>
+      <path d="M86 48h46" class={faint} stroke-width="3"></path>
+      <circle cx="210" cy="38" r="4" class="fill-muted" stroke="none"></circle>
+      <circle cx="222" cy="38" r="4" class="fill-brand-purple" stroke="none"></circle>
+      <circle cx="234" cy="38" r="4" class="fill-brand-cyan" stroke="none"></circle>
+      {[
+        [88, 30],
+        [108, 40],
+        [128, 34],
+        [148, 50],
+        [168, 58],
+      ].map(([x, h], i) => (
+        <rect
+          x={x}
+          y={128 - h}
+          width="12"
+          height={h}
+          rx="3"
+          class={i === 4 ? 'fill-brand-cyan' : 'fill-brand-cyan/30'}
+          stroke="none"
+        ></rect>
+      ))}
+      <path d="M94 92 L114 84 L134 88 L154 74 L174 64" class="stroke-brand-purple"></path>
+      <circle cx="174" cy="64" r="3.5" class="fill-brand-purple" stroke="none"></circle>
+      <path d="M196 76h38M196 90h30M196 104h38M196 118h24" class={faint} stroke-width="3"></path>
+      <path d="M84 128h100" class={faint} stroke-width="1.5"></path>
+    </g>
+  )}
 
-  {
-    motif === 'environments' && (
-      <g>
-        {/* Stacked environments with one release passing down through each. */}
-        {[24, 54, 84, 114].map((y, i) => (
-          <g>
-            <rect x={60 + i * 6} y={y} width={176 - i * 12} height="24" rx="7" class={i === 3 ? 'fill-brand-cyan/15 stroke-brand-cyan' : box}></rect>
-            <path d={`M${76 + i * 6} ${y + 12}h${40 - i * 4}`} class={i === 3 ? 'stroke-brand-cyan' : bar} stroke-width="3"></path>
-            <circle cx={214 - i * 6} cy={y + 12} r="3" class={i === 3 ? 'fill-brand-cyan' : 'fill-muted/60'} stroke="none"></circle>
-          </g>
-        ))}
-        <path d="M262 18 V132" class="stroke-brand-purple"></path>
-        <path d="M256 126l6 6l6 -6" class="stroke-brand-purple"></path>
-        {[36, 66, 96].map((y) => (
-          <circle cx="262" cy={y} r="4" class="fill-surface stroke-brand-purple"></circle>
-        ))}
-        <path d="M36 24v108" class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
-      </g>
-    )
-  }
+  {motif === 'environments' && (
+    <g>
+      {/* Stacked environments with one release passing down through each. */}
+      {[24, 54, 84, 114].map((y, i) => (
+        <g>
+          <rect
+            x={60 + i * 6}
+            y={y}
+            width={176 - i * 12}
+            height="24"
+            rx="7"
+            class={i === 3 ? 'fill-brand-cyan/15 stroke-brand-cyan' : box}
+          ></rect>
+          <path
+            d={`M${76 + i * 6} ${y + 12}h${40 - i * 4}`}
+            class={i === 3 ? 'stroke-brand-cyan' : bar}
+            stroke-width="3"
+          ></path>
+          <circle
+            cx={214 - i * 6}
+            cy={y + 12}
+            r="3"
+            class={i === 3 ? 'fill-brand-cyan' : 'fill-muted/60'}
+            stroke="none"
+          ></circle>
+        </g>
+      ))}
+      <path d="M262 18 V132" class="stroke-brand-purple"></path>
+      <path d="M256 126l6 6l6 -6" class="stroke-brand-purple"></path>
+      {[36, 66, 96].map((y) => (
+        <circle cx="262" cy={y} r="4" class="fill-surface stroke-brand-purple"></circle>
+      ))}
+      <path d="M36 24v108" class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
+    </g>
+  )}
 
-  {
-    motif === 'approvals' && (
-      <g>
-        {/* Branch tree: two feature branches, each merged after a recorded approval. */}
-        <path d="M96 16V144" class="stroke-muted"></path>
-        <path d="M96 28 C96 44 136 42 136 56 V64 C136 78 96 74 96 84" class="stroke-brand-cyan"></path>
-        <path d="M96 84 C96 100 136 98 136 112 V120 C136 134 96 130 96 140" class="stroke-brand-purple"></path>
-        {[28, 84, 140].map((y) => (
-          <circle cx="96" cy={y} r="5" class="fill-surface stroke-muted"></circle>
-        ))}
-        <circle cx="136" cy="60" r="5" class="fill-brand-cyan" stroke="none"></circle>
-        <circle cx="136" cy="116" r="5" class="fill-brand-purple" stroke="none"></circle>
-        <path d="M144 60 H186M144 116 H186" class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
-        {[
-          [42, 'cyan'],
-          [98, 'purple'],
-        ].map(([y, tone]) => (
-          <g>
-            <rect x="186" y={Number(y)} width="108" height="36" rx="8" class={box}></rect>
-            <circle
-              cx="205"
-              cy={Number(y) + 18}
-              r="9"
-              class={tone === 'cyan' ? 'fill-brand-cyan/20 stroke-brand-cyan' : 'fill-brand-purple/20 stroke-brand-purple'}
-            ></circle>
-            <path d={`M201 ${Number(y) + 18}l3 3l6 -6`} class={tone === 'cyan' ? 'stroke-brand-cyan' : 'stroke-brand-purple'}></path>
-            <path d={`M222 ${Number(y) + 13}h56M222 ${Number(y) + 23}h36`} class={bar} stroke-width="3"></path>
-          </g>
-        ))}
-      </g>
-    )
-  }
+  {motif === 'approvals' && (
+    <g>
+      {/* Branch tree: two feature branches, each merged after a recorded approval. */}
+      <path d="M96 16V144" class="stroke-muted"></path>
+      <path d="M96 28 C96 44 136 42 136 56 V64 C136 78 96 74 96 84" class="stroke-brand-cyan"></path>
+      <path d="M96 84 C96 100 136 98 136 112 V120 C136 134 96 130 96 140" class="stroke-brand-purple"></path>
+      {[28, 84, 140].map((y) => (
+        <circle cx="96" cy={y} r="5" class="fill-surface stroke-muted"></circle>
+      ))}
+      <circle cx="136" cy="60" r="5" class="fill-brand-cyan" stroke="none"></circle>
+      <circle cx="136" cy="116" r="5" class="fill-brand-purple" stroke="none"></circle>
+      <path d="M144 60 H186M144 116 H186" class={faint} stroke-width="1.5" stroke-dasharray="3 4"></path>
+      {[
+        [42, 'cyan'],
+        [98, 'purple'],
+      ].map(([y, tone]) => (
+        <g>
+          <rect x="186" y={Number(y)} width="108" height="36" rx="8" class={box}></rect>
+          <circle
+            cx="205"
+            cy={Number(y) + 18}
+            r="9"
+            class={
+              tone === 'cyan' ? 'fill-brand-cyan/20 stroke-brand-cyan' : 'fill-brand-purple/20 stroke-brand-purple'
+            }
+          ></circle>
+          <path
+            d={`M201 ${Number(y) + 18}l3 3l6 -6`}
+            class={tone === 'cyan' ? 'stroke-brand-cyan' : 'stroke-brand-purple'}
+          ></path>
+          <path d={`M222 ${Number(y) + 13}h56M222 ${Number(y) + 23}h36`} class={bar} stroke-width="3"></path>
+        </g>
+      ))}
+    </g>
+  )}
 
-  {
-    motif === 'cost' && (
-      <g>
-        {/* Checklist beside a falling spend line; the shaded gap is the saving. */}
-        {[30, 58, 86, 114].map((y, i) => (
-          <g>
-            <rect x="28" y={y} width="16" height="16" rx="4" class={i < 3 ? 'fill-brand-cyan/20 stroke-brand-cyan' : 'fill-surface stroke-border-strong'}></rect>
-            {i < 3 && <path d={`M32 ${y + 8}l3 3l5 -6`} class="stroke-brand-cyan"></path>}
-            <path d={`M54 ${y + 8}h${[80, 64, 72, 56][i]}`} class={bar} stroke-width="3"></path>
-          </g>
-        ))}
-        <path d="M172 24V132H296" class={faint} stroke-width="1.5"></path>
-        <path d="M180 44 H290 V112 L262 104 L238 84 L212 70 L180 44 Z" class="fill-brand-purple/10" stroke="none"></path>
-        <path d="M180 44 H290" class="stroke-muted" stroke-width="1.5" stroke-dasharray="4 4"></path>
-        <path d="M180 44 L212 70 L238 84 L262 104 L290 112" class="stroke-brand-purple"></path>
-        {[
-          [212, 70],
-          [238, 84],
-          [262, 104],
-        ].map(([x, y]) => (
-          <circle cx={x} cy={y} r="3.5" class="fill-surface stroke-brand-purple"></circle>
-        ))}
-        <circle cx="290" cy="112" r="4.5" class="fill-brand-cyan" stroke="none"></circle>
-      </g>
-    )
-  }
+  {motif === 'cost' && (
+    <g>
+      {/* Checklist beside a falling spend line; the shaded gap is the saving. */}
+      {[30, 58, 86, 114].map((y, i) => (
+        <g>
+          <rect
+            x="28"
+            y={y}
+            width="16"
+            height="16"
+            rx="4"
+            class={i < 3 ? 'fill-brand-cyan/20 stroke-brand-cyan' : 'fill-surface stroke-border-strong'}
+          ></rect>
+          {i < 3 && <path d={`M32 ${y + 8}l3 3l5 -6`} class="stroke-brand-cyan"></path>}
+          <path d={`M54 ${y + 8}h${[80, 64, 72, 56][i]}`} class={bar} stroke-width="3"></path>
+        </g>
+      ))}
+      <path d="M172 24V132H296" class={faint} stroke-width="1.5"></path>
+      <path d="M180 44 H290 V112 L262 104 L238 84 L212 70 L180 44 Z" class="fill-brand-purple/10" stroke="none"></path>
+      <path d="M180 44 H290" class="stroke-muted" stroke-width="1.5" stroke-dasharray="4 4"></path>
+      <path d="M180 44 L212 70 L238 84 L262 104 L290 112" class="stroke-brand-purple"></path>
+      {[
+        [212, 70],
+        [238, 84],
+        [262, 104],
+      ].map(([x, y]) => (
+        <circle cx={x} cy={y} r="3.5" class="fill-surface stroke-brand-purple"></circle>
+      ))}
+      <circle cx="290" cy="112" r="4.5" class="fill-brand-cyan" stroke="none"></circle>
+    </g>
+  )}
 
-  {
-    motif === 'generic' && (
-      <g>
-        {/* Fallback: three connected nodes. */}
-        <path d="M90 80 H230" class={faint} stroke-dasharray="3 4"></path>
-        <rect x="58" y="58" width="64" height="44" rx="8" class={box}></rect>
-        <rect x="128" y="50" width="64" height="60" rx="10" class="fill-brand-purple/15 stroke-brand-purple"></rect>
-        <rect x="198" y="58" width="64" height="44" rx="8" class="fill-brand-cyan/15 stroke-brand-cyan"></rect>
-      </g>
-    )
-  }
+  {motif === 'generic' && (
+    <g>
+      {/* Fallback: three connected nodes. */}
+      <path d="M90 80 H230" class={faint} stroke-dasharray="3 4"></path>
+      <rect x="58" y="58" width="64" height="44" rx="8" class={box}></rect>
+      <rect x="128" y="50" width="64" height="60" rx="10" class="fill-brand-purple/15 stroke-brand-purple"></rect>
+      <rect x="198" y="58" width="64" height="44" rx="8" class="fill-brand-cyan/15 stroke-brand-cyan"></rect>
+    </g>
+  )}
 </svg>

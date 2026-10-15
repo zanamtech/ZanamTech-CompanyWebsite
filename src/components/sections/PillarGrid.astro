@@ -8,7 +8,11 @@ const pillars = await getServicesByPillar();
 ---
 
 <!-- Service pillars (spec 002 FR-008). Reuses the ServiceCard surface, icon tile and card-hover lift. -->
-<section id="core-services" aria-labelledby="services-title" class="container-page section-y scroll-mt-15.5 sm:scroll-mt-13.5 lg:scroll-mt-11.5">
+<section
+  id="core-services"
+  aria-labelledby="services-title"
+  class="container-page section-y scroll-mt-15.5 sm:scroll-mt-13.5 lg:scroll-mt-11.5"
+>
   <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
     <div class="max-w-2xl">
       <p class="eyebrow">Services</p>
@@ -20,51 +24,63 @@ const pillars = await getServicesByPillar();
         written Statement of Work.
       </p>
     </div>
-    <a href="/services" class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline">
+    <a
+      href="/services"
+      class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
+    >
       View all services
       <ArrowRight aria-hidden="true" className="size-4" />
     </a>
   </div>
 
   <ul class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-reveal-group>
-    {
-      pillars.map((p) => (
-        <li data-pillar={p.pillar} class="glass card-hover group flex flex-col rounded-2xl p-6 sm:p-7">
-          <div class="flex items-start justify-between gap-4">
-            <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-              <Icon name={p.icon} class="size-6" />
-            </span>
-            <span class="text-sm font-semibold text-muted tabular-nums transition-colors duration-300 group-hover:text-accent" aria-hidden="true">
-              {String(p.order).padStart(2, '0')}
-            </span>
-          </div>
-          <h3 class="mt-5 text-lg font-semibold text-fg">
-            <a href={pillarHref(p.pillar)} class="hover:text-accent">{p.title}</a>
-          </h3>
-          <p class="mt-2 text-sm text-muted">{p.description}</p>
-          {/* A single-service pillar (Managed) lists what the retainer includes, each linking to the flagship page,
+    {pillars.map((p) => (
+      <li data-pillar={p.pillar} class="glass card-hover group flex flex-col rounded-2xl p-6 sm:p-7">
+        <div class="flex items-start justify-between gap-4">
+          <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+            <Icon name={p.icon} class="size-6" />
+          </span>
+          <span
+            class="text-sm font-semibold text-muted tabular-nums transition-colors duration-300 group-hover:text-accent"
+            aria-hidden="true"
+          >
+            {String(p.order).padStart(2, '0')}
+          </span>
+        </div>
+        <h3 class="mt-5 text-lg font-semibold text-fg">
+          <a href={pillarHref(p.pillar)} class="hover:text-accent">
+            {p.title}
+          </a>
+        </h3>
+        <p class="mt-2 text-sm text-muted">{p.description}</p>
+        {/* A single-service pillar (Managed) lists what the retainer includes, each linking to the flagship page,
               instead of one link repeating the pillar name. */}
-          <ul class="mt-5 space-y-1 border-t border-border pt-4">
-            {p.services.length === 1
-              ? flagshipIncluded.map((item) => (
-                  <li>
-                    <a href={serviceHref(p.services[0])} class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent">
-                      <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
-                      {item}
-                    </a>
-                  </li>
-                ))
-              : p.services.map((s) => (
-                  <li>
-                    <a href={serviceHref(s)} class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent">
-                      <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
-                      {s.data.name}
-                    </a>
-                  </li>
-                ))}
-          </ul>
-        </li>
-      ))
-    }
+        <ul class="mt-5 space-y-1 border-t border-border pt-4">
+          {p.services.length === 1
+            ? flagshipIncluded.map((item) => (
+                <li>
+                  <a
+                    href={serviceHref(p.services[0])}
+                    class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent"
+                  >
+                    <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                    {item}
+                  </a>
+                </li>
+              ))
+            : p.services.map((s) => (
+                <li>
+                  <a
+                    href={serviceHref(s)}
+                    class="inline-flex min-h-9 items-center gap-1.5 text-sm font-medium text-fg hover:text-accent"
+                  >
+                    <ArrowRight aria-hidden="true" className="size-3.5 shrink-0 text-muted" />
+                    {s.data.name}
+                  </a>
+                </li>
+              ))}
+        </ul>
+      </li>
+    ))}
   </ul>
 </section>

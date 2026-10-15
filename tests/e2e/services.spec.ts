@@ -7,7 +7,12 @@ test.describe('US2 — Services', () => {
     await page.goto('/services');
     const names = await page.locator('[data-service-card] h3').allInnerTexts();
     expect(names.map((n) => n.trim()).sort()).toEqual([...publishedNames].sort());
-    for (const pillar of ['Managed Cloud & DevOps', 'Cloud & DevOps Engineering', 'Web & SaaS Engineering', 'Practical AI & Automation']) {
+    for (const pillar of [
+      'Managed Cloud & DevOps',
+      'Cloud & DevOps Engineering',
+      'Web & SaaS Engineering',
+      'Practical AI & Automation',
+    ]) {
       await expect(page.getByRole('heading', { level: 2, name: pillar, exact: true })).toBeVisible();
     }
     await expect(page.locator('#ai')).toBeAttached(); // /services#ai is the redirect target for the retired roadmap URL
@@ -16,7 +21,9 @@ test.describe('US2 — Services', () => {
   test('home pillar grid lists every published service in canonical order', async ({ page }) => {
     await page.goto('/');
     // Each service once, in canonical order (the Managed card's included items all link to the flagship).
-    const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    const hrefs = await page
+      .locator('#core-services [data-pillar] a[href^="/services/"]')
+      .evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect([...new Set(hrefs)]).toEqual(published.map((s) => `/services/${s.slug}`));
   });
 
@@ -24,9 +31,9 @@ test.describe('US2 — Services', () => {
     await page.goto('/');
     const hrefs = [
       ...new Set(
-        await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
-          els.map((el) => (el as HTMLAnchorElement).getAttribute('href')),
-        ),
+        await page
+          .locator('#core-services [data-pillar] a[href^="/services/"]')
+          .evaluateAll((els) => els.map((el) => (el as HTMLAnchorElement).getAttribute('href'))),
       ),
     ];
     expect(hrefs).toHaveLength(published.length);
@@ -36,7 +43,9 @@ test.describe('US2 — Services', () => {
       const response = await page.goto(href!);
       expect(response?.status(), href!).toBe(200);
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(service.name);
-      await expect(page.getByRole('heading', { name: service.flagship ? 'What the service covers' : 'Core capabilities' })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: service.flagship ? 'What the service covers' : 'Core capabilities' }),
+      ).toBeVisible();
       await expect(page.getByRole('heading', { name: 'What you get' })).toBeVisible();
       await expect(page.getByText('Outcome', { exact: true }).first()).toBeVisible();
       const hasReal = service.scenarios.some((s) => s.kind === 'real');
@@ -44,7 +53,9 @@ test.describe('US2 — Services', () => {
       await expect(page.getByText(RESULTS_FOOTNOTE)).toHaveCount(hasReal ? 2 : 0);
       await expect(page.locator('[data-scenario]')).toHaveCount(service.scenarios.length);
       const examples = service.scenarios.filter((s) => s.kind === 'illustrative').length;
-      await expect(page.locator('[data-scenario]').getByText('Example engagement', { exact: true })).toHaveCount(examples);
+      await expect(page.locator('[data-scenario]').getByText('Example engagement', { exact: true })).toHaveCount(
+        examples,
+      );
       await expect(page.getByText(/Representative Engagement Scenario/)).toHaveCount(0);
     }
   });
@@ -96,7 +107,9 @@ test.describe('US2 — Services', () => {
       await expect(page.getByRole('heading', { level: 1 })).toHaveText('Enterprise engineering services');
     });
 
-    test('is keyboard accessible: focus opens, Tab enters the panel, Escape closes and restores focus', async ({ page }) => {
+    test('is keyboard accessible: focus opens, Tab enters the panel, Escape closes and restores focus', async ({
+      page,
+    }) => {
       await page.goto('/');
       const link = servicesLink(page);
       const menu = page.locator('#services-menu');

@@ -23,7 +23,10 @@ async function recordHtmlClasses(page: Page) {
     const w = window as unknown as { __seen: { cls: string; duration: string }[] };
     w.__seen = [];
     new MutationObserver(() =>
-      w.__seen.push({ cls: document.documentElement.className, duration: getComputedStyle(document.body).transitionDuration }),
+      w.__seen.push({
+        cls: document.documentElement.className,
+        duration: getComputedStyle(document.body).transitionDuration,
+      }),
     ).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   });
 }

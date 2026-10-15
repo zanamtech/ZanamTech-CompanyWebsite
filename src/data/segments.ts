@@ -18,7 +18,8 @@ export const segments: TargetSegment[] = [
     id: 'saas',
     icon: 'Rocket',
     name: 'B2B SaaS Companies',
-    profile: 'SaaS companies of roughly 10 to 200 people with no in-house DevOps, where releases, environments and cloud bills are nobody’s full-time job.',
+    profile:
+      'SaaS companies of roughly 10 to 200 people with no in-house DevOps, where releases, environments and cloud bills are nobody’s full-time job.',
     decisionMakers: ['CTOs', 'Technical co-founders', 'VPs of Engineering'],
     challenges: [
       'Unpredictable cloud bill growth',
@@ -42,7 +43,11 @@ export const segments: TargetSegment[] = [
       'Manual processes that slow operations',
     ],
     value: ['Staged cloud migration', 'WAF and zero-trust perimeter hardening', 'Practical AI workflow automation'],
-    services: ['cloud-migration-containerization', 'enterprise-security-waf-hardening', 'ai-workflow-document-automation'],
+    services: [
+      'cloud-migration-containerization',
+      'enterprise-security-waf-hardening',
+      'ai-workflow-document-automation',
+    ],
   },
   {
     id: 'software-agencies',
@@ -56,7 +61,11 @@ export const segments: TargetSegment[] = [
       'No dedicated DevOps capacity',
       'Hosting and support handed back to developers',
     ],
-    value: ['White-label or co-branded DevOps', 'Environment and pipeline setup per client project', 'Managed operations after launch'],
+    value: [
+      'White-label or co-branded DevOps',
+      'Environment and pipeline setup per client project',
+      'Managed operations after launch',
+    ],
     services: ['managed-cloud-devops', 'cicd-pipeline-workflow-automation', 'infrastructure-as-code-landing-zones'],
   },
   {
@@ -71,7 +80,11 @@ export const segments: TargetSegment[] = [
       'Modernising legacy applications',
       'Limited in-house cloud operations capacity',
     ],
-    value: ['Platforms in UAE and Saudi Arabia cloud regions', 'Infrastructure as Code foundations', 'Managed operations and reporting'],
+    value: [
+      'Platforms in UAE and Saudi Arabia cloud regions',
+      'Infrastructure as Code foundations',
+      'Managed operations and reporting',
+    ],
     services: ['infrastructure-as-code-landing-zones', 'managed-cloud-devops', 'application-modernisation-integration'],
   },
 ];

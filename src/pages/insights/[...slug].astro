@@ -16,7 +16,9 @@ type Article = CollectionEntry<'insights'>;
 // /insights and /insights/<slug> exist only for visible articles: drafts render in `astro dev` only, so in a build
 // this route produces no pages until the owner sets `draft: false` (spec 002 FR-036, SC-010).
 export async function getStaticPaths() {
-  const articles = (await getCollection('insights', isVisible)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const articles = (await getCollection('insights', isVisible)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
   if (articles.length === 0) return [];
   // The Samples link appears only when at least one sample is visible, so it never points at a missing page.
   const hasSamples = (await getCollection('resources', isVisible)).length > 0;
@@ -39,7 +41,9 @@ const Content = rendered?.Content;
 // "On this page" table of contents from the article's H2s.
 const toc = rendered?.headings.filter((h) => h.depth === 2) ?? [];
 // Reading time at ~200 words a minute.
-const readMinutes = article ? Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 200)) : 0;
+const readMinutes = article
+  ? Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 200))
+  : 0;
 const articleLd = article
   ? {
       '@context': 'https://schema.org',
@@ -47,51 +51,66 @@ const articleLd = article
       headline: article.data.title,
       description: article.data.summary,
       datePublished: article.data.date.toISOString(),
-      author: { '@type': 'Person', name: leadership.name, jobTitle: leadership.role, url: new URL('/about', Astro.site).href },
+      author: {
+        '@type': 'Person',
+        name: leadership.name,
+        jobTitle: leadership.role,
+        url: new URL('/about', Astro.site).href,
+      },
       publisher: { '@type': 'Organization', name: site.name, url: Astro.site?.href },
       mainEntityOfPage: new URL(`/insights/${article.id}`, Astro.site).href,
     }
   : undefined;
 ---
 
-{
-  article && Content ? (
-    <BaseLayout title={article.data.title} description={article.data.summary} jsonLd={articleLd}>
-      <PageHero
-        eyebrow="Insights"
-        title={article.data.title}
-        lead={article.data.summary}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights', href: '/insights' }, { label: article.data.title }]}
-      >
-        <p slot="meta" class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted" data-article-meta>
-          {article.data.draft && <Badge tone="accent">Draft</Badge>}
-          <span>
-            By{' '}
-            <a href="/about" class="font-semibold text-fg hover:text-accent">
-              {leadership.name}
-            </a>
-          </span>
-          <span aria-hidden="true">·</span>
-          <span>{leadership.role}</span>
-          <span aria-hidden="true">·</span>
-          <time datetime={article.data.date.toISOString()}>{dateLabel(article.data.date)}</time>
-          <span aria-hidden="true">·</span>
-          <span>{readMinutes} min read</span>
-        </p>
-        <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
-          <Illustration topic={article.id} variant="header" />
-        </div>
-      </PageHero>
-      {/* Desktop: a 720px reading column with a sticky "On this page" list on the right (no empty right half);
+{article && Content ? (
+  <BaseLayout title={article.data.title} description={article.data.summary} jsonLd={articleLd}>
+    <PageHero
+      eyebrow="Insights"
+      title={article.data.title}
+      lead={article.data.summary}
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Insights', href: '/insights' },
+        { label: article.data.title },
+      ]}
+    >
+      <p slot="meta" class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted" data-article-meta>
+        {article.data.draft && <Badge tone="accent">Draft</Badge>}
+        <span>
+          By{' '}
+          <a href="/about" class="font-semibold text-fg hover:text-accent">
+            {leadership.name}
+          </a>
+        </span>
+        <span aria-hidden="true">·</span>
+        <span>{leadership.role}</span>
+        <span aria-hidden="true">·</span>
+        <time datetime={article.data.date.toISOString()}>{dateLabel(article.data.date)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readMinutes} min read</span>
+      </p>
+      <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
+        <Illustration topic={article.id} variant="header" />
+      </div>
+    </PageHero>
+    {/* Desktop: a 720px reading column with a sticky "On this page" list on the right (no empty right half);
           without H2s the column is centred on its own. */}
-      <div class:list={['container-page section-y', toc.length > 0 ? 'lg:grid lg:grid-cols-[minmax(0,45rem)_14rem] lg:justify-center lg:gap-16' : '']}>
+    <div
+      class:list={[
+        'container-page section-y',
+        toc.length > 0 ? 'lg:grid lg:grid-cols-[minmax(0,45rem)_14rem] lg:justify-center lg:gap-16' : '',
+      ]}
+    >
       <article class:list={[toc.length === 0 && 'mx-auto max-w-180']}>
         <ArticleBody>
           <Content />
         </ArticleBody>
         {article.data.sources.length > 0 && (
           <aside aria-labelledby="sources-title" class="mt-12 max-w-3xl border-t border-border pt-6">
-            <h2 id="sources-title" class="text-sm font-semibold text-fg">Sources</h2>
+            <h2 id="sources-title" class="text-sm font-semibold text-fg">
+              Sources
+            </h2>
             <ul class="mt-3 space-y-2">
               {article.data.sources.map((s) => (
                 <li>
@@ -107,7 +126,9 @@ const articleLd = article
       {toc.length > 0 && (
         <nav aria-labelledby="toc-title" class="hidden lg:block" data-article-toc>
           <div class="sticky top-28">
-            <p id="toc-title" class="text-sm font-semibold text-fg">On this page</p>
+            <p id="toc-title" class="text-sm font-semibold text-fg">
+              On this page
+            </p>
             {/* 14px muted text with a clear rail; the section being read is highlighted (src/scripts/article-toc.ts). */}
             <ul class="mt-3 space-y-0.5 border-l-2 border-border-strong">
               {toc.map((h) => (
@@ -124,55 +145,63 @@ const articleLd = article
           </div>
         </nav>
       )}
-      </div>
-      <CtaBand />
-    </BaseLayout>
-  ) : (
-    <BaseLayout title="Insights" description="Practical writing on cloud operations, DevOps governance, cost control and AI automation.">
-      <PageHero
-        eyebrow="Insights"
-        title="Insights"
-        lead="Practical writing on cloud operations, DevOps governance, cost control and AI automation."
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights' }]}
-      />
-      <div class="container-page section-y">
-        <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
-          {articles.map((a) => (
-            <li data-insight class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
-              <div class="mb-5 overflow-hidden rounded-xl border border-border">
-                <Illustration topic={a.id} />
-              </div>
-              <div class="flex flex-wrap items-center gap-2 text-sm text-muted">
-                {a.data.draft && <Badge tone="accent">Draft</Badge>}
-                <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
-              </div>
-              <h2 class="mt-4 text-lg font-semibold text-fg">
-                <a href={`/insights/${a.id}`} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
-                  {a.data.title}
-                </a>
-              </h2>
-              <p class="mt-2 text-sm text-muted">{a.data.summary}</p>
-              <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
-                Read the article
-                <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-              </p>
-            </li>
-          ))}
-        </ul>
-        {hasSamples && (
-          <p class="mt-10 text-muted">
-            Looking for practical examples? See our{' '}
-            <a href="/resources" class="font-semibold text-link underline underline-offset-2">
-              sample architectures, procedures and reports
-            </a>
-            .
-          </p>
-        )}
-      </div>
-      <CtaBand />
-    </BaseLayout>
-  )
-}
+    </div>
+    <CtaBand />
+  </BaseLayout>
+) : (
+  <BaseLayout
+    title="Insights"
+    description="Practical writing on cloud operations, DevOps governance, cost control and AI automation."
+  >
+    <PageHero
+      eyebrow="Insights"
+      title="Insights"
+      lead="Practical writing on cloud operations, DevOps governance, cost control and AI automation."
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Insights' }]}
+    />
+    <div class="container-page section-y">
+      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+        {articles.map((a) => (
+          <li data-insight class="glass card-hover group relative flex flex-col rounded-2xl p-6 sm:p-7">
+            <div class="mb-5 overflow-hidden rounded-xl border border-border">
+              <Illustration topic={a.id} />
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-sm text-muted">
+              {a.data.draft && <Badge tone="accent">Draft</Badge>}
+              <time datetime={a.data.date.toISOString()}>{dateLabel(a.data.date)}</time>
+            </div>
+            <h2 class="mt-4 text-lg font-semibold text-fg">
+              <a
+                href={`/insights/${a.id}`}
+                class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
+              >
+                {a.data.title}
+              </a>
+            </h2>
+            <p class="mt-2 text-sm text-muted">{a.data.summary}</p>
+            <p class="mt-auto inline-flex items-center gap-1.5 pt-5 text-sm font-semibold text-link" aria-hidden="true">
+              Read the article
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              />
+            </p>
+          </li>
+        ))}
+      </ul>
+      {hasSamples && (
+        <p class="mt-10 text-muted">
+          Looking for practical examples? See our{' '}
+          <a href="/resources" class="font-semibold text-link underline underline-offset-2">
+            sample architectures, procedures and reports
+          </a>
+          .
+        </p>
+      )}
+    </div>
+    <CtaBand />
+  </BaseLayout>
+)}
 
 <script>
   import '../../scripts/article-toc';

@@ -42,18 +42,28 @@ async function fillValid(scope: ReturnType<Page['getByRole']>) {
   await scope.getByRole('option', { name: 'Cloud Migration & Modernisation' }).click();
   await scope.getByRole('combobox', { name: 'Estimated engagement size (optional)' }).click();
   await scope.getByRole('listbox', { name: 'Estimated engagement size (optional)' }).getByRole('option').nth(2).click();
-  await scope.getByLabel('Project overview & requirements').fill('We need a zero-downtime migration of our production workloads to Kubernetes.');
+  await scope
+    .getByLabel('Project overview & requirements')
+    .fill('We need a zero-downtime migration of our production workloads to Kubernetes.');
   await scope.getByLabel(/I agree to ZanamTech processing my details/).check();
 }
 
 test.describe('US3 — Contact page & lead submission', () => {
   test('consultation CTAs are links to /contact and no dialog exists', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' })).toHaveAttribute('href', '/contact');
+    await expect(page.locator('#hero').getByRole('link', { name: 'Book a Strategy Consultation' })).toHaveAttribute(
+      'href',
+      '/contact',
+    );
     // Desktop bar and mobile drawer CTAs (one of them is hidden at any width).
-    const headerCtas = await page.locator('header a', { hasText: 'Book a Strategy Consultation' }).evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+    const headerCtas = await page
+      .locator('header a', { hasText: 'Book a Strategy Consultation' })
+      .evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect(headerCtas).toEqual(['/contact', '/contact']);
-    await expect(page.locator('footer').getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
+    await expect(page.locator('footer').getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute(
+      'href',
+      '/contact',
+    );
     await expect(page.locator('dialog')).toHaveCount(0);
   });
 
@@ -120,17 +130,26 @@ test.describe('US3 — Contact page & lead submission', () => {
     await page.goto('/services/cloud-cost-optimization');
     const heroCta = page.locator('section').first().getByRole('link', { name: 'Book a Strategy Consultation' });
     await expect(heroCta).toHaveAttribute('href', '/contact?service=cloud-cost-optimization');
-    await expect(page.locator('#cta-band-title').locator('..').getByRole('link')).toHaveAttribute('href', '/contact?service=cloud-cost-optimization');
+    await expect(page.locator('#cta-band-title').locator('..').getByRole('link')).toHaveAttribute(
+      'href',
+      '/contact?service=cloud-cost-optimization',
+    );
     await heroCta.click();
-    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Cloud Cost Optimisation');
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText(
+      'Cloud Cost Optimisation',
+    );
   });
 
   test('unknown ?service= values are ignored and nothing persists to the next visit', async ({ page }) => {
     await page.goto('/contact?service=not-a-service');
-    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Select a service');
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText(
+      'Select a service',
+    );
     await page.goto('/contact?service=ai-assistants-company-data');
     await page.goto('/contact');
-    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText('Select a service');
+    await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText(
+      'Select a service',
+    );
   });
 
   test('contact page form works standalone and honours ?service=', async ({ page }) => {
@@ -157,19 +176,32 @@ test.describe('US3 — Contact page & lead submission', () => {
 
     await dialog.getByRole('combobox', { name: 'Cloud platform (optional)' }).click();
     for (const option of ['AWS', 'Azure', 'Google Cloud', 'Multi-cloud', 'Other']) {
-      await expect(dialog.getByRole('listbox', { name: 'Cloud platform (optional)' }).getByRole('option', { name: option, exact: true })).toBeVisible();
+      await expect(
+        dialog
+          .getByRole('listbox', { name: 'Cloud platform (optional)' })
+          .getByRole('option', { name: option, exact: true }),
+      ).toBeVisible();
     }
-    await dialog.getByRole('listbox', { name: 'Cloud platform (optional)' }).getByRole('option', { name: 'Multi-cloud', exact: true }).click();
+    await dialog
+      .getByRole('listbox', { name: 'Cloud platform (optional)' })
+      .getByRole('option', { name: 'Multi-cloud', exact: true })
+      .click();
 
     await dialog.getByRole('button', { name: 'Send', exact: true }).click();
     await expect(dialog.getByRole('heading', { name: 'Request received' })).toBeVisible();
-    expect(calls[0]).toMatchObject({ region: 'United Kingdom', cloudPlatform: 'Multi-cloud', companySize: 'Not specified' });
+    expect(calls[0]).toMatchObject({
+      region: 'United Kingdom',
+      cloudPlatform: 'Multi-cloud',
+      companySize: 'Not specified',
+    });
   });
 
   test('service options include every published service, Agency partnership and Other', async ({ page }) => {
     const { form: dialog } = await openContactFromHero(page);
     await dialog.getByRole('combobox', { name: 'Service needed' }).click();
-    const options = await dialog.locator('#page-service-listbox [role="option"]').evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.value));
+    const options = await dialog
+      .locator('#page-service-listbox [role="option"]')
+      .evaluateAll((els) => els.map((e) => (e as HTMLElement).dataset.value));
     expect(options).toEqual([...publishedNamesInPillarOrder, 'Agency partnership', 'Other / Not sure yet']);
   });
 

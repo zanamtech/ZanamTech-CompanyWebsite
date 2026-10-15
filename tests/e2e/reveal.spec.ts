@@ -44,7 +44,9 @@ test.describe('How we engage: step cards always end visible', () => {
     'fast scroll past it, then back up': async (page) => {
       await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
       await page.waitForTimeout(150);
-      await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant', block: 'center' }));
+      await page.evaluate(() =>
+        document.querySelector('#process')!.scrollIntoView({ behavior: 'instant', block: 'center' }),
+      );
     },
     'reload mid-page': async (page) => {
       await page.evaluate(() => document.querySelector('#process')!.scrollIntoView({ behavior: 'instant' }));
@@ -69,7 +71,9 @@ test.describe('How we engage: step cards always end visible', () => {
         await arrive(page);
         await expectAllStepsVisible(page);
         // After the sequence the cards carry no reveal styles at all.
-        await expect.poll(async () => (await stepCards(page)).map((c) => c.state)).toEqual(['done', 'done', 'done', 'done']);
+        await expect
+          .poll(async () => (await stepCards(page)).map((c) => c.state))
+          .toEqual(['done', 'done', 'done', 'done']);
       }
     });
   }
@@ -94,11 +98,13 @@ test('every reveal group on the home page ends fully visible', async ({ page }) 
   await expect
     .poll(
       () =>
-        page.locator('[data-reveal-group] > *').evaluateAll((items) =>
-          items
-            .filter((el) => Number(getComputedStyle(el).opacity) < 1)
-            .map((el) => el.textContent?.trim().slice(0, 40)),
-        ),
+        page
+          .locator('[data-reveal-group] > *')
+          .evaluateAll((items) =>
+            items
+              .filter((el) => Number(getComputedStyle(el).opacity) < 1)
+              .map((el) => el.textContent?.trim().slice(0, 40)),
+          ),
       { timeout: 6_000 },
     )
     .toEqual([]);

@@ -31,7 +31,9 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
 
   <LongFormDoc sections={sections}>
     <section id="scope" aria-labelledby="scope-title">
-      <h2 id="scope-title"><span class="text-accent tabular-nums">{num('scope')}.</span> Scope</h2>
+      <h2 id="scope-title">
+        <span class="text-accent tabular-nums">{num('scope')}.</span> Scope
+      </h2>
       <p>
         These terms apply to your use of this website. Client engagements are governed separately by a master services
         agreement and Statement of Work, which take precedence over anything on this website.
@@ -39,18 +41,25 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="acceptable-use" aria-labelledby="use-title">
-      <h2 id="use-title"><span class="text-accent tabular-nums">{num('acceptable-use')}.</span> Acceptable use</h2>
+      <h2 id="use-title">
+        <span class="text-accent tabular-nums">{num('acceptable-use')}.</span> Acceptable use
+      </h2>
       <p>You agree not to:</p>
       <ul>
         <li>Attempt to gain unauthorised access to this website, its hosting or any connected system</li>
-        <li>Interfere with the website's operation, including through automated scraping, load testing or denial-of-service activity</li>
+        <li>
+          Interfere with the website's operation, including through automated scraping, load testing or
+          denial-of-service activity
+        </li>
         <li>Submit false, misleading or malicious information through the contact forms</li>
         <li>Use the website in breach of any applicable law</li>
       </ul>
     </section>
 
     <section id="no-warranty" aria-labelledby="warranty-title">
-      <h2 id="warranty-title"><span class="text-accent tabular-nums">{num('no-warranty')}.</span> No warranty on site content</h2>
+      <h2 id="warranty-title">
+        <span class="text-accent tabular-nums">{num('no-warranty')}.</span> No warranty on site content
+      </h2>
       <p>
         Content on this website, including articles, samples and results from past engagements, is provided for general
         information. It is not professional advice for your specific environment, and outcomes vary. We aim to keep the
@@ -59,37 +68,48 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
     </section>
 
     <section id="intellectual-property" aria-labelledby="ip-title">
-      <h2 id="ip-title"><span class="text-accent tabular-nums">{num('intellectual-property')}.</span> Intellectual property</h2>
+      <h2 id="ip-title">
+        <span class="text-accent tabular-nums">{num('intellectual-property')}.</span> Intellectual property
+      </h2>
       <p>
         The ZanamTech name, logo, website design and content are owned by ZanamTech unless stated otherwise. Third-party
-        product names and trademarks belong to their respective owners and are used only to describe technologies we work
-        with; their use does not imply endorsement. You may share links to this website, but you may not copy or
+        product names and trademarks belong to their respective owners and are used only to describe technologies we
+        work with; their use does not imply endorsement. You may share links to this website, but you may not copy or
         republish its content without permission.
       </p>
     </section>
 
     <section id="liability" aria-labelledby="liability-title">
-      <h2 id="liability-title"><span class="text-accent tabular-nums">{num('liability')}.</span> Limitation of liability</h2>
+      <h2 id="liability-title">
+        <span class="text-accent tabular-nums">{num('liability')}.</span> Limitation of liability
+      </h2>
       <p>
-        To the extent permitted by law, ZanamTech is not liable for any loss arising from your use of, or reliance on, this
-        website or its content. Nothing in these terms limits liability that cannot be limited by law.
+        To the extent permitted by law, ZanamTech is not liable for any loss arising from your use of, or reliance on,
+        this website or its content. Nothing in these terms limits liability that cannot be limited by law.
       </p>
     </section>
 
     <section id="governing-law" aria-labelledby="law-title">
-      <h2 id="law-title"><span class="text-accent tabular-nums">{num('governing-law')}.</span> Governing law</h2>
+      <h2 id="law-title">
+        <span class="text-accent tabular-nums">{num('governing-law')}.</span> Governing law
+      </h2>
       <p>
-        These terms are governed by the laws of the jurisdiction stated in your agreement with ZanamTech or, where there is
-        no agreement, the jurisdiction in which ZanamTech operates. Disputes are subject to the courts of that
+        These terms are governed by the laws of the jurisdiction stated in your agreement with ZanamTech or, where there
+        is no agreement, the jurisdiction in which ZanamTech operates. Disputes are subject to the courts of that
         jurisdiction.
       </p>
     </section>
 
     <section id="contact" aria-labelledby="contact-title">
-      <h2 id="contact-title"><span class="text-accent tabular-nums">{num('contact')}.</span> Contact</h2>
+      <h2 id="contact-title">
+        <span class="text-accent tabular-nums">{num('contact')}.</span> Contact
+      </h2>
       <p>
         Questions about these terms can be sent to{' '}
-        <a href={`mailto:${site.email}`} class="font-semibold text-link underline underline-offset-2">{site.email}</a>.
+        <a href={`mailto:${site.email}`} class="font-semibold text-link underline underline-offset-2">
+          {site.email}
+        </a>
+        .
       </p>
     </section>
   </LongFormDoc>

@@ -25,7 +25,9 @@ test.describe('US7 — Verified-only proof', () => {
   test('no certification or partner badges are claimed', async ({ page }) => {
     for (const path of ['/', '/about', '/trust']) {
       await page.goto(path);
-      expect(await page.locator('main').innerText(), path).not.toMatch(/\bcertified\b|Solutions Partner|Select Tier|Advanced Tier|Premier Partner/i);
+      expect(await page.locator('main').innerText(), path).not.toMatch(
+        /\bcertified\b|Solutions Partner|Select Tier|Advanced Tier|Premier Partner/i,
+      );
     }
   });
 });

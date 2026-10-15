@@ -57,7 +57,9 @@ for (const device of [
       await expectNoNavigation(page);
     });
 
-    test('services remain reachable: "View all services" and service links navigate from the open menu', async ({ page }) => {
+    test('services remain reachable: "View all services" and service links navigate from the open menu', async ({
+      page,
+    }) => {
       await page.goto('/');
       const menu = page.locator('#services-menu');
       await servicesTrigger(page).tap();

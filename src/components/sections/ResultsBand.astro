@@ -3,52 +3,56 @@ import { Info } from 'lucide-react';
 import { results, formatResult, resultsFootnote, resultsTitle } from '../../data/results';
 ---
 
-<section id="metrics" aria-labelledby="metrics-title" class="relative isolate scroll-mt-15.5 overflow-hidden border-y border-border bg-surface/60 sm:scroll-mt-13.5 lg:scroll-mt-11.5">
+<section
+  id="metrics"
+  aria-labelledby="metrics-title"
+  class="relative isolate scroll-mt-15.5 overflow-hidden border-y border-border bg-surface/60 sm:scroll-mt-13.5 lg:scroll-mt-11.5"
+>
   <div class="mesh-bg absolute inset-0 -z-10 opacity-70" aria-hidden="true"></div>
   <div class="container-page section-y">
     <div class="max-w-2xl">
       <p class="eyebrow">Results</p>
-      <h2 id="metrics-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">{resultsTitle}</h2>
+      <h2 id="metrics-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
+        {resultsTitle}
+      </h2>
       <p class="mt-4 text-lg text-muted">
         Measured outcomes from cloud, DevOps and security work on production platforms.
       </p>
     </div>
 
     <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        results.map((m) => (
-          <li
-            data-metric={m.id}
-            class="glass group relative flex cursor-default select-none flex-col overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-purple-500/10"
-          >
-            {/* Shine sweep on hover, same technique as the primary CTA. */}
-            <span
-              aria-hidden="true"
-              class="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-brand-purple/10 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden dark:via-white/8"
-            />
-            <span class="sr-only">
-              {m.qualifier ? `${m.qualifier} ` : ''}
-              {formatResult(m)} {m.label}. {m.context}
-            </span>
-            <div aria-hidden="true" class="relative">
-              <p class="h-5 text-sm font-semibold text-muted">{m.qualifier}</p>
-              <p class="metric-figure text-gradient-display mt-1 inline-block origin-left text-4xl font-bold tracking-tight transition-[scale,filter] duration-300 group-hover:scale-[1.04] sm:text-5xl motion-reduce:group-hover:scale-100">
-                <span
-                  data-counter
-                  data-value={m.value}
-                  data-decimals={m.decimals}
-                  data-suffix={m.suffix}
-                  class="tabular-nums"
-                >
-                  {formatResult(m)}
-                </span>
-              </p>
-              <p class="mt-3 text-sm font-medium text-fg">{m.label.charAt(0).toUpperCase() + m.label.slice(1)}</p>
-              <p class="mt-1 text-sm text-muted">{m.context}</p>
-            </div>
-          </li>
-        ))
-      }
+      {results.map((m) => (
+        <li
+          data-metric={m.id}
+          class="glass group relative flex cursor-default select-none flex-col overflow-hidden rounded-2xl p-6 transition-all duration-300 hover:border-accent/50 hover:shadow-lg hover:shadow-purple-500/10"
+        >
+          {/* Shine sweep on hover, same technique as the primary CTA. */}
+          <span
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-brand-purple/10 to-transparent transition-transform duration-700 group-hover:translate-x-full motion-reduce:hidden dark:via-white/8"
+          />
+          <span class="sr-only">
+            {m.qualifier ? `${m.qualifier} ` : ''}
+            {formatResult(m)} {m.label}. {m.context}
+          </span>
+          <div aria-hidden="true" class="relative">
+            <p class="h-5 text-sm font-semibold text-muted">{m.qualifier}</p>
+            <p class="metric-figure text-gradient-display mt-1 inline-block origin-left text-4xl font-bold tracking-tight transition-[scale,filter] duration-300 group-hover:scale-[1.04] sm:text-5xl motion-reduce:group-hover:scale-100">
+              <span
+                data-counter
+                data-value={m.value}
+                data-decimals={m.decimals}
+                data-suffix={m.suffix}
+                class="tabular-nums"
+              >
+                {formatResult(m)}
+              </span>
+            </p>
+            <p class="mt-3 text-sm font-medium text-fg">{m.label.charAt(0).toUpperCase() + m.label.slice(1)}</p>
+            <p class="mt-1 text-sm text-muted">{m.context}</p>
+          </div>
+        </li>
+      ))}
     </ul>
 
     <p class="mt-8 flex items-start gap-2 text-sm text-muted">

@@ -5,10 +5,19 @@ test.describe('US4 — Trust, legal and company', () => {
     const trust = await page.goto('/trust');
     expect(trust?.status()).toBe(200);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Security & Trust');
-    for (const heading of ['How we access your environment', 'AI-tool policy', 'Sub-processors', 'Data residency', 'Reporting a security issue']) {
+    for (const heading of [
+      'How we access your environment',
+      'AI-tool policy',
+      'Sub-processors',
+      'Data residency',
+      'Reporting a security issue',
+    ]) {
       await expect(page.getByRole('heading', { level: 2, name: new RegExp(heading) })).toBeVisible();
     }
-    await expect(page.getByRole('link', { name: 'security@zanamtech.com' })).toHaveAttribute('href', 'mailto:security@zanamtech.com');
+    await expect(page.getByRole('link', { name: 'security@zanamtech.com' })).toHaveAttribute(
+      'href',
+      'mailto:security@zanamtech.com',
+    );
 
     const terms = await page.goto('/terms');
     expect(terms?.status()).toBe(200);
@@ -30,9 +39,13 @@ test.describe('US4 — Trust, legal and company', () => {
     await expect(footer).toContainText('ZanamTech · Cloud, DevOps & AI engineering');
     await expect(footer.getByRole('link', { name: 'contact@zanamtech.com' })).toBeVisible();
     for (const label of ['Privacy', 'Terms', 'Trust']) {
-      await expect(footer.getByRole('navigation', { name: 'Legal' }).getByRole('link', { name: label, exact: true })).toBeVisible();
+      await expect(
+        footer.getByRole('navigation', { name: 'Legal' }).getByRole('link', { name: label, exact: true }),
+      ).toBeVisible();
     }
-    expect(await footer.innerText()).not.toMatch(/\b(?:Street|Road|Avenue|Suite|Floor|Karachi|Pakistan|London|Dubai)\b|\b(?:Ltd|Inc|LLC)\b/);
+    expect(await footer.innerText()).not.toMatch(
+      /\b(?:Street|Road|Avenue|Suite|Floor|Karachi|Pakistan|London|Dubai)\b|\b(?:Ltd|Inc|LLC)\b/,
+    );
   });
 
   test('About has a Leadership section without years, badges or a city', async ({ page }) => {

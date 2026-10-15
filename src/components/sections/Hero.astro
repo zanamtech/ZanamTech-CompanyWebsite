@@ -31,25 +31,26 @@ const blueprint = [
         Managed Cloud, DevOps &amp; AI Engineering for Businesses That Can't Afford Downtime.
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-muted">
-        We run, secure and modernise your AWS, Azure and Google Cloud platforms, build cloud-native SaaS, and automate manual work
-        with practical AI. Documented runbooks, transparent reporting, no lock-in.
+        We run, secure and modernise your AWS, Azure and Google Cloud platforms, build cloud-native SaaS, and automate
+        manual work with practical AI. Documented runbooks, transparent reporting, no lock-in.
       </p>
 
       <ul class="mt-8 flex flex-wrap gap-2.5" aria-label="Positioning pillars">
-        {
-          pillars.map(({ label, Icon }) => (
-            <li class="glass inline-flex cursor-default select-none items-center gap-2 rounded-full border border-border/60 px-4 py-2 text-sm font-semibold text-fg transition-all duration-300 hover:scale-[1.02] hover:border-accent/60 hover:shadow-md hover:shadow-purple-500/10 motion-reduce:hover:scale-100">
-              <Icon aria-hidden="true" className="size-4 text-brand-cyan" strokeWidth={2.25} />
-              <span>{label}</span>
-            </li>
-          ))
-        }
+        {pillars.map(({ label, Icon }) => (
+          <li class="glass inline-flex cursor-default select-none items-center gap-2 rounded-full border border-border/60 px-4 py-2 text-sm font-semibold text-fg transition-all duration-300 hover:scale-[1.02] hover:border-accent/60 hover:shadow-md hover:shadow-purple-500/10 motion-reduce:hover:scale-100">
+            <Icon aria-hidden="true" className="size-4 text-brand-cyan" strokeWidth={2.25} />
+            <span>{label}</span>
+          </li>
+        ))}
       </ul>
 
       <div class="mt-10 flex flex-col gap-3 sm:flex-row">
         <Button href={cta.href} size="lg">
           {cta.primary}
-          <ArrowRight aria-hidden="true" className="size-4.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+          <ArrowRight
+            aria-hidden="true"
+            className="size-4.5 transition-transform duration-200 group-hover:translate-x-0.5"
+          />
         </Button>
       </div>
     </div>
@@ -65,35 +66,33 @@ const blueprint = [
         <p class="text-sm font-semibold text-accent">Engagement blueprint</p>
         <h2 class="mt-2 text-xl font-semibold text-fg">From audit to always-on operations</h2>
         <ol class="mt-5 space-y-1.5">
-          {
-            blueprint.map((step, i) => (
-              <li
-                class="group -mx-3 flex gap-4 rounded-xl border-l-2 border-transparent px-3 py-2 transition-all duration-700 ease-in-out data-[step=active]:border-accent data-[step=active]:bg-surface-2/60 data-[step=active]:shadow-[0_0_15px_rgb(122_43_255/0.12)]"
-                x-bind:data-step={`stepState(${i + 1})`}
-              >
-                <span class="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-surface-2 text-sm font-bold text-fg transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-white group-data-[step=active]:shadow-md group-data-[step=active]:shadow-brand-purple/25 group-data-[step=idle]:opacity-65">
-                  {/* Gradient lives on an overlay so it can fade (background-image itself can't transition). */}
-                  <span
-                    class="absolute inset-0 bg-linear-to-br from-brand-purple to-cta opacity-0 transition-opacity duration-700 ease-in-out group-data-[step=active]:opacity-100"
+          {blueprint.map((step, i) => (
+            <li
+              class="group -mx-3 flex gap-4 rounded-xl border-l-2 border-transparent px-3 py-2 transition-all duration-700 ease-in-out data-[step=active]:border-accent data-[step=active]:bg-surface-2/60 data-[step=active]:shadow-[0_0_15px_rgb(122_43_255/0.12)]"
+              x-bind:data-step={`stepState(${i + 1})`}
+            >
+              <span class="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-surface-2 text-sm font-bold text-fg transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-white group-data-[step=active]:shadow-md group-data-[step=active]:shadow-brand-purple/25 group-data-[step=idle]:opacity-65">
+                {/* Gradient lives on an overlay so it can fade (background-image itself can't transition). */}
+                <span
+                  class="absolute inset-0 bg-linear-to-br from-brand-purple to-cta opacity-0 transition-opacity duration-700 ease-in-out group-data-[step=active]:opacity-100"
+                  aria-hidden="true"
+                />
+                <span class="relative">{String(i + 1).padStart(2, '0')}</span>
+              </span>
+              <div>
+                <p class="flex items-center gap-2 font-semibold">
+                  <span class="bg-linear-to-r from-link to-accent bg-clip-text text-fg transition-all duration-700 ease-in-out group-data-[step=active]:text-transparent group-data-[step=idle]:text-fg/80">
+                    {step.title}
+                  </span>
+                  <CircleCheck
                     aria-hidden="true"
+                    className="size-4 shrink-0 text-brand-cyan transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-accent group-data-[step=active]:opacity-100 group-data-[step=clear]:opacity-0 group-data-[step=done]:scale-100 group-data-[step=done]:text-muted group-data-[step=done]:opacity-70 group-data-[step=idle]:opacity-0"
                   />
-                  <span class="relative">{String(i + 1).padStart(2, '0')}</span>
-                </span>
-                <div>
-                  <p class="flex items-center gap-2 font-semibold">
-                    <span class="bg-linear-to-r from-link to-accent bg-clip-text text-fg transition-all duration-700 ease-in-out group-data-[step=active]:text-transparent group-data-[step=idle]:text-fg/80">
-                      {step.title}
-                    </span>
-                    <CircleCheck
-                      aria-hidden="true"
-                      className="size-4 shrink-0 text-brand-cyan transition-all duration-700 ease-in-out group-data-[step=active]:scale-105 group-data-[step=active]:text-accent group-data-[step=active]:opacity-100 group-data-[step=clear]:opacity-0 group-data-[step=done]:scale-100 group-data-[step=done]:text-muted group-data-[step=done]:opacity-70 group-data-[step=idle]:opacity-0"
-                    />
-                  </p>
-                  <p class="text-sm text-muted">{step.detail}</p>
-                </div>
-              </li>
-            ))
-          }
+                </p>
+                <p class="text-sm text-muted">{step.detail}</p>
+              </div>
+            </li>
+          ))}
         </ol>
       </div>
     </div>

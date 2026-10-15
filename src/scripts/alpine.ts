@@ -24,8 +24,10 @@ const FORM_ENDPOINT = import.meta.env.PUBLIC_FORM_ENDPOINT || 'https://api.web3f
 const FORM_ACCESS_KEY = import.meta.env.PUBLIC_FORM_ACCESS_KEY || '';
 
 const FAILURE_MESSAGES = {
-  rejected: 'Your request could not be sent because it was rejected by our form service. Please review your details and try again.',
-  server: 'Your request could not be sent due to a temporary service issue. Your details are preserved; please try again.',
+  rejected:
+    'Your request could not be sent because it was rejected by our form service. Please review your details and try again.',
+  server:
+    'Your request could not be sent due to a temporary service issue. Your details are preserved; please try again.',
   network: 'Your request could not be sent. Please check your connection and try again; your details are preserved.',
   timeout: 'Your request could not be sent because the service took too long to respond. Please try again.',
 } as const;
@@ -84,7 +86,9 @@ export default (Alpine: Alpine) => {
 
       // Primary: a single 200ms crossfade snapshot (View Transitions API). Wait for Alpine to re-render
       // reactive bits (e.g. the toggle icon) so the "new" snapshot is complete.
-      const doc = document as Document & { startViewTransition?: (cb: () => Promise<void> | void) => { finished: Promise<void> } };
+      const doc = document as Document & {
+        startViewTransition?: (cb: () => Promise<void> | void) => { finished: Promise<void> };
+      };
       if (typeof doc.startViewTransition === 'function') {
         root.classList.add('theme-vt');
         const transition = doc.startViewTransition(() => {
@@ -366,8 +370,13 @@ export default (Alpine: Alpine) => {
       this.step = 0;
       this.done = false;
       // Observe the grid container; a grid taller than the screen (stacked on phones) asks only for what can fit.
-      const threshold = Math.min(0.2, (window.innerHeight * 0.5) / Math.max(1, this.$el.getBoundingClientRect().height));
-      this.observer = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && this.start(), { threshold });
+      const threshold = Math.min(
+        0.2,
+        (window.innerHeight * 0.5) / Math.max(1, this.$el.getBoundingClientRect().height),
+      );
+      this.observer = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && this.start(), {
+        threshold,
+      });
       this.observer.observe(this.$el);
       // Safety net: if the observer misses the entry (scroll restoration on reload, a back/forward-cache restore, a
       // jump past the section, a tab hidden mid-load), start as soon as any part of the steps is on screen.
@@ -395,7 +404,9 @@ export default (Alpine: Alpine) => {
       this.started = true;
       this.stopWatching();
       const total = count * 2 - 1;
-      this.timers = Array.from({ length: total }, (_, i) => window.setTimeout(() => (this.step = i + 1), i * PROCESS_STEP_MS));
+      this.timers = Array.from({ length: total }, (_, i) =>
+        window.setTimeout(() => (this.step = i + 1), i * PROCESS_STEP_MS),
+      );
       this.timers.push(window.setTimeout(() => (this.done = true), (total - 1) * PROCESS_STEP_MS + 900));
     },
 
@@ -524,7 +535,9 @@ export default (Alpine: Alpine) => {
     },
 
     scrollActiveIntoView(field: MenuField) {
-      document.getElementById(`${config.idPrefix}-${field}-listbox-${this.activeIndex}`)?.scrollIntoView({ block: 'nearest' });
+      document
+        .getElementById(`${config.idPrefix}-${field}-listbox-${this.activeIndex}`)
+        ?.scrollIntoView({ block: 'nearest' });
     },
 
     /** Keyboard model for a select-only combobox (WAI-ARIA APG): focus stays on the trigger. */
@@ -568,7 +581,9 @@ export default (Alpine: Alpine) => {
     },
 
     activeId(field: MenuField) {
-      return this.openMenu === field && this.activeIndex >= 0 ? `${config.idPrefix}-${field}-listbox-${this.activeIndex}` : null;
+      return this.openMenu === field && this.activeIndex >= 0
+        ? `${config.idPrefix}-${field}-listbox-${this.activeIndex}`
+        : null;
     },
 
     optionSelected(field: MenuField, index: number) {

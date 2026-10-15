@@ -14,7 +14,9 @@ type Artefact = CollectionEntry<'resources'>;
 // Proof-by-artefact samples (spec 002 §E), always labelled "Sample". /resources and /resources/<slug> exist only for
 // visible entries: drafts render in `astro dev` only, so a build produces no pages until the owner approves one.
 export async function getStaticPaths() {
-  const artefacts = (await getCollection('resources', isVisible)).sort((a, b) => a.data.title.localeCompare(b.data.title));
+  const artefacts = (await getCollection('resources', isVisible)).sort((a, b) =>
+    a.data.title.localeCompare(b.data.title),
+  );
   if (artefacts.length === 0) return [];
   return [
     { params: { slug: undefined }, props: { artefact: undefined, artefacts } },
@@ -32,49 +34,47 @@ const Content = artefact ? (await render(artefact)).Content : undefined;
 const title = artefact ? artefact.data.title.replace(/^Sample:\s*/, '') : '';
 ---
 
-{
-  artefact && Content ? (
-    <BaseLayout title={`Sample: ${title}`} description={artefact.data.summary}>
-      <PageHero
-        eyebrow="Sample"
-        title={title}
-        lead={artefact.data.summary}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples', href: '/resources' }, { label: title }]}
-      >
-        <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
-          <Illustration topic={artefact.id} variant="header" />
-        </div>
-      </PageHero>
-      <article class="container-page section-y">
-        <div class="mb-6 flex flex-wrap gap-2">
-          <Badge tone="accent">Sample</Badge>
-          {artefact.data.draft && <Badge>Draft</Badge>}
-        </div>
-        <ArticleBody>
-          <Content />
-        </ArticleBody>
-      </article>
-      <CtaBand />
-    </BaseLayout>
-  ) : (
-    <BaseLayout
-      title="Samples"
-      description="Samples of the architecture, procedures and reporting ZanamTech engagements produce, written for illustration."
+{artefact && Content ? (
+  <BaseLayout title={`Sample: ${title}`} description={artefact.data.summary}>
+    <PageHero
+      eyebrow="Sample"
+      title={title}
+      lead={artefact.data.summary}
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples', href: '/resources' }, { label: title }]}
     >
-      <PageHero
-        eyebrow="Samples"
-        title="See the standard before you sign"
-        lead="Samples of the architecture, procedures and reporting every engagement produces. Written for illustration, not taken from any client."
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples' }]}
-      />
-      <div class="container-page section-y">
-        <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
-          {artefacts.map((a) => (
-            <ArtefactCard artefact={a} headingLevel={2} />
-          ))}
-        </ul>
+      <div class="w-full max-w-md shrink-0 overflow-hidden rounded-2xl border border-border lg:w-96 xl:w-md">
+        <Illustration topic={artefact.id} variant="header" />
       </div>
-      <CtaBand />
-    </BaseLayout>
-  )
-}
+    </PageHero>
+    <article class="container-page section-y">
+      <div class="mb-6 flex flex-wrap gap-2">
+        <Badge tone="accent">Sample</Badge>
+        {artefact.data.draft && <Badge>Draft</Badge>}
+      </div>
+      <ArticleBody>
+        <Content />
+      </ArticleBody>
+    </article>
+    <CtaBand />
+  </BaseLayout>
+) : (
+  <BaseLayout
+    title="Samples"
+    description="Samples of the architecture, procedures and reporting ZanamTech engagements produce, written for illustration."
+  >
+    <PageHero
+      eyebrow="Samples"
+      title="See the standard before you sign"
+      lead="Samples of the architecture, procedures and reporting every engagement produces. Written for illustration, not taken from any client."
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Samples' }]}
+    />
+    <div class="container-page section-y">
+      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+        {artefacts.map((a) => (
+          <ArtefactCard artefact={a} headingLevel={2} />
+        ))}
+      </ul>
+    </div>
+    <CtaBand />
+  </BaseLayout>
+)}

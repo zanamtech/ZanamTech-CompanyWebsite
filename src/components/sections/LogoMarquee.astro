@@ -6,25 +6,33 @@ import { verifiedOnly } from '../../lib/content';
 const logos = verifiedOnly(clients);
 ---
 
-{
-  logos.length > 0 && (
-    <section id="clients" aria-labelledby="clients-title" class="py-10 sm:py-12">
-      <div class="container-page">
-        <h2 id="clients-title" class="eyebrow text-center">Clients we work with</h2>
+{logos.length > 0 && (
+  <section id="clients" aria-labelledby="clients-title" class="py-10 sm:py-12">
+    <div class="container-page">
+      <h2 id="clients-title" class="eyebrow text-center">
+        Clients we work with
+      </h2>
+    </div>
+    <div class="marquee marquee-mask mt-6 overflow-hidden py-1.5">
+      <div class="marquee-track animate-marquee flex w-max">
+        {[0, 1].map((copy) => (
+          <ul
+            class="marquee-group flex shrink-0 items-center gap-10 pr-10"
+            aria-hidden={copy === 1 ? 'true' : undefined}
+          >
+            {logos.map((c) => (
+              <li class="flex h-10 items-center">
+                <img
+                  src={c.logo}
+                  alt={copy === 0 ? c.name : ''}
+                  class="h-8 w-auto opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                  loading="lazy"
+                />
+              </li>
+            ))}
+          </ul>
+        ))}
       </div>
-      <div class="marquee marquee-mask mt-6 overflow-hidden py-1.5">
-        <div class="marquee-track animate-marquee flex w-max">
-          {[0, 1].map((copy) => (
-            <ul class="marquee-group flex shrink-0 items-center gap-10 pr-10" aria-hidden={copy === 1 ? 'true' : undefined}>
-              {logos.map((c) => (
-                <li class="flex h-10 items-center">
-                  <img src={c.logo} alt={copy === 0 ? c.name : ''} class="h-8 w-auto opacity-80 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0" loading="lazy" />
-                </li>
-              ))}
-            </ul>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+    </div>
+  </section>
+)}

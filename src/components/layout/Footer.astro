@@ -8,10 +8,16 @@ import { getServicesByPillar, serviceHref } from '../../lib/services';
 import { hasPublishedInsights, hasVerifiedCaseStudies } from '../../lib/content';
 
 const groups = await getServicesByPillar();
-const pillar = Object.fromEntries(groups.map((g) => [g.pillar, g])) as Record<(typeof groups)[number]['pillar'], (typeof groups)[number]>;
+const pillar = Object.fromEntries(groups.map((g) => [g.pillar, g])) as Record<
+  (typeof groups)[number]['pillar'],
+  (typeof groups)[number]
+>;
 // Same grouping as the mega-menu: Managed + Practical AI together, Cloud & DevOps split into two sub-columns.
 const cloudSplit = Math.ceil(pillar['cloud-devops'].services.length / 2);
-const cloudColumns = [pillar['cloud-devops'].services.slice(0, cloudSplit), pillar['cloud-devops'].services.slice(cloudSplit)];
+const cloudColumns = [
+  pillar['cloud-devops'].services.slice(0, cloudSplit),
+  pillar['cloud-devops'].services.slice(cloudSplit),
+];
 
 const showInsights = await hasPublishedInsights();
 const showCaseStudies = await hasVerifiedCaseStudies();
@@ -39,26 +45,29 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
     <div class="lg:flex lg:flex-wrap lg:items-center lg:gap-x-8 lg:gap-y-3 xl:flex-col xl:flex-nowrap xl:items-start xl:gap-0">
       <Logo height={24} />
       <p class="mt-4 max-w-sm text-sm text-muted md:hidden">{footerCopy.tagline}</p>
-      <p class="mt-4 hidden max-w-md text-sm text-muted md:block lg:mt-0 lg:max-w-xl xl:mt-4 xl:max-w-none">{footerCopy.description}</p>
+      <p class="mt-4 hidden max-w-md text-sm text-muted md:block lg:mt-0 lg:max-w-xl xl:mt-4 xl:max-w-none">
+        {footerCopy.description}
+      </p>
       <!-- Contact email with the company LinkedIn icon beside it (same line, level with the Company row at xl). -->
       <p class="mt-3 flex items-center gap-3 text-sm lg:mt-0 xl:mt-auto xl:pt-4">
-        <a href={`mailto:${site.email}`} class="inline-flex min-h-11 items-center font-semibold text-link hover:underline lg:min-h-8">
+        <a
+          href={`mailto:${site.email}`}
+          class="inline-flex min-h-11 items-center font-semibold text-link hover:underline lg:min-h-8"
+        >
           {site.email}
         </a>
-        {
-          leadership.companyLinkedin && (
-            <a
-              href={leadership.companyLinkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ZanamTech on LinkedIn"
-              class="inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-200 hover:text-accent lg:size-8"
-              data-footer-linkedin
-            >
-              <LinkedInIcon class="size-4.5" />
-            </a>
-          )
-        }
+        {leadership.companyLinkedin && (
+          <a
+            href={leadership.companyLinkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="ZanamTech on LinkedIn"
+            class="inline-flex size-11 items-center justify-center rounded-lg text-muted transition-colors duration-200 hover:text-accent lg:size-8"
+            data-footer-linkedin
+          >
+            <LinkedInIcon class="size-4.5" />
+          </a>
+        )}
       </p>
     </div>
 
@@ -76,7 +85,9 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
                 <ul class={serviceList}>
                   {g.services.map((s) => (
                     <li>
-                      <a href={serviceHref(s)} class={serviceLink}>{s.data.name}</a>
+                      <a href={serviceHref(s)} class={serviceLink}>
+                        {s.data.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -91,7 +102,9 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
                 <ul class={serviceList}>
                   {column.map((s) => (
                     <li>
-                      <a href={serviceHref(s)} class={serviceLink}>{s.data.name}</a>
+                      <a href={serviceHref(s)} class={serviceLink}>
+                        {s.data.name}
+                      </a>
                     </li>
                   ))}
                 </ul>
@@ -103,7 +116,9 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
             <ul class={serviceList}>
               {pillar['web-saas'].services.map((s) => (
                 <li>
-                  <a href={serviceHref(s)} class={serviceLink}>{s.data.name}</a>
+                  <a href={serviceHref(s)} class={serviceLink}>
+                    {s.data.name}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -114,51 +129,53 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
       <!-- Services, phones: the four pillars as collapsible groups (native details/summary, collapsed). -->
       <nav aria-label="Services" class="md:hidden" data-footer-services-mobile>
         <h2 class="sr-only">Services</h2>
-        {
-          groups.map((g) => (
-            <details class="group border-b border-border" data-footer-pillar-mobile={g.pillar}>
-              <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold text-fg hover:text-accent [&::-webkit-details-marker]:hidden">
-                {g.title}
-                <span class="inline-flex text-muted transition-transform duration-200 group-open:rotate-180">
-                  <ChevronDown aria-hidden="true" className="size-4" />
-                </span>
-              </summary>
-              <ul class="pb-2">
-                {g.services.map((s) => (
-                  <li>
-                    <a href={serviceHref(s)} class={linkClass}>{s.data.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))
-        }
+        {groups.map((g) => (
+          <details class="group border-b border-border" data-footer-pillar-mobile={g.pillar}>
+            <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between text-sm font-semibold text-fg hover:text-accent [&::-webkit-details-marker]:hidden">
+              {g.title}
+              <span class="inline-flex text-muted transition-transform duration-200 group-open:rotate-180">
+                <ChevronDown aria-hidden="true" className="size-4" />
+              </span>
+            </summary>
+            <ul class="pb-2">
+              {g.services.map((s) => (
+                <li>
+                  <a href={serviceHref(s)} class={linkClass}>
+                    {s.data.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
       </nav>
 
       <!-- Company: a two-column list on phones; from md a single row spanning the services area. Between the label and
            each pair of links sits a spacer (24px minimum, equal growth), so every gap in the row is the same width; the
            spacers between links carry a dot centred in the gap. From md the list is `display: contents` (role="list"
            keeps its semantics), so the label, spacers and links share one flex row. -->
-      <nav aria-label="Company" class="md:mt-auto md:flex md:items-baseline md:border-t md:border-border md:pt-4" data-footer-company>
+      <nav
+        aria-label="Company"
+        class="md:mt-auto md:flex md:items-baseline md:border-t md:border-border md:pt-4"
+        data-footer-company
+      >
         <h2 class={headingClass}>Company</h2>
         <span aria-hidden="true" class={spacerClass}></span>
         <ul role="list" class="mt-2 grid grid-cols-2 gap-x-6 md:contents">
-          {
-            company.map((link, i) => (
-              <>
-                {i > 0 && (
-                  <li aria-hidden="true" class={spacerClass} data-footer-dot>
-                    <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-muted">·</span>
-                  </li>
-                )}
-                <li>
-                  <a href={link.href} class={linkClass}>
-                    {link.label}
-                  </a>
+          {company.map((link, i) => (
+            <>
+              {i > 0 && (
+                <li aria-hidden="true" class={spacerClass} data-footer-dot>
+                  <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm text-muted">·</span>
                 </li>
-              </>
-            ))
-          }
+              )}
+              <li>
+                <a href={link.href} class={linkClass}>
+                  {link.label}
+                </a>
+              </li>
+            </>
+          ))}
         </ul>
       </nav>
     </div>
@@ -169,15 +186,13 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
       <p>&copy; {year} ZanamTech · Cloud, DevOps &amp; AI engineering</p>
       <nav aria-label="Legal">
         <ul class="flex gap-4">
-          {
-            legalLinks.map((link) => (
-              <li>
-                <a href={link.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
-                  {link.label}
-                </a>
-              </li>
-            ))
-          }
+          {legalLinks.map((link) => (
+            <li>
+              <a href={link.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
+                {link.label}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
     </div>

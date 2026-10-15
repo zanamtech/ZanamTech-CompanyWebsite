@@ -18,32 +18,30 @@ const { eyebrow, title, lead, breadcrumbs = [] } = Astro.props;
   <div class="mesh-bg absolute inset-0 -z-10" aria-hidden="true"></div>
   <div class="grid-lines absolute inset-0 -z-10 opacity-50" aria-hidden="true"></div>
   <div class="container-page pt-28 pb-9 sm:pt-32 sm:pb-12 lg:pt-34 lg:pb-14">
-    {
-      breadcrumbs.length > 0 && (
-        <nav aria-label="Breadcrumb" class="mb-8">
-          <ol class="flex flex-wrap items-center gap-1 text-sm text-muted">
-            {breadcrumbs.map((crumb, i) => (
-              <li class="flex items-center gap-1">
-                {i > 0 && (
-                  <span aria-hidden="true" class="px-1">
-                    /
-                  </span>
-                )}
-                {crumb.href ? (
-                  <a href={crumb.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
-                    {crumb.label}
-                  </a>
-                ) : (
-                  <span aria-current="page" class="font-medium text-fg">
-                    {crumb.label}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ol>
-        </nav>
-      )
-    }
+    {breadcrumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" class="mb-8">
+        <ol class="flex flex-wrap items-center gap-1 text-sm text-muted">
+          {breadcrumbs.map((crumb, i) => (
+            <li class="flex items-center gap-1">
+              {i > 0 && (
+                <span aria-hidden="true" class="px-1">
+                  /
+                </span>
+              )}
+              {crumb.href ? (
+                <a href={crumb.href} class="inline-flex min-h-11 items-center hover:text-accent sm:min-h-0">
+                  {crumb.label}
+                </a>
+              ) : (
+                <span aria-current="page" class="font-medium text-fg">
+                  {crumb.label}
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
     <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
       <div class="max-w-3xl">
         {eyebrow && <p class="eyebrow">{eyebrow}</p>}

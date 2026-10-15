@@ -19,7 +19,7 @@ export default defineConfig({
     build: { assetsInlineLimit: 0 },
     resolve: {
       // Alpine's CSP build evaluates expressions without eval/new Function, so the CSP needs no 'unsafe-eval'.
-      alias: { alpinejs: '@alpinejs/csp' }
-    }
-  }
+      alias: { alpinejs: '@alpinejs/csp' },
+    },
+  },
 });

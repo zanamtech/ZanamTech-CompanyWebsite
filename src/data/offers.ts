@@ -20,9 +20,18 @@ export const offers: Offer[] = [
     icon: 'Activity',
     duration: '2–3 weeks',
     output: 'Scorecard and prioritised backlog',
-    summary: 'An independent review of one cloud environment against reliability, security, cost and delivery practices.',
-    inputs: ['Read-only access to the cloud account', 'Read access to repositories and pipelines', 'A named technical owner'],
-    deliverables: ['Scorecard across reliability, security, cost and delivery', 'Findings with evidence', 'Prioritised backlog with cost and risk'],
+    summary:
+      'An independent review of one cloud environment against reliability, security, cost and delivery practices.',
+    inputs: [
+      'Read-only access to the cloud account',
+      'Read access to repositories and pipelines',
+      'A named technical owner',
+    ],
+    deliverables: [
+      'Scorecard across reliability, security, cost and delivery',
+      'Findings with evidence',
+      'Prioritised backlog with cost and risk',
+    ],
     nextStep: 'A fixed-scope project or a managed retainer.',
   },
   {
@@ -44,7 +53,12 @@ export const offers: Offer[] = [
     output: 'Branch rules, pipeline gates and SOPs',
     summary: 'Branch protection, pipeline gates and written SOPs for a delivery process your team can rely on.',
     inputs: ['Admin access to the repository workspace', 'Current release process walkthrough'],
-    deliverables: ['Branch restrictions and merge policies', 'Pipeline approval gates', 'Written SOPs', 'Access review'],
+    deliverables: [
+      'Branch restrictions and merge policies',
+      'Pipeline approval gates',
+      'Written SOPs',
+      'Access review',
+    ],
     nextStep: 'A managed retainer that keeps governance current.',
   },
   {

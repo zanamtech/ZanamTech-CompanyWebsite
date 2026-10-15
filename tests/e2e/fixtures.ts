@@ -25,13 +25,19 @@ export async function revealAll(page: Page) {
   }
   await expect
     .poll(() =>
-      page.evaluate(() =>
-        [...document.querySelectorAll<HTMLElement>('[data-reveal-group] > *, [data-reveal], #process [data-phase] > :first-child')].filter((el) => {
-          if (el.hasAttribute('data-reveal')) return true;
-          let opacity = 1;
-          for (let n: Element | null = el; n && n !== document.body; n = n.parentElement) opacity *= Number(getComputedStyle(n).opacity);
-          return opacity < 0.999;
-        }).length,
+      page.evaluate(
+        () =>
+          [
+            ...document.querySelectorAll<HTMLElement>(
+              '[data-reveal-group] > *, [data-reveal], #process [data-phase] > :first-child',
+            ),
+          ].filter((el) => {
+            if (el.hasAttribute('data-reveal')) return true;
+            let opacity = 1;
+            for (let n: Element | null = el; n && n !== document.body; n = n.parentElement)
+              opacity *= Number(getComputedStyle(n).opacity);
+            return opacity < 0.999;
+          }).length,
       ),
     )
     .toBe(0);
@@ -41,7 +47,9 @@ export async function revealAll(page: Page) {
 /** Run axe (WCAG 2.1 A/AA) and fail on any violation. */
 export async function expectNoA11yViolations(page: Page) {
   const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
-  const summary = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`);
+  const summary = results.violations.map(
+    (v) => `${v.id} (${v.impact}): ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`,
+  );
   expect(summary, summary.join('\n')).toEqual([]);
 }
 

@@ -24,8 +24,7 @@ export type LeadField = Exclude<keyof LeadInput, 'botcheck'>;
 export type LeadErrors = Partial<Record<LeadField, string>>;
 
 export type SubmitResult =
-  | { ok: true; spam?: boolean }
-  | { ok: false; reason: 'rejected' | 'server' | 'network' | 'timeout' };
+  { ok: true; spam?: boolean } | { ok: false; reason: 'rejected' | 'server' | 'network' | 'timeout' };
 
 const TIMEOUT_MS = 10_000;
 
@@ -91,7 +90,8 @@ export function validateLead(input: LeadInput, allowedServices: readonly string[
     errors.budget = 'Please choose an option from the list.';
   }
   for (const [field, options] of OPTIONAL_SELECTS) {
-    if (input[field] && !(options as readonly string[]).includes(input[field])) errors[field] = 'Please choose an option from the list.';
+    if (input[field] && !(options as readonly string[]).includes(input[field]))
+      errors[field] = 'Please choose an option from the list.';
   }
   if (message.length < 20) errors.message = 'Please describe your requirements (at least 20 characters).';
   else if (message.length > 2000) errors.message = 'Please keep your message under 2000 characters.';

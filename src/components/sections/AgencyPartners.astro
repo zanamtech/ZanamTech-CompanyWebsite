@@ -19,7 +19,9 @@ const points = [
     <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
       <div class="lg:col-span-6">
         <p class="eyebrow">For software agencies</p>
-        <h2 id="agencies-title" class="mt-3 text-3xl font-bold text-fg">Your DevOps partner, behind your brand</h2>
+        <h2 id="agencies-title" class="mt-3 text-3xl font-bold text-fg">
+          Your DevOps partner, behind your brand
+        </h2>
         <p class="mt-4 text-muted">
           You win the application work; we run the cloud and delivery platform behind it. Every project gets reliable
           environments, pipelines and operations, without you hiring a platform team.
@@ -32,14 +34,12 @@ const points = [
         </div>
       </div>
       <ul class="space-y-3 lg:col-span-6">
-        {
-          points.map((p) => (
-            <li class="flex gap-2.5 text-fg">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
-              {p}
-            </li>
-          ))
-        }
+        {points.map((p) => (
+          <li class="flex gap-2.5 text-fg">
+            <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-brand-cyan" />
+            {p}
+          </li>
+        ))}
       </ul>
     </div>
   </GlassCard>

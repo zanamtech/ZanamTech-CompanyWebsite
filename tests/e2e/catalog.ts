@@ -18,7 +18,10 @@ export interface CatalogService {
 const DIR = join(process.cwd(), 'src', 'content', 'services');
 
 const field = (frontMatter: string, key: string) =>
-  frontMatter.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]?.trim().replace(/^["']|["']$/g, '');
+  frontMatter
+    .match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]
+    ?.trim()
+    .replace(/^["']|["']$/g, '');
 
 export const catalog: CatalogService[] = readdirSync(DIR)
   .filter((f) => f.endsWith('.md'))
@@ -31,7 +34,9 @@ export const catalog: CatalogService[] = readdirSync(DIR)
       pillar: field(fm, 'pillar') ?? '',
       flagship: field(fm, 'flagship') === 'true',
       published: field(fm, 'published') !== 'false',
-      scenarios: [...fm.matchAll(/^\s+- kind:\s*(real|illustrative)\s*$/gm)].map((m) => ({ kind: m[1] as 'real' | 'illustrative' })),
+      scenarios: [...fm.matchAll(/^\s+- kind:\s*(real|illustrative)\s*$/gm)].map((m) => ({
+        kind: m[1] as 'real' | 'illustrative',
+      })),
     };
   })
   .sort((a, b) => a.order - b.order);

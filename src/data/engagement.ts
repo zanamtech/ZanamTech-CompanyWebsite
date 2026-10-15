@@ -12,21 +12,33 @@ export const engagementPhases: EngagementPhase[] = [
     name: 'Technical Audit & Infrastructure Discovery',
     summary:
       'A structured assessment of cloud configuration, database replication, security perimeters, CI/CD pipelines and monthly resource spend.',
-    details: ['Bottleneck and single-point-of-failure analysis', 'Vulnerability and attack surface review', 'Cost-reduction opportunities'],
+    details: [
+      'Bottleneck and single-point-of-failure analysis',
+      'Vulnerability and attack surface review',
+      'Cost-reduction opportunities',
+    ],
   },
   {
     order: 2,
     name: 'Custom Proposal & Statement of Work',
     summary:
       'A detailed technical Statement of Work defines architecture, deliverables, milestones and service level commitments.',
-    details: ['Architectural specifications and deliverables', 'Deployment milestones and schedule', 'Service levels and security benchmarks'],
+    details: [
+      'Architectural specifications and deliverables',
+      'Deployment milestones and schedule',
+      'Service levels and security benchmarks',
+    ],
   },
   {
     order: 3,
     name: 'Onboarding & Staged Implementation',
     summary:
       'Delivery through Infrastructure as Code, staging validation and staged cutovers, with weekly status reports throughout.',
-    details: ['IaC-driven, repeatable environments', 'Staged validation before every cutover', 'Operational continuity throughout'],
+    details: [
+      'IaC-driven, repeatable environments',
+      'Staged validation before every cutover',
+      'Operational continuity throughout',
+    ],
   },
   {
     order: 4,

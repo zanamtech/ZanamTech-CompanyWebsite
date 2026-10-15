@@ -37,38 +37,38 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
   </PageHero>
 
   <div class="container-page section-y">
-    <div
-      class="privacy-doc space-y-14 text-muted [&_section]:max-w-5xl [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-fg [&_h3]:mt-8 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-fg [&_li]:pl-1 [&_p]:mt-4 [&_p]:leading-relaxed [&_section]:scroll-mt-28 sm:[&_section]:scroll-mt-32 [&_strong]:font-semibold [&_strong]:text-fg [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:marker:text-accent"
-    >
+    <div class="privacy-doc space-y-14 text-muted [&_section]:max-w-5xl [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-fg [&_h3]:mt-8 [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-fg [&_li]:pl-1 [&_p]:mt-4 [&_p]:leading-relaxed [&_section]:scroll-mt-28 sm:[&_section]:scroll-mt-32 [&_strong]:font-semibold [&_strong]:text-fg [&_ul]:mt-4 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5 [&_ul]:marker:text-accent">
       <GlassCard as="div" class="w-full max-w-full p-6! sm:p-8!">
         <nav aria-labelledby="toc-title">
-          <p id="toc-title" class="eyebrow">On this page</p>
+          <p id="toc-title" class="eyebrow">
+            On this page
+          </p>
           <ol class="mt-4! grid list-none! grid-cols-1 gap-3 pl-0! sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {
-              sections.map((s, i) => (
-                <li class="pl-0!">
-                  <a
-                    href={`#${s.id}`}
-                    class="group flex min-h-11 items-center gap-3 text-sm font-medium text-fg transition-colors hover:text-accent"
-                  >
-                    <span class="w-6 text-muted tabular-nums transition-colors group-hover:text-accent">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {s.title}
-                  </a>
-                </li>
-              ))
-            }
+            {sections.map((s, i) => (
+              <li class="pl-0!">
+                <a
+                  href={`#${s.id}`}
+                  class="group flex min-h-11 items-center gap-3 text-sm font-medium text-fg transition-colors hover:text-accent"
+                >
+                  <span class="w-6 text-muted tabular-nums transition-colors group-hover:text-accent">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  {s.title}
+                </a>
+              </li>
+            ))}
           </ol>
         </nav>
       </GlassCard>
 
       <section id="overview" aria-labelledby="overview-title">
-        <h2 id="overview-title"><span class="text-accent tabular-nums">{num('overview')}.</span> Overview &amp; scope</h2>
+        <h2 id="overview-title">
+          <span class="text-accent tabular-nums">{num('overview')}.</span> Overview &amp; scope
+        </h2>
         <p>
-          ZanamTech is committed to data privacy, transparency and the responsible use of personal data. This notice explains what
-          information we collect through this website, why we collect it, how it is protected and the choices available
-          to you.
+          ZanamTech is committed to data privacy, transparency and the responsible use of personal data. This notice
+          explains what information we collect through this website, why we collect it, how it is protected and the
+          choices available to you.
         </p>
         <p>
           It applies to information submitted through this website, including the consultation and custom proposal
@@ -83,7 +83,9 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
         </h2>
 
         <h3>Voluntarily provided data</h3>
-        <p>When you submit a consultation or custom proposal request, we collect the information you choose to provide:</p>
+        <p>
+          When you submit a consultation or custom proposal request, we collect the information you choose to provide:
+        </p>
         <ul>
           <li>Full name and email address</li>
           <li>Company name and, optionally, a phone number</li>
@@ -115,7 +117,9 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
       </section>
 
       <section id="legal-basis" aria-labelledby="legal-title">
-        <h2 id="legal-title"><span class="text-accent tabular-nums">{num('legal-basis')}.</span> Legal basis for processing</h2>
+        <h2 id="legal-title">
+          <span class="text-accent tabular-nums">{num('legal-basis')}.</span> Legal basis for processing
+        </h2>
         <p>We process the information you submit on the following grounds:</p>
         <ul>
           <li>
@@ -157,7 +161,8 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
 
       <section id="processors-infrastructure" aria-labelledby="processors-title">
         <h2 id="processors-title">
-          <span class="text-accent tabular-nums">{num('processors-infrastructure')}.</span> Data processors &amp; infrastructure
+          <span class="text-accent tabular-nums">{num('processors-infrastructure')}.</span> Data processors &amp;
+          infrastructure
         </h2>
         <ul>
           <li>
@@ -174,9 +179,9 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
             it reaches us.
           </li>
           <li>
-            <strong>Client engagements:</strong> where ZanamTech processes personal data on a client's behalf during
-            an engagement, we act as a processor under Article 28 of the GDPR and UK GDPR. We process that data only on
-            the client's documented instructions, under a data processing agreement that covers security measures,
+            <strong>Client engagements:</strong> where ZanamTech processes personal data on a client's behalf during an
+            engagement, we act as a processor under Article 28 of the GDPR and UK GDPR. We process that data only on the
+            client's documented instructions, under a data processing agreement that covers security measures,
             sub-processors, breach notification, assistance with data-subject requests, and deletion or return of data
             at the end of the engagement. A list of sub-processors is available on request.
           </li>
@@ -188,8 +193,8 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
           <span class="text-accent tabular-nums">{num('local-storage-cookies')}.</span> Local storage &amp; cookies
         </h2>
         <p>
-          This website sets <strong>no tracking or advertising cookies</strong>. Your browser's local storage
-          (<code class="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-fg">localStorage</code>) is used exclusively to
+          This website sets <strong>no tracking or advertising cookies</strong>. Your browser's local storage (
+          <code class="rounded bg-surface-2 px-1.5 py-0.5 text-sm text-fg">localStorage</code>) is used exclusively to
           remember interface state, namely your light or dark theme preference. This value never leaves your device and
           can be cleared at any time through your browser settings.
         </p>
@@ -210,13 +215,23 @@ const num = (id: string) => String(sections.findIndex((s) => s.id === id) + 1).p
       </section>
 
       <section id="your-rights" aria-labelledby="rights-title">
-        <h2 id="rights-title"><span class="text-accent tabular-nums">{num('your-rights')}.</span> Your data rights</h2>
+        <h2 id="rights-title">
+          <span class="text-accent tabular-nums">{num('your-rights')}.</span> Your data rights
+        </h2>
         <p>Depending on your jurisdiction, you may request at any time:</p>
         <ul>
-          <li><strong>Access:</strong> a copy of the information we hold about you</li>
-          <li><strong>Correction:</strong> rectification of inaccurate or incomplete information</li>
-          <li><strong>Portability:</strong> your information in a structured, commonly used format</li>
-          <li><strong>Deletion:</strong> complete erasure of your information (the "right to be forgotten")</li>
+          <li>
+            <strong>Access:</strong> a copy of the information we hold about you
+          </li>
+          <li>
+            <strong>Correction:</strong> rectification of inaccurate or incomplete information
+          </li>
+          <li>
+            <strong>Portability:</strong> your information in a structured, commonly used format
+          </li>
+          <li>
+            <strong>Deletion:</strong> complete erasure of your information (the "right to be forgotten")
+          </li>
         </ul>
         <p>
           These rights apply under the EU General Data Protection Regulation (GDPR) and UK GDPR, and equivalent rights

@@ -12,32 +12,37 @@ interface Props {
 const { detailed = false, withIntro = true } = Astro.props;
 ---
 
-<section id="process" aria-labelledby={withIntro ? 'process-title' : undefined} aria-label={withIntro ? undefined : 'Engagement phases'} class:list={['container-page overflow-x-clip', withIntro ? 'section-y' : 'section-b pt-8']}>
-  {
-    withIntro && (
-      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div class="max-w-2xl">
-          <p class="eyebrow">How we engage</p>
-          <h2 id="process-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
-            A consultative process built for enterprise accountability
-          </h2>
-          <p class="mt-4 text-lg text-muted">
-            No fixed packages or commodity rates. Every engagement begins with an architectural assessment and is
-            governed by a Statement of Work.
-          </p>
-        </div>
-        <a href="/approach" class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline">
-          How We Work
-          <ArrowRight aria-hidden="true" className="size-4" />
-        </a>
+<section
+  id="process"
+  aria-labelledby={withIntro ? 'process-title' : undefined}
+  aria-label={withIntro ? undefined : 'Engagement phases'}
+  class:list={['container-page overflow-x-clip', withIntro ? 'section-y' : 'section-b pt-8']}
+>
+  {withIntro && (
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div class="max-w-2xl">
+        <p class="eyebrow">How we engage</p>
+        <h2 id="process-title" class="mt-3 text-3xl font-bold text-fg sm:text-4xl">
+          A consultative process built for enterprise accountability
+        </h2>
+        <p class="mt-4 text-lg text-muted">
+          No fixed packages or commodity rates. Every engagement begins with an architectural assessment and is governed
+          by a Statement of Work.
+        </p>
       </div>
-    )
-  }
+      <a
+        href="/approach"
+        class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
+      >
+        How We Work
+        <ArrowRight aria-hidden="true" className="size-4" />
+      </a>
+    </div>
+  )}
 
   <div class:list={['relative', withIntro && 'mt-12']} x-data={`processReveal(${engagementPhases.length})`}>
-  <ol class="relative grid gap-(--process-gap) [--process-gap:--spacing(6)] md:grid-cols-2 lg:grid-cols-4 lg:[--process-gap:--spacing(10)]">
-    {
-      engagementPhases.map((phase) => (
+    <ol class="relative grid gap-(--process-gap) [--process-gap:--spacing(6)] md:grid-cols-2 lg:grid-cols-4 lg:[--process-gap:--spacing(10)]">
+      {engagementPhases.map((phase) => (
         <li
           data-phase
           class="group/phase relative flex data-[shown=true]:transition-[translate] data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16"
@@ -67,7 +72,10 @@ const { detailed = false, withIntro = true } = Astro.props;
               card's left border. It draws once this card has settled, just before the next card slides in. Without
               JS it renders fully drawn. */}
           {phase.order < engagementPhases.length && (
-            <div class="pointer-events-none absolute top-[47px] left-full hidden h-[2px] w-(--process-gap) lg:block" aria-hidden="true">
+            <div
+              class="pointer-events-none absolute top-[47px] left-full hidden h-[2px] w-(--process-gap) lg:block"
+              aria-hidden="true"
+            >
               <span
                 class="block h-full w-full bg-purple-500/80 shadow-[0_0_8px_rgba(168,85,247,0.5)] data-[drawn=true]:transition-[width] data-[drawn=true]:duration-500 data-[drawn=true]:ease-out data-[drawn=false]:w-0 dark:bg-purple-400/80"
                 x-bind:data-drawn={`isDrawn(${phase.order})`}
@@ -75,8 +83,7 @@ const { detailed = false, withIntro = true } = Astro.props;
             </div>
           )}
         </li>
-      ))
-    }
-  </ol>
+      ))}
+    </ol>
   </div>
 </section>

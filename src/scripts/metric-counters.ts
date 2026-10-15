@@ -36,7 +36,9 @@ async function start(counters: HTMLElement[]) {
 
 function setup() {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const counters = Array.from(document.querySelectorAll<HTMLElement>('[data-counter][data-value]:not([data-motion-bound])'));
+  const counters = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-counter][data-value]:not([data-motion-bound])'),
+  );
   if (!counters.length || reduceMotion || !('IntersectionObserver' in window)) return;
   counters.forEach((el) => (el.dataset.motionBound = ''));
 

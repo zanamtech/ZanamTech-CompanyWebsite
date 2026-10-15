@@ -7,13 +7,15 @@ export type Pillar = Service['data']['pillar'];
 export const servicePillars: Record<Pillar, { title: string; description: string; order: number; icon: string }> = {
   managed: {
     title: 'Managed Cloud & DevOps',
-    description: 'We run your cloud and delivery platform: operations, environments, pipelines, backups and governance.',
+    description:
+      'We run your cloud and delivery platform: operations, environments, pipelines, backups and governance.',
     order: 1,
     icon: 'ServerCog',
   },
   'cloud-devops': {
     title: 'Cloud & DevOps Engineering',
-    description: 'Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.',
+    description:
+      'Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.',
     order: 2,
     icon: 'Layers',
   },
@@ -47,13 +49,18 @@ export async function getServicesByPillar(): Promise<
   const services = await getPublishedServices();
   return (Object.keys(servicePillars) as Pillar[])
     .sort((a, b) => servicePillars[a].order - servicePillars[b].order)
-    .map((pillar) => ({ pillar, ...servicePillars[pillar], services: services.filter((s) => s.data.pillar === pillar) }));
+    .map((pillar) => ({
+      pillar,
+      ...servicePillars[pillar],
+      services: services.filter((s) => s.data.pillar === pillar),
+    }));
 }
 
 /** The single flagship service. Throws if the catalogue does not have exactly one published flagship. */
 export async function getFlagship(): Promise<Service> {
   const flagships = (await getPublishedServices()).filter((s) => s.data.flagship);
-  if (flagships.length !== 1) throw new Error(`Expected exactly one published flagship service, found ${flagships.length}.`);
+  if (flagships.length !== 1)
+    throw new Error(`Expected exactly one published flagship service, found ${flagships.length}.`);
   return flagships[0];
 }
 

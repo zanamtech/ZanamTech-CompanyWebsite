@@ -2,7 +2,8 @@ import { test, expect } from './fixtures';
 import { catalog, published } from './catalog';
 
 // Constitution III: no clock times, time-zone labels or minute/hour figures on the site.
-const TIME_FIGURES = /\b\d{1,2}:\d{2}\b|\b(?:PKT|GST|GMT|UTC|EST|PST)\b|\b\d+\s*[-–]?\s*(?:minutes?|mins?|hours?|hrs?)\b/i;
+const TIME_FIGURES =
+  /\b\d{1,2}:\d{2}\b|\b(?:PKT|GST|GMT|UTC|EST|PST)\b|\b\d+\s*[-–]?\s*(?:minutes?|mins?|hours?|hrs?)\b/i;
 
 test.describe('US2 — Services v3', () => {
   test('/services is grouped into four pillars, flagship first, with anchors', async ({ page }) => {
@@ -15,20 +16,28 @@ test.describe('US2 — Services v3', () => {
 
   test('every published service is linked from the Home pillar grid (two clicks or fewer)', async ({ page }) => {
     await page.goto('/');
-    const hrefs = await page.locator('#core-services [data-pillar] a[href^="/services/"]').evaluateAll((els) =>
-      els.map((e) => e.getAttribute('href')),
-    );
+    const hrefs = await page
+      .locator('#core-services [data-pillar] a[href^="/services/"]')
+      .evaluateAll((els) => els.map((e) => e.getAttribute('href')));
     expect([...new Set(hrefs)].sort()).toEqual(published.map((s) => `/services/${s.slug}`).sort());
   });
 
   test('the Managed pillar card lists what the retainer includes, each linking to the flagship', async ({ page }) => {
     await page.goto('/');
     const links = page.locator('#core-services [data-pillar="managed"] ul a');
-    await expect(links).toHaveText(['Monitoring and alerting', 'Patching and backups', 'Cost and security reviews', 'Monthly service report']);
-    for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) expect(href).toBe('/services/managed-cloud-devops');
+    await expect(links).toHaveText([
+      'Monitoring and alerting',
+      'Patching and backups',
+      'Cost and security reviews',
+      'Monthly service report',
+    ]);
+    for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute('href'))))
+      expect(href).toBe('/services/managed-cloud-devops');
   });
 
-  test('/services has no empty slots: Managed is one full-width feature card, Practical AI fills a two-column row', async ({ page }, testInfo) => {
+  test('/services has no empty slots: Managed is one full-width feature card, Practical AI fills a two-column row', async ({
+    page,
+  }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop layout');
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto('/services');
@@ -36,12 +45,16 @@ test.describe('US2 — Services v3', () => {
     const flagship = (await page.locator('#managed [data-service-card]').boundingBox())!;
     expect(Math.round(flagship.width)).toBe(Math.round(list.width));
     await expect(page.locator('#managed [data-service-card]')).toHaveAttribute('data-layout', 'feature');
-    const ai = await page.locator('#ai [data-service-card]').evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+    const ai = await page
+      .locator('#ai [data-service-card]')
+      .evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
     expect(ai).toHaveLength(2);
     expect(new Set(ai).size, 'both AI cards on one row').toBe(1);
   });
 
-  test('every service page: 4–5 FAQs, 3 related cards without numbers, engagement chips linking to How We Work', async ({ page }) => {
+  test('every service page: 4–5 FAQs, 3 related cards without numbers, engagement chips linking to How We Work', async ({
+    page,
+  }) => {
     for (const service of published) {
       await page.goto(`/services/${service.slug}`);
       const faqs = await page.locator('#service-faq [data-faq]').count();
@@ -54,17 +67,21 @@ test.describe('US2 — Services v3', () => {
       const count = await chips.count();
       expect(count, `${service.slug} engagement chips`).toBeGreaterThanOrEqual(2);
       expect(count).toBeLessThanOrEqual(3);
-      for (const href of await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href')))) expect(href).toBe('/approach#engagement-models');
+      for (const href of await chips.evaluateAll((els) => els.map((e) => e.getAttribute('href'))))
+        expect(href).toBe('/approach#engagement-models');
     }
   });
 
-  test('flagship page shows modules, three tiers by scope and the P1–P4 definitions, with no time figures', async ({ page }) => {
+  test('flagship page shows modules, three tiers by scope and the P1–P4 definitions, with no time figures', async ({
+    page,
+  }) => {
     const flagship = published.find((s) => s.flagship)!;
     await page.goto(`/services/${flagship.slug}`);
     await expect(page.getByRole('heading', { name: 'What the service covers' })).toBeVisible();
     await expect(page.locator('[data-tier]')).toHaveCount(3);
     await expect(page.locator('[data-severity]')).toHaveCount(4);
-    for (const level of ['P1', 'P2', 'P3', 'P4']) await expect(page.locator(`[data-severity="${level}"]`)).toBeVisible();
+    for (const level of ['P1', 'P2', 'P3', 'P4'])
+      await expect(page.locator(`[data-severity="${level}"]`)).toBeVisible();
     const tierText = (await page.locator('[data-tier]').allInnerTexts()).join('\n');
     expect(tierText).not.toMatch(TIME_FIGURES);
     await expect(page.getByRole('heading', { name: '4-week onboarding' })).toBeVisible();

@@ -35,7 +35,9 @@ test.describe('Reveal: grids appear as one group', () => {
     await page.goto('/');
     await page.locator('#process ol').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1_200);
-    const opacities = await page.locator('#process [data-phase] > .glass').evaluateAll((els) => els.map((el) => Number(getComputedStyle(el).opacity)));
+    const opacities = await page
+      .locator('#process [data-phase] > .glass')
+      .evaluateAll((els) => els.map((el) => Number(getComputedStyle(el).opacity)));
     expect(opacities).toEqual([1, 1, 1, 1]);
   });
 });
@@ -45,7 +47,10 @@ test.describe('Home', () => {
     await page.goto('/');
     await expect(page.locator('#start-here [data-offer]')).toHaveCount(0);
     await expect(page.locator('[data-offer-strip] a')).toHaveCount(5);
-    await expect(page.locator('#start-here').getByRole('link', { name: 'See all entry offers' })).toHaveAttribute('href', '/start-here');
+    await expect(page.locator('#start-here').getByRole('link', { name: 'See all entry offers' })).toHaveAttribute(
+      'href',
+      '/start-here',
+    );
     await page.goto('/services');
     await expect(page.locator('[data-offer-strip] a')).toHaveCount(5);
   });
@@ -62,7 +67,9 @@ test.describe('Home', () => {
     await expect(page.locator('footer')).not.toContainText('Zero-trust security');
   });
 
-  test('footer: company LinkedIn icon beside the email, opening in a new tab; listed in Organization sameAs', async ({ page }) => {
+  test('footer: company LinkedIn icon beside the email, opening in a new tab; listed in Organization sameAs', async ({
+    page,
+  }) => {
     await page.goto('/');
     const link = page.locator('footer [data-footer-linkedin]');
     await expect(link).toHaveAttribute('href', 'https://www.linkedin.com/company/zanamtech/');
@@ -70,7 +77,9 @@ test.describe('Home', () => {
     await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
     await expect(link).toHaveAttribute('aria-label', 'ZanamTech on LinkedIn');
     const ld = (await page.locator('script[type="application/ld+json"]').allTextContents()).map((t) => JSON.parse(t));
-    expect(ld.find((j) => j['@type'] === 'Organization')?.sameAs).toEqual(['https://www.linkedin.com/company/zanamtech/']);
+    expect(ld.find((j) => j['@type'] === 'Organization')?.sameAs).toEqual([
+      'https://www.linkedin.com/company/zanamtech/',
+    ]);
   });
 });
 
@@ -82,7 +91,13 @@ test.describe('5-card sets centre the second row on desktop', () => {
     test(`${path}: 3 + 2 with the second row centred`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name !== 'desktop', 'Desktop layout');
       await page.goto(path);
-      const boxes = await page.locator(item).evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })));
+      const boxes = await page
+        .locator(item)
+        .evaluateAll((els) =>
+          els
+            .map((e) => e.getBoundingClientRect())
+            .map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })),
+        );
       const rows = [...new Set(boxes.map((b) => b.top))];
       expect(rows).toHaveLength(2);
       const first = boxes.filter((b) => b.top === rows[0]);
@@ -128,18 +143,27 @@ test.describe('About', () => {
       'Agency partnership',
       'Extended engineering capacity',
     ]);
-    await expect(chips(3)).toHaveText(['B2B SaaS companies', 'Software agencies', 'Mid-market firms', 'Enterprise teams']);
+    await expect(chips(3)).toHaveText([
+      'B2B SaaS companies',
+      'Software agencies',
+      'Mid-market firms',
+      'Enterprise teams',
+    ]);
     await expect(page.getByRole('heading', { name: 'Pragmatic, enterprise-first' })).toBeVisible();
   });
 });
 
 test.describe('Insights article', () => {
-  test('hero meta line, author JSON-LD and a reading layout without an empty right half', async ({ page }, testInfo) => {
+  test('hero meta line, author JSON-LD and a reading layout without an empty right half', async ({
+    page,
+  }, testInfo) => {
     await page.goto('/insights');
     const href = await page.locator('[data-insight] a').first().getAttribute('href');
     await page.goto(href!);
     const meta = page.locator('[data-article-meta]');
-    await expect(meta).toContainText(/By Mubashir Ahmed\s*·\s*Founder & Lead Architect\s*·\s*\d{1,2} \w+ \d{4}\s*·\s*\d+ min read/);
+    await expect(meta).toContainText(
+      /By Mubashir Ahmed\s*·\s*Founder & Lead Architect\s*·\s*\d{1,2} \w+ \d{4}\s*·\s*\d+ min read/,
+    );
     await expect(meta.getByRole('link', { name: 'Mubashir Ahmed' })).toHaveAttribute('href', '/about');
     const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
     const article = ld.map((t) => JSON.parse(t)).find((j) => j['@type'] === 'Article');
@@ -162,7 +186,9 @@ test.describe('Trust and legal', () => {
     await expect(page.locator('#reporting-issues').getByRole('link', { name: 'security@zanamtech.com' })).toBeVisible();
   });
 
-  test('/privacy and /terms show "Last updated" under the title; /trust and /terms show the breadcrumb below the header', async ({ page }) => {
+  test('/privacy and /terms show "Last updated" under the title; /trust and /terms show the breadcrumb below the header', async ({
+    page,
+  }) => {
     for (const path of ['/privacy', '/terms']) {
       await page.goto(path);
       await expect(page.locator('[data-last-updated]')).toContainText(/^Last updated: \d{1,2} \w+ \d{4}$/);

@@ -10,7 +10,9 @@ test.describe('Focus rings: keyboard only', () => {
     await page.waitForLoadState('load');
     // The client-side navigation then moves focus to <main>; wait for it so Tab starts from there.
     await expect(page.locator('main#main')).toBeFocused();
-    const outlineAfterClick = await page.evaluate(() => getComputedStyle(document.activeElement as Element).outlineStyle);
+    const outlineAfterClick = await page.evaluate(
+      () => getComputedStyle(document.activeElement as Element).outlineStyle,
+    );
     expect(outlineAfterClick).toBe('none');
 
     await page.keyboard.press('Tab');
@@ -20,12 +22,19 @@ test.describe('Focus rings: keyboard only', () => {
 });
 
 test.describe('Services mega-menu (desktop)', () => {
-  for (const [width, height] of [[1440, 900], [1280, 800], [1024, 768]] as const) {
+  for (const [width, height] of [
+    [1440, 900],
+    [1280, 800],
+    [1024, 768],
+  ] as const) {
     test(`balanced and short at ${width}px`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name !== 'desktop', 'Desktop menu');
       await page.setViewportSize({ width, height });
       await page.goto('/');
-      await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Services', exact: true }).hover();
+      await page
+        .locator('header nav[aria-label="Primary"]')
+        .getByRole('link', { name: 'Services', exact: true })
+        .hover();
       const menu = page.locator('#services-menu');
       await expect(menu).toBeVisible();
       const box = (await menu.boundingBox())!;
@@ -34,15 +43,22 @@ test.describe('Services mega-menu (desktop)', () => {
       expect(box.x + box.width).toBeLessThanOrEqual(width);
       // Flagship first, shown like every other service (no badge, no highlighted tile); no list taller than four items.
       await expect(menu.locator('[data-menu-pillar]').first()).toHaveAttribute('data-menu-pillar', 'managed');
-      await expect(menu.locator('a[href^="/services/"]').first()).toHaveAttribute('href', '/services/managed-cloud-devops');
+      await expect(menu.locator('a[href^="/services/"]').first()).toHaveAttribute(
+        'href',
+        '/services/managed-cloud-devops',
+      );
       await expect(menu.getByText('Flagship', { exact: true })).toHaveCount(0);
       const [flagshipLink, otherLink] = await Promise.all(
         ['/services/managed-cloud-devops', '/services/observability-monitoring'].map((href) =>
-          menu.locator(`a[href="${href}"]`).evaluate((a) => `${a.className}|${getComputedStyle(a.parentElement!.parentElement!).borderTopWidth}`),
+          menu
+            .locator(`a[href="${href}"]`)
+            .evaluate((a) => `${a.className}|${getComputedStyle(a.parentElement!.parentElement!).borderTopWidth}`),
         ),
       );
       expect(flagshipLink).toBe(otherLink);
-      for (const count of await menu.locator('ul').evaluateAll((uls) => uls.map((u) => u.querySelectorAll('a[href^="/services/"]').length))) {
+      for (const count of await menu
+        .locator('ul')
+        .evaluateAll((uls) => uls.map((u) => u.querySelectorAll('a[href^="/services/"]').length))) {
         expect(count).toBeLessThanOrEqual(4);
       }
       await expect(menu.locator('a[href^="/services/"]')).toHaveCount(published.length);
@@ -56,7 +72,11 @@ test.describe('Services mega-menu (desktop)', () => {
     const nav = page.locator('header nav[aria-label="Primary"]');
     await expect(nav.getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Managed Services' })).toHaveCount(0);
-    const cta = (await page.locator('header').getByRole('link', { name: 'Book a Strategy Consultation' }).first().boundingBox())!;
+    const cta = (await page
+      .locator('header')
+      .getByRole('link', { name: 'Book a Strategy Consultation' })
+      .first()
+      .boundingBox())!;
     expect(cta.x + cta.width).toBeLessThanOrEqual(1024 - 16);
     expect(cta.height).toBeLessThanOrEqual(44);
   });
@@ -76,7 +96,8 @@ test.describe('Mobile menu: expandable Services', () => {
     await expect(toggle).toHaveAttribute('aria-expanded', 'true');
     const groups = drawer.locator('[data-mobile-pillar]');
     await expect(groups).toHaveCount(4);
-    for (const open of await groups.evaluateAll((els) => els.map((e) => (e as HTMLDetailsElement).open))) expect(open).toBe(false);
+    for (const open of await groups.evaluateAll((els) => els.map((e) => (e as HTMLDetailsElement).open)))
+      expect(open).toBe(false);
 
     // Keyboard: Enter on a pillar summary opens it and reveals its services.
     const cloud = drawer.locator('[data-mobile-pillar="cloud-devops"]');
@@ -113,14 +134,18 @@ test.describe('Footer', () => {
   });
 
   for (const width of [1440, 1024, 768]) {
-    test(`Company links form one row under the services, which span to the right edge, at ${width}px`, async ({ page }, testInfo) => {
+    test(`Company links form one row under the services, which span to the right edge, at ${width}px`, async ({
+      page,
+    }, testInfo) => {
       test.skip(testInfo.project.name !== 'desktop', 'Desktop and tablet footer');
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/');
       const footer = page.locator('footer');
       const company = footer.locator('[data-footer-company]');
       await expect(company.getByRole('heading', { name: 'Company' })).toBeVisible();
-      const tops = await company.getByRole('link').evaluateAll((links) => links.map((a) => Math.round(a.getBoundingClientRect().top)));
+      const tops = await company
+        .getByRole('link')
+        .evaluateAll((links) => links.map((a) => Math.round(a.getBoundingClientRect().top)));
       expect(new Set(tops).size, 'single row').toBe(1);
       const services = (await footer.locator('[data-footer-services]').boundingBox())!;
       const container = (await footer.locator('.container-page').first().boundingBox())!;
@@ -137,7 +162,9 @@ test.describe('Footer', () => {
   }
 
   for (const width of [1440, 1024]) {
-    test(`service columns: equal gaps, same first-link height, even item spacing at ${width}px`, async ({ page }, testInfo) => {
+    test(`service columns: equal gaps, same first-link height, even item spacing at ${width}px`, async ({
+      page,
+    }, testInfo) => {
       test.skip(testInfo.project.name !== 'desktop', 'Desktop and tablet footer');
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/');
@@ -168,7 +195,8 @@ test.describe('Footer', () => {
     await page.goto('/');
     const groups = page.locator('footer [data-footer-pillar-mobile]');
     await expect(groups).toHaveCount(4);
-    for (const open of await groups.evaluateAll((els) => els.map((e) => (e as HTMLDetailsElement).open))) expect(open).toBe(false);
+    for (const open of await groups.evaluateAll((els) => els.map((e) => (e as HTMLDetailsElement).open)))
+      expect(open).toBe(false);
     await groups.first().locator('summary').scrollIntoViewIfNeeded();
     await groups.first().locator('summary').tap();
     await expect(groups.first()).toHaveAttribute('open', '');

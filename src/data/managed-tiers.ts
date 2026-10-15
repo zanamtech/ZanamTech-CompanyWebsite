@@ -17,7 +17,13 @@ export const tiers: RetainerTier[] = [
     id: 'essentials',
     name: 'Essentials',
     coverage: 'Coverage during your business hours',
-    includes: ['Monitoring and alerting', 'Monthly patching', 'Backup checks', 'Monthly service report', 'A small block of improvements'],
+    includes: [
+      'Monitoring and alerting',
+      'Monthly patching',
+      'Backup checks',
+      'Monthly service report',
+      'A small block of improvements',
+    ],
   },
   {
     id: 'professional',
@@ -62,4 +68,9 @@ export const severityLevels: SeverityLevel[] = [
 
 /** What every Managed Cloud & DevOps retainer includes: the short list on the home pillar card and the /services
  * flagship card. Scope wording only, never response times. */
-export const flagshipIncluded = ['Monitoring and alerting', 'Patching and backups', 'Cost and security reviews', 'Monthly service report'];
+export const flagshipIncluded = [
+  'Monitoring and alerting',
+  'Patching and backups',
+  'Cost and security reviews',
+  'Monthly service report',
+];

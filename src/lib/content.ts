@@ -7,7 +7,8 @@ import { getCollection } from 'astro:content';
 export const isVisible = (entry: { data: { draft?: boolean } }) => !entry.data.draft || import.meta.env.DEV;
 
 /** Verified-only proof (ADR-003, Constitution III): drop anything that is not verified. */
-export const verifiedOnly = <T extends { verified: boolean }>(list: readonly T[]): T[] => list.filter((item) => item.verified);
+export const verifiedOnly = <T extends { verified: boolean }>(list: readonly T[]): T[] =>
+  list.filter((item) => item.verified);
 
 /**
  * Case-study source files. Checked first so an empty collection is never queried (avoids a warning per page; the

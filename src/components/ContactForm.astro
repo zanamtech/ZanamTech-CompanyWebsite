@@ -29,8 +29,24 @@ const config = JSON.stringify({ services, idPrefix });
 
 const textFields = [
   { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
-  { name: 'email', label: 'Email address', type: 'email', autocomplete: 'email', required: true, maxlength: 100, hint: '' },
-  { name: 'company', label: 'Company name', type: 'text', autocomplete: 'organization', required: true, maxlength: 120, hint: '' },
+  {
+    name: 'email',
+    label: 'Email address',
+    type: 'email',
+    autocomplete: 'email',
+    required: true,
+    maxlength: 100,
+    hint: '',
+  },
+  {
+    name: 'company',
+    label: 'Company name',
+    type: 'text',
+    autocomplete: 'organization',
+    required: true,
+    maxlength: 120,
+    hint: '',
+  },
   {
     name: 'phone',
     label: 'Phone number (optional)',
@@ -99,140 +115,138 @@ const menus = [
     <input type="hidden" name="subject" value="New consultation request — ZanamTech website" />
 
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5">
-      {
-        textFields.map((field) => (
-          <div>
-            <label for={id(field.name)} class="block text-sm font-semibold text-fg">
-              {field.label}
-            </label>
-            <input
-              id={id(field.name)}
-              name={field.name}
-              type={field.type}
-              autocomplete={field.autocomplete}
-              required={field.required}
-              maxlength={field.maxlength}
-              inputmode={field.type === 'tel' ? 'tel' : undefined}
-              placeholder={field.hint ? '+1 555 010 0000' : undefined}
-              class="field-input mt-1.5"
-              x-model={`fields.${field.name}`}
-              x-bind:aria-invalid={`errors.${field.name} ? 'true' : 'false'`}
-              aria-describedby={field.hint ? `${id(field.name)}-hint` : undefined}
-              x-bind:aria-describedby={
-                field.hint
-                  ? `errors.${field.name} ? '${id(field.name)}-hint ${id(field.name)}-error' : '${id(field.name)}-hint'`
-                  : `errors.${field.name} ? '${id(field.name)}-error' : null`
-              }
-            />
-            {field.hint && (
-              <p id={`${id(field.name)}-hint`} class="mt-0.5 text-xs text-muted">
-                {field.hint}
-              </p>
-            )}
-            <p
-              id={`${id(field.name)}-error`}
-              class="mt-1.5 text-sm font-medium text-danger"
-              x-show={`errors.${field.name}`}
-              x-text={`errors.${field.name}`}
-              x-cloak
-            />
-          </div>
-        ))
-      }
-      {
-        menus.map((menu) => (
-          <div>
-            <label id={`${id(menu.field)}-label`} for={id(menu.field)} class="block text-sm font-semibold text-fg">
-              {menu.label}
-            </label>
-            {/* No-JS fallback: the native select is the control until Alpine starts, then it is hidden. */}
-            <select
-              name={menu.field}
-              aria-label={menu.label}
-              required={menu.required}
-              class="field-input mt-1.5"
-              x-model={`fields.${menu.field}`}
-              x-show="false"
+      {textFields.map((field) => (
+        <div>
+          <label for={id(field.name)} class="block text-sm font-semibold text-fg">
+            {field.label}
+          </label>
+          <input
+            id={id(field.name)}
+            name={field.name}
+            type={field.type}
+            autocomplete={field.autocomplete}
+            required={field.required}
+            maxlength={field.maxlength}
+            inputmode={field.type === 'tel' ? 'tel' : undefined}
+            placeholder={field.hint ? '+1 555 010 0000' : undefined}
+            class="field-input mt-1.5"
+            x-model={`fields.${field.name}`}
+            x-bind:aria-invalid={`errors.${field.name} ? 'true' : 'false'`}
+            aria-describedby={field.hint ? `${id(field.name)}-hint` : undefined}
+            x-bind:aria-describedby={
+              field.hint
+                ? `errors.${field.name} ? '${id(field.name)}-hint ${id(field.name)}-error' : '${id(field.name)}-hint'`
+                : `errors.${field.name} ? '${id(field.name)}-error' : null`
+            }
+          />
+          {field.hint && (
+            <p id={`${id(field.name)}-hint`} class="mt-0.5 text-xs text-muted">
+              {field.hint}
+            </p>
+          )}
+          <p
+            id={`${id(field.name)}-error`}
+            class="mt-1.5 text-sm font-medium text-danger"
+            x-show={`errors.${field.name}`}
+            x-text={`errors.${field.name}`}
+            x-cloak
+          />
+        </div>
+      ))}
+      {menus.map((menu) => (
+        <div>
+          <label id={`${id(menu.field)}-label`} for={id(menu.field)} class="block text-sm font-semibold text-fg">
+            {menu.label}
+          </label>
+          {/* No-JS fallback: the native select is the control until Alpine starts, then it is hidden. */}
+          <select
+            name={menu.field}
+            aria-label={menu.label}
+            required={menu.required}
+            class="field-input mt-1.5"
+            x-model={`fields.${menu.field}`}
+            x-show="false"
+          >
+            <option value="">{menu.placeholder}</option>
+            {menu.options.map((o) => (
+              <option value={o}>{o}</option>
+            ))}
+          </select>
+          <div class="relative mt-1.5" x-on:click.outside={`closeMenuIf('${menu.field}')`} x-cloak>
+            <button
+              type="button"
+              id={id(menu.field)}
+              data-focus={menu.field}
+              role="combobox"
+              aria-haspopup="listbox"
+              aria-controls={`${id(menu.field)}-listbox`}
+              aria-expanded="false"
+              x-bind:aria-expanded={`openMenu === '${menu.field}' ? 'true' : 'false'`}
+              x-bind:aria-activedescendant={`activeId('${menu.field}')`}
+              x-bind:aria-invalid={`errors.${menu.field} ? 'true' : 'false'`}
+              x-bind:aria-describedby={`errors.${menu.field} ? '${id(menu.field)}-error' : null`}
+              class="field-input flex items-center justify-between gap-2 pr-3.5! text-left"
+              x-on:click={`toggleMenu('${menu.field}')`}
+              x-on:keydown={`onMenuKey('${menu.field}', $event)`}
             >
-              <option value="">{menu.placeholder}</option>
-              {menu.options.map((o) => (
-                <option value={o}>{o}</option>
+              <span
+                class="truncate"
+                x-bind:class={`fields.${menu.field} ? 'text-fg' : 'text-muted'`}
+                x-text={`fields.${menu.field} || '${menu.placeholder}'`}
+              >
+                {menu.placeholder}
+              </span>
+              <span
+                class="inline-flex shrink-0 text-muted transition-transform duration-200"
+                x-bind:class={`openMenu === '${menu.field}' && 'rotate-180'`}
+              >
+                <ChevronDown aria-hidden="true" className="size-4" />
+              </span>
+            </button>
+            <ul
+              id={`${id(menu.field)}-listbox`}
+              role="listbox"
+              aria-labelledby={`${id(menu.field)}-label`}
+              tabindex="-1"
+              class="absolute inset-x-0 z-50 overflow-y-auto rounded-xl border border-border/80 bg-bg/95 p-1.5 shadow-xl backdrop-blur-md"
+              x-bind:class="menuUp ? 'bottom-full mb-1' : 'top-full mt-1'"
+              x-bind:style="menuStyle"
+              x-show={`openMenu === '${menu.field}'`}
+              x-transition.opacity.duration.150ms
+            >
+              {menu.options.map((o, i) => (
+                <li
+                  id={`${id(menu.field)}-listbox-${i}`}
+                  role="option"
+                  data-value={o}
+                  aria-selected="false"
+                  x-bind:aria-selected={`optionSelected('${menu.field}', ${i})`}
+                  x-bind:data-active={`optionActive('${menu.field}', ${i})`}
+                  x-on:mouseenter={`activeIndex = ${i}`}
+                  x-on:click={`chooseOption('${menu.field}', ${i})`}
+                  class="group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-fg transition-colors hover:bg-purple-500/10 hover:text-purple-600 aria-selected:font-semibold data-[active=true]:bg-purple-500/10 data-[active=true]:text-purple-600 dark:hover:bg-purple-500/20 dark:hover:text-purple-300 dark:data-[active=true]:bg-purple-500/20 dark:data-[active=true]:text-purple-300"
+                >
+                  <span>{o}</span>
+                  <Check aria-hidden="true" className="size-4 shrink-0 opacity-0 group-aria-selected:opacity-100" />
+                </li>
               ))}
-            </select>
-            <div class="relative mt-1.5" x-on:click.outside={`closeMenuIf('${menu.field}')`} x-cloak>
-              <button
-                type="button"
-                id={id(menu.field)}
-                data-focus={menu.field}
-                role="combobox"
-                aria-haspopup="listbox"
-                aria-controls={`${id(menu.field)}-listbox`}
-                aria-expanded="false"
-                x-bind:aria-expanded={`openMenu === '${menu.field}' ? 'true' : 'false'`}
-                x-bind:aria-activedescendant={`activeId('${menu.field}')`}
-                x-bind:aria-invalid={`errors.${menu.field} ? 'true' : 'false'`}
-                x-bind:aria-describedby={`errors.${menu.field} ? '${id(menu.field)}-error' : null`}
-                class="field-input flex items-center justify-between gap-2 pr-3.5! text-left"
-                x-on:click={`toggleMenu('${menu.field}')`}
-                x-on:keydown={`onMenuKey('${menu.field}', $event)`}
-              >
-                <span
-                  class="truncate"
-                  x-bind:class={`fields.${menu.field} ? 'text-fg' : 'text-muted'`}
-                  x-text={`fields.${menu.field} || '${menu.placeholder}'`}
-                >
-                  {menu.placeholder}
-                </span>
-                <span
-                  class="inline-flex shrink-0 text-muted transition-transform duration-200"
-                  x-bind:class={`openMenu === '${menu.field}' && 'rotate-180'`}
-                >
-                  <ChevronDown aria-hidden="true" className="size-4" />
-                </span>
-              </button>
-              <ul
-                id={`${id(menu.field)}-listbox`}
-                role="listbox"
-                aria-labelledby={`${id(menu.field)}-label`}
-                tabindex="-1"
-                class="absolute inset-x-0 z-50 overflow-y-auto rounded-xl border border-border/80 bg-bg/95 p-1.5 shadow-xl backdrop-blur-md"
-                x-bind:class="menuUp ? 'bottom-full mb-1' : 'top-full mt-1'"
-                x-bind:style="menuStyle"
-                x-show={`openMenu === '${menu.field}'`}
-                x-transition.opacity.duration.150ms
-              >
-                {menu.options.map((o, i) => (
-                  <li
-                    id={`${id(menu.field)}-listbox-${i}`}
-                    role="option"
-                    data-value={o}
-                    aria-selected="false"
-                    x-bind:aria-selected={`optionSelected('${menu.field}', ${i})`}
-                    x-bind:data-active={`optionActive('${menu.field}', ${i})`}
-                    x-on:mouseenter={`activeIndex = ${i}`}
-                    x-on:click={`chooseOption('${menu.field}', ${i})`}
-                    class="group flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm text-fg transition-colors hover:bg-purple-500/10 hover:text-purple-600 aria-selected:font-semibold data-[active=true]:bg-purple-500/10 data-[active=true]:text-purple-600 dark:hover:bg-purple-500/20 dark:hover:text-purple-300 dark:data-[active=true]:bg-purple-500/20 dark:data-[active=true]:text-purple-300"
-                  >
-                    <span>{o}</span>
-                    <Check aria-hidden="true" className="size-4 shrink-0 opacity-0 group-aria-selected:opacity-100" />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <p
-              id={`${id(menu.field)}-error`}
-              class="mt-1.5 text-sm font-medium text-danger"
-              x-show={`errors.${menu.field}`}
-              x-text={`errors.${menu.field}`}
-              x-cloak
-            />
+            </ul>
           </div>
-        ))
-      }
+          <p
+            id={`${id(menu.field)}-error`}
+            class="mt-1.5 text-sm font-medium text-danger"
+            x-show={`errors.${menu.field}`}
+            x-text={`errors.${menu.field}`}
+            x-cloak
+          />
+        </div>
+      ))}
     </div>
 
     <div>
-      <label for={id('message')} class="block text-sm font-semibold text-fg">Project overview &amp; requirements</label>
+      <label for={id('message')} class="block text-sm font-semibold text-fg">
+        Project overview &amp; requirements
+      </label>
       <p id={`${id('message')}-hint`} class="mt-0.5 text-xs text-muted">
         Briefly describe your environment, objectives and timeline.
       </p>
@@ -249,13 +263,26 @@ const menus = [
         aria-describedby={`${id('message')}-hint`}
         x-bind:aria-describedby={`errors.message ? '${id('message')}-hint ${id('message')}-error' : '${id('message')}-hint'`}
       ></textarea>
-      <p id={`${id('message')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.message" x-text="errors.message" x-cloak></p>
+      <p
+        id={`${id('message')}-error`}
+        class="mt-1.5 text-sm font-medium text-danger"
+        x-show="errors.message"
+        x-text="errors.message"
+        x-cloak
+      ></p>
     </div>
 
     <!-- Honeypot: hidden from people and assistive technology; automated agents tend to fill it. -->
     <div class="hidden" aria-hidden="true">
       <label for={id('botcheck')}>Leave this field empty</label>
-      <input id={id('botcheck')} name="botcheck" type="text" tabindex="-1" autocomplete="off" x-model="fields.botcheck" />
+      <input
+        id={id('botcheck')}
+        name="botcheck"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+        x-model="fields.botcheck"
+      />
     </div>
 
     <div
@@ -285,10 +312,19 @@ const menus = [
           />
           <label for={id('consent')} class="text-sm text-fg">
             I agree to ZanamTech processing my details to schedule the consultation, as described in the{' '}
-            <a href="/privacy" class="font-semibold text-link underline underline-offset-2">Privacy Notice</a>.
+            <a href="/privacy" class="font-semibold text-link underline underline-offset-2">
+              Privacy Notice
+            </a>
+            .
           </label>
         </div>
-        <p id={`${id('consent')}-error`} class="mt-1.5 text-sm font-medium text-danger" x-show="errors.consent" x-text="errors.consent" x-cloak></p>
+        <p
+          id={`${id('consent')}-error`}
+          class="mt-1.5 text-sm font-medium text-danger"
+          x-show="errors.consent"
+          x-text="errors.consent"
+          x-cloak
+        ></p>
       </div>
       <button
         type="submit"
@@ -307,7 +343,9 @@ const menus = [
     <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-brand-cyan/12 text-brand-cyan">
       <CircleCheck aria-hidden="true" className="size-7" />
     </span>
-    <h3 data-success-heading tabindex="-1" class="mt-5 text-2xl font-bold text-fg focus:outline-none">Request received</h3>
+    <h3 data-success-heading tabindex="-1" class="mt-5 text-2xl font-bold text-fg focus:outline-none">
+      Request received
+    </h3>
     <p class="mx-auto mt-3 max-w-md text-muted">
       Thank you. We reply within 1 business day to arrange your consultation.
     </p>

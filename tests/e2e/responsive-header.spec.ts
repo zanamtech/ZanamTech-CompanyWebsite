@@ -45,7 +45,9 @@ for (const device of [
   test.describe(`Tablet header — ${device.name} (${device.width}px)`, () => {
     test.use({ viewport: { width: device.width, height: device.height } });
 
-    test('uses the drawer: desktop nav and header CTA hidden, hamburger visible, nothing overlaps', async ({ page }) => {
+    test('uses the drawer: desktop nav and header CTA hidden, hamburger visible, nothing overlaps', async ({
+      page,
+    }) => {
       await page.goto('/');
       const parts = headerParts(page);
       await expect(parts.nav).toBeHidden();

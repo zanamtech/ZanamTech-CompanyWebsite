@@ -8,8 +8,16 @@ const CONF = readFileSync(join(process.cwd(), 'nginx', 'nginx.conf'), 'utf8');
 const DIST = join(process.cwd(), 'dist');
 
 const REDIRECTS = [
-  { from: 'managed-infrastructure-24-7', to: '/services/managed-cloud-devops', page: 'services/managed-cloud-devops/index.html' },
-  { from: 'enterprise-ai-integration', to: '/services/ai-assistants-company-data', page: 'services/ai-assistants-company-data/index.html' },
+  {
+    from: 'managed-infrastructure-24-7',
+    to: '/services/managed-cloud-devops',
+    page: 'services/managed-cloud-devops/index.html',
+  },
+  {
+    from: 'enterprise-ai-integration',
+    to: '/services/ai-assistants-company-data',
+    page: 'services/ai-assistants-company-data/index.html',
+  },
   { from: 'agentic-ai-llmops', to: '/services#ai', page: 'services/index.html', anchor: 'id="ai"' },
 ];
 

@@ -11,7 +11,10 @@ const { service } = Astro.props;
 
 <!-- One service row in the Services mega-menu. 44px tall (Constitution II touch targets). -->
 <li>
-  <a href={serviceHref(service)} class="group/item flex min-h-11 items-center gap-2.5 rounded-lg px-2 py-1 hover:bg-surface-2">
+  <a
+    href={serviceHref(service)}
+    class="group/item flex min-h-11 items-center gap-2.5 rounded-lg px-2 py-1 hover:bg-surface-2"
+  >
     <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-cyan/12 text-brand-cyan">
       <Icon name={service.data.icon} class="size-4" />
     </span>

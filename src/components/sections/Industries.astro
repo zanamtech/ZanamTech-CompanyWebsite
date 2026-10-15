@@ -13,26 +13,35 @@ import { segments } from '../../data/segments';
           Built for organisations that cannot compromise on reliability
         </h2>
       </div>
-      <a href="/industries" class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline">
+      <a
+        href="/industries"
+        class="inline-flex min-h-11 shrink-0 items-center gap-1.5 font-semibold text-link hover:underline"
+      >
         Industries we serve
         <ArrowRight aria-hidden="true" className="size-4" />
       </a>
     </div>
 
-    <ul class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4" data-reveal-group data-reveal-distance="0" data-reveal-scale="0.95">
-      {
-        segments.map((s) => (
-          <li data-segment class="glass cursor-default select-none rounded-2xl p-6 transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2 hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/15 sm:p-7 motion-reduce:hover:translate-y-0">
-            <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
-              <Icon name={s.icon} class="size-6" />
-            </span>
-            <h3 class="mt-5 text-lg font-semibold text-fg">{s.name}</h3>
-            <p class="mt-2 text-sm text-muted">{s.profile}</p>
-            <p class="mt-5 text-sm font-semibold text-fg">Decision makers</p>
-            <p class="mt-1 text-sm text-muted">{s.decisionMakers.join(' · ')}</p>
-          </li>
-        ))
-      }
+    <ul
+      class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4"
+      data-reveal-group
+      data-reveal-distance="0"
+      data-reveal-scale="0.95"
+    >
+      {segments.map((s) => (
+        <li
+          data-segment
+          class="glass cursor-default select-none rounded-2xl p-6 transition-[translate,box-shadow,border-color] duration-300 ease-out hover:-translate-y-2 hover:border-accent/50 hover:shadow-xl hover:shadow-purple-500/15 sm:p-7 motion-reduce:hover:translate-y-0"
+        >
+          <span class="flex size-12 items-center justify-center rounded-xl bg-brand-cyan/12 text-brand-cyan">
+            <Icon name={s.icon} class="size-6" />
+          </span>
+          <h3 class="mt-5 text-lg font-semibold text-fg">{s.name}</h3>
+          <p class="mt-2 text-sm text-muted">{s.profile}</p>
+          <p class="mt-5 text-sm font-semibold text-fg">Decision makers</p>
+          <p class="mt-1 text-sm text-muted">{s.decisionMakers.join(' · ')}</p>
+        </li>
+      ))}
     </ul>
   </div>
 </section>

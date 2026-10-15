@@ -15,40 +15,43 @@ const { offer, detailed = false, headingLevel = 'h3' } = Astro.props;
 const Heading = headingLevel;
 ---
 
-<li data-offer={offer.id} id={detailed ? offer.id : undefined} class="glass card-hover flex flex-col rounded-2xl p-6 sm:p-7">
-  <Badge tone="accent" class="self-start">{offer.duration}</Badge>
+<li
+  data-offer={offer.id}
+  id={detailed ? offer.id : undefined}
+  class="glass card-hover flex flex-col rounded-2xl p-6 sm:p-7"
+>
+  <Badge tone="accent" class="self-start">
+    {offer.duration}
+  </Badge>
   <Heading class="mt-4 text-lg font-semibold text-fg">{offer.name}</Heading>
   <p class="mt-2 text-sm text-muted">{offer.summary}</p>
-  {
-    detailed && (
-      <div class="mt-5 grid gap-5 border-t border-border pt-5">
-        <div>
-          <p class="text-sm font-semibold text-fg">What we need from you</p>
-          <ul class="mt-2 space-y-1.5">
-            {offer.inputs.map((i) => (
-              <li class="flex gap-2 text-sm text-muted">
-                <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-                {i}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p class="text-sm font-semibold text-fg">What you get</p>
-          <ul class="mt-2 space-y-1.5">
-            {offer.deliverables.map((d) => (
-              <li class="flex gap-2 text-sm text-muted">
-                <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-                {d}
-              </li>
-            ))}
-          </ul>
-        </div>
+  {detailed && (
+    <div class="mt-5 grid gap-5 border-t border-border pt-5">
+      <div>
+        <p class="text-sm font-semibold text-fg">What we need from you</p>
+        <ul class="mt-2 space-y-1.5">
+          {offer.inputs.map((i) => (
+            <li class="flex gap-2 text-sm text-muted">
+              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+              {i}
+            </li>
+          ))}
+        </ul>
       </div>
-    )
-  }
+      <div>
+        <p class="text-sm font-semibold text-fg">What you get</p>
+        <ul class="mt-2 space-y-1.5">
+          {offer.deliverables.map((d) => (
+            <li class="flex gap-2 text-sm text-muted">
+              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+              {d}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )}
   <p class="mt-auto pt-5 text-sm text-fg">
-    <span class="font-semibold text-accent">Next step:</span>{' '}
-    {offer.nextStep}
+    <span class="font-semibold text-accent">Next step:</span> {offer.nextStep}
   </p>
 </li>

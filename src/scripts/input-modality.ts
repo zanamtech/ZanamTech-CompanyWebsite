@@ -7,7 +7,20 @@
  * keyboard modality back on immediately, so Tab users always see the ring.
  */
 const root = document.documentElement;
-const KEYBOARD_KEYS = new Set(['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown', 'Enter', ' ', 'Escape']);
+const KEYBOARD_KEYS = new Set([
+  'Tab',
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Home',
+  'End',
+  'PageUp',
+  'PageDown',
+  'Enter',
+  ' ',
+  'Escape',
+]);
 
 const setModality = (value: 'pointer' | 'keyboard') => {
   if (root.dataset.modality !== value) root.dataset.modality = value;

@@ -7,25 +7,23 @@ import { tiers } from '../../data/managed-tiers';
 
 <!-- Retainer tiers by scope and coverage wording only: no prices, clock hours or response times (Constitution III). -->
 <ul class="grid gap-6 lg:grid-cols-3" aria-label="Retainer tiers" data-reveal-group>
-  {
-    tiers.map((t) => (
-      <GlassCard as="li" data-tier={t.id} class:list={['card-hover flex flex-col', t.featured && 'border-accent/50']}>
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h3 class="text-xl font-semibold text-fg">{t.name}</h3>
-          {t.featured && <Badge tone="accent">Recommended</Badge>}
-        </div>
-        <p class="mt-1 text-sm font-medium text-accent">{t.coverage}</p>
-        <ul class="mt-5 space-y-2 border-t border-border pt-5">
-          {t.includes.map((item) => (
-            <li class="flex gap-2 text-sm text-fg">
-              <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </GlassCard>
-    ))
-  }
+  {tiers.map((t) => (
+    <GlassCard as="li" data-tier={t.id} class:list={['card-hover flex flex-col', t.featured && 'border-accent/50']}>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <h3 class="text-xl font-semibold text-fg">{t.name}</h3>
+        {t.featured && <Badge tone="accent">Recommended</Badge>}
+      </div>
+      <p class="mt-1 text-sm font-medium text-accent">{t.coverage}</p>
+      <ul class="mt-5 space-y-2 border-t border-border pt-5">
+        {t.includes.map((item) => (
+          <li class="flex gap-2 text-sm text-fg">
+            <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </GlassCard>
+  ))}
 </ul>
 <p class="mt-6 text-sm text-muted">
   Coverage and response targets for your tier are fixed in your Statement of Work. There is no uptime guarantee for

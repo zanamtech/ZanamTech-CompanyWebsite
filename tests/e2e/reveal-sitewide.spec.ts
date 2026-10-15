@@ -28,7 +28,8 @@ function invisibleItems(page: Page) {
       .filter((el) => {
         if (el.dataset.reveal === 'hidden') return true;
         let opacity = 1;
-        for (let n: Element | null = el; n && n !== document.body; n = n.parentElement) opacity *= Number(getComputedStyle(n).opacity);
+        for (let n: Element | null = el; n && n !== document.body; n = n.parentElement)
+          opacity *= Number(getComputedStyle(n).opacity);
         return opacity < 0.999;
       })
       .map((el) => (el.textContent ?? '').trim().replace(/\s+/g, ' ').slice(0, 50));
@@ -78,7 +79,9 @@ test.describe('Reveal never leaves content hidden', () => {
     });
   }
 
-  test('the safety timeout starts per group on entering the viewport: lower sections still fade in', async ({ page }) => {
+  test('the safety timeout starts per group on entering the viewport: lower sections still fade in', async ({
+    page,
+  }) => {
     await page.goto('/about');
     const group = page.locator('section[aria-labelledby="capabilities-title"] [data-reveal-group]');
     // Well past the 4s timeout, never scrolled to: still waiting to fade in.

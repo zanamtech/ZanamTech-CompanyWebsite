@@ -17,11 +17,27 @@ test.describe('US1 — Home v3', () => {
   test('sections appear in the v3 order', async ({ page }) => {
     await page.goto('/');
     const order = await page.evaluate(() =>
-      [...document.querySelectorAll('main section[id], main > section[id]')].map((s) => s.id).filter((id, i, a) => a.indexOf(id) === i),
+      [...document.querySelectorAll('main section[id], main > section[id]')]
+        .map((s) => s.id)
+        .filter((id, i, a) => a.indexOf(id) === i),
     );
-    const expected = ['hero', 'metrics', 'proof-strip', 'flagship', 'core-services', 'start-here', 'process', 'industries', 'trust', 'faq'];
+    const expected = [
+      'hero',
+      'metrics',
+      'proof-strip',
+      'flagship',
+      'core-services',
+      'start-here',
+      'process',
+      'industries',
+      'trust',
+      'faq',
+    ];
     const positions = expected.map((id) => order.indexOf(id));
-    expect(positions.every((p) => p >= 0), `missing sections in ${order.join(', ')}`).toBe(true);
+    expect(
+      positions.every((p) => p >= 0),
+      `missing sections in ${order.join(', ')}`,
+    ).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
   });
 
@@ -61,21 +77,31 @@ test.describe('US1 — Home v3', () => {
           .getAnimations()
           .filter((a) => {
             const effect = a.effect as KeyframeEffect | null;
-            return !!effect?.target && details.contains(effect.target) && !(effect.target as Element).matches('[data-faq-chevron]');
+            return (
+              !!effect?.target &&
+              details.contains(effect.target) &&
+              !(effect.target as Element).matches('[data-faq-chevron]')
+            );
           })
           .map((a) => Number((a.effect as KeyframeEffect).getComputedTiming().duration));
       });
 
     const closed = Math.round((await item.boundingBox())!.height);
     const opening = await toggle();
-    expect(opening.some((d) => d >= 250 && d <= 300), `height animation on open: ${opening.join(',')}ms`).toBe(true);
+    expect(
+      opening.some((d) => d >= 250 && d <= 300),
+      `height animation on open: ${opening.join(',')}ms`,
+    ).toBe(true);
     await expect.poll(async () => Math.round((await item.boundingBox())!.height)).toBeGreaterThan(closed);
     await page.waitForTimeout(400);
     const open = Math.round((await item.boundingBox())!.height);
     await expect(item.locator('[data-faq-chevron]')).toHaveCSS('rotate', '180deg');
 
     const closing = await toggle();
-    expect(closing.some((d) => d >= 250 && d <= 300), `height animation on close: ${closing.join(',')}ms`).toBe(true);
+    expect(
+      closing.some((d) => d >= 250 && d <= 300),
+      `height animation on close: ${closing.join(',')}ms`,
+    ).toBe(true);
     await expect(item).not.toHaveAttribute('open', '');
     await expect.poll(async () => Math.round((await item.boundingBox())!.height)).toBe(closed);
 
@@ -89,7 +115,9 @@ test.describe('US1 — Home v3', () => {
     await reduced.close();
   });
 
-  test('hero scroll cue is fully in front of the results band and lands on the flagship heading below the header', async ({ page }) => {
+  test('hero scroll cue is fully in front of the results band and lands on the flagship heading below the header', async ({
+    page,
+  }) => {
     await page.goto('/');
     const cue = page.getByRole('link', { name: 'Scroll to the flagship service: Managed Cloud & DevOps' });
     await expect(cue).toHaveAttribute('href', '#flagship');
@@ -109,7 +137,10 @@ test.describe('US1 — Home v3', () => {
     await cue.click();
     const eyebrow = page.locator('#flagship .eyebrow');
     await expect.poll(async () => (await eyebrow.boundingBox())!.y, { timeout: 3_000 }).toBeLessThan(200);
-    const headerBottom = await page.locator('header > div').first().evaluate((el) => el.getBoundingClientRect().bottom);
+    const headerBottom = await page
+      .locator('header > div')
+      .first()
+      .evaluate((el) => el.getBoundingClientRect().bottom);
     await expect.poll(async () => (await eyebrow.boundingBox())!.y).toBeGreaterThanOrEqual(headerBottom + 8);
     await expect(page.locator('#flagship-title')).toBeInViewport();
   });

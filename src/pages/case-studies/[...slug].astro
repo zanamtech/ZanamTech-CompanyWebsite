@@ -31,60 +31,65 @@ const { study, studies } = Astro.props;
 const Content = study ? (await render(study)).Content : undefined;
 ---
 
-{
-  study && Content ? (
-    <BaseLayout title={study.data.title} description={study.data.challenge}>
-      <PageHero
-        eyebrow={study.data.industry}
-        title={study.data.title}
-        lead={study.data.challenge}
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Case Studies', href: '/case-studies' }, { label: study.data.title }]}
-      />
-      <div class="container-page section-y grid gap-12 lg:grid-cols-12">
-        <article class="lg:col-span-8">
-          <ArticleBody>
-            <Content />
-          </ArticleBody>
-        </article>
-        <aside class="space-y-6 lg:col-span-4" aria-label="Case study summary">
-          <GlassCard>
-            <p class="text-sm font-semibold text-accent">Result</p>
-            <p class="mt-2 text-lg font-semibold text-fg">{study.data.result}</p>
-          </GlassCard>
-          <GlassCard>
-            <p class="text-sm font-semibold text-fg">Approach</p>
-            <p class="mt-2 text-sm text-muted">{study.data.approach}</p>
-            <p class="mt-4 text-sm font-semibold text-fg">Timeline</p>
-            <p class="mt-2 text-sm text-muted">{study.data.timeline}</p>
-            <ul class="mt-4 space-y-1.5">
-              {study.data.stack.map((t) => (
-                <li class="flex gap-2 text-sm text-fg">
-                  <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
-        </aside>
-      </div>
-      <CtaBand />
-    </BaseLayout>
-  ) : (
-    <BaseLayout title="Case Studies" description="Case studies from ZanamTech engagements, published with each client's written permission.">
-      <PageHero
-        eyebrow="Case Studies"
-        title="Case studies"
-        lead="Engagements published with each client's written permission."
-        breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]}
-      />
-      <div class="container-page section-y">
-        <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
-          {studies.map((s) => (
-            <CaseStudyCard study={s} />
-          ))}
-        </ul>
-      </div>
-      <CtaBand />
-    </BaseLayout>
-  )
-}
+{study && Content ? (
+  <BaseLayout title={study.data.title} description={study.data.challenge}>
+    <PageHero
+      eyebrow={study.data.industry}
+      title={study.data.title}
+      lead={study.data.challenge}
+      breadcrumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Case Studies', href: '/case-studies' },
+        { label: study.data.title },
+      ]}
+    />
+    <div class="container-page section-y grid gap-12 lg:grid-cols-12">
+      <article class="lg:col-span-8">
+        <ArticleBody>
+          <Content />
+        </ArticleBody>
+      </article>
+      <aside class="space-y-6 lg:col-span-4" aria-label="Case study summary">
+        <GlassCard>
+          <p class="text-sm font-semibold text-accent">Result</p>
+          <p class="mt-2 text-lg font-semibold text-fg">{study.data.result}</p>
+        </GlassCard>
+        <GlassCard>
+          <p class="text-sm font-semibold text-fg">Approach</p>
+          <p class="mt-2 text-sm text-muted">{study.data.approach}</p>
+          <p class="mt-4 text-sm font-semibold text-fg">Timeline</p>
+          <p class="mt-2 text-sm text-muted">{study.data.timeline}</p>
+          <ul class="mt-4 space-y-1.5">
+            {study.data.stack.map((t) => (
+              <li class="flex gap-2 text-sm text-fg">
+                <CircleCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-brand-cyan" />
+                {t}
+              </li>
+            ))}
+          </ul>
+        </GlassCard>
+      </aside>
+    </div>
+    <CtaBand />
+  </BaseLayout>
+) : (
+  <BaseLayout
+    title="Case Studies"
+    description="Case studies from ZanamTech engagements, published with each client's written permission."
+  >
+    <PageHero
+      eyebrow="Case Studies"
+      title="Case studies"
+      lead="Engagements published with each client's written permission."
+      breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]}
+    />
+    <div class="container-page section-y">
+      <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+        {studies.map((s) => (
+          <CaseStudyCard study={s} />
+        ))}
+      </ul>
+    </div>
+    <CtaBand />
+  </BaseLayout>
+)}

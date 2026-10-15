@@ -6,7 +6,10 @@ import { test, expect } from './fixtures';
 const entries = (dir: string) =>
   readdirSync(join(process.cwd(), 'src', 'content', dir))
     .filter((f) => f.endsWith('.md'))
-    .map((f) => ({ slug: f.replace(/\.md$/, ''), draft: /^draft:\s*true\s*$/m.test(readFileSync(join(process.cwd(), 'src', 'content', dir, f), 'utf8')) }));
+    .map((f) => ({
+      slug: f.replace(/\.md$/, ''),
+      draft: /^draft:\s*true\s*$/m.test(readFileSync(join(process.cwd(), 'src', 'content', dir, f), 'utf8')),
+    }));
 
 const insights = entries('insights');
 const resources = entries('resources');
@@ -31,21 +34,30 @@ test.describe('US6 — Drafts and published content', () => {
     }
   });
 
-  test('the Insights link is in the desktop nav and the footer when articles are published', async ({ page }, testInfo) => {
+  test('the Insights link is in the desktop nav and the footer when articles are published', async ({
+    page,
+  }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav (1440px)');
     test.skip(!insights.some((a) => !a.draft), 'No published articles');
     await page.goto('/');
-    await expect(page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
+    await expect(
+      page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'Insights', exact: true }),
+    ).toBeVisible();
     await expect(page.locator('footer').getByRole('link', { name: 'Insights', exact: true })).toBeVisible();
   });
 
   test('the artefact band is absent while every sample is a draft', async ({ page }) => {
-    test.skip(resources.some((r) => !r.draft), 'At least one sample is published');
+    test.skip(
+      resources.some((r) => !r.draft),
+      'At least one sample is published',
+    );
     await page.goto('/');
     await expect(page.locator('#artefacts')).toHaveCount(0);
   });
 
-  test('Insights cards carry a decorative 2:1 illustration; the article header repeats it at 16:9', async ({ page }) => {
+  test('Insights cards carry a decorative 2:1 illustration; the article header repeats it at 16:9', async ({
+    page,
+  }) => {
     test.skip(!insights.some((a) => !a.draft), 'No published articles');
     await page.goto('/insights');
     const cards = page.locator('[data-insight]');
@@ -71,6 +83,9 @@ test.describe('US6 — Drafts and published content', () => {
   test('published articles cite third-party statistics with a source link', async ({ page }) => {
     await page.goto('/insights/cloud-cost-checklist');
     await expect(page.getByRole('heading', { name: 'Sources', exact: true })).toBeVisible();
-    await expect(page.getByRole('link', { name: /29% of their IaaS and PaaS spend is wasted/ })).toHaveAttribute('href', /^https:\/\//);
+    await expect(page.getByRole('link', { name: /29% of their IaaS and PaaS spend is wasted/ })).toHaveAttribute(
+      'href',
+      /^https:\/\//,
+    );
   });
 });

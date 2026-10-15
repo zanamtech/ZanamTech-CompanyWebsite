@@ -5,7 +5,9 @@ import { test, expect } from './fixtures';
 test.describe('External links', () => {
   test.beforeEach(async ({ context }) => {
     // Never reach the real network: answer LinkedIn with an empty page.
-    await context.route('https://www.linkedin.com/**', (route) => route.fulfill({ status: 200, contentType: 'text/html', body: '<title>LinkedIn</title>' }));
+    await context.route('https://www.linkedin.com/**', (route) =>
+      route.fulfill({ status: 200, contentType: 'text/html', body: '<title>LinkedIn</title>' }),
+    );
   });
 
   for (const [path, selector] of [
@@ -27,11 +29,13 @@ test.describe('External links', () => {
   test('every link to another origin opens in a new tab with noopener noreferrer', async ({ page }) => {
     for (const path of ['/', '/about', '/insights/cloud-cost-checklist']) {
       await page.goto(path);
-      const external = await page.locator('a[href^="http"]').evaluateAll((els) =>
-        els
-          .filter((a) => new URL((a as HTMLAnchorElement).href).origin !== location.origin)
-          .map((a) => ({ target: a.getAttribute('target'), rel: a.getAttribute('rel') })),
-      );
+      const external = await page
+        .locator('a[href^="http"]')
+        .evaluateAll((els) =>
+          els
+            .filter((a) => new URL((a as HTMLAnchorElement).href).origin !== location.origin)
+            .map((a) => ({ target: a.getAttribute('target'), rel: a.getAttribute('rel') })),
+        );
       expect(external.length, path).toBeGreaterThan(0);
       for (const a of external) {
         expect(a.target, path).toBe('_blank');
@@ -58,7 +62,11 @@ test.describe('Page transitions and focus', () => {
             const effect = anim.effect as KeyframeEffect | null;
             if (!effect?.pseudoElement) continue;
             const timing = effect.getTiming();
-            w.__vt.push({ pseudo: effect.pseudoElement, delay: Number(timing.delay), duration: Number(timing.duration) });
+            w.__vt.push({
+              pseudo: effect.pseudoElement,
+              delay: Number(timing.delay),
+              duration: Number(timing.duration),
+            });
           }
         });
         return t;
@@ -66,8 +74,12 @@ test.describe('Page transitions and focus', () => {
     });
     await page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'How We Work' }).click();
     await expect(page).toHaveURL(/\/approach\/?$/);
-    await expect.poll(() => page.evaluate(() => (window as unknown as { __vt: unknown[] }).__vt.length)).toBeGreaterThan(0);
-    const seen = await page.evaluate(() => (window as unknown as { __vt: { pseudo: string; delay: number; duration: number }[] }).__vt);
+    await expect
+      .poll(() => page.evaluate(() => (window as unknown as { __vt: unknown[] }).__vt.length))
+      .toBeGreaterThan(0);
+    const seen = await page.evaluate(
+      () => (window as unknown as { __vt: { pseudo: string; delay: number; duration: number }[] }).__vt,
+    );
     const old = seen.find((s) => s.pseudo === '::view-transition-old(root)');
     const next = seen.find((s) => s.pseudo === '::view-transition-new(root)');
     expect(old, 'old-page animation').toBeTruthy();
@@ -77,7 +89,9 @@ test.describe('Page transitions and focus', () => {
     expect(next!.duration).toBe(180);
   });
 
-  test('after a client-side navigation focus is on <main>, with no ring on the clicked link', async ({ page }, testInfo) => {
+  test('after a client-side navigation focus is on <main>, with no ring on the clicked link', async ({
+    page,
+  }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
     await page.goto('/');
     const about = page.locator('header nav[aria-label="Primary"]').getByRole('link', { name: 'About' });
@@ -102,7 +116,9 @@ test.describe('Header', () => {
     expect(Math.round(box.y + box.height)).toBe(Math.round(bar.y + bar.height));
     // Full width of the fixed header layer (the viewport minus any classic scrollbar).
     expect(Math.round(box.x)).toBe(0);
-    expect(Math.round(box.width)).toBe(await page.evaluate(() => Math.round(document.querySelector('header')!.getBoundingClientRect().width)));
+    expect(Math.round(box.width)).toBe(
+      await page.evaluate(() => Math.round(document.querySelector('header')!.getBoundingClientRect().width)),
+    );
     expect(box.width).toBeGreaterThanOrEqual(page.viewportSize()!.width - 20);
   });
 
@@ -110,12 +126,17 @@ test.describe('Header', () => {
     test.skip(testInfo.project.name !== 'desktop', 'Desktop nav');
     await page.goto('/approach');
     const links = page.locator('[data-nav-link="desktop"]');
-    for (const deco of await links.evaluateAll((els) => els.map((e) => getComputedStyle(e).textDecorationLine))) expect(deco).toBe('none');
-    const accent = await links.evaluateAll((els) => els.filter((e) => e.classList.contains('text-accent')).map((e) => e.textContent?.trim()));
+    for (const deco of await links.evaluateAll((els) => els.map((e) => getComputedStyle(e).textDecorationLine)))
+      expect(deco).toBe('none');
+    const accent = await links.evaluateAll((els) =>
+      els.filter((e) => e.classList.contains('text-accent')).map((e) => e.textContent?.trim()),
+    );
     expect(accent).toEqual(['How We Work']);
   });
 
-  test('a mega-menu link to the current page closes the menu and scrolls to the top without navigating', async ({ page }, testInfo) => {
+  test('a mega-menu link to the current page closes the menu and scrolls to the top without navigating', async ({
+    page,
+  }, testInfo) => {
     test.skip(testInfo.project.name !== 'desktop', 'Mega-menu is desktop-only');
     await page.goto('/services/cloud-cost-optimization');
     await page.evaluate(() => window.scrollTo(0, 900));
@@ -135,7 +156,9 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
     await page.goto('/');
     const cards = page.locator('[data-offer-card]');
     await expect(cards).toHaveCount(5);
-    await expect(page.locator('#start-here')).toContainText('Fixed scope, a clear written output, no long-term commitment.');
+    await expect(page.locator('#start-here')).toContainText(
+      'Fixed scope, a clear written output, no long-term commitment.',
+    );
     await expect(cards.first()).toContainText('Scorecard and prioritised backlog');
     for (const id of await cards.evaluateAll((els) => els.map((e) => e.getAttribute('data-offer-card')))) {
       await expect(page.locator(`[data-offer-card="${id}"]`)).toHaveAttribute('href', `/start-here#${id}`);
@@ -150,7 +173,13 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
       test.skip(testInfo.project.name !== 'desktop', 'Desktop widths');
       await page.setViewportSize({ width, height: 900 });
       await page.goto('/');
-      const boxes = await page.locator('[data-offer-card]').evaluateAll((els) => els.map((e) => e.getBoundingClientRect()).map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })));
+      const boxes = await page
+        .locator('[data-offer-card]')
+        .evaluateAll((els) =>
+          els
+            .map((e) => e.getBoundingClientRect())
+            .map((r) => ({ top: Math.round(r.top), left: r.left, right: r.right })),
+        );
       const tops = [...new Set(boxes.map((b) => b.top))];
       expect(tops.map((t) => boxes.filter((b) => b.top === t).length)).toEqual([...rows]);
       if (tops.length === 2) {
@@ -168,7 +197,10 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
     await page.goto('/');
     const strip = page.locator('[data-offer-strip]');
     await expect(strip).toHaveCSS('scroll-snap-type', /x mandatory/);
-    const { scrollWidth, clientWidth } = await strip.evaluate((el) => ({ scrollWidth: el.scrollWidth, clientWidth: el.clientWidth }));
+    const { scrollWidth, clientWidth } = await strip.evaluate((el) => ({
+      scrollWidth: el.scrollWidth,
+      clientWidth: el.clientWidth,
+    }));
     expect(scrollWidth).toBeGreaterThan(clientWidth);
     const second = (await page.locator('[data-offer-card]').nth(1).boundingBox())!;
     expect(second.x).toBeLessThan(page.viewportSize()!.width);
@@ -177,7 +209,9 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
 });
 
 test.describe('About', () => {
-  test('LinkedIn button: top-right level with the name from 768px, under the role on phones; capabilities 2 × 4 with "View all services"', async ({ page }, testInfo) => {
+  test('LinkedIn button: top-right level with the name from 768px, under the role on phones; capabilities 2 × 4 with "View all services"', async ({
+    page,
+  }, testInfo) => {
     await page.goto('/about');
     const card = page.locator('section[aria-labelledby="leadership-title"]');
     const name = (await card.getByRole('heading', { name: 'Mubashir Ahmed' }).boundingBox())!;
@@ -196,7 +230,8 @@ test.describe('About', () => {
     }
     const lists = page.locator('section[aria-labelledby="capabilities-title"] ul');
     await expect(lists).toHaveCount(2);
-    for (const n of await lists.evaluateAll((uls) => uls.map((ul) => ul.children.length))) expect(n).toBeLessThanOrEqual(4);
+    for (const n of await lists.evaluateAll((uls) => uls.map((ul) => ul.children.length)))
+      expect(n).toBeLessThanOrEqual(4);
     await expect(page.locator('[data-view-all-services]')).toHaveAttribute('href', '/services');
   });
 });
@@ -209,7 +244,9 @@ test.describe('Article "On this page"', () => {
     await expect(links.first()).toHaveCSS('font-size', '14px');
     await expect(links.first()).toHaveAttribute('aria-current', 'location');
     const third = await links.nth(2).getAttribute('href');
-    await page.locator(third!).evaluate((h) => window.scrollTo(0, h.getBoundingClientRect().top + window.scrollY - 120));
+    await page
+      .locator(third!)
+      .evaluate((h) => window.scrollTo(0, h.getBoundingClientRect().top + window.scrollY - 120));
     await expect(links.nth(2)).toHaveAttribute('aria-current', 'location');
     await expect(page.locator('[data-article-toc] a[aria-current]')).toHaveCount(1);
   });

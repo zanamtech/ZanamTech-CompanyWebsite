@@ -15,6 +15,10 @@ import { Moon, Sun } from 'lucide-react';
   x-on:click="$store.theme.toggle()"
   data-theme-toggle
 >
-  <span class="inline-flex" x-show="!$store.theme.isDark"><Moon aria-hidden="true" className="size-5" /></span>
-  <span class="inline-flex" x-show="$store.theme.isDark"><Sun aria-hidden="true" className="size-5" /></span>
+  <span class="inline-flex" x-show="!$store.theme.isDark">
+    <Moon aria-hidden="true" className="size-5" />
+  </span>
+  <span class="inline-flex" x-show="$store.theme.isDark">
+    <Sun aria-hidden="true" className="size-5" />
+  </span>
 </button>

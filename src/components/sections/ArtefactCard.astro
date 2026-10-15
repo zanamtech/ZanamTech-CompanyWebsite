@@ -24,7 +24,10 @@ const { title, summary, draft } = artefact.data;
     {draft && <Badge>Draft</Badge>}
   </div>
   <Heading class="mt-4 text-lg font-semibold text-fg">
-    <a href={`/resources/${artefact.id}`} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">
+    <a
+      href={`/resources/${artefact.id}`}
+      class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none"
+    >
       {title.replace(/^Sample:\s*/, '')}
     </a>
   </Heading>

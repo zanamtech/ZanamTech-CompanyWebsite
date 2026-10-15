@@ -29,9 +29,18 @@ const COMPETITORS =
 const RULES = [
   // Years, pricing, competitors (v1 rules, kept).
   { name: 'years-of-experience claim', re: /\b\d+\s*\+?\s*(?:years?|yrs)\b/i },
-  { name: 'years-of-experience claim', re: /\b(?:one|two|three|four|five|six|seven|eight|nine|ten|twelve|fifteen|twenty)\s*\+?\s*years?\b/i },
-  { name: 'years-of-experience claim', re: /\byears?\s+of\s+(?:combined\s+)?(?:industry\s+|engineering\s+)?experience\b/i },
-  { name: 'pricing (currency amount)', re: /(?:[$€£]\s?\d|\b(?:USD|PKR|EUR|GBP|AED|SAR)\s?\d|\d\s?(?:USD|PKR|EUR|GBP|AED|SAR)\b)/ },
+  {
+    name: 'years-of-experience claim',
+    re: /\b(?:one|two|three|four|five|six|seven|eight|nine|ten|twelve|fifteen|twenty)\s*\+?\s*years?\b/i,
+  },
+  {
+    name: 'years-of-experience claim',
+    re: /\byears?\s+of\s+(?:combined\s+)?(?:industry\s+|engineering\s+)?experience\b/i,
+  },
+  {
+    name: 'pricing (currency amount)',
+    re: /(?:[$€£]\s?\d|\b(?:USD|PKR|EUR|GBP|AED|SAR)\s?\d|\d\s?(?:USD|PKR|EUR|GBP|AED|SAR)\b)/,
+  },
   { name: 'pricing (rate)', re: /\b(?:per\s+(?:hour|month)|\/\s?(?:hr|hour|mo|month))\b/i },
   { name: 'pricing (rate)', re: /\b(?:hourly|gigs?|packages\s+from)\b/i },
   { name: 'competitor name', re: COMPETITORS },
@@ -42,7 +51,10 @@ const RULES = [
   { name: 'team-structure claim', re: /\bon-call\s+engineers?\b/i },
   { name: 'team-structure claim', re: /\b(?:PM-led|project[-\s]manager[-\s]led|one\s+accountable\s+lead)\b/i },
   { name: 'team-structure claim', re: /\bour\s+team\b/i },
-  { name: 'headcount claim', re: /\b\d+\s*\+?\s*(?:engineers|developers|experts|specialists|consultants|architects)\b/i },
+  {
+    name: 'headcount claim',
+    re: /\b\d+\s*\+?\s*(?:engineers|developers|experts|specialists|consultants|architects)\b/i,
+  },
   { name: 'first-person claim', re: /(?<![\w'.])I\s+(?:am|have|will|work|deliver|build|lead|run|help|offer|manage)\b/ },
 
   // Over-promising.
@@ -132,7 +144,8 @@ for await (const file of walk(join(ROOT, 'src', 'content', 'case-studies'))) {
   if (!file.endsWith('.md')) continue;
   const front = (await readFile(file, 'utf8')).split(/^---\s*$/m)[1] ?? '';
   for (const field of ['verified', 'permissionDate', 'evidence']) {
-    if (!new RegExp(`^${field}:`, 'm').test(front)) violations.push(`${relative(ROOT, file)}  case study missing "${field}"`);
+    if (!new RegExp(`^${field}:`, 'm').test(front))
+      violations.push(`${relative(ROOT, file)}  case study missing "${field}"`);
   }
 }
 
