@@ -20,7 +20,8 @@
 | Fix round from video review #3 (external links, transitions, header, offer cards, About, article TOC) | ✅ Done (14 Oct, section 3g) |
 | Tweaks: no active underline, LinkedIn button top-right | ✅ Done (14 Oct, section 3h) |
 | Code audit, round 1 of 3 (dead code, dependencies, tooling, one URL per page, external links) | ✅ Done (15 Oct, section 3l) |
-| Pushed to `origin/dev` | Everything up to and including section 3l |
+| Code audit, round 2 of 3 (CSS, types, scripts, icons without React, shared components) | ✅ Done (15 Oct, section 3m) |
+| Pushed to `origin/dev` | Everything up to and including section 3m |
 
 ## 2. What was completed in spec 002
 
@@ -234,6 +235,55 @@ Implements part of `docs/audit/CODE_AUDIT.md`. The owner's decisions are in §6 
   - **Run 2:** 14 axe contrast failures in `home`, `approach-industries` and `responsive-header`. This is the same pre-existing reveal timing issue, so `revealAll()` now runs before axe in every a11y spec (`contact` and `services` too). 3× repeat: 357/357.
   - **Run 3:** 4 mobile failures (`security`, `services-v3`). They pass in isolation and in run 4, so they look timing-related; watch them in CI (round 3 replaces the fixed sleeps, F-21).
   - **Run 4:** clean.
+
+## 3m. Code audit, round 2 of 3 (15 Oct)
+Implements batches 6–10 of `docs/audit/CODE_AUDIT.md` (owner decisions in §6 of that file).
+- **CSS consolidation** (F-12, F-13, F-41):
+  - One `.card-link` rule replaces four scoped `<style>` blocks, so the site ships one stylesheet (was five files).
+  - `/privacy` uses `LongFormDoc`, and section numbers come from a CSS counter.
+  - Anchors: `html { scroll-padding-top }` from `--header-h` + 24px, plus `.anchor-section` for sections whose first line sits below the section padding. Every per-section `scroll-mt-*` is gone.
+  - Every linked anchor now lands 23–26px below the header. It used to vary from 33 to 92px, and the `/start-here` offer cards landed 44px under the header; their card edge now sits 24px below it.
+- **Types and single sources** (F-32–F-35):
+  - `src/data/ids.ts` holds the icon, pillar, offer and engagement-type ID lists. The Zod enums and the TypeScript unions both derive from it, so an unknown icon fails `astro check`.
+  - `astro:env` schema for the `PUBLIC_*` variables. All are optional, because Docker passes unset build args as empty strings; the build with empty values was checked.
+  - One form config (`src/lib/form-config.ts`) and one `FORM_SUBJECT`. `check:csp` reads the built form action.
+- **Scripts** (F-04, F-05, F-15, F-40, F-54–F-56):
+  - **framer-motion removed.** The count-up is a `requestAnimationFrame` loop with Framer's own cubic-bezier solver and timing. Under a fixed fake clock it matches the Framer build frame for frame: 110/110 frames, 8 counters, 1440 and 390.
+  - **"How we engage" now runs on `reveal.ts`.** The cards are a normal reveal group whose items style their own `data-reveal` states. Measured transitions match the old build: the same properties, 700/500 ms, the same easing, and begins at exactly 0/30/…/180 ms.
+  - The 3k rule now applies to these cards too: the safety timer starts when the group enters the viewport, not at page load. Before, the cards appeared without animation if the visitor reached them after 4 s.
+  - `alpine.ts` is split into `scripts/alpine/{theme,router,header,hero,lead-form}.ts`. The lead form stays registered from the entrypoint. Registered from `ContactForm.astro` instead, a client-side navigation into `/contact` initialises the form before that page's script runs ("Undefined variable: leadForm", verified).
+  - `reducedMotion()` helper. Counters tear down on swap. Reveal cleanups are tracked. Dropdown options come from config.
+- **Icons without React** (F-03):
+  - `@lucide/astro` 1.48.0, the same Lucide release as before.
+  - `react`, `react-dom`, `@astrojs/react`, `@types/react*` and `lucide-react` are removed, and the 220 KB `client.*.js` chunk is gone.
+  - All 1,686 SVGs on 32 pages are byte-identical to the previous build, and so is the whole HTML once asset names are masked.
+- **Shared components and nav model** (F-10, F-11, F-36–F-39, F-67):
+  - New `ui/` components: `SectionHeader` (18 headers), `ArrowLink`, `IconTile`, `CheckList`, `Chip`.
+  - `cards/ContentCard`, `lib/format.ts` `pad2()` and `data/pillars.ts`.
+  - `lib/navigation.ts` `getNavModel()`: gating, pillar groups and Cloud columns are built once, and active links use `pagePath()`.
+  - Component folders: `cards/`, `forms/`, `content/`.
+  - Normalised HTML of all 32 pages is identical to the previous build.
+- **Sizes** (`dist/_astro`):
+  - JS: 380 KB raw / 123 KB gzip → 104 KB / 35 KB.
+  - Home no longer lazy-loads 19 KB gzip of framer-motion.
+  - Initial JS per page: 34.6 → 34.1 KB gzip.
+  - CSS: 5 files, 101 KB / 17.5 KB → 1 file, 101 KB / 17.1 KB.
+- **Checks:**
+  - After every batch: `check`, `lint`, `format:check`, `lint:content`, `build`, `check:csp` and the affected specs all pass.
+  - Design freeze after every batch: computed-style and layout snapshot of **all 32 pages** at 1440/390 in light and dark (128 views). 0 differences, except the two intended changes in batch 6: the removed number spans and `scroll-margin-top`. The legal pages were pixel-compared: terms identical; privacy and trust show only sub-pixel anti-aliasing in heading text.
+  - `reveal`, `reveal-sitewide`, `metrics`, `theme-motion` and `home-v3` 3×: 207 passed.
+  - Full suite: 346 passed, 76 skipped by design, 0 failed.
+- **Lighthouse 13**, Playwright Chromium, `astro preview`:
+
+  | Page | Mobile | Desktop |
+  | --- | --- | --- |
+  | `/` | 99 / 100 / 81 / 100, LCP 1.8 s, CLS 0 | 100 / 100 / 81 / 100 |
+  | `/services/managed-cloud-devops` | 99 / 100 / 81 / 100, LCP 1.8 s | 100 / 100 / 81 / 100 |
+
+  - Performance, Accessibility and SEO are unchanged from the audit.
+  - **Best Practices 81 (was 100)** is one audit, "deprecated API: FencedFrame". Alpine's CSP build reads every `globalThis` property at load, and this Chromium build flags a fenced-frame global.
+  - The pre-round build scores the same 81 with the same tool. It is not caused by this round. The fix belongs upstream in Alpine, which already skips `styleMedia` and `sharedStorage` for this reason.
+- **Correction:** the batch 8 3× run had 30 failures, all one stale assertion in `reveal.spec.ts` that read Alpine's removed `data-shown`. I misread the output then. The test now checks that `data-reveal` is removed (commit 023f765).
 
 ## 4. Owner decisions (binding)
 
