@@ -14,7 +14,7 @@ Practical AI, Cloud & DevOps engineering, and Web & SaaS engineering.
 | Framework | Astro (static output), TypeScript strict |
 | Styling | Tailwind CSS v4 with semantic design tokens (`src/styles/global.css`), light default and dark toggle |
 | Interactivity | Alpine.js (CSP build): theme, navigation, services menu, lead form |
-| Motion | CSS transitions driven by `data-reveal` attributes (`src/scripts/reveal.ts`); Framer Motion DOM engine (`framer-motion/dom`) only for the results count-up, lazy-loaded on Home |
+| Motion | CSS transitions driven by `data-reveal` attributes (`src/scripts/reveal.ts`); a small `requestAnimationFrame` count-up for the results (`src/scripts/metric-counters.ts`). No animation library |
 | Icons | Lucide, rendered at build time as static SVG (via `@astrojs/react`; no React runtime is shipped) |
 | Font | Plus Jakarta Sans Variable, self-hosted |
 | Hosting | Docker multi-stage build, served by `nginx:stable-alpine-slim` as a non-root user |

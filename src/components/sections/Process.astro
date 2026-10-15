@@ -40,18 +40,24 @@ const { detailed = false, withIntro = true } = Astro.props;
     </div>
   )}
 
-  <div class:list={['relative', withIntro && 'mt-12']} x-data={`processReveal(${engagementPhases.length})`}>
-    <ol class="relative grid gap-(--process-gap) [--process-gap:--spacing(6)] md:grid-cols-2 lg:grid-cols-4 lg:[--process-gap:--spacing(10)]">
+  {/* One reveal group (src/scripts/reveal.ts): the four cards start 60ms apart, each connector 30ms after its card. The
+      items style their own states (data-reveal-custom): each card slides 64px over 700ms, the fade runs on the glass
+      card and the connector draws over 500ms. Without JS, under reduced motion and once done, nothing is applied. */}
+  <div class:list={['relative', withIntro && 'mt-12']}>
+    <ol
+      data-reveal-group
+      class="relative grid gap-(--process-gap) [--process-gap:--spacing(6)] md:grid-cols-2 lg:grid-cols-4 lg:[--process-gap:--spacing(10)]"
+    >
       {engagementPhases.map((phase) => (
         <li
           data-phase
-          class="group/phase relative flex data-[shown=true]:transition-[translate] data-[shown=true]:duration-700 data-[shown=true]:ease-out data-[shown=false]:pointer-events-none data-[shown=false]:translate-x-16"
-          x-bind:data-shown={`isShown(${phase.order})`}
+          data-reveal-custom
+          class="group/phase relative flex data-[reveal=hidden]:pointer-events-none data-[reveal=hidden]:translate-x-16 data-[reveal=shown]:transition-[translate] data-[reveal=shown]:delay-(--reveal-delay) data-[reveal=shown]:duration-700 data-[reveal=shown]:ease-out"
         >
           {/* The fade runs on the glass card itself, never on an ancestor: an ancestor below opacity 1 becomes the card's
               backdrop root, and browsers can leave the backdrop-filtered card unpainted until something (a hover)
-              forces a repaint. data-shown="done" (after the sequence) drops every reveal style. */}
-          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6 group-data-[shown=false]/phase:opacity-0 group-data-[shown=true]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[shown=true]/phase:duration-700 group-data-[shown=true]/phase:ease-out">
+              forces a repaint. The attribute is removed after the sequence, which drops every reveal style. */}
+          <div class="glass card-hover relative flex w-full cursor-default select-none flex-col rounded-2xl p-6 group-data-[reveal=hidden]/phase:opacity-0 group-data-[reveal=shown]/phase:transition-[opacity,translate,box-shadow,border-color] group-data-[reveal=shown]/phase:delay-[var(--reveal-delay),0s,0s,0s] group-data-[reveal=shown]/phase:duration-700 group-data-[reveal=shown]/phase:ease-out">
             <span class="flex size-12 items-center justify-center rounded-xl bg-cta text-sm font-bold text-cta-fg shadow-sm">
               {String(phase.order).padStart(2, '0')}
             </span>
@@ -69,17 +75,14 @@ const { detailed = false, withIntro = true } = Astro.props;
             )}
           </div>
           {/* Connector: lives in the gap after this card (desktop row only), running from its right border to the next
-              card's left border. It draws once this card has settled, just before the next card slides in. Without
+              card's left border. It draws 30ms after its card starts, just before the next card slides in. Without
               JS it renders fully drawn. */}
           {phase.order < engagementPhases.length && (
             <div
               class="pointer-events-none absolute top-[47px] left-full hidden h-[2px] w-(--process-gap) lg:block"
               aria-hidden="true"
             >
-              <span
-                class="block h-full w-full bg-purple-500/80 shadow-[0_0_8px_rgba(168,85,247,0.5)] data-[drawn=true]:transition-[width] data-[drawn=true]:duration-500 data-[drawn=true]:ease-out data-[drawn=false]:w-0 dark:bg-purple-400/80"
-                x-bind:data-drawn={`isDrawn(${phase.order})`}
-              />
+              <span class="block h-full w-full bg-purple-500/80 shadow-[0_0_8px_rgba(168,85,247,0.5)] transition-[width] duration-500 ease-out group-data-[reveal=hidden]/phase:w-0 group-data-[reveal=hidden]/phase:transition-none group-data-[reveal=shown]/phase:delay-[calc(var(--reveal-delay)+30ms)] dark:bg-purple-400/80" />
             </div>
           )}
         </li>

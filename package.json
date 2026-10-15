@@ -30,7 +30,6 @@
     "@tailwindcss/vite": "^4.3.3",
     "alpinejs": "^3.17.4",
     "astro": "^7.3.8",
-    "framer-motion": "^13.4.6",
     "lucide-react": "^1.48.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",

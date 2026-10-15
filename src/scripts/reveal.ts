@@ -3,6 +3,8 @@
  * a `data-reveal` attribute; no animation library, nothing inline.
  * Optional per-group tuning: `data-reveal-distance` (rise in px, default 16), `data-reveal-x` (horizontal offset in px,
  * default 0), `data-reveal-scale` (starting scale, default 1).
+ * Items marked `data-reveal-custom` get no shared reveal style: the component styles their `data-reveal` states itself
+ * (the "How we engage" cards slide in and fade on the inner card), while timing and every rule below stay shared.
  *
  * Fail-safe rules (a card must never be left blank):
  * - Visible by default: only this script hides anything, by setting data-reveal="hidden" on items of groups that are
@@ -13,10 +15,12 @@
  * - Once revealed, an element is never hidden again (WeakSet), whatever re-runs.
  * - Per-group safety timeout: from the moment any part of a group enters the viewport, it has 4s to finish; then it is
  *   shown and stripped of reveal styles whatever state it is in. Lower sections still fade in when reached.
- * - Re-initialised on each `astro:page-load`: the previous observers and timers are torn down first; the scroll/pageshow/
- *   visibility watchdog listeners are bound once for the whole session.
+ * - Re-initialised on each `astro:page-load`: the previous observers and timers are torn down first (a group still
+ *   finishing is cleaned at once); the scroll/pageshow/visibility watchdog listeners are bound once for the session.
  * - The theme toggle never touches reveal state. prefers-reduced-motion: nothing is hidden.
  */
+import { reducedMotion } from './motion';
+
 const SAFETY_MS = 4000;
 const STAGGER_S = 0.06;
 const DONE_MS = 900;
@@ -27,6 +31,8 @@ let observer: IntersectionObserver | null = null;
 /** Watches for the first visible pixel of each pending group to start its safety timer. */
 let safetyObserver: IntersectionObserver | null = null;
 const safetyTimers = new Map<HTMLElement, number>();
+/** Pending end-of-reveal cleanups, so teardown never leaves a group with reveal styles. */
+const cleanTimers = new Map<HTMLElement, number>();
 
 function itemsOf(group: HTMLElement): HTMLElement[] {
   return Array.from(group.children) as HTMLElement[];
@@ -57,7 +63,16 @@ function reveal(group: HTMLElement, animate = true) {
     el.style.setProperty('--reveal-delay', `${i * stagger}s`);
     el.setAttribute('data-reveal', 'shown');
   });
-  window.setTimeout(() => clean(group), DONE_MS + items.length * stagger * 1000);
+  cleanTimers.set(
+    group,
+    window.setTimeout(
+      () => {
+        cleanTimers.delete(group);
+        clean(group);
+      },
+      DONE_MS + items.length * stagger * 1000,
+    ),
+  );
 }
 
 function check() {
@@ -103,14 +118,18 @@ function teardown() {
   safetyObserver = null;
   safetyTimers.forEach((t) => window.clearTimeout(t));
   safetyTimers.clear();
+  cleanTimers.forEach((t, group) => {
+    window.clearTimeout(t);
+    clean(group);
+  });
+  cleanTimers.clear();
   pending = [];
 }
 
 function init() {
   teardown();
   const groups = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal-group]'));
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce || !('IntersectionObserver' in window)) {
+  if (reducedMotion() || !('IntersectionObserver' in window)) {
     groups.forEach((g) => {
       revealed.add(g);
       clean(g);

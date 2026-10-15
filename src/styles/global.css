@@ -344,8 +344,9 @@
 
   /* Group reveal (src/scripts/reveal.ts). Only the script sets data-reveal, so without JS everything is visible. The
      hover transitions of .card-hover are repeated here so the two never override each other. The attribute is removed
-     once the reveal is over, leaving the card with no opacity or transform of its own. */
-  [data-reveal] {
+     once the reveal is over, leaving the card with no opacity or transform of its own. Items marked data-reveal-custom
+     style their own states (Process.astro). */
+  [data-reveal]:where(:not([data-reveal-custom])) {
     transition:
       opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
       transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s),
@@ -354,13 +355,13 @@
       border-color 0.3s ease-out;
   }
 
-  [data-reveal='hidden'] {
+  [data-reveal='hidden']:where(:not([data-reveal-custom])) {
     opacity: 0;
     transform: var(--reveal-from, translate3d(0, 16px, 0));
   }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-reveal='hidden'] {
+    [data-reveal='hidden']:where(:not([data-reveal-custom])) {
       opacity: 1;
       transform: none;
     }

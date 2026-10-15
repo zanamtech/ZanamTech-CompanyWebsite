@@ -25,7 +25,6 @@ const services = [
   { slug: AGENCY_PARTNERSHIP_SLUG, name: AGENCY_PARTNERSHIP },
 ];
 const id = (field: string) => `${idPrefix}-${field}`;
-const config = JSON.stringify({ services, idPrefix });
 
 const textFields = [
   { name: 'name', label: 'Full name', type: 'text', autocomplete: 'name', required: true, maxlength: 100, hint: '' },
@@ -96,6 +95,11 @@ const menus = [
     options: [...CLOUD_PLATFORM_OPTIONS] as string[],
   },
 ];
+const config = JSON.stringify({
+  services,
+  idPrefix,
+  options: Object.fromEntries(menus.map((m) => [m.field, m.options])),
+});
 ---
 
 <div x-data={`leadForm(${config})`}>

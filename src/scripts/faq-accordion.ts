@@ -6,9 +6,10 @@
  * The native <details>/<summary> stays in charge of semantics and keyboard support: Enter and Space fire the same click
  * handled below. Under reduced motion nothing is intercepted, so items open and close instantly.
  */
+import { reducedMotion } from './motion';
+
 const DURATION = 280;
 const cssAnimates = typeof CSS !== 'undefined' && CSS.supports('interpolate-size', 'allow-keywords');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const running = new WeakMap<HTMLElement, Animation>();
 
 function animateHeight(body: HTMLElement, from: number, to: number, onFinish: () => void) {
@@ -22,7 +23,7 @@ function animateHeight(body: HTMLElement, from: number, to: number, onFinish: ()
 
 if (!cssAnimates) {
   document.addEventListener('click', (event) => {
-    if (reducedMotion.matches || !(event.target instanceof Element)) return;
+    if (reducedMotion() || !(event.target instanceof Element)) return;
     const summary = event.target.closest('[data-faq] > summary');
     const details = summary?.parentElement;
     const body = details?.querySelector<HTMLElement>('[data-faq-body]');
