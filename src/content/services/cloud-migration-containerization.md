@@ -16,7 +16,7 @@ deliverables:
 engagementTypes: [assessment, project]
 capabilities:
   - Migration planning, landing zone setup and legacy hardware decommissioning
-  - Microservice decomposition and containerization of monolithic applications with Docker
+  - Containerization of existing applications with Docker, without rewriting application code
   - Production Kubernetes with horizontal pod auto-scaling and ingress load balancing
   - Staged database and traffic cutover with validation at every step
   - Infrastructure as Code (IaC) and Linux instance optimization
@@ -46,9 +46,10 @@ scenarios:
 ---
 
 ZanamTech moves workloads from legacy on-premises hardware or unoptimized hosting to elastic environments on
-AWS, Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off,
-containerized with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the
-simpler, cheaper option.
+AWS, Azure and Google Cloud. Applications are containerized with Docker and orchestrated on Kubernetes where scaling
+and portability justify it, or moved to managed platform services where that is the simpler, cheaper option.
+Code-level changes, such as splitting a monolith into services, are handled separately under
+[Application Modernization & Integration](/services/application-modernisation-integration).
 
 The resulting architecture scales automatically, recovers from failure on its own and holds performance steady
 during sudden traffic spikes. Every cutover is staged and validated to protect revenue and operational continuity.

@@ -9,10 +9,10 @@ Conventions: page headings are shifted two levels down (the page H1 is `###`). `
 | Page | Words |
 | --- | --- |
 | Shared (header, menus, footer, CTA band) | 308 |
-| Home `/` | 1430 |
-| `/services` | 829 |
-| `/services/managed-cloud-devops` | 1025 |
-| `/services/cloud-migration-containerization` | 716 |
+| Home `/` | 1429 |
+| `/services` | 828 |
+| `/services/managed-cloud-devops` | 1046 |
+| `/services/cloud-migration-containerization` | 731 |
 | `/services/infrastructure-as-code-landing-zones` | 706 |
 | `/services/cicd-pipeline-workflow-automation` | 698 |
 | `/services/enterprise-security-waf-hardening` | 715 |
@@ -280,7 +280,7 @@ Measured outcomes from cloud, DevOps and security work on production platforms.
 
   Lower hardware maintenance costs
 
-  SaaS provider · fragile on-premise servers
+  SaaS provider · fragile on-premises servers
 
 - 35%
 
@@ -375,8 +375,8 @@ From managed operations and migrations to SaaS builds and practical AI automatio
   We run your cloud and delivery platform: operations, environments, pipelines, backups and governance.
 
   - → Link: Monitoring and alerting
-  - → Link: Patching and backups
-  - → Link: Security patching
+  - → Link: Monthly patching
+  - → Link: Backup checks
   - → Link: Monthly service report
 - 02
 
@@ -665,8 +665,8 @@ We run your cloud and delivery platform: operations, environments, pipelines, ba
   Included in every retainer
 
   - Monitoring and alerting
-  - Patching and backups
-  - Security patching
+  - Monthly patching
+  - Backup checks
   - Monthly service report
 
   Explore service
@@ -1121,14 +1121,14 @@ Staged, validated migration from legacy or unoptimized hosting to elastic AWS, A
 
 #### Overview
 
-ZanamTech moves workloads from legacy on-premise hardware or unoptimized hosting to elastic environments on AWS, Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off, containerized with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the simpler, cheaper option.
+ZanamTech moves workloads from legacy on-premises hardware or unoptimized hosting to elastic environments on AWS, Azure and Google Cloud. Applications are containerized with Docker and orchestrated on Kubernetes where scaling and portability justify it, or moved to managed platform services where that is the simpler, cheaper option. Code-level changes, such as splitting a monolith into services, are handled separately under Application Modernization & Integration.
 
 The resulting architecture scales automatically, recovers from failure on its own and holds performance steady during sudden traffic spikes. Every cutover is staged and validated to protect revenue and operational continuity.
 
 #### Core capabilities
 
 - Migration planning, landing zone setup and legacy hardware decommissioning
-- Microservice decomposition and containerization of monolithic applications with Docker
+- Containerization of existing applications with Docker, without rewriting application code
 - Production Kubernetes with horizontal pod auto-scaling and ingress load balancing
 - Staged database and traffic cutover with validation at every step
 - Infrastructure as Code (IaC) and Linux instance optimization
@@ -1190,7 +1190,7 @@ Anonymized results from past engagements.
 
 - Challenge
 
-  A growing SaaS provider carried fragile, costly on-premise servers that demanded constant maintenance.
+  A growing SaaS provider carried fragile, costly on-premises servers that demanded constant maintenance.
 
   Approach
 
