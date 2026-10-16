@@ -48,9 +48,8 @@ test.describe('US2 — Services', () => {
       ).toBeVisible();
       await expect(page.getByRole('heading', { name: 'What you get' })).toBeVisible();
       await expect(page.getByText('Outcome', { exact: true }).first()).toBeVisible();
-      const hasReal = service.scenarios.some((s) => s.kind === 'real');
-      // The past-engagements footnote appears only where a real result is shown.
-      await expect(page.getByText(RESULTS_FOOTNOTE)).toHaveCount(hasReal ? 2 : 0);
+      // The past-engagements footnote appears once, and only where the page shows a figure.
+      await expect(page.getByText(RESULTS_FOOTNOTE)).toHaveCount(service.figures ? 1 : 0);
       await expect(page.locator('[data-scenario]')).toHaveCount(service.scenarios.length);
       const examples = service.scenarios.filter((s) => s.kind === 'illustrative').length;
       await expect(page.locator('[data-scenario]').getByText('Example engagement', { exact: true })).toHaveCount(

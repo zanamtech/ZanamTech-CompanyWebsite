@@ -24,7 +24,7 @@ test.describe('Header and mega-menu', () => {
       .hover();
     const menu = page.locator('#services-menu');
     await expect(menu).toBeVisible();
-    await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
+    await menu.getByRole('link', { name: 'Cloud Cost Optimization' }).click();
     await expect(menu).toBeHidden();
     await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);
   });
@@ -170,7 +170,7 @@ test.describe('Insights article', () => {
     await page.goto(href!);
     const meta = page.locator('[data-article-meta]');
     await expect(meta).toContainText(
-      /By Mubashir Ahmed\s*·\s*Founder & Lead Architect\s*·\s*\d{1,2} \w+ \d{4}\s*·\s*\d+ min read/,
+      /By Mubashir Ahmed\s*·\s*Founder & Lead Architect\s*·\s*\w+ \d{1,2}, \d{4}\s*·\s*\d+ min read/,
     );
     await expect(meta.getByRole('link', { name: 'Mubashir Ahmed' })).toHaveAttribute('href', '/about');
     const ld = await page.locator('script[type="application/ld+json"]').allTextContents();
@@ -199,7 +199,7 @@ test.describe('Trust and legal', () => {
   }) => {
     for (const path of ['/privacy', '/terms']) {
       await page.goto(path);
-      await expect(page.locator('[data-last-updated]')).toContainText(/^Last updated: \d{1,2} \w+ \d{4}$/);
+      await expect(page.locator('[data-last-updated]')).toContainText(/^Last updated: \w+ \d{1,2}, \d{4}$/);
     }
     for (const path of ['/trust', '/terms']) {
       await page.goto(path);

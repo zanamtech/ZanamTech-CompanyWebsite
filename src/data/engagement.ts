@@ -65,7 +65,7 @@ export const engagementModelCatalog: EngagementModelEntry[] = [
   {
     id: 'assessment',
     name: 'Assessment',
-    description: 'A fixed-fee review with a written scorecard, findings and a prioritised backlog.',
+    description: 'A fixed-fee review with a written scorecard, findings and a prioritized backlog.',
     fits: 'Understanding where your platform stands before committing to larger work.',
   },
   {

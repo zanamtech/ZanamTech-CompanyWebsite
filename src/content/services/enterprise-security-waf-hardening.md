@@ -5,10 +5,10 @@ pillar: cloud-devops
 flagship: false
 published: true
 icon: ShieldCheck
-summary: Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
-seoDescription: "Layered, zero-trust protection for web apps, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF and AWS WAF."
+summary: Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+seoDescription: "Layered, zero-trust protection for web apps, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF and AWS WAF."
 deliverables:
-  - Attack-surface review with prioritised findings
+  - Attack-surface review with prioritized findings
   - WAF policies, rate limits and bot controls in place
   - TLS enforcement and hardened server baselines
   - Access and firewall rules documented
@@ -20,13 +20,13 @@ capabilities:
   - Geographic access controls (geo-fencing) and automated bot filtering
   - End-to-end SSL/TLS enforcement and operating system hardening
   - Attack-surface audits and active threat mitigation
-stack: [Cloudflare WAF, AWS WAF & Shield, Azure Front Door & WAF, Google Cloud Armor, SSL/TLS, Security Audit Tooling]
+stack: [Cloudflare WAF, AWS WAF & Shield, Azure Front Door & WAF, Google Cloud Armor, SSL/TLS]
 outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 relatedOffer: health-check
 faq:
   - q: Will security rules block legitimate users?
     a: Rules are introduced in monitoring mode first and tuned against real traffic before enforcement, so legitimate users are not disrupted.
-  - q: Do you provide a security operations centre?
+  - q: Do you provide a security operations center?
     a: No. We harden and configure your perimeter and hand over monitoring with clear runbooks. Ongoing review can continue under the managed retainer.
   - q: How is the price set?
     a: There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
@@ -38,7 +38,7 @@ scenarios:
   - kind: real
     problem: A healthcare portal faced persistent attacks and probing aimed at sensitive patient data.
     solution: An enterprise WAF was deployed with strict geo-fencing rules, untrusted IP ranges were blocked and TLS was enforced end to end.
-    outcome: Unauthorised intrusion attempts dropped sharply, and patient-facing endpoints now operate behind a hardened zero-trust perimeter.
+    outcome: Unauthorized intrusion attempts dropped sharply, and patient-facing endpoints now operate behind a hardened zero-trust perimeter.
   - kind: real
     problem: A high-volume B2B platform suffered performance degradation from aggressive automated bot traffic.
     solution: Geographic access blocks, rate-limiting policies and automated DDoS mitigation rules were implemented at the edge.
@@ -46,7 +46,7 @@ scenarios:
 ---
 
 ZanamTech deploys layered defences that shield web applications, enterprise portals and public or internal APIs
-against distributed denial-of-service attacks, automated bots, exploit probes and unauthorised access.
+against distributed denial-of-service attacks, automated bots, exploit probes and unauthorized access.
 
 By combining Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall, Google Cloud Armor, zero-trust network firewalls, geographic access fencing, rate limiting
 and strict SSL/TLS enforcement, every public endpoint is verified, filtered and encrypted. Regular reviews keep the

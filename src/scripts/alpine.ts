@@ -7,7 +7,7 @@ import { registerLeadForm } from './alpine/lead-form';
 
 // Alpine entrypoint (astro.config.mjs): the integration calls this, then starts Alpine on DOMContentLoaded. Every
 // component is registered here, the contact form included: after a client-side navigation into /contact, Alpine
-// initialises the new page before that page's own scripts run, so a component registered from ContactForm.astro would
+// initializes the new page before that page's own scripts run, so a component registered from ContactForm.astro would
 // not exist yet.
 export default (Alpine: Alpine) => {
   registerRouter(registerTheme(Alpine));

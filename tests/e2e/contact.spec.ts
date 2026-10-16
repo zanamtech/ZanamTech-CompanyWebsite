@@ -39,7 +39,7 @@ async function fillValid(scope: ReturnType<Page['getByRole']>) {
   await scope.getByLabel('Company name').fill('Example Corp');
   await scope.getByLabel('Phone number (optional)').fill('+1 555 010 0000');
   await scope.getByRole('combobox', { name: 'Service needed' }).click();
-  await scope.getByRole('option', { name: 'Cloud Migration & Modernisation' }).click();
+  await scope.getByRole('option', { name: 'Cloud Migration & Modernization' }).click();
   await scope.getByRole('combobox', { name: 'Estimated engagement size (optional)' }).click();
   await scope.getByRole('listbox', { name: 'Estimated engagement size (optional)' }).getByRole('option').nth(2).click();
   await scope
@@ -136,7 +136,7 @@ test.describe('US3 — Contact page & lead submission', () => {
     );
     await heroCta.click();
     await expect(page.getByRole('main').getByRole('combobox', { name: 'Service needed' })).toHaveText(
-      'Cloud Cost Optimisation',
+      'Cloud Cost Optimization',
     );
   });
 

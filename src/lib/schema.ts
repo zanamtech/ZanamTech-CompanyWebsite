@@ -58,7 +58,7 @@ export function website(base: URL): SchemaNode {
     '@id': abs('/#website', base),
     name: site.name,
     url: base.href,
-    inLanguage: 'en-GB',
+    inLanguage: 'en-US',
     publisher: { '@id': orgId(base) },
   };
 }
@@ -121,7 +121,7 @@ export function article(
     },
     publisher: { '@type': 'Organization', '@id': orgId(base), name: site.name, url: base.href, logo: logo(base) },
     mainEntityOfPage: abs(entry.path, base),
-    inLanguage: 'en-GB',
+    inLanguage: 'en-US',
   };
 }
 

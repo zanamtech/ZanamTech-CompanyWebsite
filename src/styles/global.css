@@ -314,7 +314,7 @@
     outline-offset: 3px;
   }
 
-  /* Long-form documents (LongFormDoc.astro): each section heading is numbered "01." in the accent colour. */
+  /* Long-form documents (LongFormDoc.astro): each section heading is numbered "01." in the accent color. */
   .privacy-doc {
     counter-reset: doc-section;
   }
@@ -376,7 +376,7 @@
   }
 
   /* Card sets of 5 (or any count that leaves a partial last row): three across on desktop, two on tablet, one on
-     phones, with the last row centred instead of leaving an empty left-aligned slot. Cards in a row share a height. */
+     phones, with the last row centered instead of leaving an empty left-aligned slot. Cards in a row share a height. */
   .cards-centred {
     display: flex;
     flex-wrap: wrap;
@@ -459,7 +459,7 @@
     color: transparent;
   }
 
-  /* Metric numerals are gradient-clipped text (colour is transparent), so "light up" with a purple glow instead. */
+  /* Metric numerals are gradient-clipped text (color is transparent), so "light up" with a purple glow instead. */
   .group:hover .metric-figure {
     filter: drop-shadow(0 0 12px rgb(168 85 247 / 0.35));
   }
@@ -571,7 +571,7 @@
     animation: none !important;
   }
 
-  /* Ticker becomes a static, centred wrap of badges; the duplicate copy is hidden. */
+  /* Ticker becomes a static, centered wrap of badges; the duplicate copy is hidden. */
   .marquee-track {
     animation: none !important;
     width: auto;

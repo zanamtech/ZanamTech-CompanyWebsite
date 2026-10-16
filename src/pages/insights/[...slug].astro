@@ -43,7 +43,14 @@ interface Props {
 }
 
 const { article, articles, hasSamples, services } = Astro.props;
-const dateLabel = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+// "October 15, 2026". Front-matter dates are midnight at the start of the day in universal time, so the calendar
+// parts are read in that time and formatted locally (no day shift on a build machine west of Greenwich).
+const dateLabel = (d: Date) =>
+  new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
 const rendered = article ? await render(article) : undefined;
 const Content = rendered?.Content;
 // "On this page" table of contents from the article's H2s.
@@ -117,7 +124,7 @@ const breadcrumbs = article
       </div>
     </PageHero>
     {/* Desktop: a 720px reading column with a sticky "On this page" list on the right (no empty right half);
-          without H2s the column is centred on its own. */}
+          without H2s the column is centered on its own. */}
     <div
       class:list={[
         'container-page section-y',

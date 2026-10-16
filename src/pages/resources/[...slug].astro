@@ -11,7 +11,7 @@ import { isVisible } from '../../lib/content';
 
 type Artefact = CollectionEntry<'resources'>;
 
-// Proof-by-artefact samples (spec 002 §E), always labelled "Sample". /resources and /resources/<slug> exist only for
+// Proof-by-artefact samples (spec 002 §E), always labeled "Sample". /resources and /resources/<slug> exist only for
 // visible entries: drafts render in `astro dev` only, so a build produces no pages until the owner approves one.
 export async function getStaticPaths() {
   const artefacts = (await getCollection('resources', isVisible)).sort((a, b) =>

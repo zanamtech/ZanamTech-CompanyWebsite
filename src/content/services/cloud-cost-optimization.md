@@ -1,6 +1,6 @@
 ---
 order: 8
-name: Cloud Cost Optimisation
+name: Cloud Cost Optimization
 pillar: cloud-devops
 flagship: false
 published: true
@@ -15,17 +15,17 @@ deliverables:
   - A savings roadmap for the remaining opportunities
 engagementTypes: [assessment, project, retainer]
 capabilities:
-  - Billing and utilisation analysis across AWS, Azure and Google Cloud
+  - Billing and utilization analysis across AWS, Azure and Google Cloud
   - Compute right-sizing and idle capacity consolidation
   - Automated clean-up of orphaned disks, unattached IPs and stale environments
   - Budget alerts and spend guardrails
   - Reserved capacity, savings plans and spot strategy
-stack: [AWS Cost Explorer, Azure Cost Management, Google Cloud Billing, Architecture Auditing Tools]
+stack: [AWS Cost Explorer, Azure Cost Management, Google Cloud Billing, AWS Compute Optimizer, Azure Advisor, Google Cloud Recommender]
 outcome: Lower cloud bills through architecture rather than compromise; a past engagement cut recurring spend by up to 40%
 relatedOffer: cost-review
 faq:
   - q: Will cost cuts hurt performance?
-    a: No. Changes are based on measured utilisation, and availability and performance objectives stay intact.
+    a: No. Changes are based on measured utilization, and availability and performance objectives stay intact.
   - q: Can cost control continue after the review?
     a: Yes. Monthly spend reviews, budgets and alerts are part of the Managed Cloud & DevOps retainer.
   - q: How is the price set?
@@ -36,7 +36,7 @@ faq:
     a: AWS, Azure and Google Cloud equally, using each provider's own cost tools alongside your tagging and budgets.
 scenarios:
   - kind: real
-    problem: A high-growth scale-up ran its compute fleet at under 20% average CPU utilisation.
+    problem: A high-growth scale-up ran its compute fleet at under 20% average CPU utilization.
     solution: Instance allocation was audited and compute nodes were right-sized to match measured application demand.
     outcome: Recurring cloud spend fell by up to 40% with no loss of performance.
   - kind: real
@@ -45,7 +45,7 @@ scenarios:
     outcome: Wasteful spend was eliminated and unbudgeted cost overruns were prevented going forward.
 ---
 
-ZanamTech reviews active AWS, Azure and Google Cloud infrastructure to remove wasted spend. Utilisation data drives right-sizing,
+ZanamTech reviews active AWS, Azure and Google Cloud infrastructure to remove wasted spend. Utilization data drives right-sizing,
 consolidation and clean-up decisions, while automated guardrails keep spending aligned with budget.
 
 Savings come from architecture rather than compromise: availability and performance objectives stay intact while

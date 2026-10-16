@@ -45,7 +45,7 @@ to AWS and Google Cloud.
 
 - Give each environment one job, and isolate production in its own subscription.
 - Build every environment from the same Infrastructure as Code modules, with only parameters changing.
-- Build once and promote the same artefact from Dev to production, ending with a slot swap behind an approval.
+- Build once and promote the same artifact from Dev to production, ending with a slot swap behind an approval.
 - Keep secrets in one Key Vault per application and environment, read through managed identities.
 
 </aside>
@@ -78,7 +78,7 @@ policies are assigned once and inherited, rather than repeated on every subscrip
 ## Naming and tagging
 
 Name everything consistently, for example `rg-<app>-<env>-<region>` for resource groups and `kv-<app>-<env>` for vaults,
-and tag every resource with environment, owner, application and cost centre. Do not rely on people remembering:
+and tag every resource with environment, owner, application and cost center. Do not rely on people remembering:
 Azure Policy can require a tag, add a missing tag, or inherit it from the resource group, so untagged resources never
 appear in the first place.
 
@@ -112,7 +112,7 @@ A useful rule: if copying a production setting into Dev would be dangerous, it b
 
 ## Promotion, not redeployment
 
-Build once and promote the same artefact through every environment. The pipeline should:
+Build once and promote the same artifact through every environment. The pipeline should:
 
 1. Build and test on every pull request.
 2. Deploy the merged build automatically to Dev.
@@ -120,7 +120,7 @@ Build once and promote the same artefact through every environment. The pipeline
 4. Promote to UAT after QA sign-off.
 5. Promote to production through an approval gate, ideally via a slot swap.
 
-Rebuilding for each environment means production runs code that was never tested. Promoting one artefact, identified
+Rebuilding for each environment means production runs code that was never tested. Promoting one artifact, identified
 by its version or commit, removes that risk. In Azure Pipelines, model each stage as an environment with approvals and
 checks; GitHub Actions environments with protection rules do the same job. We design and build these pipelines in our
 [CI/CD & DevOps Transformation](/services/cicd-pipeline-workflow-automation) service.
@@ -179,4 +179,4 @@ The same ideas apply on the other two clouds; only the names change.
 
 On AWS, use separate accounts for production and non-production, grouped into organizational units. On Google Cloud,
 use a project per environment, grouped under folders. The rules stay the same everywhere: one job per environment,
-one set of modules, one promoted artefact.
+one set of modules, one promoted artifact.

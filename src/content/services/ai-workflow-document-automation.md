@@ -46,7 +46,7 @@ scenarios:
 ---
 
 ZanamTech automates the manual work that slows teams down. A recurring process, such as document intake or a
-regular management report, is automated end to end on your real data, with human approval points wherever judgement
+regular management report, is automated end to end on your real data, with human approval points wherever judgment
 matters and a full audit log of every action.
 
 Every build starts small: an AI Opportunity Sprint picks the right process, and a pilot runs alongside the current

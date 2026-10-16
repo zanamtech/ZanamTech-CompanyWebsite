@@ -37,7 +37,7 @@ export const segments: TargetSegment[] = [
     icon: 'Building2',
     name: 'Mid-Market Firms on AWS, Azure and Google Cloud',
     profile:
-      'Established firms in logistics, professional services and e-commerce modernising their platforms without hiring a full platform team.',
+      'Established firms in logistics, professional services and e-commerce modernizing their platforms without hiring a full platform team.',
     decisionMakers: ['CIOs', 'IT directors', 'Heads of infrastructure'],
     challenges: [
       'Legacy hosting and high maintenance overhead',
@@ -75,15 +75,15 @@ export const segments: TargetSegment[] = [
     icon: 'Globe',
     name: 'GCC Enterprises & Scale-Ups',
     profile:
-      'Organisations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centres, with data-residency awareness and same-day time-zone overlap.',
+      'Organizations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centers, with data-residency awareness and same-day time-zone overlap.',
     decisionMakers: ['IT leads', 'Digital transformation leads', 'Heads of engineering'],
     challenges: [
       'Data-residency requirements for regional cloud hosting',
-      'Modernising legacy applications',
+      'Modernizing legacy applications',
       'Limited in-house cloud operations capacity',
     ],
     value: [
-      'Platforms in UAE and Saudi Arabia cloud regions',
+      'Platforms in the cloud regions you choose, including UAE and Saudi Arabia regions where your chosen provider offers them',
       'Infrastructure as Code foundations',
       'Managed operations and reporting',
     ],

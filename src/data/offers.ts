@@ -21,7 +21,7 @@ export const offers: Offer[] = [
     name: 'Cloud & DevOps Health Check',
     icon: 'Activity',
     duration: '2–3 weeks',
-    output: 'Scorecard and prioritised backlog',
+    output: 'Scorecard and prioritized backlog',
     summary:
       'An independent review of one cloud environment against reliability, security, cost and delivery practices.',
     inputs: [
@@ -32,7 +32,7 @@ export const offers: Offer[] = [
     deliverables: [
       'Scorecard across reliability, security, cost and delivery',
       'Findings with evidence',
-      'Prioritised backlog with cost and risk',
+      'Prioritized backlog with cost and risk',
     ],
     nextStep: 'A fixed-scope project or a managed retainer.',
   },
@@ -72,7 +72,7 @@ export const offers: Offer[] = [
     summary: 'Find the manual processes where automation pays back, and specify the first pilot.',
     inputs: ['Process owners for a short interview each', 'Sample documents or reports'],
     deliverables: ['Processes ranked by hours saved × volume', 'Data and risk assessment', 'Pilot specification'],
-    nextStep: 'The AI Automation Pilot. The sprint fee is credited towards it.',
+    nextStep: 'The AI Automation Pilot.',
   },
   {
     id: 'ai-automation-pilot',
@@ -80,7 +80,8 @@ export const offers: Offer[] = [
     icon: 'Bot',
     duration: '3–4 weeks',
     output: 'One working automation with approval points',
-    summary: 'One workflow automated on real data, run alongside the current process before any larger commitment.',
+    summary:
+      'One automation or assistant built on real data, run alongside the current process before any larger commitment.',
     inputs: ['A named process owner', 'Representative real data', 'Access to the target systems'],
     deliverables: ['Working automation with human approval points', 'Audit log', 'Go/no-go report'],
     nextStep: 'A full AI build or managed AI operations.',

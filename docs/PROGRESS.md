@@ -388,6 +388,49 @@ Owner-approved after review on the dev server. Desktop and tablet only; the phon
 - **Bottom row:** Privacy / Terms / Trust are 24px apart (was 16px), with the Company row's centred dot (`aria-hidden`) in each gap. They stay right-aligned at the same size and colour.
 - **Checks:** `npm run check` 0 errors, `format:check` passes; `header-footer-ui`, `trust-legal`, `review-fixes`: 48 passed, 0 failed. Screenshots at 1440 and 1024 in light and dark.
 
+## 3r. Content review round: American English, accuracy, consistency, wording (16 Oct)
+From the owner's review of `docs/review/SITE_COPY.md`. Copy and data only; no layout or design change.
+- **American English sitewide:** visible copy, meta, JSON-LD, form text and articles (for example optimize, modernize, organization, artifact, catalog, center, prioritized, anonymized, utilization, judgment, labeled). This includes the names Cloud Cost Optimization, Cloud Migration & Modernization and Application Modernization & Integration.
+  - **Unchanged:** URLs and slugs (for example `/services/application-modernisation-integration`), code identifiers (`ArtefactCard`, `#artefacts`, `data-artefact`), external source titles and product names.
+  - **Locale:** `lang="en-US"`, `og:locale` `en_US` and JSON-LD `inLanguage` `en-US`.
+  - **Dates:** American format ("October 15, 2026") on articles, cards and "Last updated". The date helper reads the date in universal time, so it never shifts a day.
+  - **Check:** a scan of the built HTML finds no British spellings left. No lint rule enforced British spelling; `seo.spec.ts` now asserts `en-US`.
+- **Accuracy:**
+  - The retainer's "included" list says "Security patching" (was "Cost and security reviews").
+  - **Privacy Notice:**
+    - Every form field is listed, and "the consultation form" replaces "consultation and custom proposal forms".
+    - "This website" replaces "this platform" in the intro, the meta description and the abuse-protection bullet.
+    - Retention: "Inquiries that do not lead to an engagement are deleted within 12 months of receipt."
+    - "Last updated: October 16, 2026".
+  - The About "Privacy by design" card has the new text.
+  - UAE and Saudi regions now read "including UAE and Saudi Arabia regions where your chosen provider offers them" in the Home FAQ, Trust data residency and the Industries GCC bullet.
+  - **Other fixes:**
+    - The CI/CD FAQ tools list no longer mentions GitLab.
+    - The SOP sample notes that approval reset needs Bitbucket Premium.
+    - The Home commitment reads "Written proposal within 2 business days of the consultation".
+    - The AI Opportunity Sprint next step no longer says the sprint fee is credited.
+- **Consistency:**
+  - SQL Server (was MS SQL).
+  - Flexential (was Flexential Cloud), with Liquid Web added to the Home marquee.
+  - "High availability" in the brand pillar (hero chip and Trust card).
+  - The AI Automation Pilot summary has the new text.
+- **Wording:**
+  - **Tier coverage:** Business-hours coverage / Extended-hours coverage / Extended hours with after-hours escalation.
+  - **About:** the "Our mission" text is replaced with one paragraph.
+  - **Technology stacks:**
+    - Modern Full-Stack Frameworks (React/Next.js, Node.js, Astro, Python).
+    - The cost page lists AWS Compute Optimizer, Azure Advisor and Google Cloud Recommender.
+    - "Security Audit Tooling" is removed.
+    - Bash replaces Linux Shell Automation.
+    - PostgreSQL and SQL Server replace SQL Databases.
+    - Amazon SQS, Azure Service Bus and Google Cloud Pub/Sub replace Message Queues.
+  - **Results footnote:** shown once per service page, after "Engagements in practice", and only where the page shows a figure (5 of 13 pages). The "Example engagement" sentence appears only when the page has example entries.
+- **Tests updated (old text only, no new tests):** `contact`, `navigation`, `review-fixes`, `review3`, `home`, `home-v3`, `services`, `services-v3`, `seo`. The test catalog gained a `figures` flag that mirrors the footnote rule.
+- **Checks:**
+  - **Gates:** `npm run check` 0 errors; `lint`, `lint:content`, `format:check`, `build` and `check:csp` all pass.
+  - **Specs:** `seo` and the updated specs pass (225 passed, after one more date-format assertion fix in `review-fixes`).
+  - **Export:** `docs/review/SITE_COPY.md` was exported again from the new build.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
@@ -400,6 +443,7 @@ Owner-approved after review on the dev server. Desktop and tablet only; the phon
 | **SC-006:** results appear within one scroll on desktop and within two scrolls on phones; the hero is unchanged | Spec SC-006, `tests/e2e/home-v3.spec.ts` |
 | **The visual design is unchanged:** colours, fonts, spacing, themes, animations. Approved exceptions: the wider multi-column Services menu, and tighter header link padding at lg | Constitution IV, design-freeze comparison |
 | **Naming (14 Oct):** "How We Work" in title case everywhere; "Azure", not "Microsoft Azure"; the footer Company row uses even spacing without dots | `src/data/site.ts`, `src/data/platforms.ts`, service content |
+| **American English (16 Oct):** US spelling and US date format ("October 15, 2026") in all visible copy, meta and structured data; `lang="en-US"`. URLs and slugs keep their original spelling | Section 3r; `seo.spec.ts` (`en-US`) |
 | Also decided: no prices; no competitor names; no fabricated or placeholder proof; single CTA "Book a Strategy Consultation"; "Custom Full-Stack Web App Development" name kept; no address on the site and no "remote-first" wording; Google Cloud supported | Constitution III, spec |
 
 ## 5. Open before launch

@@ -37,7 +37,7 @@ sample: true
 ### 4. Review and merge
 
 - **Approvals required:** at least one, or two for repositories marked critical.
-- **Merge checks:** no unresolved tasks, a passing build, approvals reset on new commits.
+- **Merge checks:** no unresolved tasks, a passing build, approvals reset on new commits (Bitbucket Premium).
 - **Reviewers check:** correctness, tests, security impact, configuration changes and documentation.
 - **Merge strategy:** squash merge for feature branches, unless the repository specifies otherwise.
 

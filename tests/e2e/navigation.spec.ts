@@ -84,7 +84,7 @@ test.describe('Client-side navigation (Astro ClientRouter)', () => {
       .getByRole('link', { name: 'Services', exact: true })
       .hover();
     const menu = page.locator('#services-menu');
-    await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
+    await menu.getByRole('link', { name: 'Cloud Cost Optimization' }).click();
     await expect(page).toHaveURL(/\/services\/cloud-cost-optimization\/?$/);
     await expect(menu).toBeHidden();
   });

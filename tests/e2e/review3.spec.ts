@@ -151,7 +151,7 @@ test.describe('Header', () => {
         .hover();
       const menu = page.locator('#services-menu');
       await expect(menu).toBeVisible();
-      await menu.getByRole('link', { name: 'Cloud Cost Optimisation' }).click();
+      await menu.getByRole('link', { name: 'Cloud Cost Optimization' }).click();
       await expect(menu).toBeHidden();
       await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
       expect(await page.evaluate(() => (window as unknown as { __marker?: boolean }).__marker)).toBe(true);
@@ -167,7 +167,7 @@ test.describe('Home: "Low-risk ways to start" cards', () => {
     await expect(page.locator('#start-here')).toContainText(
       'Fixed scope, a clear written output, no long-term commitment.',
     );
-    await expect(cards.first()).toContainText('Scorecard and prioritised backlog');
+    await expect(cards.first()).toContainText('Scorecard and prioritized backlog');
     for (const id of await cards.evaluateAll((els) => els.map((e) => e.getAttribute('data-offer-card')))) {
       await expect(page.locator(`[data-offer-card="${id}"]`)).toHaveAttribute('href', `/start-here#${id}`);
     }

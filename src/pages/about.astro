@@ -17,7 +17,7 @@ import { engagementModelCatalog } from '../data/engagement';
 import founderPhoto from '../assets/team/mubashir.jpg';
 
 // Facts only (Constitution III): no experience-length claims, no response targets.
-// Engagement labels come from the /approach catalogue so the two pages always match.
+// Engagement labels come from the /approach catalog so the two pages always match.
 const atAGlance = [
   { label: 'Clouds', values: ['AWS', 'Azure', 'Google Cloud', 'Flexential', 'Liquid Web'] },
   { label: 'Regions served', values: [...regionsServed] },
@@ -29,7 +29,7 @@ const capabilities = [
   {
     title: 'Cloud & Infrastructure',
     items: [
-      'Cloud migration and modernisation on AWS, Azure and Google Cloud',
+      'Cloud migration and modernization on AWS, Azure and Google Cloud',
       'Kubernetes and Docker architecture',
       'Active observability and monitoring',
       'High availability and disaster recovery',
@@ -60,7 +60,7 @@ const principles = [
   {
     Icon: Compass,
     title: 'Privacy by design',
-    body: 'AI and data workflows are engineered to keep proprietary information inside your perimeter, never exposed to public third-party APIs.',
+    body: 'AI and data workflows run inside your own cloud tenant, on managed AI services under business terms that exclude training on your data.',
   },
 ];
 const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
@@ -74,7 +74,7 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
   <PageHero
     eyebrow="About ZanamTech"
     title="Enterprise-grade engineering, delivered with boutique precision"
-    lead="ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down."
+    lead="ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernize the cloud platforms growing businesses depend on, and automate the work that slows them down."
     breadcrumbs={breadcrumbs}
   />
 
@@ -89,13 +89,8 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
       </h2>
       <div class="mt-5 space-y-4 text-lg text-muted">
         <p>
-          We bridge the gap between legacy cloud operations and the next generation of privacy-first, intelligent
-          automation. Modern enterprises need systems that are resilient and scalable, and also natively intelligent and
-          securely architected.
-        </p>
-        <p>
-          We engineer high-performance cloud environments, establish automated release pipelines, enforce zero-trust
-          security perimeters and embed data-compliant AI workflows into core business processes.
+          We help growing businesses run cloud platforms that stay up, stay secure and cost what they should, and we
+          automate the manual work that slows their teams down, with AI that keeps their data inside their own cloud.
         </p>
       </div>
     </div>
@@ -124,8 +119,8 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
     <GlassCard class="relative p-8 sm:p-10">
       <div class="hairline-gradient absolute inset-x-10 top-0" aria-hidden="true"></div>
       <!-- Phones: eyebrow, photo, name, role, LinkedIn, bio (DOM order). From md a 3-column grid: the eyebrow sits on the
-           name row with their cap tops level (3px nudge), the LinkedIn button sits top-right on that row, and the photo is centred against the
-           role + bio rows, so it stays centred whatever the bio length. -->
+           name row with their cap tops level (3px nudge), the LinkedIn button sits top-right on that row, and the photo is centered against the
+           role + bio rows, so it stays centered whatever the bio length. -->
       <div
         class="flex flex-col items-start md:grid md:grid-cols-[10rem_minmax(0,1fr)_auto] md:items-start md:gap-x-8 lg:grid-cols-[13rem_minmax(0,1fr)_auto] lg:gap-x-10"
         data-founder-card
@@ -181,7 +176,7 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'About' }];
         eyebrow="Philosophy"
         title="Pragmatic, enterprise-first"
         titleId="philosophy-title"
-        lead="We reject speculative technology hype in favour of verified engineering outcomes, resilient operations and privacy-conscious AI integration."
+        lead="We reject speculative technology hype in favor of verified engineering outcomes, resilient operations and privacy-conscious AI integration."
         size="md"
       />
       <ul class="mt-12 grid gap-6 md:grid-cols-3" data-reveal-group>

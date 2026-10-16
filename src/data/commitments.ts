@@ -3,7 +3,7 @@
  * (Constitution III); the content lint allow-lists them verbatim.
  */
 export const commitments = [
-  'Written proposal within 2 business days',
+  'Written proposal within 2 business days of the consultation',
   'We reply within 1 business day',
   'Weekly status reports',
   'Monthly service review',

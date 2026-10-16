@@ -9,7 +9,7 @@ test.describe('US1 — Home hero & brand', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(HEADLINE);
 
     const hero = page.locator('#hero');
-    for (const pillar of ['Enterprise-grade', 'High-availability', 'Zero-trust security']) {
+    for (const pillar of ['Enterprise-grade', 'High availability', 'Zero-trust security']) {
       await expect(hero.getByText(pillar, { exact: true })).toBeVisible();
     }
 

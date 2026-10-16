@@ -42,7 +42,7 @@ scenarios:
   - kind: real
     problem: An operations department lost significant time searching scattered PDF documentation.
     solution: A document-retrieval assistant was deployed over internal repositories, with access limited to approved staff.
-    outcome: Staff received fast, accurate answers to operational questions while proprietary data stayed inside the organisation.
+    outcome: Staff received fast, accurate answers to operational questions while proprietary data stayed inside the organization.
 ---
 
 ZanamTech builds AI assistants that put company knowledge to work. Staff or customers ask questions in plain

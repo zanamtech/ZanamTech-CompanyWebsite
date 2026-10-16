@@ -26,16 +26,16 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
 <BaseLayout
   breadcrumbs={breadcrumbs}
   title="Privacy Notice"
-  description="How ZanamTech collects, processes, and safeguards information submitted through this platform."
+  description="How ZanamTech collects, processes, and safeguards information submitted through this website."
 >
   <PageHero
     eyebrow="Legal"
     title="Privacy Notice"
-    lead="How ZanamTech collects, processes, and safeguards information submitted through this platform."
+    lead="How ZanamTech collects, processes, and safeguards information submitted through this website."
     breadcrumbs={breadcrumbs}
   >
     <p slot="meta" class="mt-4 text-sm text-muted" data-last-updated>
-      Last updated: <time datetime="2026-10-12">12 October 2026</time>
+      Last updated: <time datetime="2026-10-16">October 16, 2026</time>
     </p>
   </PageHero>
 
@@ -48,9 +48,9 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
         choices available to you.
       </p>
       <p>
-        It applies to information submitted through this website, including the consultation and custom proposal forms.
-        Information exchanged during a contracted engagement is governed by the confidentiality and data protection
-        terms of the applicable Statement of Work and data processing agreement.
+        It applies to information submitted through this website, including the consultation form. Information exchanged
+        during a contracted engagement is governed by the confidentiality and data protection terms of the applicable
+        Statement of Work and data processing agreement.
       </p>
     </section>
 
@@ -58,14 +58,19 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
       <h2 id="collect-title">Information we collect</h2>
 
       <h3>Voluntarily provided data</h3>
-      <p>
-        When you submit a consultation or custom proposal request, we collect the information you choose to provide:
-      </p>
+      <p>When you submit the consultation form, we collect the information you choose to provide:</p>
       <ul>
-        <li>Full name and email address</li>
-        <li>Company name and, optionally, a phone number</li>
-        <li>Service needed and, optionally, an estimated engagement size</li>
-        <li>The content of your message and your consent confirmation</li>
+        <li>Full name</li>
+        <li>Email address</li>
+        <li>Company name</li>
+        <li>Phone number (optional)</li>
+        <li>Service needed</li>
+        <li>Estimated engagement size (optional)</li>
+        <li>Region (optional)</li>
+        <li>Company size (optional)</li>
+        <li>Cloud platform (optional)</li>
+        <li>Your message (project overview and requirements)</li>
+        <li>Your consent confirmation</li>
       </ul>
 
       <h3>Technical &amp; telemetry data</h3>
@@ -113,7 +118,7 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
         <li>Evaluate your inquiry and respond to you</li>
         <li>Schedule and conduct consultations</li>
         <li>Prepare Statement of Work (SOW) proposals</li>
-        <li>Defend this platform against spam, fraud and abuse</li>
+        <li>Defend this website against spam, fraud and abuse</li>
       </ul>
 
       <GlassCard as="div" class="mt-8! flex gap-4 p-5! sm:p-6!">
@@ -123,7 +128,7 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
         <div>
           <p class="mt-0! font-semibold text-fg">Our commitment</p>
           <p class="mt-1.5! text-sm">
-            We do not sell, rent or otherwise monetise personal data. We do not perform automated profiling, and we do
+            We do not sell, rent or otherwise monetize personal data. We do not perform automated profiling, and we do
             not add your details to third-party marketing lists.
           </p>
         </div>
@@ -169,8 +174,8 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Privacy Notice' }];
     <section id="retention-security" aria-labelledby="retention-title">
       <h2 id="retention-title">Retention &amp; security controls</h2>
       <p>
-        Inquiry information is retained only for as long as necessary to respond to your inquiry and, where an
-        engagement follows, to complete client onboarding. It is then permanently deleted.
+        Inquiry information is used only to respond to your inquiry and, where an engagement follows, to complete client
+        onboarding. Inquiries that do not lead to an engagement are deleted within 12 months of receipt.
       </p>
       <p>
         Access is limited to the personnel who need it to respond to you, and the website is served with strict security

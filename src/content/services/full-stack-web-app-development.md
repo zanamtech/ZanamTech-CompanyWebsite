@@ -22,7 +22,7 @@ capabilities:
   - Authentication, role-based access control (RBAC) and user management
   - REST and GraphQL API design with database integration
   - Cloud-native deployment through CI/CD, behind WAF protection
-stack: [Modern Full-Stack Frameworks, REST / GraphQL APIs, AWS, Azure, Google Cloud, PostgreSQL, Docker]
+stack: [Modern Full-Stack Frameworks (React/Next.js, Node.js, Astro, Python), REST / GraphQL APIs, AWS, Azure, Google Cloud, PostgreSQL, Docker]
 outcome: Production-grade web applications and SaaS platforms that ship quickly and scale without a rebuild
 relatedOffer: health-check
 faq:

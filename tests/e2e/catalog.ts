@@ -13,6 +13,8 @@ export interface CatalogService {
   flagship: boolean;
   published: boolean;
   scenarios: { kind: 'real' | 'illustrative' }[];
+  /** The page shows a figure: a digit in the outcome or in a real scenario (the results footnote appears then). */
+  figures: boolean;
 }
 
 const DIR = join(process.cwd(), 'src', 'content', 'services');
@@ -37,6 +39,14 @@ export const catalog: CatalogService[] = readdirSync(DIR)
       scenarios: [...fm.matchAll(/^\s+- kind:\s*(real|illustrative)\s*$/gm)].map((m) => ({
         kind: m[1] as 'real' | 'illustrative',
       })),
+      figures:
+        /\d/.test(field(fm, 'outcome') ?? '') ||
+        fm
+          .split(/^\s+- kind:/m)
+          .slice(1)
+          // Each block runs to the next scenario or the next top-level key.
+          .map((block) => block.split(/^\S/m)[0])
+          .some((block) => /^\s*real\b/.test(block) && /\d/.test(block)),
     };
   })
   .sort((a, b) => a.order - b.order);

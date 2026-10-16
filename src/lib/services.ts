@@ -16,7 +16,7 @@ export const servicePillars: Record<Pillar, { title: string; description: string
   'cloud-devops': {
     title: 'Cloud & DevOps Engineering',
     description:
-      'Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.',
+      'Fixed-scope projects that modernize, secure and automate your AWS, Azure and Google Cloud foundations.',
     order: 2,
     icon: 'Layers',
   },
@@ -57,7 +57,7 @@ export async function getServicesByPillar(): Promise<
     }));
 }
 
-/** The single flagship service. Throws if the catalogue does not have exactly one published flagship. */
+/** The single flagship service. Throws if the catalog does not have exactly one published flagship. */
 export async function getFlagship(): Promise<Service> {
   const flagships = (await getPublishedServices()).filter((s) => s.data.flagship);
   if (flagships.length !== 1)

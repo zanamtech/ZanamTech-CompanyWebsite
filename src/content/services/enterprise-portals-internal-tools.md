@@ -19,7 +19,7 @@ capabilities:
   - Workflow and approval applications
   - Single sign-on with Microsoft Entra ID or other identity providers
   - Integration with CRM, ERP and internal databases
-stack: [Modern Full-Stack Frameworks, Microsoft Entra ID, REST APIs, AWS, Azure, Google Cloud, SQL Databases]
+stack: [Modern Full-Stack Frameworks (React/Next.js, Node.js, Astro, Python), Microsoft Entra ID, REST APIs, AWS, Azure, Google Cloud, PostgreSQL, SQL Server]
 outcome: Teams, customers and partners working from one secure application instead of spreadsheets and email
 relatedOffer: health-check
 faq:

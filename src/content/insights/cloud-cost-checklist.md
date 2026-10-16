@@ -74,14 +74,14 @@ first, because you cannot cut what you cannot attribute.
 
 - Tag and label everything first; untagged spend has no owner and no one to fix it.
 - Remove idle and orphaned resources before you resize anything else.
-- Right-size from measured utilisation, then commit only to the steady baseline.
+- Right-size from measured utilization, then commit only to the steady baseline.
 - Make cost a monthly routine with budgets and alerts, not a one-off clean-up.
 
 </aside>
 
 ## Visibility
 
-1. **Tag everything.** Every resource should carry environment, owner, application and cost-centre tags (labels on
+1. **Tag everything.** Every resource should carry environment, owner, application and cost-center tags (labels on
    Google Cloud). On AWS, activate the tags as cost allocation tags so they appear in billing; on Azure, tag
    inheritance can apply subscription and resource group tags to usage records; on Google Cloud, labels flow into the
    billing export. Enforce the tags with policy in your
@@ -107,7 +107,7 @@ first, because you cannot cut what you cannot attribute.
 
 ## Right-sizing
 
-8. **Check compute utilisation.** VMs, instances and App Service plans running at low average CPU and memory are
+8. **Check compute utilization.** VMs, instances and App Service plans running at low average CPU and memory are
    candidates for a smaller size. AWS Compute Optimizer, Azure Advisor and Google Cloud's machine type recommendations
    all suggest sizes from observed usage; treat them as a shortlist to verify, not as instructions.
 9. **Review database tiers.** Managed databases are often provisioned for a peak load that never arrives. Look at real
@@ -167,6 +167,6 @@ A first pass does not need special tooling. In practice:
 
 A one-off clean-up helps, but waste returns without ownership. Review spend every month by environment and by
 application, track the actions you take and their effect, and keep budgets, tags and schedules current as the
-platform changes. Our [Cloud Cost Optimisation](/services/cloud-cost-optimization) service runs this review as a
+platform changes. Our [Cloud Cost Optimization](/services/cloud-cost-optimization) service runs this review as a
 structured engagement, and [Managed Cloud & DevOps](/services/managed-cloud-devops) keeps it going as part of the
 monthly service report.

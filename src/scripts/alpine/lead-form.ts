@@ -60,7 +60,7 @@ export function registerLeadForm(Alpine: Alpine) {
     init() {
       const fromUrl = () => this.preselect(new URL(location.href).searchParams.get('service') ?? '');
       fromUrl();
-      // After a client-side navigation the component can initialise before the router updates the address bar, so
+      // After a client-side navigation the component can initialize before the router updates the address bar, so
       // read the URL again once the new page has loaded.
       document.addEventListener('astro:page-load', fromUrl, { once: true });
     },
@@ -79,7 +79,7 @@ export function registerLeadForm(Alpine: Alpine) {
       return document.getElementById(`${config.idPrefix}-${field}`);
     },
 
-    /** Open towards the side with more room in the viewport, capping height so nothing is clipped. */
+    /** Open toward the side with more room in the viewport, capping height so nothing is clipped. */
     openMenuFor(field: MenuField) {
       const el = this.trigger(field);
       if (el) {

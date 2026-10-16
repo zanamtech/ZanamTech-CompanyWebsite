@@ -13,7 +13,7 @@ const { company, legal, pillars: groups, pillar, cloudColumns } = await getNavMo
 
 const year = new Date().getFullYear();
 // Phones: 44px touch rows. Tablet/desktop service lists use an even gap between items instead (serviceList +
-// serviceLink), so a link that wraps to two lines keeps the same spacing as its neighbours.
+// serviceLink), so a link that wraps to two lines keeps the same spacing as its neighbors.
 const linkClass = 'inline-flex min-h-11 items-center text-sm text-muted hover:text-accent lg:min-h-8';
 const serviceList = 'mt-1.5 space-y-0.5';
 const serviceLink = 'block py-1 text-sm text-muted hover:text-accent';
@@ -148,7 +148,7 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
 
       <!-- Company: a two-column list on phones; from md a single row spanning the services area. Between the label and
            each pair of links sits a spacer (24px minimum, equal growth), so the gaps between links are equal and the label's
-           gap is 14px wider (its right margin); the spacers between links carry a dot centred in the gap. From md the list is `display: contents` (role="list"
+           gap is 14px wider (its right margin); the spacers between links carry a dot centered in the gap. From md the list is `display: contents` (role="list"
            keeps its semantics), so the label, spacers and links share one flex row. -->
       <nav
         aria-label="Company"
@@ -181,7 +181,7 @@ const spacerClass = 'relative hidden md:block md:w-6 md:shrink-0 md:grow md:basi
     <div class="container-page flex flex-col gap-1 py-4 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
       <p>&copy; {year} ZanamTech · Cloud, DevOps &amp; AI engineering</p>
       <nav aria-label="Legal">
-        <!-- 24px between links (was 16px), with the Company row's centred dot in each gap. -->
+        <!-- 24px between links (was 16px), with the Company row's centered dot in each gap. -->
         <ul class="flex">
           {legal.map((link, i) => (
             <>

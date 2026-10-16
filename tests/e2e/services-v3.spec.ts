@@ -20,7 +20,7 @@ test.describe('US2 — Services v3', () => {
     await expect(links).toHaveText([
       'Monitoring and alerting',
       'Patching and backups',
-      'Cost and security reviews',
+      'Security patching',
       'Monthly service report',
     ]);
     for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute('href'))))

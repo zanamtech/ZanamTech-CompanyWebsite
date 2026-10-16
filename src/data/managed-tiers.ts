@@ -16,7 +16,7 @@ export const tiers: RetainerTier[] = [
   {
     id: 'essentials',
     name: 'Essentials',
-    coverage: 'Coverage during your business hours',
+    coverage: 'Business-hours coverage',
     includes: [
       'Monitoring and alerting',
       'Monthly patching',
@@ -28,7 +28,7 @@ export const tiers: RetainerTier[] = [
   {
     id: 'professional',
     name: 'Professional',
-    coverage: 'Coverage across your full business day',
+    coverage: 'Extended-hours coverage',
     featured: true,
     includes: [
       'Everything in Essentials',
@@ -43,7 +43,7 @@ export const tiers: RetainerTier[] = [
   {
     id: 'enterprise',
     name: 'Enterprise',
-    coverage: 'Extended coverage with after-hours escalation',
+    coverage: 'Extended hours with after-hours escalation',
     includes: [
       'Everything in Professional',
       'After-hours escalation for production incidents',
@@ -71,6 +71,6 @@ export const severityLevels: SeverityLevel[] = [
 export const flagshipIncluded = [
   'Monitoring and alerting',
   'Patching and backups',
-  'Cost and security reviews',
+  'Security patching',
   'Monthly service report',
 ];

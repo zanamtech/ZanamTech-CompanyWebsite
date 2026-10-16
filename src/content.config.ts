@@ -78,7 +78,7 @@ const resources = defineCollection({
     seoDescription: z.string().min(50).optional(),
     date: z.coerce.date(),
     draft: z.boolean().default(true),
-    /** Proof artefacts are always labelled "Sample". */
+    /** Proof artefacts are always labeled "Sample". */
     sample: z.literal(true),
   }),
 });

@@ -9,39 +9,39 @@ Conventions: page headings are shifted two levels down (the page H1 is `###`). `
 | Page | Words |
 | --- | --- |
 | Shared (header, menus, footer, CTA band) | 308 |
-| Home `/` | 1427 |
-| `/services` | 831 |
-| `/services/managed-cloud-devops` | 1070 |
-| `/services/cloud-migration-containerization` | 741 |
+| Home `/` | 1430 |
+| `/services` | 829 |
+| `/services/managed-cloud-devops` | 1025 |
+| `/services/cloud-migration-containerization` | 716 |
 | `/services/infrastructure-as-code-landing-zones` | 706 |
-| `/services/cicd-pipeline-workflow-automation` | 718 |
-| `/services/enterprise-security-waf-hardening` | 743 |
-| `/services/high-availability-disaster-recovery` | 688 |
-| `/services/observability-monitoring` | 692 |
-| `/services/cloud-cost-optimization` | 668 |
-| `/services/full-stack-web-app-development` | 686 |
-| `/services/enterprise-portals-internal-tools` | 661 |
-| `/services/application-modernisation-integration` | 685 |
+| `/services/cicd-pipeline-workflow-automation` | 698 |
+| `/services/enterprise-security-waf-hardening` | 715 |
+| `/services/high-availability-disaster-recovery` | 646 |
+| `/services/observability-monitoring` | 667 |
+| `/services/cloud-cost-optimization` | 648 |
+| `/services/full-stack-web-app-development` | 650 |
+| `/services/enterprise-portals-internal-tools` | 666 |
+| `/services/application-modernisation-integration` | 691 |
 | `/services/ai-workflow-document-automation` | 754 |
-| `/services/ai-assistants-company-data` | 719 |
-| `/start-here` | 351 |
+| `/services/ai-assistants-company-data` | 681 |
+| `/start-here` | 346 |
 | `/approach` | 556 |
-| `/industries` | 374 |
-| `/about` | 417 |
+| `/industries` | 385 |
+| `/about` | 400 |
 | `/insights` | 147 |
 | `/insights/cloud-cost-checklist` | 1458 |
 | `/insights/bitbucket-branch-governance` | 1459 |
 | `/insights/azure-environment-strategy` | 1693 |
 | `/resources` | 114 |
 | `/resources/azure-reference-architecture` | 446 |
-| `/resources/branch-governance-sop-template` | 385 |
+| `/resources/branch-governance-sop-template` | 387 |
 | `/resources/sample-monthly-service-report` | 309 |
 | `/contact` | 488 |
-| `/trust` | 431 |
-| `/privacy` | 790 |
+| `/trust` | 437 |
+| `/privacy` | 792 |
 | `/terms` | 342 |
 | `/404` | 33 |
-| **Total** | **21890** |
+| **Total** | **21622** |
 
 ## Shared on every page
 
@@ -81,19 +81,19 @@ Practical AI & Automation
 
 Cloud & DevOps Engineering
 
-- → Link: Cloud Migration & Modernisation
+- → Link: Cloud Migration & Modernization
 - → Link: Infrastructure as Code & Landing Zones
 - → Link: CI/CD & DevOps Transformation
 - → Link: Security Hardening & WAF
 - → Link: High Availability & Disaster Recovery
 - → Link: Observability & Monitoring
-- → Link: Cloud Cost Optimisation
+- → Link: Cloud Cost Optimization
 
 Web & SaaS Engineering
 
 - → Link: Custom Full-Stack Web App Development
 - → Link: Enterprise Portals & Internal Tools
-- → Link: Application Modernisation & Integration
+- → Link: Application Modernization & Integration
 
 ### Header and menu (phones)
 
@@ -111,7 +111,7 @@ In the phone menu, "Services" expands to the same four service groups and links 
 
 → Link (icon): ZanamTech home
 
-Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernise cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in.
+Cloud, DevOps & AI engineering for growing businesses. We run, secure and modernize cloud platforms on AWS, Azure and Google Cloud, with documented runbooks and no lock-in.
 
 contact@zanamtech.com
 
@@ -126,19 +126,19 @@ contact@zanamtech.com
 
 **Cloud & DevOps Engineering**
 
-- → Link: Cloud Migration & Modernisation
+- → Link: Cloud Migration & Modernization
 - → Link: Infrastructure as Code & Landing Zones
 - → Link: CI/CD & DevOps Transformation
 - → Link: Security Hardening & WAF
 - → Link: High Availability & Disaster Recovery
 - → Link: Observability & Monitoring
-- → Link: Cloud Cost Optimisation
+- → Link: Cloud Cost Optimization
 
 **Web & SaaS Engineering**
 
 - → Link: Custom Full-Stack Web App Development
 - → Link: Enterprise Portals & Internal Tools
-- → Link: Application Modernisation & Integration
+- → Link: Application Modernization & Integration
 
 **Company**
 
@@ -186,16 +186,16 @@ None: the site has no cookie or consent banner. (The contact form has its own co
 ## Home `/`
 
 - **Title:** ZanamTech | Cloud, DevOps & AI Engineering
-- **Meta description:** ZanamTech runs, secures and modernises AWS, Azure and Google Cloud platforms and automates manual work with practical AI. Documented runbooks, no lock-in.
+- **Meta description:** ZanamTech runs, secures and modernizes AWS, Azure and Google Cloud platforms and automates manual work with practical AI. Documented runbooks, no lock-in.
 
 [Managed Cloud · DevOps · Practical AI]
 
 ### Managed Cloud, DevOps & AI Engineering for Businesses That Can't Afford Downtime.
 
-We run, secure and modernise your AWS, Azure and Google Cloud platforms, build cloud-native SaaS, and automate manual work with practical AI. Documented runbooks, transparent reporting, no lock-in.
+We run, secure and modernize your AWS, Azure and Google Cloud platforms, build cloud-native SaaS, and automate manual work with practical AI. Documented runbooks, transparent reporting, no lock-in.
 
 - Enterprise-grade
-- High-availability
+- High availability
 - Zero-trust security
 
 → Link: Book a Strategy Consultation
@@ -254,7 +254,7 @@ Measured outcomes from cloud, DevOps and security work on production platforms.
 
   Lower recurring cloud spend
 
-  Scale-up · under-utilised compute fleet
+  Scale-up · under-utilized compute fleet
 
 - 50%
 
@@ -297,7 +297,8 @@ Enterprise Ecosystem
 - AWS
 - Azure
 - Google Cloud
-- Flexential Cloud
+- Flexential
+- Liquid Web
 - Kubernetes
 - Docker
 - Cloudflare
@@ -317,7 +318,7 @@ Enterprise Ecosystem
 - Grafana
 - Zabbix
 - MySQL
-- MS SQL
+- SQL Server
 - MongoDB
 - PostgreSQL
 - SSL / TLS
@@ -341,7 +342,7 @@ We run your AWS, Azure or Google Cloud platform end to end, covering operations,
 
 - **Essentials**
 
-  Coverage during your business hours
+  Business-hours coverage
 
   Monitoring and alerting · Monthly patching · Backup checks · Monthly service report
 
@@ -349,13 +350,13 @@ We run your AWS, Azure or Google Cloud platform end to end, covering operations,
 
   Recommended
 
-  Coverage across your full business day
+  Extended-hours coverage
 
   Everything in Essentials · Environment and release management · CI/CD pipeline ownership · Repository governance and SOP upkeep
 
 - **Enterprise**
 
-  Extended coverage with after-hours escalation
+  Extended hours with after-hours escalation
 
   Everything in Professional · After-hours escalation for production incidents · A named backup engineer · Quarterly business review
 
@@ -375,21 +376,21 @@ From managed operations and migrations to SaaS builds and practical AI automatio
 
   - → Link: Monitoring and alerting
   - → Link: Patching and backups
-  - → Link: Cost and security reviews
+  - → Link: Security patching
   - → Link: Monthly service report
 - 02
 
   **Cloud & DevOps Engineering**
 
-  Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.
+  Fixed-scope projects that modernize, secure and automate your AWS, Azure and Google Cloud foundations.
 
-  - → Link: Cloud Migration & Modernisation
+  - → Link: Cloud Migration & Modernization
   - → Link: Infrastructure as Code & Landing Zones
   - → Link: CI/CD & DevOps Transformation
   - → Link: Security Hardening & WAF
   - → Link: High Availability & Disaster Recovery
   - → Link: Observability & Monitoring
-  - → Link: Cloud Cost Optimisation
+  - → Link: Cloud Cost Optimization
 - 03
 
   **Web & SaaS Engineering**
@@ -398,7 +399,7 @@ From managed operations and migrations to SaaS builds and practical AI automatio
 
   - → Link: Custom Full-Stack Web App Development
   - → Link: Enterprise Portals & Internal Tools
-  - → Link: Application Modernisation & Integration
+  - → Link: Application Modernization & Integration
 - 04
 
   **Practical AI & Automation**
@@ -422,7 +423,7 @@ Fixed scope, a clear written output, no long-term commitment.
 
     2–3 weeks
 
-    Scorecard and prioritised backlog
+    Scorecard and prioritized backlog
 
     View offer
 
@@ -530,7 +531,7 @@ No fixed packages or commodity rates. Every engagement begins with an architectu
 
 [Who we serve]
 
-#### Built for organisations that cannot compromise on reliability
+#### Built for organizations that cannot compromise on reliability
 
 → Link: Industries we serve
 
@@ -544,7 +545,7 @@ No fixed packages or commodity rates. Every engagement begins with an architectu
 
 - **Mid-Market Firms on AWS, Azure and Google Cloud**
 
-  Established firms in logistics, professional services and e-commerce modernising their platforms without hiring a full platform team.
+  Established firms in logistics, professional services and e-commerce modernizing their platforms without hiring a full platform team.
 
   Decision makers
 
@@ -560,7 +561,7 @@ No fixed packages or commodity rates. Every engagement begins with an architectu
 
 - **GCC Enterprises & Scale-Ups**
 
-  Organisations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centres, with data-residency awareness and same-day time-zone overlap.
+  Organizations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centers, with data-residency awareness and same-day time-zone overlap.
 
   Decision makers
 
@@ -574,9 +575,9 @@ Least-privilege access, documented delivery and work that stays in your own acco
 
 - **Enterprise-grade**
 
-  Architecture, delivery and governance built to the standards of regulated, high-scale organisations, with documented runbooks, transparent reporting and no lock-in.
+  Architecture, delivery and governance built to the standards of regulated, high-scale organizations, with documented runbooks, transparent reporting and no lock-in.
 
-- **High-availability**
+- **High availability**
 
   Multi-zone orchestration, cross-region replication and automated failover engineered to keep critical workloads online.
 
@@ -594,7 +595,7 @@ Least-privilege access, documented delivery and work that stays in your own acco
 
 ##### What we commit to
 
-- Written proposal within 2 business days
+- Written proposal within 2 business days of the consultation
 - We reply within 1 business day
 - Weekly status reports
 - Monthly service review
@@ -624,7 +625,7 @@ Yes. We work in your accounts and repositories with least-privilege access and M
 
 Q: Can our data stay in a specific region?
 
-Yes. Environments can be designed for the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia regions, to support your data-residency requirements.
+Yes. Environments can be designed for the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia regions where your chosen provider offers them, to support your data-residency requirements.
 
 Q: How do you use AI tools in delivery?
 
@@ -634,7 +635,7 @@ Only under business terms that exclude training on customer data. No client secr
 
 **Alt text:** none
 
-**Word count:** 1427
+**Word count:** 1430
 
 ---
 
@@ -649,7 +650,7 @@ Breadcrumb: Home / Services
 
 ### Enterprise engineering services
 
-We run, secure and modernise AWS, Azure and Google Cloud platforms, build cloud-native web applications and automate manual work with practical AI. Every engagement is scoped in a Statement of Work.
+We run, secure and modernize AWS, Azure and Google Cloud platforms, build cloud-native web applications and automate manual work with practical AI. Every engagement is scoped in a Statement of Work.
 
 #### Managed Cloud & DevOps
 
@@ -665,20 +666,20 @@ We run your cloud and delivery platform: operations, environments, pipelines, ba
 
   - Monitoring and alerting
   - Patching and backups
-  - Cost and security reviews
+  - Security patching
   - Monthly service report
 
   Explore service
 
 #### Cloud & DevOps Engineering
 
-Fixed-scope projects that modernise, secure and automate your AWS, Azure and Google Cloud foundations.
+Fixed-scope projects that modernize, secure and automate your AWS, Azure and Google Cloud foundations.
 
 - 02
 
-  **Cloud Migration & Modernisation**
+  **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -708,7 +709,7 @@ Fixed-scope projects that modernise, secure and automate your AWS, Azure and Goo
 
   **Security Hardening & WAF**
 
-  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 
   Outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 
@@ -736,7 +737,7 @@ Fixed-scope projects that modernise, secure and automate your AWS, Azure and Goo
 
 - 08
 
-  **Cloud Cost Optimisation**
+  **Cloud Cost Optimization**
 
   Architectural reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
 
@@ -770,11 +771,11 @@ Cloud-native web applications, SaaS platforms, portals and integrations.
 
 - 11
 
-  **Application Modernisation & Integration**
+  **Application Modernization & Integration**
 
   Refactor legacy applications, expose clean APIs, move to managed PaaS services and connect ERP, CRM and third-party systems without disrupting operations.
 
-  Outcome: Legacy systems modernised step by step, connected through clean APIs, with less to maintain
+  Outcome: Legacy systems modernized step by step, connected through clean APIs, with less to maintain
 
   Explore service
 
@@ -816,7 +817,7 @@ Fixed scope, a clear written output, no long-term commitment.
 
     2–3 weeks
 
-    Scorecard and prioritised backlog
+    Scorecard and prioritized backlog
 
     View offer
 
@@ -864,7 +865,7 @@ Fixed scope, a clear written output, no long-term commitment.
 
 **Alt text:** none
 
-**Word count:** 831
+**Word count:** 829
 
 ---
 
@@ -912,8 +913,6 @@ Outcome
 
 Your cloud and delivery platform operated to written runbooks, with every change, backup and risk reported monthly
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Assessment
@@ -947,7 +946,7 @@ Branch protection, pipeline gates and written SOPs for a delivery process your t
 
 - **Essentials**
 
-  Coverage during your business hours
+  Business-hours coverage
 
   - Monitoring and alerting
   - Monthly patching
@@ -958,7 +957,7 @@ Branch protection, pipeline gates and written SOPs for a delivery process your t
 
   Recommended
 
-  Coverage across your full business day
+  Extended-hours coverage
 
   - Everything in Essentials
   - Environment and release management
@@ -969,7 +968,7 @@ Branch protection, pipeline gates and written SOPs for a delivery process your t
   - Quarterly architecture review
 - **Enterprise**
 
-  Extended coverage with after-hours escalation
+  Extended hours with after-hours escalation
 
   - Everything in Professional
   - After-hours escalation for production incidents
@@ -1021,7 +1020,7 @@ A three-month minimum, then rolling with one month's notice. Runbooks, diagrams,
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -1046,8 +1045,6 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
   Outcome
 
   Infrastructure management was fully offloaded, with availability and changes tracked in monthly service reports.
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 [FAQ]
 
@@ -1075,9 +1072,9 @@ There are no public prices. Each retainer is quoted in a written proposal for th
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -1103,52 +1100,50 @@ There are no public prices. Each retainer is quoted in a written proposal for th
 
 **Alt text:** none
 
-**Word count:** 1070
+**Word count:** 1025
 
 ---
 
 ## `/services/cloud-migration-containerization`
 
-- **Title:** Cloud Migration & Modernisation | ZanamTech
-- **Meta description:** Staged, validated migration from legacy hosting to AWS, Azure or Google Cloud, with workloads containerised where it pays off for scaling and self-healing.
+- **Title:** Cloud Migration & Modernization | ZanamTech
+- **Meta description:** Staged, validated migration from legacy hosting to AWS, Azure or Google Cloud, with workloads containerized where it pays off for scaling and self-healing.
 
-Breadcrumb: Home / Services / Cloud Migration & Modernisation
+Breadcrumb: Home / Services / Cloud Migration & Modernization
 
 [Cloud & DevOps Engineering]
 
-### Cloud Migration & Modernisation
+### Cloud Migration & Modernization
 
-Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
 → Link: Book a Strategy Consultation
 
 #### Overview
 
-ZanamTech moves workloads from legacy on-premise hardware or unoptimised hosting to elastic environments on AWS, Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off, containerised with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the simpler, cheaper option.
+ZanamTech moves workloads from legacy on-premise hardware or unoptimized hosting to elastic environments on AWS, Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off, containerized with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the simpler, cheaper option.
 
 The resulting architecture scales automatically, recovers from failure on its own and holds performance steady during sudden traffic spikes. Every cutover is staged and validated to protect revenue and operational continuity.
 
 #### Core capabilities
 
 - Migration planning, landing zone setup and legacy hardware decommissioning
-- Microservice decomposition and containerisation of monolithic applications with Docker
+- Microservice decomposition and containerization of monolithic applications with Docker
 - Production Kubernetes with horizontal pod auto-scaling and ingress load balancing
 - Staged database and traffic cutover with validation at every step
-- Infrastructure as Code (IaC) and Linux instance optimisation
+- Infrastructure as Code (IaC) and Linux instance optimization
 
 #### What you get
 
 - Migration plan with sequencing, risks and rollback points
 - Target landing zone and Infrastructure as Code
-- Containerised workloads and orchestration where justified
+- Containerized workloads and orchestration where justified
 - Staged, validated cutover with a documented rollback plan
 - Decommissioning plan for legacy infrastructure
 
 Outcome
 
 Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 #### How you can engage
 
@@ -1179,7 +1174,7 @@ An independent review of one cloud environment against reliability, security, co
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -1187,7 +1182,7 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
 
   Approach
 
-  The monolithic application was containerised with Docker and deployed across a multi-zone AWS Kubernetes cluster with automated pod scaling.
+  The monolithic application was containerized with Docker and deployed across a multi-zone AWS Kubernetes cluster with automated pod scaling.
 
   Outcome
 
@@ -1209,9 +1204,9 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 
 [FAQ]
 
-#### Cloud Migration & Modernisation: common questions
+#### Cloud Migration & Modernization: common questions
 
-Q: Do you containerise everything?
+Q: Do you containerize everything?
 
 No. Containers and Kubernetes are used where scaling and portability justify them. Many workloads run best on managed platform services such as AWS Elastic Beanstalk, Azure App Service or Google Cloud Run.
 
@@ -1251,7 +1246,7 @@ AWS, Azure and Google Cloud, treated equally. We recommend a target based on you
 
 - **Security Hardening & WAF**
 
-  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 
   Outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 
@@ -1261,7 +1256,7 @@ AWS, Azure and Google Cloud, treated equally. We recommend a target based on you
 
 **Alt text:** none
 
-**Word count:** 741
+**Word count:** 716
 
 ---
 
@@ -1391,9 +1386,9 @@ You receive the modules, pipelines and documentation in your repositories, with 
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -1409,7 +1404,7 @@ You receive the modules, pipelines and documentation in your repositories, with 
 
 - **Security Hardening & WAF**
 
-  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 
   Outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 
@@ -1450,7 +1445,7 @@ Blue/green and canary strategies, combined with automated rollback, let teams re
 - Automated testing, static analysis and build validation
 - Blue/green and canary deployment models with staging parity
 - One-click automated rollback for fast failure mitigation
-- Developer environment standardisation and DevSecOps integration
+- Developer environment standardization and DevSecOps integration
 
 #### What you get
 
@@ -1463,8 +1458,6 @@ Blue/green and canary strategies, combined with automated rollback, let teams re
 Outcome
 
 Routine, low-risk releases; past engagements achieved 50% faster deployments and 35% fewer release errors
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 #### How you can engage
 
@@ -1495,7 +1488,7 @@ Branch protection, pipeline gates and written SOPs for a delivery process your t
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -1545,13 +1538,13 @@ Admin access to the repository workspace and pipeline tool, granted through your
 
 Q: Which clouds and tools do you support?
 
-AWS, Azure and Google Cloud equally, with GitHub Actions, Azure DevOps, Bitbucket or GitLab pipelines.
+AWS, Azure and Google Cloud equally, with GitHub Actions, Azure DevOps, Bitbucket Pipelines, AWS CodePipeline, Google Cloud Build or Jenkins.
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -1567,7 +1560,7 @@ AWS, Azure and Google Cloud equally, with GitHub Actions, Azure DevOps, Bitbucke
 
 - **Security Hardening & WAF**
 
-  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+  Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 
   Outcome: Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
 
@@ -1577,14 +1570,14 @@ AWS, Azure and Google Cloud equally, with GitHub Actions, Azure DevOps, Bitbucke
 
 **Alt text:** none
 
-**Word count:** 718
+**Word count:** 698
 
 ---
 
 ## `/services/enterprise-security-waf-hardening`
 
 - **Title:** Security Hardening & WAF | ZanamTech
-- **Meta description:** Layered, zero-trust protection for web apps, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF and AWS WAF.
+- **Meta description:** Layered, zero-trust protection for web apps, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF and AWS WAF.
 
 Breadcrumb: Home / Services / Security Hardening & WAF
 
@@ -1592,13 +1585,13 @@ Breadcrumb: Home / Services / Security Hardening & WAF
 
 ### Security Hardening & WAF
 
-Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorised access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
+Layered, zero-trust protection for web applications, portals and APIs against DDoS, bots, exploit probes and unauthorized access, using Cloudflare WAF, AWS WAF & Shield and strict perimeter controls.
 
 → Link: Book a Strategy Consultation
 
 #### Overview
 
-ZanamTech deploys layered defences that shield web applications, enterprise portals and public or internal APIs against distributed denial-of-service attacks, automated bots, exploit probes and unauthorised access.
+ZanamTech deploys layered defences that shield web applications, enterprise portals and public or internal APIs against distributed denial-of-service attacks, automated bots, exploit probes and unauthorized access.
 
 By combining Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall, Google Cloud Armor, zero-trust network firewalls, geographic access fencing, rate limiting and strict SSL/TLS enforcement, every public endpoint is verified, filtered and encrypted. Regular reviews keep the perimeter aligned with evolving threats.
 
@@ -1612,7 +1605,7 @@ By combining Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall, G
 
 #### What you get
 
-- Attack-surface review with prioritised findings
+- Attack-surface review with prioritized findings
 - WAF policies, rate limits and bot controls in place
 - TLS enforcement and hardened server baselines
 - Access and firewall rules documented
@@ -1621,8 +1614,6 @@ By combining Cloudflare WAF, AWS WAF & Shield, Azure Web Application Firewall, G
 Outcome
 
 Hardened, verified perimeters; a past engagement reduced the malicious attack surface by 80%
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 #### How you can engage
 
@@ -1636,7 +1627,6 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 - Azure Front Door & WAF
 - Google Cloud Armor
 - SSL/TLS
-- Security Audit Tooling
 
 A low-risk way to start
 
@@ -1652,7 +1642,7 @@ An independent review of one cloud environment against reliability, security, co
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -1664,7 +1654,7 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
 
   Outcome
 
-  Unauthorised intrusion attempts dropped sharply, and patient-facing endpoints now operate behind a hardened zero-trust perimeter.
+  Unauthorized intrusion attempts dropped sharply, and patient-facing endpoints now operate behind a hardened zero-trust perimeter.
 
 - Challenge
 
@@ -1688,7 +1678,7 @@ Q: Will security rules block legitimate users?
 
 Rules are introduced in monitoring mode first and tuned against real traffic before enforcement, so legitimate users are not disrupted.
 
-Q: Do you provide a security operations centre?
+Q: Do you provide a security operations center?
 
 No. We harden and configure your perimeter and hand over monitoring with clear runbooks. Ongoing review can continue under the managed retainer.
 
@@ -1706,9 +1696,9 @@ You receive the rule sets, configuration as code, a findings report and runbooks
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -1734,7 +1724,7 @@ You receive the rule sets, configuration as code, a findings report and runbooks
 
 **Alt text:** none
 
-**Word count:** 743
+**Word count:** 715
 
 ---
 
@@ -1779,8 +1769,6 @@ Outcome
 
 Recovery objectives that are documented, tested and proven in practice rather than assumed
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Assessment
@@ -1790,12 +1778,12 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 
 - PostgreSQL
 - MySQL
-- MS SQL
+- SQL Server
 - MongoDB
 - AWS RDS
 - Azure SQL
 - Google Cloud SQL
-- Linux Shell Automation
+- Bash
 
 A low-risk way to start
 
@@ -1811,7 +1799,7 @@ An independent review of one cloud environment against reliability, security, co
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -1827,7 +1815,7 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
 
 - Challenge
 
-  An enterprise IT organisation relied on manual backup procedures, creating significant operational and data-loss risk.
+  An enterprise IT organization relied on manual backup procedures, creating significant operational and data-loss risk.
 
   Approach
 
@@ -1836,8 +1824,6 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
   Outcome
 
   Manual backup error was removed from the process, and point-in-time recovery became routine and verifiable.
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 [FAQ]
 
@@ -1855,7 +1841,7 @@ Q: How is the price set?
 
 There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
 
-Q: How long does a resilience programme take?
+Q: How long does a resilience program take?
 
 An assessment sets recovery objectives first. The build-out is staged in milestones measured in weeks and finishes with a documented restore test.
 
@@ -1865,9 +1851,9 @@ AWS, Azure and Google Cloud equally, including cross-region designs within one c
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -1893,7 +1879,7 @@ AWS, Azure and Google Cloud equally, including cross-region designs within one c
 
 **Alt text:** none
 
-**Word count:** 688
+**Word count:** 646
 
 ---
 
@@ -1938,8 +1924,6 @@ Outcome
 
 Problems found before users notice; past engagements achieved 45% faster incident detection and a 30% improvement in mean time to recovery
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Assessment
@@ -1968,7 +1952,7 @@ An independent review of one cloud environment against reliability, security, co
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -2022,9 +2006,9 @@ Your team, using the runbook written for each alert, or ZanamTech under a manage
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -2050,20 +2034,20 @@ Your team, using the runbook written for each alert, or ZanamTech under a manage
 
 **Alt text:** none
 
-**Word count:** 692
+**Word count:** 667
 
 ---
 
 ## `/services/cloud-cost-optimization`
 
-- **Title:** Cloud Cost Optimisation | ZanamTech
+- **Title:** Cloud Cost Optimization | ZanamTech
 - **Meta description:** Architecture reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails.
 
-Breadcrumb: Home / Services / Cloud Cost Optimisation
+Breadcrumb: Home / Services / Cloud Cost Optimization
 
 [Cloud & DevOps Engineering]
 
-### Cloud Cost Optimisation
+### Cloud Cost Optimization
 
 Architectural reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
 
@@ -2071,13 +2055,13 @@ Architectural reviews of AWS, Azure and Google Cloud estates that right-size com
 
 #### Overview
 
-ZanamTech reviews active AWS, Azure and Google Cloud infrastructure to remove wasted spend. Utilisation data drives right-sizing, consolidation and clean-up decisions, while automated guardrails keep spending aligned with budget.
+ZanamTech reviews active AWS, Azure and Google Cloud infrastructure to remove wasted spend. Utilization data drives right-sizing, consolidation and clean-up decisions, while automated guardrails keep spending aligned with budget.
 
 Savings come from architecture rather than compromise: availability and performance objectives stay intact while monthly infrastructure overhead falls.
 
 #### Core capabilities
 
-- Billing and utilisation analysis across AWS, Azure and Google Cloud
+- Billing and utilization analysis across AWS, Azure and Google Cloud
 - Compute right-sizing and idle capacity consolidation
 - Automated clean-up of orphaned disks, unattached IPs and stale environments
 - Budget alerts and spend guardrails
@@ -2095,8 +2079,6 @@ Outcome
 
 Lower cloud bills through architecture rather than compromise; a past engagement cut recurring spend by up to 40%
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Assessment
@@ -2108,7 +2090,9 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 - AWS Cost Explorer
 - Azure Cost Management
 - Google Cloud Billing
-- Architecture Auditing Tools
+- AWS Compute Optimizer
+- Azure Advisor
+- Google Cloud Recommender
 
 A low-risk way to start
 
@@ -2124,11 +2108,11 @@ A focused analysis of cloud spend that applies quick wins and plans the rest.
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
-  A high-growth scale-up ran its compute fleet at under 20% average CPU utilisation.
+  A high-growth scale-up ran its compute fleet at under 20% average CPU utilization.
 
   Approach
 
@@ -2154,11 +2138,11 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 
 [FAQ]
 
-#### Cloud Cost Optimisation: common questions
+#### Cloud Cost Optimization: common questions
 
 Q: Will cost cuts hurt performance?
 
-No. Changes are based on measured utilisation, and availability and performance objectives stay intact.
+No. Changes are based on measured utilization, and availability and performance objectives stay intact.
 
 Q: Can cost control continue after the review?
 
@@ -2178,9 +2162,9 @@ AWS, Azure and Google Cloud equally, using each provider's own cost tools alongs
 
 #### Related services
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -2206,7 +2190,7 @@ AWS, Azure and Google Cloud equally, using each provider's own cost tools alongs
 
 **Alt text:** none
 
-**Word count:** 668
+**Word count:** 648
 
 ---
 
@@ -2252,8 +2236,6 @@ Outcome
 
 Production-grade web applications and SaaS platforms that ship quickly and scale without a rebuild
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Fixed-scope project
@@ -2261,7 +2243,10 @@ Results from past engagements; outcomes vary by environment. Commitments are def
 
 #### Technology stack
 
-- Modern Full-Stack Frameworks
+- Modern Full-Stack Frameworks (React/Next.js
+- Node.js
+- Astro
+- Python)
 - REST / GraphQL APIs
 - AWS
 - Azure
@@ -2283,7 +2268,7 @@ An independent review of one cloud environment against reliability, security, co
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -2308,8 +2293,6 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
   Outcome
 
   Operations were streamlined while strict data-access controls were maintained across staff roles.
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
 
 [FAQ]
 
@@ -2345,11 +2328,11 @@ On AWS, Azure or Google Cloud in your own account, deployed through pipelines an
 
   Explore service
 
-- **Application Modernisation & Integration**
+- **Application Modernization & Integration**
 
   Refactor legacy applications, expose clean APIs, move to managed PaaS services and connect ERP, CRM and third-party systems without disrupting operations.
 
-  Outcome: Legacy systems modernised step by step, connected through clean APIs, with less to maintain
+  Outcome: Legacy systems modernized step by step, connected through clean APIs, with less to maintain
 
   Explore service
 
@@ -2365,7 +2348,7 @@ On AWS, Azure or Google Cloud in your own account, deployed through pipelines an
 
 **Alt text:** none
 
-**Word count:** 686
+**Word count:** 650
 
 ---
 
@@ -2417,13 +2400,17 @@ Teams, customers and partners working from one secure application instead of spr
 
 #### Technology stack
 
-- Modern Full-Stack Frameworks
+- Modern Full-Stack Frameworks (React/Next.js
+- Node.js
+- Astro
+- Python)
 - Microsoft Entra ID
 - REST APIs
 - AWS
 - Azure
 - Google Cloud
-- SQL Databases
+- PostgreSQL
+- SQL Server
 
 A low-risk way to start
 
@@ -2503,11 +2490,11 @@ Yes. Code, infrastructure definitions and documentation live in your own reposit
 
   Explore service
 
-- **Application Modernisation & Integration**
+- **Application Modernization & Integration**
 
   Refactor legacy applications, expose clean APIs, move to managed PaaS services and connect ERP, CRM and third-party systems without disrupting operations.
 
-  Outcome: Legacy systems modernised step by step, connected through clean APIs, with less to maintain
+  Outcome: Legacy systems modernized step by step, connected through clean APIs, with less to maintain
 
   Explore service
 
@@ -2523,20 +2510,20 @@ Yes. Code, infrastructure definitions and documentation live in your own reposit
 
 **Alt text:** none
 
-**Word count:** 661
+**Word count:** 666
 
 ---
 
 ## `/services/application-modernisation-integration`
 
-- **Title:** Application Modernisation & Integration | ZanamTech
+- **Title:** Application Modernization & Integration | ZanamTech
 - **Meta description:** Refactor legacy applications, expose clean APIs, move to managed PaaS services and connect ERP, CRM and third-party systems without disrupting operations.
 
-Breadcrumb: Home / Services / Application Modernisation & Integration
+Breadcrumb: Home / Services / Application Modernization & Integration
 
 [Web & SaaS Engineering]
 
-### Application Modernisation & Integration
+### Application Modernization & Integration
 
 Refactor legacy applications, expose clean APIs, move to managed PaaS services and connect ERP, CRM and third-party systems without disrupting operations.
 
@@ -2544,7 +2531,7 @@ Refactor legacy applications, expose clean APIs, move to managed PaaS services a
 
 #### Overview
 
-ZanamTech modernises applications without stopping the business. Legacy code is refactored incrementally, protected by automated tests, and moved to managed platform services where that reduces operational load.
+ZanamTech modernizes applications without stopping the business. Legacy code is refactored incrementally, protected by automated tests, and moved to managed platform services where that reduces operational load.
 
 Clean, documented APIs connect the application to ERP, CRM and third-party platforms, so data flows reliably between the systems your teams already use.
 
@@ -2554,11 +2541,11 @@ Clean, documented APIs connect the application to ERP, CRM and third-party platf
 - API design and gateway configuration
 - Migration to managed services such as AWS Elastic Beanstalk, Azure App Service or Google Cloud Run, with managed databases
 - ERP, CRM and third-party system integration
-- Automated testing to protect behaviour during change
+- Automated testing to protect behavior during change
 
 #### What you get
 
-- Modernisation assessment and sequenced roadmap
+- Modernization assessment and sequenced roadmap
 - Refactored components or services
 - Documented APIs for internal and partner use
 - Integrations with ERP, CRM and third-party platforms
@@ -2566,7 +2553,7 @@ Clean, documented APIs connect the application to ERP, CRM and third-party platf
 
 Outcome
 
-Legacy systems modernised step by step, connected through clean APIs, with less to maintain
+Legacy systems modernized step by step, connected through clean APIs, with less to maintain
 
 #### How you can engage
 
@@ -2581,7 +2568,9 @@ Legacy systems modernised step by step, connected through clean APIs, with less 
 - Google Cloud Run
 - AWS API Gateway
 - Azure API Management
-- Message Queues
+- Amazon SQS
+- Azure Service Bus
+- Google Cloud Pub/Sub
 
 A low-risk way to start
 
@@ -2621,7 +2610,7 @@ Example engagements that illustrate how this service is typically delivered. The
 
   Approach
 
-  An integration layer synchronises customers and orders between the two systems through their supported APIs, with monitoring and error alerts.
+  An integration layer synchronizes customers and orders between the two systems through their supported APIs, with monitoring and error alerts.
 
   Outcome
 
@@ -2629,11 +2618,11 @@ Example engagements that illustrate how this service is typically delivered. The
 
 [FAQ]
 
-#### Application Modernisation & Integration: common questions
+#### Application Modernization & Integration: common questions
 
 Q: Do we have to rewrite the whole application?
 
-Rarely. Modernisation is done incrementally, replacing or refactoring the parts that create the most risk or cost first.
+Rarely. Modernization is done incrementally, replacing or refactoring the parts that create the most risk or cost first.
 
 Q: Can you integrate with our ERP or CRM?
 
@@ -2643,9 +2632,9 @@ Q: How is the price set?
 
 There are no public prices. After a strategy consultation you receive a written proposal and a Statement of Work that fix scope, deliverables, milestones and acceptance criteria before any work starts.
 
-Q: How long does modernisation take?
+Q: How long does modernization take?
 
-It is staged. An assessment maps the application first, then each stage is a fixed-scope milestone in the Statement of Work, measured in weeks, so improvements ship before the whole programme ends.
+It is staged. An assessment maps the application first, then each stage is a fixed-scope milestone in the Statement of Work, measured in weeks, so improvements ship before the whole program ends.
 
 Q: What happens after delivery?
 
@@ -2681,7 +2670,7 @@ You receive the code, documentation and runbooks in your own repositories, plus 
 
 **Alt text:** none
 
-**Word count:** 685
+**Word count:** 691
 
 ---
 
@@ -2702,7 +2691,7 @@ Automate a recurring manual process end to end, such as a regular report or docu
 
 #### Overview
 
-ZanamTech automates the manual work that slows teams down. A recurring process, such as document intake or a regular management report, is automated end to end on your real data, with human approval points wherever judgement matters and a full audit log of every action.
+ZanamTech automates the manual work that slows teams down. A recurring process, such as document intake or a regular management report, is automated end to end on your real data, with human approval points wherever judgment matters and a full audit log of every action.
 
 Every build starts small: an AI Opportunity Sprint picks the right process, and a pilot runs alongside the current way of working before you commit to anything larger. Solutions run on managed AI services in your own cloud tenant, on AWS, Azure or Google Cloud.
 
@@ -2827,9 +2816,9 @@ AWS, Azure and Google Cloud equally, using the AI services available in your cho
 
   Explore service
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -2884,8 +2873,6 @@ Outcome
 
 Fast, cited answers from company knowledge, without sending data outside your own cloud tenant
 
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
-
 #### How you can engage
 
 - → Link: Assessment
@@ -2906,7 +2893,7 @@ A low-risk way to start
 
 3–4 weeks
 
-One workflow automated on real data, run alongside the current process before any larger commitment.
+One automation or assistant built on real data, run alongside the current process before any larger commitment.
 
 → Link: See entry offers
 
@@ -2914,7 +2901,7 @@ One workflow automated on real data, run alongside the current process before an
 
 #### Engagements in practice
 
-Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.
+Anonymized results from past engagements.
 
 - Challenge
 
@@ -2938,9 +2925,7 @@ Anonymised results from past engagements. Entries marked "Example engagement" ar
 
   Outcome
 
-  Staff received fast, accurate answers to operational questions while proprietary data stayed inside the organisation.
-
-Results from past engagements; outcomes vary by environment. Commitments are defined per Statement of Work.
+  Staff received fast, accurate answers to operational questions while proprietary data stayed inside the organization.
 
 [FAQ]
 
@@ -2984,9 +2969,9 @@ You receive the source, prompts, evaluation set and a runbook. Ongoing tuning an
 
   Explore service
 
-- **Cloud Migration & Modernisation**
+- **Cloud Migration & Modernization**
 
-  Staged, validated migration from legacy or unoptimised hosting to elastic AWS, Azure or Google Cloud, with workloads containerised where it pays off for automated scaling and self-healing.
+  Staged, validated migration from legacy or unoptimized hosting to elastic AWS, Azure or Google Cloud, with workloads containerized where it pays off for automated scaling and self-healing.
 
   Outcome: Elastic, fault-tolerant cloud platforms; past engagements achieved 99.9% availability and up to 60% lower hardware maintenance costs
 
@@ -2996,7 +2981,7 @@ You receive the source, prompts, evaluation set and a runbook. Ongoing tuning an
 
 **Alt text:** none
 
-**Word count:** 719
+**Word count:** 681
 
 ---
 
@@ -3029,7 +3014,7 @@ Fixed-scope engagements with a clear output and a defined next step, so you can 
 
   - Scorecard across reliability, security, cost and delivery
   - Findings with evidence
-  - Prioritised backlog with cost and risk
+  - Prioritized backlog with cost and risk
 
   Next step: A fixed-scope project or a managed retainer.
 
@@ -3089,13 +3074,13 @@ Fixed-scope engagements with a clear output and a defined next step, so you can 
   - Data and risk assessment
   - Pilot specification
 
-  Next step: The AI Automation Pilot. The sprint fee is credited towards it.
+  Next step: The AI Automation Pilot.
 
 - 3–4 weeks
 
   **AI Automation Pilot**
 
-  One workflow automated on real data, run alongside the current process before any larger commitment.
+  One automation or assistant built on real data, run alongside the current process before any larger commitment.
 
   What we need from you
 
@@ -3115,7 +3100,7 @@ Fixed-scope engagements with a clear output and a defined next step, so you can 
 
 **Alt text:** none
 
-**Word count:** 351
+**Word count:** 346
 
 ---
 
@@ -3181,7 +3166,7 @@ Commercial terms are defined transparently in each written proposal, under the m
 
 ##### Assessment
 
-A fixed-fee review with a written scorecard, findings and a prioritised backlog.
+A fixed-fee review with a written scorecard, findings and a prioritized backlog.
 
 Best for
 
@@ -3280,7 +3265,7 @@ Breadcrumb: Home / Industries
 
 ### Who we serve
 
-Organisations that depend on reliable, secure and cost-efficient cloud platforms, from growing SaaS companies to software agencies and Gulf Cooperation Council (GCC) enterprises.
+Organizations that depend on reliable, secure and cost-efficient cloud platforms, from growing SaaS companies to software agencies and Gulf Cooperation Council (GCC) enterprises.
 
 #### B2B SaaS Companies
 
@@ -3307,11 +3292,11 @@ CTOs · Technical co-founders · VPs of Engineering
 
 - → Link: Managed Cloud & DevOps
 - → Link: CI/CD & DevOps Transformation
-- → Link: Cloud Cost Optimisation
+- → Link: Cloud Cost Optimization
 
 #### Mid-Market Firms on AWS, Azure and Google Cloud
 
-Established firms in logistics, professional services and e-commerce modernising their platforms without hiring a full platform team.
+Established firms in logistics, professional services and e-commerce modernizing their platforms without hiring a full platform team.
 
 Key stakeholders
 
@@ -3331,7 +3316,7 @@ CIOs · IT directors · Heads of infrastructure
 
 ##### Relevant services
 
-- → Link: Cloud Migration & Modernisation
+- → Link: Cloud Migration & Modernization
 - → Link: Security Hardening & WAF
 - → Link: AI Workflow & Document Automation
 
@@ -3363,7 +3348,7 @@ Agency owners · Delivery heads · Technical directors
 
 #### GCC Enterprises & Scale-Ups
 
-Organisations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centres, with data-residency awareness and same-day time-zone overlap.
+Organizations in the UAE, Saudi Arabia and the wider GCC that need cloud platforms in regional data centers, with data-residency awareness and same-day time-zone overlap.
 
 Key stakeholders
 
@@ -3372,12 +3357,12 @@ IT leads · Digital transformation leads · Heads of engineering
 ##### Core challenges
 
 - Data-residency requirements for regional cloud hosting
-- Modernising legacy applications
+- Modernizing legacy applications
 - Limited in-house cloud operations capacity
 
 ##### How we help
 
-- Platforms in UAE and Saudi Arabia cloud regions
+- Platforms in the cloud regions you choose, including UAE and Saudi Arabia regions where your chosen provider offers them
 - Infrastructure as Code foundations
 - Managed operations and reporting
 
@@ -3385,13 +3370,13 @@ IT leads · Digital transformation leads · Heads of engineering
 
 - → Link: Infrastructure as Code & Landing Zones
 - → Link: Managed Cloud & DevOps
-- → Link: Application Modernisation & Integration
+- → Link: Application Modernization & Integration
 
 [CTA band]
 
 **Alt text:** none
 
-**Word count:** 374
+**Word count:** 385
 
 ---
 
@@ -3406,15 +3391,13 @@ Breadcrumb: Home / About
 
 ### Enterprise-grade engineering, delivered with boutique precision
 
-ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernise the cloud platforms growing businesses depend on, and automate the work that slows them down.
+ZanamTech is a Cloud, DevOps & AI engineering firm. We run, secure and modernize the cloud platforms growing businesses depend on, and automate the work that slows them down.
 
 [Mission]
 
 #### Our mission
 
-We bridge the gap between legacy cloud operations and the next generation of privacy-first, intelligent automation. Modern enterprises need systems that are resilient and scalable, and also natively intelligent and securely architected.
-
-We engineer high-performance cloud environments, establish automated release pipelines, enforce zero-trust security perimeters and embed data-compliant AI workflows into core business processes.
+We help growing businesses run cloud platforms that stay up, stay secure and cost what they should, and we automate the manual work that slows their teams down, with AI that keeps their data inside their own cloud.
 
 #### At a glance
 
@@ -3470,7 +3453,7 @@ As your scope grows, delivery scales with vetted engineers working to the same s
 
 #### Pragmatic, enterprise-first
 
-We reject speculative technology hype in favour of verified engineering outcomes, resilient operations and privacy-conscious AI integration.
+We reject speculative technology hype in favor of verified engineering outcomes, resilient operations and privacy-conscious AI integration.
 
 - **Verified outcomes over hype**
 
@@ -3482,7 +3465,7 @@ We reject speculative technology hype in favour of verified engineering outcomes
 
 - **Privacy by design**
 
-  AI and data workflows are engineered to keep proprietary information inside your perimeter, never exposed to public third-party APIs.
+  AI and data workflows run inside your own cloud tenant, on managed AI services under business terms that exclude training on your data.
 
 [Capabilities]
 
@@ -3492,7 +3475,7 @@ Deep expertise across multi-cloud infrastructure, container orchestration, Linux
 
 ##### Cloud & Infrastructure
 
-- Cloud migration and modernisation on AWS, Azure and Google Cloud
+- Cloud migration and modernization on AWS, Azure and Google Cloud
 - Kubernetes and Docker architecture
 - Active observability and monitoring
 - High availability and disaster recovery
@@ -3517,7 +3500,7 @@ Rather than rigid public packages, every partnership begins with a technical ass
 **Alt text:** 
 - Mubashir Ahmed, Founder & Lead Architect
 
-**Word count:** 417
+**Word count:** 400
 
 ---
 
@@ -3534,7 +3517,7 @@ Breadcrumb: Home / Insights
 
 Practical writing on cloud operations, DevOps governance, cost control and AI automation.
 
-- 15 October 2026
+- October 15, 2026
 
   **A 15-point cloud cost checklist**
 
@@ -3542,7 +3525,7 @@ Practical writing on cloud operations, DevOps governance, cost control and AI au
 
   Read the article
 
-- 14 October 2026
+- October 14, 2026
 
   **Bitbucket branch governance: the restrictions and SOPs every team should have**
 
@@ -3550,7 +3533,7 @@ Practical writing on cloud operations, DevOps governance, cost control and AI au
 
   Read the article
 
-- 12 October 2026
+- October 12, 2026
 
   **Dev, QA, UAT, Prod on Azure: an environment strategy that survives real releases**
 
@@ -3581,7 +3564,7 @@ Breadcrumb: Home / Insights / A 15-point cloud cost checklist
 
 Fifteen checks for AWS, Azure and Google Cloud estates that find wasted spend quickly, from idle resources and oversized compute to missing budgets and untagged assets.
 
-By Mubashir Ahmed · Founder & Lead Architect · 15 October 2026 · 5 min read
+By Mubashir Ahmed · Founder & Lead Architect · October 15, 2026 · 5 min read
 
 Cloud waste is common, and it is growing again. Flexera’s 2026 State of the Cloud research reports that, after five years of decline, wasted cloud spend on IaaS and PaaS increased to 29%. The usual suspects are not exotic: resources nobody owns, capacity sized for a peak that never comes, and environments that run when nobody is using them.
 
@@ -3591,14 +3574,14 @@ Key takeaways
 
 - Tag and label everything first; untagged spend has no owner and no one to fix it.
 - Remove idle and orphaned resources before you resize anything else.
-- Right-size from measured utilisation, then commit only to the steady baseline.
+- Right-size from measured utilization, then commit only to the steady baseline.
 - Make cost a monthly routine with budgets and alerts, not a one-off clean-up.
 
 #### Visibility
 
 - Tag everything.
 
-  Every resource should carry environment, owner, application and cost-centre tags (labels on Google Cloud). On AWS, activate the tags as cost allocation tags so they appear in billing; on Azure, tag inheritance can apply subscription and resource group tags to usage records; on Google Cloud, labels flow into the billing export. Enforce the tags with policy in your
+  Every resource should carry environment, owner, application and cost-center tags (labels on Google Cloud). On AWS, activate the tags as cost allocation tags so they appear in billing; on Azure, tag inheritance can apply subscription and resource group tags to usage records; on Google Cloud, labels flow into the billing export. Enforce the tags with policy in your
 
   → Link: landing zone
 
@@ -3616,7 +3599,7 @@ Key takeaways
 
 #### Right-sizing
 
-- Check compute utilisation. VMs, instances and App Service plans running at low average CPU and memory are candidates for a smaller size. AWS Compute Optimizer, Azure Advisor and Google Cloud’s machine type recommendations all suggest sizes from observed usage; treat them as a shortlist to verify, not as instructions.
+- Check compute utilization. VMs, instances and App Service plans running at low average CPU and memory are candidates for a smaller size. AWS Compute Optimizer, Azure Advisor and Google Cloud’s machine type recommendations all suggest sizes from observed usage; treat them as a shortlist to verify, not as instructions.
 - Review database tiers. Managed databases are often provisioned for a peak load that never arrives. Look at real CPU, memory, storage and connection usage before the next change window, and plan the change with a tested rollback.
 - Use autoscaling. Scale out for demand and back in afterwards, instead of sizing for the busiest moment all the time. Check that scale-in actually happens; a minimum instance count set during an incident and never reverted is a common source of waste.
 
@@ -3652,7 +3635,7 @@ A first pass does not need special tooling. In practice:
 
 #### Make it continuous
 
-A one-off clean-up helps, but waste returns without ownership. Review spend every month by environment and by application, track the actions you take and their effect, and keep budgets, tags and schedules current as the platform changes. Our Cloud Cost Optimisation service runs this review as a structured engagement, and Managed Cloud & DevOps keeps it going as part of the monthly service report.
+A one-off clean-up helps, but waste returns without ownership. Review spend every month by environment and by application, track the actions you take and their effect, and keep budgets, tags and schedules current as the platform changes. Our Cloud Cost Optimization service runs this review as a structured engagement, and Managed Cloud & DevOps keeps it going as part of the monthly service report.
 
 #### Sources
 
@@ -3697,7 +3680,7 @@ On this page
 
 #### Related service
 
-- **Cloud Cost Optimisation**
+- **Cloud Cost Optimization**
 
   Architectural reviews of AWS, Azure and Google Cloud estates that right-size compute, remove orphaned resources and enforce automated budget guardrails without degrading performance.
 
@@ -3707,7 +3690,7 @@ On this page
 
 #### Related articles
 
-- 14 October 2026
+- October 14, 2026
 
   **Bitbucket branch governance: the restrictions and SOPs every team should have**
 
@@ -3715,7 +3698,7 @@ On this page
 
   Read the article
 
-- 12 October 2026
+- October 12, 2026
 
   **Dev, QA, UAT, Prod on Azure: an environment strategy that survives real releases**
 
@@ -3744,7 +3727,7 @@ Breadcrumb: Home / Insights / Bitbucket branch governance: restrictions & SOPs
 
 A practical baseline for Bitbucket branch permissions, merge checks and written SOPs that keeps main deployable without slowing developers down.
 
-By Mubashir Ahmed · Founder & Lead Architect · 14 October 2026 · 6 min read
+By Mubashir Ahmed · Founder & Lead Architect · October 14, 2026 · 6 min read
 
 A repository without branch governance relies on everyone remembering the rules. That works until a busy week, a new team member or a late-night fix. Bitbucket Cloud has the controls to make most of the rules automatic, but some of them only warn rather than block unless you are on the Premium plan, and that difference is easy to miss.
 
@@ -3888,7 +3871,7 @@ On this page
 
 #### Related articles
 
-- 15 October 2026
+- October 15, 2026
 
   **A 15-point cloud cost checklist**
 
@@ -3896,7 +3879,7 @@ On this page
 
   Read the article
 
-- 12 October 2026
+- October 12, 2026
 
   **Dev, QA, UAT, Prod on Azure: an environment strategy that survives real releases**
 
@@ -3925,7 +3908,7 @@ Breadcrumb: Home / Insights / Azure Dev, QA, UAT and Prod environment strategy
 
 How to structure Azure environments so code moves predictably from a developer's branch to production, with parity, isolation and controlled promotion at every step.
 
-By Mubashir Ahmed · Founder & Lead Architect · 12 October 2026 · 7 min read
+By Mubashir Ahmed · Founder & Lead Architect · October 12, 2026 · 7 min read
 
 Most release problems are not code problems. They are environment problems: a setting that exists in QA but not in production, a database that drifted, a hotfix that skipped testing because UAT was “busy”. None of these is solved by writing better code. They are solved by deciding what each environment is for, building every environment the same way, and moving one tested build through them in a fixed order.
 
@@ -3935,7 +3918,7 @@ Key takeaways
 
 - Give each environment one job, and isolate production in its own subscription.
 - Build every environment from the same Infrastructure as Code modules, with only parameters changing.
-- Build once and promote the same artefact from Dev to production, ending with a slot swap behind an approval.
+- Build once and promote the same artifact from Dev to production, ending with a slot swap behind an approval.
 - Keep secrets in one Key Vault per application and environment, read through managed identities.
 
 #### Four environments, four jobs
@@ -3957,7 +3940,7 @@ Group the subscriptions under management groups (for example one for production 
 
 #### Naming and tagging
 
-Name everything consistently, for example rg-<app>-<env>-<region> for resource groups and kv-<app>-<env> for vaults, and tag every resource with environment, owner, application and cost centre. Do not rely on people remembering: Azure Policy can require a tag, add a missing tag, or inherit it from the resource group, so untagged resources never appear in the first place.
+Name everything consistently, for example rg-<app>-<env>-<region> for resource groups and kv-<app>-<env> for vaults, and tag every resource with environment, owner, application and cost center. Do not rely on people remembering: Azure Policy can require a tag, add a missing tag, or inherit it from the resource group, so untagged resources never appear in the first place.
 
 Tags pay for themselves the first time someone asks what a resource is for, or why a bill went up.
 
@@ -3980,7 +3963,7 @@ A useful rule: if copying a production setting into Dev would be dangerous, it b
 
 #### Promotion, not redeployment
 
-Build once and promote the same artefact through every environment. The pipeline should:
+Build once and promote the same artifact through every environment. The pipeline should:
 
 - Build and test on every pull request.
 - Deploy the merged build automatically to Dev.
@@ -3988,7 +3971,7 @@ Build once and promote the same artefact through every environment. The pipeline
 - Promote to UAT after QA sign-off.
 - Promote to production through an approval gate, ideally via a slot swap.
 
-Rebuilding for each environment means production runs code that was never tested. Promoting one artefact, identified by its version or commit, removes that risk. In Azure Pipelines, model each stage as an environment with approvals and checks; GitHub Actions environments with protection rules do the same job. We design and build these pipelines in our CI/CD & DevOps Transformation service.
+Rebuilding for each environment means production runs code that was never tested. Promoting one artifact, identified by its version or commit, removes that risk. In Azure Pipelines, model each stage as an environment with approvals and checks; GitHub Actions environments with protection rules do the same job. We design and build these pipelines in our CI/CD & DevOps Transformation service.
 
 #### Slot swaps for production releases
 
@@ -4029,7 +4012,7 @@ The same ideas apply on the other two clouds; only the names change.
 | Workload identity | Managed identities | IAM roles | Service accounts |
 | Staged release with quick rollback | App Service slot swap | Blue/green deployment (for example Amazon ECS with CodeDeploy) | Cloud Run revisions with traffic splitting |
 
-On AWS, use separate accounts for production and non-production, grouped into organizational units. On Google Cloud, use a project per environment, grouped under folders. The rules stay the same everywhere: one job per environment, one set of modules, one promoted artefact.
+On AWS, use separate accounts for production and non-production, grouped into organizational units. On Google Cloud, use a project per environment, grouped under folders. The rules stay the same everywhere: one job per environment, one set of modules, one promoted artifact.
 
 #### Sources
 
@@ -4072,7 +4055,7 @@ On this page
 
 #### Related articles
 
-- 15 October 2026
+- October 15, 2026
 
   **A 15-point cloud cost checklist**
 
@@ -4080,7 +4063,7 @@ On this page
 
   Read the article
 
-- 14 October 2026
+- October 14, 2026
 
   **Bitbucket branch governance: the restrictions and SOPs every team should have**
 
@@ -4265,7 +4248,7 @@ Owner: Engineering lead · Applies to: all repositories in the workspace · Revi
 ##### 4. Review and merge
 
 - Approvals required: at least one, or two for repositories marked critical.
-- Merge checks: no unresolved tasks, a passing build, approvals reset on new commits.
+- Merge checks: no unresolved tasks, a passing build, approvals reset on new commits (Bitbucket Premium).
 - Reviewers check: correctness, tests, security impact, configuration changes and documentation.
 - Merge strategy: squash merge for feature branches, unless the repository specifies otherwise.
 
@@ -4297,7 +4280,7 @@ Any exception to this SOP is approved by the engineering lead, recorded with a r
 
 **Alt text:** none
 
-**Word count:** 385
+**Word count:** 387
 
 ---
 
@@ -4416,7 +4399,7 @@ Include your country code, e.g. +1 555 010 0000
 
 Label: Service needed
 
-Options: Select a service | Managed Cloud & DevOps | Cloud Migration & Modernisation | Infrastructure as Code & Landing Zones | CI/CD & DevOps Transformation | Security Hardening & WAF | High Availability & Disaster Recovery | Observability & Monitoring | Cloud Cost Optimisation | Custom Full-Stack Web App Development | Enterprise Portals & Internal Tools | Application Modernisation & Integration | AI Workflow & Document Automation | AI Assistants on Company Data | Agency partnership | Other / Not sure yet
+Options: Select a service | Managed Cloud & DevOps | Cloud Migration & Modernization | Infrastructure as Code & Landing Zones | CI/CD & DevOps Transformation | Security Hardening & WAF | High Availability & Disaster Recovery | Observability & Monitoring | Cloud Cost Optimization | Custom Full-Stack Web App Development | Enterprise Portals & Internal Tools | Application Modernization & Integration | AI Workflow & Document Automation | AI Assistants on Company Data | Agency partnership | Other / Not sure yet
 
 → Button: Select a service
 
@@ -4551,7 +4534,7 @@ How we protect your environments and data, written for the security and procurem
 - NDA available before discovery
 - DPA on request
 
-Runbooks, architecture diagrams and the credentials registry live in your own repositories and vault, so anyone you authorise can pick up the work. Access is removed at the end of an engagement.
+Runbooks, architecture diagrams and the credentials registry live in your own repositories and vault, so anyone you authorize can pick up the work. Access is removed at the end of an engagement.
 
 #### AI-tool policy
 
@@ -4574,7 +4557,7 @@ Client data stays in your own cloud accounts and tools wherever possible. The se
 
 #### Data residency
 
-Environments are built in the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia regions, so data stays where your obligations require it.
+Environments are built in the AWS, Azure or Google Cloud regions you choose, including UAE and Saudi Arabia regions where your chosen provider offers them, so data stays where your obligations require it.
 
 #### Reporting a security issue
 
@@ -4584,14 +4567,14 @@ If you believe you have found a security issue affecting ZanamTech or this websi
 
 **Alt text:** none
 
-**Word count:** 431
+**Word count:** 437
 
 ---
 
 ## `/privacy`
 
 - **Title:** Privacy Notice | ZanamTech
-- **Meta description:** How ZanamTech collects, processes, and safeguards information submitted through this platform.
+- **Meta description:** How ZanamTech collects, processes, and safeguards information submitted through this website.
 
 Breadcrumb: Home / Privacy Notice
 
@@ -4599,9 +4582,9 @@ Breadcrumb: Home / Privacy Notice
 
 ### Privacy Notice
 
-How ZanamTech collects, processes, and safeguards information submitted through this platform.
+How ZanamTech collects, processes, and safeguards information submitted through this website.
 
-Last updated: 12 October 2026
+Last updated: October 16, 2026
 
 [On this page]
 
@@ -4619,18 +4602,25 @@ Last updated: 12 October 2026
 
 ZanamTech is committed to data privacy, transparency and the responsible use of personal data. This notice explains what information we collect through this website, why we collect it, how it is protected and the choices available to you.
 
-It applies to information submitted through this website, including the consultation and custom proposal forms. Information exchanged during a contracted engagement is governed by the confidentiality and data protection terms of the applicable Statement of Work and data processing agreement.
+It applies to information submitted through this website, including the consultation form. Information exchanged during a contracted engagement is governed by the confidentiality and data protection terms of the applicable Statement of Work and data processing agreement.
 
 #### Information we collect
 
 ##### Voluntarily provided data
 
-When you submit a consultation or custom proposal request, we collect the information you choose to provide:
+When you submit the consultation form, we collect the information you choose to provide:
 
-- Full name and email address
-- Company name and, optionally, a phone number
-- Service needed and, optionally, an estimated engagement size
-- The content of your message and your consent confirmation
+- Full name
+- Email address
+- Company name
+- Phone number (optional)
+- Service needed
+- Estimated engagement size (optional)
+- Region (optional)
+- Company size (optional)
+- Cloud platform (optional)
+- Your message (project overview and requirements)
+- Your consent confirmation
 
 ##### Technical & telemetry data
 
@@ -4654,11 +4644,11 @@ Information you submit is used solely to:
 - Evaluate your inquiry and respond to you
 - Schedule and conduct consultations
 - Prepare Statement of Work (SOW) proposals
-- Defend this platform against spam, fraud and abuse
+- Defend this website against spam, fraud and abuse
 
 Our commitment
 
-We do not sell, rent or otherwise monetise personal data. We do not perform automated profiling, and we do not add your details to third-party marketing lists.
+We do not sell, rent or otherwise monetize personal data. We do not perform automated profiling, and we do not add your details to third-party marketing lists.
 
 #### Data processors & infrastructure
 
@@ -4673,7 +4663,7 @@ This website sets no tracking or advertising cookies. Your browser's local stora
 
 #### Retention & security controls
 
-Inquiry information is retained only for as long as necessary to respond to your inquiry and, where an engagement follows, to complete client onboarding. It is then permanently deleted.
+Inquiry information is used only to respond to your inquiry and, where an engagement follows, to complete client onboarding. Inquiries that do not lead to an engagement are deleted within 12 months of receipt.
 
 Access is limited to the personnel who need it to respond to you, and the website is served with strict security headers, including a Content Security Policy and enforced HTTPS.
 
@@ -4700,7 +4690,7 @@ We respond to privacy requests promptly, and always within the timeframe require
 
 **Alt text:** none
 
-**Word count:** 790
+**Word count:** 792
 
 ---
 
@@ -4717,7 +4707,7 @@ Breadcrumb: Home / Terms of Use
 
 The terms that apply to your use of this website.
 
-Last updated: 12 October 2026
+Last updated: October 12, 2026
 
 [On this page]
 
@@ -4737,7 +4727,7 @@ These terms apply to your use of this website. Client engagements are governed s
 
 You agree not to:
 
-- Attempt to gain unauthorised access to this website, its hosting or any connected system
+- Attempt to gain unauthorized access to this website, its hosting or any connected system
 - Interfere with the website's operation, including through automated scraping, load testing or denial-of-service activity
 - Submit false, misleading or malicious information through the contact forms
 - Use the website in breach of any applicable law

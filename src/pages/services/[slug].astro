@@ -5,7 +5,7 @@ import Chip from '../../components/ui/Chip.astro';
 import ArrowLink from '../../components/ui/ArrowLink.astro';
 import SectionHeader from '../../components/ui/SectionHeader.astro';
 import { render } from 'astro:content';
-import { ArrowRight, Info } from '@lucide/astro';
+import { ArrowRight } from '@lucide/astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHero from '../../components/sections/PageHero.astro';
 import ServiceCard from '../../components/cards/ServiceCard.astro';
@@ -53,8 +53,13 @@ const {
   pillar,
 } = service.data;
 const hasReal = scenarios.some((s) => s.kind === 'real');
+const hasExamples = scenarios.some((s) => s.kind === 'illustrative');
+// The past-results footnote appears once, after "Engagements in practice", and only where the page shows a figure.
+const hasFigures =
+  /\d/.test(outcome) ||
+  scenarios.some((s) => s.kind === 'real' && /\d/.test(`${s.problem} ${s.solution} ${s.outcome}`));
 const { Content } = await render(service);
-// Always three related services: same pillar first, then cross-pillar picks in catalogue order.
+// Always three related services: same pillar first, then cross-pillar picks in catalog order.
 const related = [
   ...all.filter((s) => s.data.pillar === pillar && s.id !== service.id),
   ...all.filter((s) => s.data.pillar !== pillar),
@@ -127,12 +132,6 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Services', href: '/
         <div class="hairline-gradient absolute inset-x-6 top-0" aria-hidden="true"></div>
         <p class="text-sm font-semibold text-accent">Outcome</p>
         <p class="mt-2 text-xl font-semibold text-fg">{outcome}</p>
-        {hasReal && (
-          <p class="mt-4 flex gap-2 text-sm text-muted">
-            <Info aria-hidden="true" class="mt-0.5 size-4 shrink-0" />
-            {resultsFootnote}
-          </p>
-        )}
       </GlassCard>
 
       <GlassCard>
@@ -237,9 +236,11 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Services', href: '/
         title="Engagements in practice"
         titleId="scenarios-title"
         lead={
-          hasReal
-            ? 'Anonymised results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.'
-            : 'Example engagements that illustrate how this service is typically delivered. They are illustrative and carry no figures.'
+          !hasReal
+            ? 'Example engagements that illustrate how this service is typically delivered. They are illustrative and carry no figures.'
+            : hasExamples
+              ? 'Anonymized results from past engagements. Entries marked "Example engagement" are illustrative and carry no figures.'
+              : 'Anonymized results from past engagements.'
         }
         leadSize="base"
         size="md"
@@ -268,7 +269,7 @@ const breadcrumbs = [{ label: 'Home', href: '/' }, { label: 'Services', href: '/
           </li>
         ))}
       </ol>
-      {hasReal && <p class="mt-6 text-sm text-muted">{resultsFootnote}</p>}
+      {hasFigures && <p class="mt-6 text-sm text-muted">{resultsFootnote}</p>}
     </div>
   </section>
 

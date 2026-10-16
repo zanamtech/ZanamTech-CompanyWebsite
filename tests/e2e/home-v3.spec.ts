@@ -44,7 +44,7 @@ test.describe('US1 — Home v3', () => {
   test('trust band reuses the three brand-pillar cards', async ({ page }) => {
     await page.goto('/');
     const trust = page.locator('#trust');
-    for (const pillar of ['Enterprise-grade', 'High-availability', 'Zero-trust security']) {
+    for (const pillar of ['Enterprise-grade', 'High availability', 'Zero-trust security']) {
       await expect(trust.getByRole('heading', { level: 3, name: pillar, exact: true })).toBeVisible();
     }
     await expect(trust.getByText('Written proposal within 2 business days')).toBeVisible();

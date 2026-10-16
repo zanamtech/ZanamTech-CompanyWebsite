@@ -55,7 +55,7 @@ export const results: Result[] = [
     suffix: '%',
     qualifier: 'Up to',
     label: 'lower recurring cloud spend',
-    context: 'Scale-up · under-utilised compute fleet',
+    context: 'Scale-up · under-utilized compute fleet',
     service: 'cloud-cost-optimization',
     attribution: 'pre-zanamtech',
   },

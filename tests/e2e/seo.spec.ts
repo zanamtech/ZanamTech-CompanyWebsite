@@ -168,9 +168,9 @@ test.describe('Metadata and structured data', { tag: '@desktop' }, () => {
     }
   });
 
-  test('every page has share-image size and alt, British English and one valid JSON-LD graph', () => {
+  test('every page has share-image size and alt, American English and one valid JSON-LD graph', () => {
     for (const [path, html] of build().pages) {
-      expect(html, path).toContain('<html lang="en-GB"');
+      expect(html, path).toContain('<html lang="en-US"');
       for (const tag of ['og:image', 'og:image:width', 'og:image:height', 'og:image:alt', 'og:locale']) {
         expect(attr(html, new RegExp(`<meta property="${tag}" content="([^"]+)"`)), `${path} ${tag}`).toBeTruthy();
       }

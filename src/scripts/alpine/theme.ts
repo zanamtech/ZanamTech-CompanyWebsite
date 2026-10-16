@@ -13,12 +13,12 @@ export interface ThemeStore {
   toggle(): void;
 }
 
-/** Browser-chrome colours, the same values as the theme-color metas in src/layouts/BaseLayout.astro. */
+/** Browser-chrome colors, the same values as the theme-color metas in src/layouts/BaseLayout.astro. */
 const THEME_COLOR: Record<Theme, string> = { light: '#F8FAFC', dark: '#0B1120' };
 
 /**
  * Make the mobile browser bar follow the site theme, not the OS scheme: both theme-color metas (one per
- * prefers-color-scheme media query) get the chosen theme's colour.
+ * prefers-color-scheme media query) get the chosen theme's color.
  */
 export function syncThemeColor(doc: Document, theme: Theme) {
   for (const meta of doc.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')) {
@@ -78,7 +78,7 @@ export function registerTheme(Alpine: Alpine): ThemeStore {
         return;
       }
 
-      // Fallback: short CSS colour transitions, enabled only for the duration of the switch.
+      // Fallback: short CSS color transitions, enabled only for the duration of the switch.
       root.classList.add('theme-transition');
       apply();
       window.setTimeout(() => root.classList.remove('theme-transition'), 250);
