@@ -1008,9 +1008,9 @@ Request or question
 - Quarterly architecture review
 - Documented runbooks and full handover
 
-#### 4-week onboarding
+#### Onboarding in 2–4 weeks
 
-Least-privilege access set up, a platform review, runbook and diagram baselines, monitoring and backup checks, and an agreed reporting format before steady-state operations begin.
+Depending on platform size. Least-privilege access and monitoring and backup checks start in the first week, followed by a platform review, runbook and diagram baselines, and an agreed reporting format before steady-state operations begin.
 
 #### Exit terms
 
@@ -1052,7 +1052,7 @@ Anonymized results from past engagements.
 
 Q: What does onboarding involve?
 
-A 4-week onboarding covers access setup with least privilege, a platform review, runbook and diagram baselines, monitoring and backup checks, and an agreed reporting format before steady-state operations begin.
+Onboarding takes 2–4 weeks, depending on platform size. Least-privilege access and monitoring and backup checks start in the first week, followed by a platform review, runbook and diagram baselines, and an agreed reporting format before steady-state operations begin.
 
 Q: How are response targets and coverage agreed?
 

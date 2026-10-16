@@ -78,7 +78,7 @@ test.describe('US2 — Services v3', () => {
       await expect(page.locator(`[data-severity="${level}"]`)).toBeVisible();
     const tierText = (await page.locator('[data-tier]').allInnerTexts()).join('\n');
     expect(tierText).not.toMatch(TIME_FIGURES);
-    await expect(page.getByRole('heading', { name: '4-week onboarding' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Onboarding in 2–4 weeks' })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Exit terms' })).toBeVisible();
   });
 

@@ -28,7 +28,7 @@ outcome: Your cloud and delivery platform operated to written runbooks, with eve
 relatedOffer: governance-quick-start
 faq:
   - q: What does onboarding involve?
-    a: A 4-week onboarding covers access setup with least privilege, a platform review, runbook and diagram baselines, monitoring and backup checks, and an agreed reporting format before steady-state operations begin.
+    a: Onboarding takes 2–4 weeks, depending on platform size. Least-privilege access and monitoring and backup checks start in the first week, followed by a platform review, runbook and diagram baselines, and an agreed reporting format before steady-state operations begin.
   - q: How are response targets and coverage agreed?
     a: Coverage and response targets are defined in your Statement of Work for the tier you choose, so they match your business day and risk profile.
   - q: Can we leave, and what do we keep?
