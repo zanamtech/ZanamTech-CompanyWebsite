@@ -372,6 +372,22 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
 - **Design freeze** (one article, 1440 and 390, light and dark): only the takeaways box text changed (colour, size, line height, heading weight); everything below moves down by the box's extra height (62px at 1440, 141px at 390). No other style differences.
 - **Checks:** `npm run check` 0 errors; `drafts`, `review-fixes`, `review3`, `theme-a11y`: 68 passed, 2 skipped (content-conditional), 0 failed.
 
+## 3q. Footer: tighter layout, aligned Company row, legal separators (16 Oct)
+Owner-approved after review on the dev server. Desktop and tablet only; the phone footer is unchanged (390px layout identical to before). One file: `src/components/layout/Footer.astro`.
+- **Brand column (xl):** 280px (was 320px), so the description wraps to five lines and fills the space down to the email. A 340px limit would not have changed anything, because the column was already 320px wide. The services area starts 40px further left.
+- **Service columns (lg+):** one grid shared through subgrid by all four columns (Managed/Practical AI, Cloud & DevOps × 2, Web & SaaS), with 32px structural gaps.
+  - **Visible gaps:** column widths are tuned so the space between the columns' text is even: 55/58/55px at 1440 (was 45/48/45) and 35/33/42px at 1024 (was 40/72/69). The widths are weighted below 1200px and equal from 1200px.
+  - **Limit:** between about 1150 and 1279px the gaps vary more, because the text rewraps as the width changes.
+- **Vertical spacing:**
+  - **Inside the columns:** the space between links is about 20% smaller, and each heading's gap to its first link is 6px (was 8px). The gap between the Managed and Practical AI groups is unchanged.
+  - **Footer padding:** top padding is 38px at desktop (was 48px) and 32px at tablet (was 40px). The gap above the Company divider is 19px (was 24px), and the Company row's top and bottom padding are 13px (was 16px).
+  - **Height:** the footer is 366px at 1440 (was 395px) and 472px at 1024 (was 531px).
+- **Company row:** one line from the first services column to the right edge, with Contact flush with Web & SaaS.
+  - The label, links and dots are spread evenly: links are 73px apart at 1440 and 83px at 1024.
+  - The COMPANY → About gap is 14px wider (a right margin on the label), and the dots are centred.
+- **Bottom row:** Privacy / Terms / Trust are 24px apart (was 16px), with the Company row's centred dot (`aria-hidden`) in each gap. They stay right-aligned at the same size and colour.
+- **Checks:** `npm run check` 0 errors, `format:check` passes; `header-footer-ui`, `trust-legal`, `review-fixes`: 48 passed, 0 failed. Screenshots at 1440 and 1024 in light and dark.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
