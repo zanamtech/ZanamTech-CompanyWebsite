@@ -366,6 +366,12 @@ Every finding now has a status: 59 done, 3 deferred, 5 declined.
   - **CSP:** a fenced code block was replaced with a list, because the syntax highlighter's inline styles violate the CSP (`check:csp` caught it).
 - **Checks:** `check` 0 errors, `lint`, `format:check`, `lint:content`, `build` and `check:csp` all pass. Specs `seo`, `drafts`, `review-fixes`, `review3`, `publish` and `theme-a11y`: all pass after one assertion update (the Flexera link text, `drafts.spec.ts`).
 
+## 3p. Key takeaways box readability (16 Oct)
+- **Change:** the bullets now use the article body size (16px, was 14px) and the body text colour (`text-fg`, was the muted grey); the "Key takeaways" heading is bold (was semibold). The box itself (background, border, radius, padding, spacing) is unchanged. One file: `src/components/content/ArticleBody.astro`.
+- **Contrast** (measured on the box background): light 16.5:1, dark 16.2:1 (was 7.0:1 and 6.6:1 at 14px). The axe scans in `theme-a11y` pass in both themes.
+- **Design freeze** (one article, 1440 and 390, light and dark): only the takeaways box text changed (colour, size, line height, heading weight); everything below moves down by the box's extra height (62px at 1440, 141px at 390). No other style differences.
+- **Checks:** `npm run check` 0 errors; `drafts`, `review-fixes`, `review3`, `theme-a11y`: 68 passed, 2 skipped (content-conditional), 0 failed.
+
 ## 4. Owner decisions (binding)
 
 | Decision | Where it is enforced |
