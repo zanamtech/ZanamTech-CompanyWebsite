@@ -96,7 +96,7 @@ export const results: Result[] = [
     suffix: '%',
     qualifier: 'Up to',
     label: 'lower hardware maintenance costs',
-    context: 'SaaS provider · fragile on-premise servers',
+    context: 'SaaS provider · fragile on-premises servers',
     service: 'cloud-migration-containerization',
     attribution: 'pre-zanamtech',
   },

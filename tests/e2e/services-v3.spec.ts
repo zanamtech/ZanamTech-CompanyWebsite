@@ -19,8 +19,8 @@ test.describe('US2 — Services v3', () => {
     const links = page.locator('#core-services [data-pillar="managed"] ul a');
     await expect(links).toHaveText([
       'Monitoring and alerting',
-      'Patching and backups',
-      'Security patching',
+      'Monthly patching',
+      'Backup checks',
       'Monthly service report',
     ]);
     for (const href of await links.evaluateAll((els) => els.map((e) => e.getAttribute('href'))))

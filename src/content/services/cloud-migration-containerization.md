@@ -40,12 +40,12 @@ scenarios:
     solution: The monolithic application was containerized with Docker and deployed across a multi-zone AWS Kubernetes cluster with automated pod scaling.
     outcome: The platform scaled dynamically under sudden traffic surges and achieved 99.9% availability through promotional peaks.
   - kind: real
-    problem: A growing SaaS provider carried fragile, costly on-premise servers that demanded constant maintenance.
+    problem: A growing SaaS provider carried fragile, costly on-premises servers that demanded constant maintenance.
     solution: Production workloads were migrated to Azure virtual machines with automated resource management and IaC-defined environments.
     outcome: Hardware maintenance costs fell by up to 60% as the platform moved to a scalable, fault-tolerant cloud architecture.
 ---
 
-ZanamTech moves workloads from legacy on-premise hardware or unoptimized hosting to elastic environments on
+ZanamTech moves workloads from legacy on-premises hardware or unoptimized hosting to elastic environments on
 AWS, Azure and Google Cloud. Monolithic stacks are decomposed into modular services where it pays off,
 containerized with Docker and orchestrated on Kubernetes, or moved to managed platform services where that is the
 simpler, cheaper option.

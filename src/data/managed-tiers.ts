@@ -70,7 +70,7 @@ export const severityLevels: SeverityLevel[] = [
  * flagship card. Scope wording only, never response times. */
 export const flagshipIncluded = [
   'Monitoring and alerting',
-  'Patching and backups',
-  'Security patching',
+  'Monthly patching',
+  'Backup checks',
   'Monthly service report',
 ];
